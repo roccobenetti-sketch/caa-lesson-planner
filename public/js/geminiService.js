@@ -421,14 +421,19 @@ Regole:
 
   /**
    * Genera un pittogramma SVG personalizzato tramite l'IA di Gemini partendo da una descrizione testuale.
+   * Supporta stili multipli: 'stylized' (simbolico CAA), 'realistic' (realistico dettagliato) e 'storybook' (fiabesco).
    * Restituisce un Data URI in formato base64 compatibile al 100% con tutti i browser e con la stampa.
    * @param {string} description - Descrizione del soggetto o azione (es. "regina travestita con cappuccio")
+   * @param {'stylized'|'realistic'|'storybook'} [style='stylized'] - Stile grafico desiderato
    * @param {string} [categoryHint='misc']
    * @returns {Promise<string>} Data URI SVG
    */
-  async generateAiPictogramSvg(description, categoryHint = 'misc') {
+  async generateAiPictogramSvg(description, style = 'stylized', categoryHint = 'misc') {
     const activeKey = ConfigManager.getActiveApiKey();
-    const model = ConfigManager.state.model || 'gemini-3.1-flash-lite';
+    let model = ConfigManager.state.model || 'gemini-3.1-flash-lite';
+    if (model.includes('2.5') || model.includes('1.5') || model.includes('pro')) {
+      model = 'gemini-3.1-flash-lite';
+    }
 
     if (!activeKey) {
       throw new Error('Chiave API Gemini mancante. Inserisci la tua chiave nelle impostazioni per generare con IA.');
@@ -439,25 +444,50 @@ Regole:
       throw new Error('Inserisci una descrizione valida per generare il simbolo.');
     }
 
-    const systemInstructions = `Sei un maestro illustratore specializzato in Comunicazione Aumentativa e Alternativa (CAA) e grafica vettoriale SVG didattica per bisogni comunicativi speciali (stile ARASAAC).
-Il tuo compito è generare ESCLUSIVAMENTE codice SVG puro per rappresentare visivamente e simbolicamente il soggetto richiesto.
+    let systemInstructions = '';
+    if (style === 'realistic') {
+      systemInstructions = `Sei un maestro dell'illustrazione grafica vettoriale SVG realistica, pittorica e dettagliata ad alta risoluzione.
+Il tuo compito e' generare ESCLUSIVAMENTE codice SVG valido che rappresenti il soggetto in stile REALISTICO, ricco di sfumature, tridimensionalita' e dettagli accurati.
 
-LINEE GUIDA VETTORIALI:
+LINEE GUIDA VETTORIALI REALISTICHE:
+1. Usa rigorosamente un riquadro: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+2. Crea tridimensionalita' e profondita' usando sfumature realistiche (<defs><linearGradient id="..."> o <radialGradient id="...">), giochi di luce, ombre portate e toni naturali.
+3. Dettaglia con cura le forme visive (espressivita' dei volti, pieghe dei vestiti, tessuti, trasparenze, riflessi, texture della natura o degli oggetti).
+4. Sfondo: <rect width="116" height="116" x="2" y="2" rx="16" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+5. NON inserire testo, scritte o lettere all'interno del disegno SVG (il testo viene renderizzato esternamente).
+6. Rispondi TASSATIVAMENTE con il solo codice SVG (<svg ...>...</svg>). Niente spiegazioni, niente markdown prima o dopo.`;
+    } else if (style === 'storybook') {
+      systemInstructions = `Sei un celebre illustratore di libri per l'infanzia, favole e fiabe classiche.
+Il tuo compito e' generare ESCLUSIVAMENTE codice SVG valido per un'illustrazione narrativa, calda, espressiva e fiabesca.
+
+LINEE GUIDA STILE FIABESCO:
+1. Usa: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+2. Disegna figure narrative espressive con colori caldi, sfumature pastello vibranti e dettagli fiabeschi (mantelli, corone, magia, natura).
+3. Sfondo: <rect width="116" height="116" x="2" y="2" rx="16" fill="#fefce8" stroke="#fef08a" stroke-width="1.5"/>
+4. NON inserire testo o scritte all'interno del disegno SVG.
+5. Rispondi TASSATIVAMENTE solo con il codice SVG (<svg ...>...</svg>). Niente spiegazioni o markdown.`;
+    } else {
+      // Default: stilizzato CAA (ARASAAC)
+      systemInstructions = `Sei un maestro illustratore specializzato in Comunicazione Aumentativa e Alternativa (CAA) e grafica vettoriale SVG didattica per bisogni comunicativi speciali (stile ARASAAC).
+Il tuo compito e' generare ESCLUSIVAMENTE codice SVG puro per rappresentare visivamente e simbolicamente il soggetto richiesto.
+
+LINEE GUIDA VETTORIALI CAA:
 1. Usa rigorosamente un riquadro: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
 2. Includi un rettangolo di sfondo bianco pulito: <rect width="96" height="96" x="2" y="2" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
 3. Disegna figure chiare, stilizzate, espressive ed essenziali, con contorni neri o scuri ben definiti: stroke="#1e293b" con stroke-width tra 2.5 e 3.5, stroke-linecap="round", stroke-linejoin="round".
 4. Usa campiture di colori piatti, vivaci, allegri e ad alto contrasto (es. rosso, giallo, blu, verde, arancione, toni pelle).
-5. NON inserire testo o scritte all'interno del disegno SVG (la scritta è gestita esternamente).
+5. NON inserire testo o scritte all'interno del disegno SVG (la scritta e' gestita esternamente).
 6. Rispondi TASSATIVAMENTE con il solo codice SVG (<svg ...>...</svg>). Niente spiegazioni, niente markdown, niente testo prima o dopo.`;
+    }
 
-    const userPrompt = `Disegna il simbolo CAA per: "${cleanDesc}".`;
+    const userPrompt = `Disegna il soggetto: "${cleanDesc}". Stile richiesto: ${style}.`;
 
     const geminiPayload = {
       systemInstruction: { parts: [{ text: systemInstructions }] },
       contents: [{ parts: [{ text: userPrompt }] }],
       generationConfig: {
-        temperature: 0.2,
-        maxOutputTokens: 2048
+        temperature: style === 'realistic' ? 0.35 : 0.2,
+        maxOutputTokens: 4096
       }
     };
 
@@ -481,28 +511,22 @@ LINEE GUIDA VETTORIALI:
       const result = await response.json();
       rawSvg = result?.candidates?.[0]?.content?.parts?.[0]?.text || '';
     } catch (err) {
-      console.warn('Proxy fallito, tentativo browser diretto:', err.message);
-      const directUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${activeKey}`;
-      const directResponse = await fetch(directUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(geminiPayload)
-      });
-      if (!directResponse.ok) {
-        const errJson = await directResponse.json().catch(() => ({}));
-        throw new Error(errJson.error?.message || `Errore Gemini HTTP ${directResponse.status}`);
-      }
-      const directResult = await directResponse.json();
-      rawSvg = directResult?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+      console.warn('Proxy fallito o errore:', err.message);
+      throw err;
     }
 
     // Estrai il tag SVG puro se avvolto da blocchi markdown
-    const svgMatch = rawSvg.match(/<svg[\s\S]*?<\/svg>/i);
+    let cleanSvg = rawSvg.replace(/```(?:xml|svg)?/gi, '').replace(/```/g, '').trim();
+    const svgMatch = cleanSvg.match(/<svg[\s\S]*?<\/svg>/i);
     let validSvg = svgMatch ? svgMatch[0] : '';
 
     if (!validSvg || !validSvg.includes('viewBox')) {
-      console.warn('Risposta SVG non valida o assente, applico fallback procedurale arricchito');
-      validSvg = this.createProceduralSvg(cleanDesc, categoryHint);
+      if (cleanSvg.includes('<svg') && !cleanSvg.includes('</svg>')) {
+        validSvg = cleanSvg.substring(cleanSvg.indexOf('<svg')) + '\n</svg>';
+      } else {
+        console.warn('Risposta SVG non valida o assente, applico fallback procedurale arricchito');
+        validSvg = this.createProceduralSvg(cleanDesc, categoryHint);
+      }
     }
 
     // Converti in Data URI base64

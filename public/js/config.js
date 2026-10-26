@@ -32,7 +32,12 @@ export const ConfigManager = {
       this.state.useColorBorders = savedColors === 'true';
     }
     if (savedModel) {
-      this.state.model = savedModel;
+      if (savedModel.includes('2.5') || savedModel.includes('1.5') || savedModel.includes('pro')) {
+        this.state.model = 'gemini-3.1-flash-lite';
+        localStorage.setItem(this.STORAGE_KEY_MODEL, 'gemini-3.1-flash-lite');
+      } else {
+        this.state.model = savedModel;
+      }
     }
 
     // 2. Interroga il server locale per verificare se è configurata una chiave predefinita

@@ -191,6 +191,16 @@ class CAAApp {
       });
     }
 
+    // Selettore dello stile grafico AI (Stilizzato CAA vs Realistico vs Fiabesco)
+    document.querySelectorAll('.ai-style-option').forEach(label => {
+      label.addEventListener('click', () => {
+        document.querySelectorAll('.ai-style-option').forEach(l => {
+          l.className = 'ai-style-option flex flex-col items-center justify-center p-2 rounded-xl border border-slate-200 bg-white cursor-pointer text-center text-xs font-bold text-slate-700 transition hover:bg-slate-50';
+        });
+        label.className = 'ai-style-option flex flex-col items-center justify-center p-2 rounded-xl border-2 border-indigo-600 bg-indigo-50/70 cursor-pointer text-center text-xs font-bold text-indigo-900 transition shadow-sm';
+      });
+    });
+
     // Esportazione e Importazione JSON
     const btnExportJson = document.getElementById('btnExportJson');
     if (btnExportJson) {
@@ -689,7 +699,8 @@ class CAAApp {
         category = LessonRenderer.currentLesson?.cards?.[this.selectedCardIndex]?.tokens?.[this.selectedTokenIndex]?.category || 'misc';
       }
 
-      const svgDataUri = await GeminiService.generateAiPictogramSvg(promptText, category);
+      const selectedStyle = document.querySelector('input[name="aiPictogramStyle"]:checked')?.value || 'stylized';
+      const svgDataUri = await GeminiService.generateAiPictogramSvg(promptText, selectedStyle, category);
       const defaultName = promptText.toLocaleUpperCase('it-IT');
       
       if (previewArea) {

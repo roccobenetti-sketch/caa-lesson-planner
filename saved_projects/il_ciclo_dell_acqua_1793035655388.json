@@ -10,7 +10,7 @@
     "explanation": "L'acqua è un bene prezioso che non si perde mai, ma si trasforma continuamente per dare vita alla natura.",
     "tokens": [
       {
-        "displayWord": "Acqua",
+        "displayWord": "ACQUA",
         "searchTerm": "acqua",
         "category": "noun",
         "pictogramId": 32464,
@@ -52,7 +52,7 @@
         "source": "arasaac"
       },
       {
-        "displayWord": "è",
+        "displayWord": "È",
         "searchTerm": "essere",
         "category": "verb",
         "pictogramId": 36480,
@@ -66,7 +66,7 @@
         "source": "arasaac"
       },
       {
-        "displayWord": "vita",
+        "displayWord": "VITA",
         "searchTerm": "vita",
         "category": "noun",
         "pictogramId": 8717,
@@ -112,7 +112,7 @@
       "pedagogicalExplanation": "Il sole riscalda l'acqua dei mari e dei laghi.",
       "tokens": [
         {
-          "displayWord": "Sole",
+          "displayWord": "SOLE",
           "searchTerm": "sole",
           "category": "noun",
           "pictogramId": 7252,
@@ -154,7 +154,7 @@
           "source": "arasaac"
         },
         {
-          "displayWord": "scalda",
+          "displayWord": "SCALDA",
           "searchTerm": "riscaldare",
           "category": "verb",
           "pictogramId": 8520,
@@ -172,11 +172,11 @@
           "source": "arasaac"
         },
         {
-          "displayWord": "acqua",
+          "displayWord": "ACQUA",
           "searchTerm": "acqua",
           "category": "noun",
-          "pictogramId": 32464,
-          "imageUrl": "https://static.arasaac.org/pictograms/32464/32464_500.png",
+          "pictogramId": 6022,
+          "imageUrl": "https://static.arasaac.org/pictograms/6022/6022_500.png",
           "alternatives": [
             {
               "id": 32464,
@@ -211,7 +211,8 @@
               "imageUrl": "https://static.arasaac.org/pictograms/8079/8079_500.png"
             }
           ],
-          "source": "arasaac"
+          "source": "arasaac",
+          "customImage": false
         }
       ]
     },
@@ -221,7 +222,7 @@
       "pedagogicalExplanation": "L'acqua diventa vapore e sale verso il cielo.",
       "tokens": [
         {
-          "displayWord": "Acqua",
+          "displayWord": "ACQUA",
           "searchTerm": "acqua",
           "category": "noun",
           "pictogramId": 32464,
@@ -263,7 +264,7 @@
           "source": "arasaac"
         },
         {
-          "displayWord": "mare",
+          "displayWord": "MARE",
           "searchTerm": "mare",
           "category": "noun",
           "pictogramId": 2925,
@@ -305,7 +306,7 @@
           "source": "arasaac"
         },
         {
-          "displayWord": "lago",
+          "displayWord": "LAGO",
           "searchTerm": "lago",
           "category": "noun",
           "pictogramId": 6022,
@@ -319,11 +320,11 @@
           "source": "arasaac"
         },
         {
-          "displayWord": "sale",
+          "displayWord": "EVAPORA",
           "searchTerm": "salire",
           "category": "verb",
-          "pictogramId": 24725,
-          "imageUrl": "https://static.arasaac.org/pictograms/24725/24725_500.png",
+          "pictogramId": "ai_1793046126128",
+          "imageUrl": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCI+CiAgPHJlY3Qgd2lkdGg9Ijk2IiBoZWlnaHQ9Ijk2IiB4PSIyIiB5PSIyIiByeD0iMTQiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iI2UyZThmMCIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgCiAgPCEtLSBMYWdvIC0tPgogIDxwYXRoIGQ9Ik0xNSA3NSBRIDUwIDY1IDg1IDc1IEwgODUgODUgUSA1MCA5NSAxNSA4NSBaIiBmaWxsPSIjM2I4MmY2IiBzdHJva2U9IiMxZTI5M2IiIHN0cm9rZS13aWR0aD0iMyIvPgogIAogIDwhLS0gVmFwb3JlL0V2YXBvcmF6aW9uZSAtLT4KICA8cGF0aCBkPSJNMzAgNjUgUSAzMCA0NSA0MCA0MCBUIDUwIDM1IiBmaWxsPSJub25lIiBzdHJva2U9IiM2MGE1ZmEiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPHBhdGggZD0iTTUwIDYwIFEgNTAgNDAgNjAgMzUgVCA3MCAzMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNjBhNWZhIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIAogIDwhLS0gR29jY2UgY2hlIHNhbGdvbm8gLS0+CiAgPGNpcmNsZSBjeD0iNDAiIGN5PSI0MCIgcj0iMyIgZmlsbD0iIzNiODJmNiIgc3Ryb2tlPSIjMWUyOTNiIiBzdHJva2Utd2lkdGg9IjIiLz4KICA8Y2lyY2xlIGN4PSI2MCIgY3k9IjM1IiByPSIzIiBmaWxsPSIjM2I4MmY2IiBzdHJva2U9IiMxZTI5M2IiIHN0cm9rZS13aWR0aD0iMiIvPgogIDxjaXJjbGUgY3g9IjcwIiBjeT0iMzAiIHI9IjMiIGZpbGw9IiMzYjgyZjYiIHN0cm9rZT0iIzFlMjkzYiIgc3Ryb2tlLXdpZHRoPSIyIi8+Cjwvc3ZnPg==",
           "alternatives": [
             {
               "id": 24725,
@@ -358,14 +359,15 @@
               "imageUrl": "https://static.arasaac.org/pictograms/27278/27278_500.png"
             }
           ],
-          "source": "arasaac"
+          "source": "arasaac",
+          "customImage": true
         },
         {
-          "displayWord": "cielo",
+          "displayWord": "CIELO",
           "searchTerm": "cielo",
           "category": "noun",
-          "pictogramId": 6978,
-          "imageUrl": "https://static.arasaac.org/pictograms/6978/6978_500.png",
+          "pictogramId": "ai_1793046185972",
+          "imageUrl": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCI+CiAgPHJlY3Qgd2lkdGg9Ijk2IiBoZWlnaHQ9Ijk2IiB4PSIyIiB5PSIyIiByeD0iMTQiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iI2UyZThmMCIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgCiAgPCEtLSBDaWVsbyAtLT4KICA8cmVjdCB4PSIxNSIgeT0iMTUiIHdpZHRoPSI3MCIgaGVpZ2h0PSI3MCIgcng9IjEwIiBmaWxsPSIjODFkNGZhIiBzdHJva2U9IiMxZTI5M2IiIHN0cm9rZS13aWR0aD0iMyIvPgogIAogIDwhLS0gU29sZSAtLT4KICA8Y2lyY2xlIGN4PSI3MCIgY3k9IjMwIiByPSIxMiIgZmlsbD0iI2ZmZWIzYiIgc3Ryb2tlPSIjMWUyOTNiIiBzdHJva2Utd2lkdGg9IjMiLz4KICAKICA8IS0tIFJhZ2dpIGRlbCBzb2xlIC0tPgogIDxsaW5lIHgxPSI3MCIgeTE9IjEyIiB4Mj0iNzAiIHkyPSI1IiBzdHJva2U9IiMxZTI5M2IiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPGxpbmUgeDE9IjcwIiB5MT0iNDgiIHgyPSI3MCIgeTI9IjU1IiBzdHJva2U9IiMxZTI5M2IiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPGxpbmUgeDE9IjUyIiB5MT0iMzAiIHgyPSI0NSIgeTI9IjMwIiBzdHJva2U9IiMxZTI5M2IiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPGxpbmUgeDE9Ijg4IiB5MT0iMzAiIHgyPSI5NSIgeTI9IjMwIiBzdHJva2U9IiMxZTI5M2IiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+Cjwvc3ZnPg==",
           "alternatives": [
             {
               "id": 6978,
@@ -380,14 +382,15 @@
               "imageUrl": "https://static.arasaac.org/pictograms/35855/35855_500.png"
             }
           ],
-          "source": "arasaac"
+          "source": "arasaac",
+          "customImage": true
         },
         {
-          "displayWord": "vapore",
+          "displayWord": "VAPORE",
           "searchTerm": "vapore",
           "category": "noun",
-          "pictogramId": 31478,
-          "imageUrl": "https://static.arasaac.org/pictograms/31478/31478_500.png",
+          "pictogramId": 2883,
+          "imageUrl": "https://static.arasaac.org/pictograms/2883/2883_500.png",
           "alternatives": [
             {
               "id": 31478,
@@ -410,7 +413,8 @@
               "imageUrl": "https://static.arasaac.org/pictograms/39590/39590_500.png"
             }
           ],
-          "source": "arasaac"
+          "source": "arasaac",
+          "customImage": false
         }
       ]
     },
@@ -420,11 +424,11 @@
       "pedagogicalExplanation": "Il vapore si raffredda e forma le nuvole.",
       "tokens": [
         {
-          "displayWord": "Vapore",
+          "displayWord": "VAPORE",
           "searchTerm": "vapore",
           "category": "noun",
-          "pictogramId": 31478,
-          "imageUrl": "https://static.arasaac.org/pictograms/31478/31478_500.png",
+          "pictogramId": "ai_1793046360868",
+          "imageUrl": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCI+CiAgPHJlY3Qgd2lkdGg9Ijk2IiBoZWlnaHQ9Ijk2IiB4PSIyIiB5PSIyIiByeD0iMTQiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iI2UyZThmMCIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgCiAgPCEtLSBMYWdvIC0tPgogIDxwYXRoIGQ9Ik0yMCA3NSBRIDUwIDYwIDgwIDc1IEwgODAgODUgUSA1MCA5NSAyMCA4NSBaIiBmaWxsPSIjM2I4MmY2IiBzdHJva2U9IiMxZTI5M2IiIHN0cm9rZS13aWR0aD0iMyIvPgogIAogIDwhLS0gTGluZWUgZGkgZXZhcG9yYXppb25lICh2YXBvcmUpIC0tPgogIDxwYXRoIGQ9Ik0zNSA2NSBRIDMwIDUwIDM1IDQwIiBmaWxsPSJub25lIiBzdHJva2U9IiM5NGEzYjgiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPHBhdGggZD0iTTUwIDYwIFEgNDUgNDUgNTAgMzUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzk0YTNiOCIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICA8cGF0aCBkPSJNNjUgNjUgUSA3MCA1MCA2NSA0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjOTRhM2I4IiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIAogIDwhLS0gTnV2b2xlIGRpIHZhcG9yZSBzdGlsaXp6YXRlIC0tPgogIDxjaXJjbGUgY3g9IjM1IiBjeT0iMzUiIHI9IjUiIGZpbGw9IiNjYmQ1ZTEiIHN0cm9rZT0iIzFlMjkzYiIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPGNpcmNsZSBjeD0iNTAiIGN5PSIzMCIgcj0iNiIgZmlsbD0iI2NiZDVlMSIgc3Ryb2tlPSIjMWUyOTNiIiBzdHJva2Utd2lkdGg9IjIiLz4KICA8Y2lyY2xlIGN4PSI2NSIgY3k9IjM1IiByPSI1IiBmaWxsPSIjY2JkNWUxIiBzdHJva2U9IiMxZTI5M2IiIHN0cm9rZS13aWR0aD0iMiIvPgo8L3N2Zz4=",
           "alternatives": [
             {
               "id": 31478,
@@ -447,11 +451,11 @@
               "imageUrl": "https://static.arasaac.org/pictograms/39590/39590_500.png"
             }
           ],
-          "source": "arasaac"
+          "customImage": true
         },
         {
-          "displayWord": "forma",
-          "searchTerm": "formare",
+          "displayWord": "FORMA",
+          "searchTerm": "forma",
           "category": "verb",
           "pictogramId": 4761,
           "imageUrl": "https://static.arasaac.org/pictograms/4761/4761_500.png",
@@ -489,11 +493,11 @@
               "imageUrl": "https://static.arasaac.org/pictograms/4711/4711_500.png"
             }
           ],
-          "source": "arasaac"
+          "customImage": false
         },
         {
-          "displayWord": "nuvole",
-          "searchTerm": "nuvola",
+          "displayWord": "NUVOLE",
+          "searchTerm": "nuvole",
           "category": "noun",
           "pictogramId": 2883,
           "imageUrl": "https://static.arasaac.org/pictograms/2883/2883_500.png",
@@ -503,7 +507,7 @@
               "imageUrl": "https://static.arasaac.org/pictograms/2883/2883_500.png"
             }
           ],
-          "source": "arasaac"
+          "customImage": false
         }
       ]
     },
@@ -513,7 +517,7 @@
       "pedagogicalExplanation": "Le nuvole diventano pesanti e cade la pioggia.",
       "tokens": [
         {
-          "displayWord": "Nuvole",
+          "displayWord": "NUVOLE",
           "searchTerm": "nuvola",
           "category": "noun",
           "pictogramId": 2883,
@@ -527,7 +531,7 @@
           "source": "arasaac"
         },
         {
-          "displayWord": "freddo",
+          "displayWord": "FREDDO",
           "searchTerm": "freddo",
           "category": "adjective",
           "pictogramId": 4652,
@@ -569,7 +573,7 @@
           "source": "arasaac"
         },
         {
-          "displayWord": "acqua",
+          "displayWord": "ACQUA",
           "searchTerm": "acqua",
           "category": "noun",
           "pictogramId": 32464,
@@ -611,7 +615,7 @@
           "source": "arasaac"
         },
         {
-          "displayWord": "cadono",
+          "displayWord": "CADONO",
           "searchTerm": "cadere",
           "category": "verb",
           "pictogramId": 39440,
@@ -653,7 +657,7 @@
           "source": "arasaac"
         },
         {
-          "displayWord": "piove",
+          "displayWord": "PIOVE",
           "searchTerm": "piovere",
           "category": "verb",
           "pictogramId": 7148,
@@ -674,7 +678,7 @@
       "pedagogicalExplanation": "La pioggia torna nei fiumi e poi nel mare.",
       "tokens": [
         {
-          "displayWord": "piove",
+          "displayWord": "PIOVE",
           "searchTerm": "piovere",
           "category": "verb",
           "pictogramId": 7148,
@@ -688,7 +692,7 @@
           "source": "arasaac"
         },
         {
-          "displayWord": "acqua",
+          "displayWord": "ACQUA",
           "searchTerm": "acqua",
           "category": "noun",
           "pictogramId": 32464,
@@ -730,7 +734,7 @@
           "source": "arasaac"
         },
         {
-          "displayWord": "va",
+          "displayWord": "VA",
           "searchTerm": "andare",
           "category": "verb",
           "pictogramId": 32154,
@@ -744,7 +748,7 @@
           "source": "arasaac"
         },
         {
-          "displayWord": "fiume",
+          "displayWord": "FIUME",
           "searchTerm": "fiume",
           "category": "noun",
           "pictogramId": 2811,
@@ -786,7 +790,7 @@
           "source": "arasaac"
         },
         {
-          "displayWord": "mare",
+          "displayWord": "MARE",
           "searchTerm": "mare",
           "category": "noun",
           "pictogramId": 2925,
@@ -832,5 +836,5 @@
   ],
   "id": "il_ciclo_dell_acqua_1793035655388",
   "createdAt": "2026-10-26T17:27:35.388Z",
-  "updatedAt": "2026-10-26T17:32:13Z"
+  "updatedAt": "2026-10-26T20:26:50Z"
 }

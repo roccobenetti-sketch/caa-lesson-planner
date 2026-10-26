@@ -364,6 +364,33 @@
           <span class="font-bold text-blue-900">✨ Disegna con l'IA:</span> descrivi qualsiasi soggetto, personaggio o azione (es. <em>"regina travestita da vecchia con cappuccio nero"</em>). Potrai usarlo subito e salvarlo con un nome nel tuo archivio personale per riutilizzarlo sempre!
         </div>
 
+        <!-- Scelta dello Stile Visivo del Disegno -->
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1.5">Stile Grafico del Disegno:</label>
+          <div class="grid grid-cols-3 gap-2">
+            <label class="ai-style-option flex flex-col items-center justify-center p-2 rounded-xl border-2 border-indigo-600 bg-indigo-50/70 cursor-pointer text-center text-xs font-bold text-indigo-900 transition shadow-sm" data-style="stylized">
+              <input type="radio" name="aiPictogramStyle" value="stylized" class="hidden" checked />
+              <span class="text-base mb-0.5">🏷️</span>
+              <span>Stilizzato CAA</span>
+              <span class="text-[9px] font-medium text-indigo-700 mt-0.5">Iconico ARASAAC</span>
+            </label>
+
+            <label class="ai-style-option flex flex-col items-center justify-center p-2 rounded-xl border border-slate-200 bg-white cursor-pointer text-center text-xs font-bold text-slate-700 transition hover:bg-slate-50" data-style="realistic">
+              <input type="radio" name="aiPictogramStyle" value="realistic" class="hidden" />
+              <span class="text-base mb-0.5">📸</span>
+              <span>Realistico</span>
+              <span class="text-[9px] font-medium text-slate-500 mt-0.5">Dettagli & Luci</span>
+            </label>
+
+            <label class="ai-style-option flex flex-col items-center justify-center p-2 rounded-xl border border-slate-200 bg-white cursor-pointer text-center text-xs font-bold text-slate-700 transition hover:bg-slate-50" data-style="storybook">
+              <input type="radio" name="aiPictogramStyle" value="storybook" class="hidden" />
+              <span class="text-base mb-0.5">📖</span>
+              <span>Fiabesco</span>
+              <span class="text-[9px] font-medium text-slate-500 mt-0.5">Libro Illustrato</span>
+            </label>
+          </div>
+        </div>
+
         <div class="space-y-2">
           <label for="inputAiPictogramPrompt" class="block text-xs font-bold text-slate-700">Descrizione del Simbolo desiderato:</label>
           <div class="flex flex-col sm:flex-row gap-2">

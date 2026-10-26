@@ -202,23 +202,24 @@ class CAARequestHandler(http.server.SimpleHTTPRequestHandler):
                 return
 
             model_name = payload.get("model", DEFAULT_MODEL)
+            # Sanitizzazione modelli deprecati o non piÃ¹ supportati da Google
+            if not model_name or "2.5" in model_name or "1.5" in model_name or "pro" in model_name.lower():
+                model_name = DEFAULT_MODEL
+
             gemini_payload = payload.get("geminiPayload", {})
 
-            # Invocazione endpoint REST di Google Gemini con gestione automatica di retry per 503/429
-            endpoint_url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent?key={api_key}"
-            
-            data_bytes = json.dumps(gemini_payload).encode("utf-8")
-            req = urllib.request.Request(
-                endpoint_url,
-                data=data_bytes,
-                headers={"Content-Type": "application/json"}
-            )
+            # Invocazione endpoint REST di Google Gemini con gestione automatica di retry per 503/429/404
+            def build_request(target_model):
+                endpoint = f"https://generativelanguage.googleapis.com/v1beta/models/{target_model}:generateContent?key={api_key}"
+                data_b = json.dumps(gemini_payload).encode("utf-8")
+                return urllib.request.Request(endpoint, data=data_b, headers={"Content-Type": "application/json"})
 
+            current_model = model_name
             max_retries = 3
-            last_err = None
             for attempt in range(max_retries + 1):
                 try:
-                    with urllib.request.urlopen(req, timeout=30) as resp:
+                    req = build_request(current_model)
+                    with urllib.request.urlopen(req, timeout=50) as resp:
                         resp_data = resp.read()
                         self.send_response(resp.status)
                         self.send_header("Content-Type", "application/json; charset=utf-8")
@@ -226,12 +227,16 @@ class CAARequestHandler(http.server.SimpleHTTPRequestHandler):
                         self.wfile.write(resp_data)
                         return
                 except urllib.error.HTTPError as http_err:
-                    last_err = http_err
+                    # Se il modello non esiste (404), passa al modello predefinito
+                    if http_err.code == 404 and current_model != DEFAULT_MODEL:
+                        current_model = DEFAULT_MODEL
+                        continue
+
                     if http_err.code in (503, 429) and attempt < max_retries:
-                        # Attesa progressiva per rate limit (429) o sovraccarico (503)
-                        delay = 5.0 * (attempt + 1) if http_err.code == 429 else 2.5 * (attempt + 1)
+                        delay = 4.0 * (attempt + 1) if http_err.code == 429 else 2.0 * (attempt + 1)
                         time.sleep(delay)
                         continue
+
                     error_body = http_err.read().decode("utf-8", errors="ignore")
                     self.send_response(http_err.code)
                     self.send_header("Content-Type", "application/json; charset=utf-8")
