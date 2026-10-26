@@ -7,6 +7,7 @@ import { GeminiService } from './geminiService.js';
 import { ArasaacService } from './arasaacService.js';
 import { LessonRenderer } from './lessonRenderer.js';
 import { ProjectManager } from './projectManager.js';
+import { CustomPictogramsManager } from './customPictogramsManager.js';
 
 class CAAApp {
   constructor() {
@@ -22,6 +23,7 @@ class CAAApp {
     this.setupUIBindings();
     this.updateConfigStatusUI();
     await this.refreshProjectsCount();
+    this.refreshCustomPictosBadge();
     window.addEventListener('resize', () => {
       LessonRenderer.adjustAllTokenLabels(document.getElementById('printableArea'));
     });
@@ -144,27 +146,37 @@ class CAAApp {
       });
     }
 
-    // Gestione Tab Modale Simbolo (Catalogo ARASAAC vs Generatore IA)
+    // Gestione Tab Modale Simbolo (Catalogo ARASAAC vs I Miei Simboli vs Generatore IA)
     const tabBtnArasaac = document.getElementById('tabBtnArasaac');
+    const tabBtnCustomPictos = document.getElementById('tabBtnCustomPictos');
     const tabBtnAiGenerator = document.getElementById('tabBtnAiGenerator');
-    const tabContentArasaac = document.getElementById('tabContentArasaac');
-    const tabContentAi = document.getElementById('tabContentAi');
 
-    if (tabBtnArasaac && tabBtnAiGenerator && tabContentArasaac && tabContentAi) {
-      tabBtnArasaac.addEventListener('click', () => {
-        tabBtnArasaac.className = 'px-4 py-2 text-xs font-bold border-b-2 border-blue-600 text-blue-700 flex items-center gap-1.5 transition';
-        tabBtnAiGenerator.className = 'px-4 py-2 text-xs font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-800 flex items-center gap-1.5 transition';
-        tabContentArasaac.classList.remove('hidden');
-        tabContentAi.classList.add('hidden');
+    if (tabBtnArasaac) {
+      tabBtnArasaac.addEventListener('click', () => this.switchModalTab('arasaac'));
+    }
+    if (tabBtnCustomPictos) {
+      tabBtnCustomPictos.addEventListener('click', () => {
+        this.switchModalTab('custom');
+        this.loadCustomPictograms();
       });
+    }
+    if (tabBtnAiGenerator) {
+      tabBtnAiGenerator.addEventListener('click', () => this.switchModalTab('ai'));
+    }
 
-      tabBtnAiGenerator.addEventListener('click', () => {
-        tabBtnAiGenerator.className = 'px-4 py-2 text-xs font-bold border-b-2 border-indigo-600 text-indigo-700 flex items-center gap-1.5 transition';
-        tabBtnArasaac.className = 'px-4 py-2 text-xs font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-800 flex items-center gap-1.5 transition';
-        tabContentAi.classList.remove('hidden');
-        tabContentArasaac.classList.add('hidden');
-        document.getElementById('inputAiPictogramPrompt')?.focus();
+    // Ricerca e aggiornamento Simboli Personali
+    const inputCustomPictoSearch = document.getElementById('inputCustomPictoSearch');
+    if (inputCustomPictoSearch) {
+      inputCustomPictoSearch.addEventListener('input', () => {
+        const query = inputCustomPictoSearch.value;
+        const filtered = CustomPictogramsManager.search(query);
+        this.renderCustomPictograms(filtered);
       });
+    }
+
+    const btnRefreshCustomPictos = document.getElementById('btnRefreshCustomPictos');
+    if (btnRefreshCustomPictos) {
+      btnRefreshCustomPictos.addEventListener('click', () => this.loadCustomPictograms());
     }
 
     // Bottone Generazione Simbolo con IA
@@ -416,6 +428,127 @@ class CAAApp {
     }
   }
 
+  /**
+   * Cambia il tab attivo nel modale di selezione/creazione simbolo.
+   * @param {'arasaac'|'custom'|'ai'} tabName 
+   */
+  switchModalTab(tabName) {
+    const tabBtnArasaac = document.getElementById('tabBtnArasaac');
+    const tabBtnCustomPictos = document.getElementById('tabBtnCustomPictos');
+    const tabBtnAiGenerator = document.getElementById('tabBtnAiGenerator');
+
+    const tabContentArasaac = document.getElementById('tabContentArasaac');
+    const tabContentCustomPictos = document.getElementById('tabContentCustomPictos');
+    const tabContentAi = document.getElementById('tabContentAi');
+
+    const baseInactive = 'px-3.5 py-2 text-xs font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-800 flex items-center gap-1.5 transition whitespace-nowrap';
+
+    if (tabBtnArasaac) tabBtnArasaac.className = baseInactive;
+    if (tabBtnCustomPictos) tabBtnCustomPictos.className = baseInactive;
+    if (tabBtnAiGenerator) tabBtnAiGenerator.className = baseInactive;
+
+    tabContentArasaac?.classList.add('hidden');
+    tabContentCustomPictos?.classList.add('hidden');
+    tabContentAi?.classList.add('hidden');
+
+    if (tabName === 'arasaac') {
+      if (tabBtnArasaac) tabBtnArasaac.className = 'px-3.5 py-2 text-xs font-bold border-b-2 border-blue-600 text-blue-700 flex items-center gap-1.5 transition whitespace-nowrap';
+      tabContentArasaac?.classList.remove('hidden');
+    } else if (tabName === 'custom') {
+      if (tabBtnCustomPictos) tabBtnCustomPictos.className = 'px-3.5 py-2 text-xs font-bold border-b-2 border-amber-600 text-amber-700 flex items-center gap-1.5 transition whitespace-nowrap';
+      tabContentCustomPictos?.classList.remove('hidden');
+    } else if (tabName === 'ai') {
+      if (tabBtnAiGenerator) tabBtnAiGenerator.className = 'px-3.5 py-2 text-xs font-bold border-b-2 border-indigo-600 text-indigo-700 flex items-center gap-1.5 transition whitespace-nowrap';
+      tabContentAi?.classList.remove('hidden');
+      document.getElementById('inputAiPictogramPrompt')?.focus();
+    }
+  }
+
+  /**
+   * Aggiorna il badge numerico con il totale dei simboli personali salvati.
+   */
+  refreshCustomPictosBadge() {
+    const badge = document.getElementById('customPictosBadge');
+    if (badge) {
+      const count = CustomPictogramsManager.getAll().length;
+      badge.textContent = String(count);
+    }
+  }
+
+  /**
+   * Carica e visualizza l'archivio dei simboli personali salvati.
+   */
+  loadCustomPictograms() {
+    this.refreshCustomPictosBadge();
+    const query = document.getElementById('inputCustomPictoSearch')?.value;
+    const items = CustomPictogramsManager.search(query || '');
+    this.renderCustomPictograms(items);
+  }
+
+  /**
+   * Renderizza la griglia dei simboli personali salvati.
+   * @param {Array<Object>} items 
+   */
+  renderCustomPictograms(items) {
+    const container = document.getElementById('customPictosGrid');
+    if (!container) return;
+
+    if (!items || items.length === 0) {
+      container.innerHTML = `
+        <div class="col-span-full py-8 text-center space-y-3">
+          <div class="w-12 h-12 bg-amber-50 text-amber-600 rounded-full flex items-center justify-center mx-auto text-xl">⭐</div>
+          <p class="text-xs text-slate-500 max-w-sm mx-auto">
+            Non hai ancora simboli salvati nel tuo archivio personale.
+          </p>
+          <button type="button" 
+                  onclick="window.app.switchModalTab('ai')" 
+                  class="px-3.5 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs font-bold rounded-lg border border-indigo-200 transition inline-flex items-center gap-1.5">
+            <span>✨ Crea subito un simbolo con l'IA</span>
+          </button>
+        </div>
+      `;
+      return;
+    }
+
+    container.innerHTML = items.map(item => {
+      const safeId = this.escapeHtml(item.id);
+      const safeName = this.escapeHtml(item.name || 'SIMBOLO');
+      return `
+        <div class="border border-amber-200 hover:border-amber-500 rounded-xl p-2 flex flex-col items-center justify-between cursor-pointer transition hover:shadow-md bg-white relative group"
+             onclick="window.app.applyNewPictogram('${safeId}', '${item.imageUrl}', true)"
+             title="Clicca per assegnare questo simbolo alla parola">
+          
+          <!-- Bottone elimina dall'archivio personale -->
+          <button type="button" 
+                  class="absolute -top-1.5 -right-1.5 w-5 h-5 bg-red-500 hover:bg-red-600 text-white rounded-full text-[10px] flex items-center justify-center opacity-0 group-hover:opacity-100 transition shadow-sm z-10"
+                  onclick="event.stopPropagation(); window.app.deleteCustomPictogram('${safeId}', '${safeName}')"
+                  title="Elimina dall'archivio personale">✕</button>
+
+          <div class="w-20 h-20 flex items-center justify-center p-1 bg-white rounded">
+            <img src="${item.imageUrl}" class="max-w-full max-h-full object-contain pointer-events-none" loading="lazy" alt="${safeName}" />
+          </div>
+          <span class="text-[10px] font-bold text-slate-700 text-center truncate w-full mt-1 uppercase" title="${safeName}">
+            ${safeName}
+          </span>
+          <span class="text-[9px] text-amber-600 font-medium">Personale</span>
+        </div>
+      `;
+    }).join('');
+  }
+
+  /**
+   * Elimina un simbolo dall'archivio personale previa conferma.
+   */
+  deleteCustomPictogram(id, name) {
+    const ok = confirm(`Eliminare il simbolo "${name}" dal tuo archivio personale?`);
+    if (!ok) return;
+
+    CustomPictogramsManager.delete(id);
+    this.refreshCustomPictosBadge();
+    this.loadCustomPictograms();
+    this.showToast(`Simbolo "${name}" eliminato dall'archivio.`);
+  }
+
   openPictogramSelector(cardRef, tokenIndex) {
     this.selectedCardIndex = cardRef;
     this.selectedTokenIndex = tokenIndex;
@@ -436,7 +569,7 @@ class CAAApp {
 
     if (title) title.textContent = `Cambia simbolo per: "${token.displayWord}"`;
     if (input) input.value = token.searchTerm || token.displayWord;
-    if (inputAiPrompt) inputAiPrompt.value = token.displayWord || token.searchTerm || '';
+    if (inputAiPrompt) inputAiPrompt.value = (token.displayWord || token.searchTerm || '').toLocaleUpperCase('it-IT');
 
     // Resetta l'anteprima IA
     if (previewArea) {
@@ -445,20 +578,26 @@ class CAAApp {
       `;
     }
 
-    // Assicura che si apra sul tab ARASAAC
-    const tabBtnArasaac = document.getElementById('tabBtnArasaac');
-    const tabBtnAiGenerator = document.getElementById('tabBtnAiGenerator');
-    const tabContentArasaac = document.getElementById('tabContentArasaac');
-    const tabContentAi = document.getElementById('tabContentAi');
-    if (tabBtnArasaac && tabBtnAiGenerator && tabContentArasaac && tabContentAi) {
-      tabBtnArasaac.className = 'px-4 py-2 text-xs font-bold border-b-2 border-blue-600 text-blue-700 flex items-center gap-1.5 transition';
-      tabBtnAiGenerator.className = 'px-4 py-2 text-xs font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-800 flex items-center gap-1.5 transition';
-      tabContentArasaac.classList.remove('hidden');
-      tabContentAi.classList.add('hidden');
-    }
+    // Assicura che si apra sul tab ARASAAC e aggiorna badge
+    this.switchModalTab('arasaac');
+    this.refreshCustomPictosBadge();
 
     modal?.classList.remove('hidden');
-    this.renderPictogramResults(token.alternatives || []);
+
+    // Se esiste un simbolo personale salvato che corrisponde a questo termine, includilo in testa
+    const cleanWord = (token.displayWord || '').trim();
+    const existingCustom = CustomPictogramsManager.findExact(cleanWord);
+    let alternatives = [...(token.alternatives || [])];
+    if (existingCustom) {
+      alternatives.unshift({
+        id: existingCustom.id,
+        imageUrl: existingCustom.imageUrl,
+        isCustom: true,
+        label: existingCustom.name
+      });
+    }
+
+    this.renderPictogramResults(alternatives);
     input?.focus();
   }
 
@@ -473,12 +612,22 @@ class CAAApp {
     }
 
     try {
+      // Cerca anche tra i simboli personali corrispondenti
+      const customMatches = CustomPictogramsManager.search(term).map(cp => ({
+        id: cp.id,
+        imageUrl: cp.imageUrl,
+        isCustom: true,
+        label: cp.name
+      }));
+
       const items = await ArasaacService.searchPictograms(term);
       const mapped = items.map(r => ({
         id: r._id,
         imageUrl: ArasaacService.getPictogramImageUrl(r._id)
       }));
-      this.renderPictogramResults(mapped);
+
+      const combined = [...customMatches, ...mapped];
+      this.renderPictogramResults(combined);
     } catch (err) {
       if (resultsContainer) {
         resultsContainer.innerHTML = `<div class="col-span-full py-6 text-center text-red-500 text-sm">Errore ricerca: ${err.message}</div>`;
@@ -495,13 +644,20 @@ class CAAApp {
       return;
     }
 
-    container.innerHTML = items.map(item => `
-      <div class="border border-slate-200 hover:border-blue-500 rounded-xl p-2 flex flex-col items-center justify-center cursor-pointer transition hover:shadow-md bg-white"
-           onclick="window.app.applyNewPictogram(${item.id}, '${item.imageUrl}')">
-        <img src="${item.imageUrl}" class="w-20 h-20 object-contain pointer-events-none" loading="lazy" alt="Simbolo" />
-        <span class="text-[10px] text-slate-400 mt-1">ID: ${item.id}</span>
-      </div>
-    `).join('');
+    container.innerHTML = items.map(item => {
+      const isCustom = item.isCustom || String(item.id).startsWith('custom_') || String(item.id).startsWith('ai_');
+      const badgeHtml = isCustom
+        ? `<span class="text-[9px] px-1.5 py-0.2 rounded bg-amber-100 text-amber-800 font-bold mt-1">Personale</span>`
+        : `<span class="text-[10px] text-slate-400 mt-1">ID: ${item.id}</span>`;
+
+      return `
+        <div class="border ${isCustom ? 'border-amber-300 bg-amber-50/40 hover:border-amber-500' : 'border-slate-200 hover:border-blue-500 bg-white'} rounded-xl p-2 flex flex-col items-center justify-center cursor-pointer transition hover:shadow-md"
+             onclick="window.app.applyNewPictogram('${item.id}', '${item.imageUrl}', ${isCustom})">
+          <img src="${item.imageUrl}" class="w-20 h-20 object-contain pointer-events-none" loading="lazy" alt="Simbolo" />
+          ${badgeHtml}
+        </div>
+      `;
+    }).join('');
   }
 
   /**
@@ -534,26 +690,85 @@ class CAAApp {
       }
 
       const svgDataUri = await GeminiService.generateAiPictogramSvg(promptText, category);
+      const defaultName = promptText.toLocaleUpperCase('it-IT');
       
       if (previewArea) {
         previewArea.innerHTML = `
-          <div class="flex flex-col sm:flex-row items-center gap-4 bg-white p-3 rounded-xl border border-indigo-100 shadow-sm w-full max-w-md mx-auto">
-            <div class="w-24 h-24 border border-slate-200 rounded-xl p-1 bg-white flex items-center justify-center shrink-0 shadow-inner">
+          <div class="flex flex-col sm:flex-row items-center gap-4 bg-white p-4 rounded-2xl border border-indigo-100 shadow-sm w-full max-w-xl mx-auto">
+            <div class="w-24 h-24 border-2 border-amber-300 rounded-2xl p-1 bg-white flex items-center justify-center shrink-0 shadow-inner">
               <img src="${svgDataUri}" class="max-w-full max-h-full object-contain pointer-events-none" alt="Simbolo generato con IA" />
             </div>
-            <div class="flex-1 text-left space-y-2">
-              <div class="text-xs font-bold text-slate-800">Simbolo creato con successo!</div>
-              <p class="text-[11px] text-slate-500 leading-tight">"${promptText}"</p>
-              <button type="button" 
-                      id="btnApplyAiPictogram"
-                      class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg shadow-sm transition flex items-center gap-1.5">
-                <span>✅ Usa Questo Simbolo</span>
-              </button>
+
+            <div class="flex-1 text-left space-y-2.5 w-full">
+              <div>
+                <label for="inputCustomPictoSaveName" class="block text-[11px] font-bold text-slate-700 mb-1">
+                  Nome / Parola chiave del simbolo:
+                </label>
+                <input type="text" 
+                       id="inputCustomPictoSaveName" 
+                       class="w-full px-3 py-1.5 border border-slate-300 rounded-lg text-xs font-bold text-slate-800 uppercase focus:ring-2 focus:ring-amber-500" 
+                       value="${this.escapeHtml(defaultName)}" 
+                       placeholder="Es: REGINA CATTIVA" />
+              </div>
+
+              <!-- Gruppo Azioni: Salva e Usa, Salva Solo, Usa Subito -->
+              <div class="flex flex-wrap items-center gap-2 pt-1">
+                <button type="button" 
+                        id="btnSaveAndUseAiPictogram"
+                        class="px-3.5 py-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-lg shadow-sm transition flex items-center gap-1.5"
+                        title="Salva nella tua collezione personale e assegna subito alla parola">
+                  <span>⭐ Salva e Usa</span>
+                </button>
+
+                <button type="button" 
+                        id="btnSaveOnlyAiPictogram"
+                        class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg border border-slate-200 transition"
+                        title="Salva nella tua collezione per usarlo in futuro">
+                  <span>💾 Salva nell'Archivio</span>
+                </button>
+
+                <button type="button" 
+                        id="btnUseOnlyAiPictogram"
+                        class="px-3 py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-semibold rounded-lg border border-emerald-200 transition"
+                        title="Usa solo ora senza salvarlo nell'archivio">
+                  <span>✅ Usa Subito</span>
+                </button>
+              </div>
             </div>
           </div>
         `;
 
-        document.getElementById('btnApplyAiPictogram')?.addEventListener('click', () => {
+        // Gestione azione "Salva e Usa"
+        document.getElementById('btnSaveAndUseAiPictogram')?.addEventListener('click', () => {
+          const nameInput = document.getElementById('inputCustomPictoSaveName');
+          const finalName = (nameInput?.value || defaultName).trim().toLocaleUpperCase('it-IT');
+          const saved = CustomPictogramsManager.save({
+            name: finalName,
+            imageUrl: svgDataUri,
+            prompt: promptText
+          });
+          this.refreshCustomPictosBadge();
+          this.applyNewPictogram(saved.id, svgDataUri, true);
+          this.showToast(`Simbolo "${finalName}" salvato nell'archivio personale e applicato!`);
+        });
+
+        // Gestione azione "Salva Solo nell'Archivio"
+        document.getElementById('btnSaveOnlyAiPictogram')?.addEventListener('click', () => {
+          const nameInput = document.getElementById('inputCustomPictoSaveName');
+          const finalName = (nameInput?.value || defaultName).trim().toLocaleUpperCase('it-IT');
+          CustomPictogramsManager.save({
+            name: finalName,
+            imageUrl: svgDataUri,
+            prompt: promptText
+          });
+          this.refreshCustomPictosBadge();
+          this.showToast(`Simbolo "${finalName}" aggiunto al tuo archivio personale!`);
+          this.switchModalTab('custom');
+          this.loadCustomPictograms();
+        });
+
+        // Gestione azione "Usa Subito" (senza salvare in archivio)
+        document.getElementById('btnUseOnlyAiPictogram')?.addEventListener('click', () => {
           this.applyNewPictogram(`ai_${Date.now()}`, svgDataUri, true);
         });
       }

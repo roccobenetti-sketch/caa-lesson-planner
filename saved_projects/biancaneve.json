@@ -7,11 +7,11 @@
   "layoutType": "routine",
   "detailLevel": "detailed",
   "createdAt": "2026-10-26T15:00:00Z",
-  "updatedAt": "2026-10-26T17:16:02Z",
+  "updatedAt": "2026-10-26T20:00:53Z",
   "cards": [
     {
       "sectionTitle": "I PERSONAGGI PRINCIPALI ",
-      "stepLabel": "BIANCANEVE LA STREGA I 7 NANI IL PRINCIPE LO SPECCHIO",
+      "stepLabel": "BIANCANEVE Rgina I 7 NANI IL PRINCIPE LO SPECCHIO",
       "pedagogicalExplanation": "Passaggio personalizzato aggiunto dall'insegnante",
       "tokens": [
         {
@@ -29,11 +29,11 @@
           "source": "arasaac"
         },
         {
-          "displayWord": "STREGA",
+          "displayWord": "REGINA CATTIVA",
           "searchTerm": "strega",
           "category": "person",
-          "pictogramId": 5404,
-          "imageUrl": "https://static.arasaac.org/pictograms/5404/5404_500.png",
+          "pictogramId": "ai_1793044774899",
+          "imageUrl": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCI+CiAgPHJlY3Qgd2lkdGg9Ijk2IiBoZWlnaHQ9Ijk2IiB4PSIyIiB5PSIyIiByeD0iMTQiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iI2UyZThmMCIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPCEtLSBDb3JvbmEgLS0+CiAgPHBhdGggZD0iTTM1IDMwIEw0MCAyMCBMNDUgMzAgTDUwIDIwIEw1NSAzMCBMNjAgMjAgTDY1IDMwIiBmaWxsPSIjZmJiZjI0IiBzdHJva2U9IiMxZTI5M2IiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgPGNpcmNsZSBjeD0iNDAiIGN5PSIyMCIgcj0iMiIgZmlsbD0iI2ZiYmYyNCIgc3Ryb2tlPSIjMWUyOTNiIiBzdHJva2Utd2lkdGg9IjIiLz4KICA8Y2lyY2xlIGN4PSI1MCIgY3k9IjIwIiByPSIyIiBmaWxsPSIjZmJiZjI0IiBzdHJva2U9IiMxZTI5M2IiIHN0cm9rZS13aWR0aD0iMiIvPgogIDxjaXJjbGUgY3g9IjYwIiBjeT0iMjAiIHI9IjIiIGZpbGw9IiNmYmJmMjQiIHN0cm9rZT0iIzFlMjkzYiIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPCEtLSBUZXN0YSAtLT4KICA8Y2lyY2xlIGN4PSI1MCIgY3k9IjM4IiByPSI4IiBmaWxsPSIjZmZkYmFjIiBzdHJva2U9IiMxZTI5M2IiIHN0cm9rZS13aWR0aD0iMyIvPgogIDwhLS0gVmVzdGl0byBzY3VybyAtLT4KICA8cGF0aCBkPSJNNDIgNDYgTDM1IDkwIEw2NSA5MCBMNTggNDYgWiIgZmlsbD0iIzQ3NTU2OSIgc3Ryb2tlPSIjMWUyOTNiIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KICA8IS0tIERldHRhZ2xpIHZpc28gLS0+CiAgPGNpcmNsZSBjeD0iNDciIGN5PSIzNiIgcj0iMSIgZmlsbD0iIzFlMjkzYiIvPgogIDxjaXJjbGUgY3g9IjUzIiBjeT0iMzYiIHI9IjEiIGZpbGw9IiMxZTI5M2IiLz4KICA8cGF0aCBkPSJNNDcgNDEgUTUwIDQzIDUzIDQxIiBmaWxsPSJub25lIiBzdHJva2U9IiMxZTI5M2IiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+Cjwvc3ZnPg==",
           "alternatives": [
             {
               "id": 5404,
@@ -52,7 +52,8 @@
               "imageUrl": "https://static.arasaac.org/pictograms/36382/36382_500.png"
             }
           ],
-          "source": "arasaac"
+          "source": "arasaac",
+          "customImage": true
         },
         {
           "displayWord": "7",
@@ -132,8 +133,8 @@
           "displayWord": "SPECCHIO",
           "searchTerm": "specchio",
           "category": "noun",
-          "pictogramId": 8573,
-          "imageUrl": "https://static.arasaac.org/pictograms/8573/8573_500.png",
+          "pictogramId": 2385,
+          "imageUrl": "https://static.arasaac.org/pictograms/2385/2385_500.png",
           "alternatives": [
             {
               "id": 8573,
@@ -156,7 +157,8 @@
               "imageUrl": "https://static.arasaac.org/pictograms/35221/35221_500.png"
             }
           ],
-          "source": "arasaac"
+          "source": "arasaac",
+          "customImage": false
         }
       ]
     },
@@ -310,7 +312,7 @@
               "imageUrl": "https://static.arasaac.org/pictograms/34171/34171_500.png"
             }
           ],
-          "source": "arasaac"
+          "customImage": false
         },
         {
           "displayWord": "CATTIVA",
@@ -352,7 +354,7 @@
               "imageUrl": "https://static.arasaac.org/pictograms/31957/31957_500.png"
             }
           ],
-          "source": "arasaac"
+          "customImage": false
         },
         {
           "displayWord": "PARLA",
@@ -394,56 +396,29 @@
               "imageUrl": "https://static.arasaac.org/pictograms/6518/6518_500.png"
             }
           ],
-          "source": "arasaac"
+          "customImage": false
         },
         {
-          "displayWord": "CON",
-          "searchTerm": "con",
+          "displayWord": "allo",
+          "searchTerm": "a",
           "category": "misc",
-          "pictogramId": 2775,
-          "imageUrl": "https://static.arasaac.org/pictograms/2775/2775_500.png",
+          "pictogramId": "ai_1793044627227",
+          "imageUrl": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCI+CiAgPHJlY3Qgd2lkdGg9Ijk2IiBoZWlnaHQ9Ijk2IiB4PSIyIiB5PSIyIiByeD0iMTQiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iI2UyZThmMCIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPCEtLSBGaWd1cmEgMSAtLT4KICA8Y2lyY2xlIGN4PSIzNSIgY3k9IjQwIiByPSIxMCIgZmlsbD0iI2ZjZDM0ZCIgc3Ryb2tlPSIjMWUyOTNiIiBzdHJva2Utd2lkdGg9IjMiLz4KICA8cGF0aCBkPSJNMjUgNTUgUTM1IDUwIDQ1IDU1IEw0NSA4MCBMMjUgODAgWiIgZmlsbD0iIzNiODJmNiIgc3Ryb2tlPSIjMWUyOTNiIiBzdHJva2Utd2lkdGg9IjMiLz4KICA8IS0tIEZpZ3VyYSAyIC0tPgogIDxjaXJjbGUgY3g9IjY1IiBjeT0iNDAiIHI9IjEwIiBmaWxsPSIjZmNkMzRkIiBzdHJva2U9IiMxZTI5M2IiIHN0cm9rZS13aWR0aD0iMyIvPgogIDxwYXRoIGQ9Ik01NSA1NSBRNjUgNTAgNzUgNTUgTDc1IDgwIEw1NSA4MCBaIiBmaWxsPSIjZWY0NDQ0IiBzdHJva2U9IiMxZTI5M2IiIHN0cm9rZS13aWR0aD0iMyIvPgogIDwhLS0gTGluZWUgZGkgdW5pb25lIC0tPgogIDxwYXRoIGQ9Ik00NSA2NSBMNTUgNjUiIHN0cm9rZT0iIzFlMjkzYiIgc3Ryb2tlLXdpZHRoPSI0IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1kYXNoYXJyYXk9IjIgNCIvPgogIDxwYXRoIGQ9Ik00NSA3NSBMNTUgNzUiIHN0cm9rZT0iIzFlMjkzYiIgc3Ryb2tlLXdpZHRoPSI0IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1kYXNoYXJyYXk9IjIgNCIvPgo8L3N2Zz4=",
           "alternatives": [
             {
-              "id": 7064,
-              "imageUrl": "https://static.arasaac.org/pictograms/7064/7064_500.png"
-            },
-            {
-              "id": 26989,
-              "imageUrl": "https://static.arasaac.org/pictograms/26989/26989_500.png"
-            },
-            {
-              "id": 27963,
-              "imageUrl": "https://static.arasaac.org/pictograms/27963/27963_500.png"
-            },
-            {
-              "id": 38383,
-              "imageUrl": "https://static.arasaac.org/pictograms/38383/38383_500.png"
-            },
-            {
-              "id": 32720,
-              "imageUrl": "https://static.arasaac.org/pictograms/32720/32720_500.png"
-            },
-            {
-              "id": 30188,
-              "imageUrl": "https://static.arasaac.org/pictograms/30188/30188_500.png"
-            },
-            {
-              "id": 30190,
-              "imageUrl": "https://static.arasaac.org/pictograms/30190/30190_500.png"
-            },
-            {
-              "id": 30186,
-              "imageUrl": "https://static.arasaac.org/pictograms/30186/30186_500.png"
+              "id": 7034,
+              "imageUrl": "https://static.arasaac.org/pictograms/7034/7034_500.png"
             }
           ],
-          "source": "arasaac"
+          "source": "arasaac",
+          "customImage": true
         },
         {
           "displayWord": "SPECCHIO",
           "searchTerm": "specchio",
           "category": "noun",
-          "pictogramId": 8573,
-          "imageUrl": "https://static.arasaac.org/pictograms/8573/8573_500.png",
+          "pictogramId": 2385,
+          "imageUrl": "https://static.arasaac.org/pictograms/2385/2385_500.png",
           "alternatives": [
             {
               "id": 8573,
@@ -466,7 +441,7 @@
               "imageUrl": "https://static.arasaac.org/pictograms/35221/35221_500.png"
             }
           ],
-          "source": "arasaac"
+          "customImage": false
         },
         {
           "displayWord": "MAGICO",
@@ -480,7 +455,7 @@
               "imageUrl": "https://static.arasaac.org/pictograms/5999/5999_500.png"
             }
           ],
-          "source": "arasaac"
+          "customImage": false
         }
       ]
     },
@@ -493,8 +468,8 @@
           "displayWord": "SPECCHIO",
           "searchTerm": "specchio",
           "category": "noun",
-          "pictogramId": 8573,
-          "imageUrl": "https://static.arasaac.org/pictograms/8573/8573_500.png",
+          "pictogramId": 2385,
+          "imageUrl": "https://static.arasaac.org/pictograms/2385/2385_500.png",
           "alternatives": [
             {
               "id": 8573,
@@ -517,7 +492,7 @@
               "imageUrl": "https://static.arasaac.org/pictograms/35221/35221_500.png"
             }
           ],
-          "source": "arasaac"
+          "customImage": false
         },
         {
           "displayWord": "DICE",
@@ -559,7 +534,7 @@
               "imageUrl": "https://static.arasaac.org/pictograms/34521/34521_500.png"
             }
           ],
-          "source": "arasaac"
+          "customImage": false
         },
         {
           "displayWord": "BIANCANEVE",
@@ -573,14 +548,56 @@
               "imageUrl": "https://static.arasaac.org/pictograms/21447/21447_500.png"
             }
           ],
+          "customImage": false
+        },
+        {
+          "displayWord": "+",
+          "searchTerm": "più",
+          "category": "misc",
+          "pictogramId": 3220,
+          "imageUrl": "https://static.arasaac.org/pictograms/3220/3220_500.png",
+          "alternatives": [
+            {
+              "id": 3220,
+              "imageUrl": "https://static.arasaac.org/pictograms/3220/3220_500.png"
+            },
+            {
+              "id": 5508,
+              "imageUrl": "https://static.arasaac.org/pictograms/5508/5508_500.png"
+            },
+            {
+              "id": 26913,
+              "imageUrl": "https://static.arasaac.org/pictograms/26913/26913_500.png"
+            },
+            {
+              "id": 16121,
+              "imageUrl": "https://static.arasaac.org/pictograms/16121/16121_500.png"
+            },
+            {
+              "id": 4557,
+              "imageUrl": "https://static.arasaac.org/pictograms/4557/4557_500.png"
+            },
+            {
+              "id": 4716,
+              "imageUrl": "https://static.arasaac.org/pictograms/4716/4716_500.png"
+            },
+            {
+              "id": 10193,
+              "imageUrl": "https://static.arasaac.org/pictograms/10193/10193_500.png"
+            },
+            {
+              "id": 32749,
+              "imageUrl": "https://static.arasaac.org/pictograms/32749/32749_500.png"
+            }
+          ],
           "source": "arasaac"
         },
         {
           "displayWord": "BELLA",
           "searchTerm": "bello",
           "category": "adjective",
-          "pictogramId": 26114,
-          "imageUrl": "https://static.arasaac.org/pictograms/26114/26114_500.png",
+          "pictogramId": 4659,
+          "imageUrl": "https://static.arasaac.org/pictograms/4659/4659_500.png",
           "alternatives": [
             {
               "id": 26114,
@@ -599,7 +616,7 @@
               "imageUrl": "https://static.arasaac.org/pictograms/31851/31851_500.png"
             }
           ],
-          "source": "arasaac"
+          "customImage": false
         }
       ]
     },
@@ -837,8 +854,8 @@
           "displayWord": "TROVA",
           "searchTerm": "trovare",
           "category": "verb",
-          "pictogramId": 24773,
-          "imageUrl": "https://static.arasaac.org/pictograms/24773/24773_500.png",
+          "pictogramId": 6564,
+          "imageUrl": "https://static.arasaac.org/pictograms/6564/6564_500.png",
           "alternatives": [
             {
               "id": 24773,
@@ -869,7 +886,8 @@
               "imageUrl": "https://static.arasaac.org/pictograms/5990/5990_500.png"
             }
           ],
-          "source": "arasaac"
+          "source": "arasaac",
+          "customImage": false
         },
         {
           "displayWord": "CASA",
@@ -1078,8 +1096,8 @@
           "displayWord": "lavoro",
           "searchTerm": "lavoro",
           "category": "noun",
-          "pictogramId": 6588,
-          "imageUrl": "https://static.arasaac.org/pictograms/6588/6588_500.png",
+          "pictogramId": 8631,
+          "imageUrl": "https://static.arasaac.org/pictograms/8631/8631_500.png",
           "alternatives": [
             {
               "id": 16087,
@@ -1114,7 +1132,8 @@
               "imageUrl": "https://static.arasaac.org/pictograms/16178/16178_500.png"
             }
           ],
-          "source": "arasaac"
+          "source": "arasaac",
+          "customImage": false
         },
         {
           "displayWord": "nella",
@@ -1229,26 +1248,28 @@
           "displayWord": "travesita",
           "searchTerm": "travestito",
           "category": "adjective",
-          "pictogramId": "ai-generated",
-          "imageUrl": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCI+CiAgICAgIDxyZWN0IHdpZHRoPSI5NiIgaGVpZ2h0PSI5NiIgeD0iMiIgeT0iMiIgcng9IjE0IiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiNmMWY1ZjkiIHN0cm9rZS13aWR0aD0iMiIvPgogICAgICAKICAgICAgICA8cmVjdCB4PSIyNSIgeT0iMjUiIHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCIgcng9IjEyIiBmaWxsPSIjZWZmNmZmIiBzdHJva2U9IiMzYjgyZjYiIHN0cm9rZS13aWR0aD0iMy41Ii8+CiAgICAgICAgPGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iMTIiIGZpbGw9IiNiZmRiZmUiIHN0cm9rZT0iIzFkNGVkOCIgc3Ryb2tlLXdpZHRoPSIzIi8+CiAgICAgIAogICAgPC9zdmc+",
+          "pictogramId": "ai_1793043471095",
+          "imageUrl": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCI+CiAgPHJlY3Qgd2lkdGg9Ijk2IiBoZWlnaHQ9Ijk2IiB4PSIyIiB5PSIyIiByeD0iMTQiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iI2UyZThmMCIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPGcgc3Ryb2tlPSIjMWUyOTNiIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZmlsbD0ibm9uZSI+CiAgICA8IS0tIFRlc3RhIC0tPgogICAgPGNpcmNsZSBjeD0iNTAiIGN5PSIzNSIgcj0iMTIiIGZpbGw9IiNmZmRiYWMiLz4KICAgIDwhLS0gTWFzY2hlcmEgLS0+CiAgICA8cGF0aCBkPSJNNDAgMzUgUTUwIDMwIDYwIDM1IFE1MCA0MiA0MCAzNSBaIiBmaWxsPSIjZmFjYzE1IiBzdHJva2U9IiMxZTI5M2IiLz4KICAgIDxjaXJjbGUgY3g9IjQ0IiBjeT0iMzUiIHI9IjIiIGZpbGw9IiMxZTI5M2IiLz4KICAgIDxjaXJjbGUgY3g9IjU2IiBjeT0iMzUiIHI9IjIiIGZpbGw9IiMxZTI5M2IiLz4KICAgIDwhLS0gQ29ycG8gZSBjb3N0dW1lIC0tPgogICAgPHBhdGggZD0iTTM1IDUwIFE1MCA0NSA2NSA1MCBMNzAgODUgTDMwIDg1IFoiIGZpbGw9IiNlZjQ0NDQiLz4KICAgIDwhLS0gRGV0dGFnbGkgY29zdHVtZSAoc3RlbGxlL2RlY29yaSkgLS0+CiAgICA8cGF0aCBkPSJNNTAgNjAgTDUyIDY2IEw1OCA2NiBMNTMgNzAgTDU1IDc2IEw1MCA3MiBMNDUgNzYgTDQ3IDcwIEw0MiA2NiBMNDggNjYgWiIgZmlsbD0iI2ZhY2MxNSIvPgogICAgPCEtLSBCcmFjY2lhIC0tPgogICAgPHBhdGggZD0iTTM1IDU1IEwyMCA3MCIgc3Ryb2tlLXdpZHRoPSI0Ii8+CiAgICA8cGF0aCBkPSJNNjUgNTUgTDgwIDcwIiBzdHJva2Utd2lkdGg9IjQiLz4KICA8L2c+Cjwvc3ZnPg==",
           "alternatives": [],
-          "source": "ai-generated"
+          "source": "ai-generated",
+          "customImage": true
         },
         {
           "displayWord": "vecchietta",
           "searchTerm": "vecchietta",
           "category": "person",
-          "pictogramId": "ai-generated",
-          "imageUrl": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCI+CiAgPCEtLSBDb3JwbyBlIHZlc3RpdG8gLS0+CiAgPHBhdGggZD0iTTMwIDk1IEw3MCA5NSBMNjUgNjAgTDM1IDYwIFoiIGZpbGw9IiNmOGZhZmMiIHN0cm9rZT0iIzFlMjkzYiIgc3Ryb2tlLXdpZHRoPSIzLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgogIAogIDwhLS0gVGVzdGEgLS0+CiAgPGNpcmNsZSBjeD0iNTAiIGN5PSIzNSIgcj0iMTUiIGZpbGw9IiNmZWYzYzciIHN0cm9rZT0iIzFlMjkzYiIgc3Ryb2tlLXdpZHRoPSIzLjUiLz4KICAKICA8IS0tIENhcGVsbGkgKGNoaWdub24pIC0tPgogIDxjaXJjbGUgY3g9IjUwIiBjeT0iMjAiIHI9IjYiIGZpbGw9IiNlMmU4ZjAiIHN0cm9rZT0iIzFlMjkzYiIgc3Ryb2tlLXdpZHRoPSIzLjUiLz4KICAKICA8IS0tIEJhc3RvbmUgLS0+CiAgPHBhdGggZD0iTTc1IDk1IEw3NSA1MCBRNzUgNDAgODUgNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzFlMjkzYiIgc3Ryb2tlLXdpZHRoPSIzLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIAogIDwhLS0gRGV0dGFnbGkgdmlzbyAob2NjaGlhbGkgZSBydWdoZSkgLS0+CiAgPHBhdGggZD0iTTQyIDMyIEw0OCAzMiBNNTIgMzIgTDU4IDMyIE00NSA0MiBRNTAgNDUgNTUgNDIiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzFlMjkzYiIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICAKICA8IS0tIEJyYWNjaWEgLS0+CiAgPHBhdGggZD0iTTM1IDY1IEwyMCA3NSBNNjUgNjUgTDc1IDU1IiBmaWxsPSJub25lIiBzdHJva2U9IiMxZTI5M2IiIHN0cm9rZS13aWR0aD0iMy41IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPC9zdmc+",
+          "pictogramId": "ai_1793043507183",
+          "imageUrl": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCI+CiAgPHJlY3Qgd2lkdGg9Ijk2IiBoZWlnaHQ9Ijk2IiB4PSIyIiB5PSIyIiByeD0iMTQiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iI2UyZThmMCIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPCEtLSBUZXN0YSBlIGNhcGVsbGkgLS0+CiAgPGNpcmNsZSBjeD0iNTAiIGN5PSIzNSIgcj0iMTgiIGZpbGw9IiNmZmRiYWMiIHN0cm9rZT0iIzFlMjkzYiIgc3Ryb2tlLXdpZHRoPSIzIi8+CiAgPHBhdGggZD0iTTM1IDM1IFEzNSAxNSA1MCAxNSBRNjUgMTUgNjUgMzUiIGZpbGw9IiNmOGZhZmMiIHN0cm9rZT0iIzFlMjkzYiIgc3Ryb2tlLXdpZHRoPSIzIi8+CiAgPCEtLSBPY2NoaWFsaSAtLT4KICA8Y2lyY2xlIGN4PSI0MyIgY3k9IjM1IiByPSI0IiBmaWxsPSJub25lIiBzdHJva2U9IiMxZTI5M2IiIHN0cm9rZS13aWR0aD0iMiIvPgogIDxjaXJjbGUgY3g9IjU3IiBjeT0iMzUiIHI9IjQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzFlMjkzYiIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPGxpbmUgeDE9IjQ3IiB5MT0iMzUiIHgyPSI1MyIgeTI9IjM1IiBzdHJva2U9IiMxZTI5M2IiIHN0cm9rZS13aWR0aD0iMiIvPgogIDwhLS0gUnVnaGUgLS0+CiAgPHBhdGggZD0iTTQwIDQ1IFE1MCA0MiA2MCA0NSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMWUyOTNiIiBzdHJva2Utd2lkdGg9IjEuNSIvPgogIDwhLS0gQ29ycG8vVmVzdGl0byAtLT4KICA8cGF0aCBkPSJNMzAgOTAgUTUwIDYwIDcwIDkwIiBmaWxsPSIjYTg1NWY3IiBzdHJva2U9IiMxZTI5M2IiIHN0cm9rZS13aWR0aD0iMyIvPgogIDwhLS0gQmFzdG9uZSAtLT4KICA8cGF0aCBkPSJNNzUgOTAgTDc1IDUwIFE3NSA0MCA4NSA0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNzgzNTBmIiBzdHJva2Utd2lkdGg9IjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4=",
           "alternatives": [],
-          "source": "ai-generated"
+          "source": "ai-generated",
+          "customImage": true
         },
         {
           "displayWord": "DA",
           "searchTerm": "dare",
           "category": "verb",
-          "pictogramId": 28431,
-          "imageUrl": "https://static.arasaac.org/pictograms/28431/28431_500.png",
+          "pictogramId": 17040,
+          "imageUrl": "https://static.arasaac.org/pictograms/17040/17040_500.png",
           "alternatives": [
             {
               "id": 28431,
@@ -1283,7 +1304,8 @@
               "imageUrl": "https://static.arasaac.org/pictograms/34489/34489_500.png"
             }
           ],
-          "source": "arasaac"
+          "source": "arasaac",
+          "customImage": false
         },
         {
           "displayWord": "MELA",
@@ -1323,10 +1345,11 @@
           "displayWord": "avvVELENata",
           "searchTerm": "avvelenato",
           "category": "adjective",
-          "pictogramId": "ai-generated",
-          "imageUrl": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCI+CiAgPCEtLSBTaW1ib2xvIGRlbCB0ZXNjaGlvIChwZXJpY29sby92ZWxlbm8pIC0tPgogIDxwYXRoIGQ9Ik0zMCA0MCBRMzAgMjAgNTAgMjAgUTcwIDIwIDcwIDQwIFE3MCA2MCA1MCA2NSBRMzAgNjAgMzAgNDAgWiIgZmlsbD0iI2Y4ZmFmYyIgc3Ryb2tlPSIjMWUyOTNiIiBzdHJva2Utd2lkdGg9IjMuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgPGNpcmNsZSBjeD0iNDAiIGN5PSIzNSIgcj0iNSIgZmlsbD0iIzFlMjkzYiIvPgogIDxjaXJjbGUgY3g9IjYwIiBjeT0iMzUiIHI9IjUiIGZpbGw9IiMxZTI5M2IiLz4KICA8cGF0aCBkPSJNNDUgNTAgTDU1IDUwIE01MCA0NSBMNTAgNTUiIHN0cm9rZT0iIzFlMjkzYiIgc3Ryb2tlLXdpZHRoPSIzLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIAogIDwhLS0gU2ltYm9sbyBkZWxsZSBvc3NhIGluY3JvY2lhdGUgLS0+CiAgPHBhdGggZD0iTTI1IDI1IEw0MCA0MCBNNjAgNjAgTDc1IDc1IE03NSAyNSBMNjAgNDAgTTQwIDYwIEwyNSA3NSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMWUyOTNiIiBzdHJva2Utd2lkdGg9IjMuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgCiAgPCEtLSBTZWduYWxlIGRpIGRpdmlldG8vYXR0ZW56aW9uZSAoY2VyY2hpbyByb3NzbykgLS0+CiAgPGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNDUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2VmNDQ0NCIgc3Ryb2tlLXdpZHRoPSI2Ii8+CiAgPGxpbmUgeDE9IjIwIiB5MT0iODAiIHgyPSI4MCIgeTI9IjIwIiBzdHJva2U9IiNlZjQ0NDQiIHN0cm9rZS13aWR0aD0iNiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+Cjwvc3ZnPg==",
+          "pictogramId": "ai_1793043630822",
+          "imageUrl": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCI+CiAgPHJlY3Qgd2lkdGg9Ijk2IiBoZWlnaHQ9Ijk2IiB4PSIyIiB5PSIyIiByeD0iMTQiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iI2UyZThmMCIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPCEtLSBCaWNjaGllcmUgZCdhY3F1YSAtLT4KICA8cGF0aCBkPSJNMzAgMzUgTDM1IDc1IEw2NSA3NSBMNzAgMzUgWiIgZmlsbD0iIzkzYzVmZCIgc3Ryb2tlPSIjMWUyOTNiIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgogIDxwYXRoIGQ9Ik0zMCAzNSBMNzAgMzUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzFlMjkzYiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICA8IS0tIFNlZ25pIGRpIGNvbnRhbWluYXppb25lIChtYWNjaGllL2JhdHRlcmkpIC0tPgogIDxjaXJjbGUgY3g9IjQ1IiBjeT0iNTAiIHI9IjQiIGZpbGw9IiNlZjQ0NDQiIHN0cm9rZT0iIzFlMjkzYiIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPGNpcmNsZSBjeD0iNTUiIGN5PSI2NSIgcj0iNSIgZmlsbD0iI2VmNDQ0NCIgc3Ryb2tlPSIjMWUyOTNiIiBzdHJva2Utd2lkdGg9IjIiLz4KICA8Y2lyY2xlIGN4PSI0MCIgY3k9IjYwIiByPSIzIiBmaWxsPSIjZWY0NDQ0IiBzdHJva2U9IiMxZTI5M2IiIHN0cm9rZS13aWR0aD0iMiIvPgogIDwhLS0gU2ltYm9sbyBkaSBkaXZpZXRvL3Blcmljb2xvIHNvdnJhcHBvc3RvIC0tPgogIDxjaXJjbGUgY3g9IjUwIiBjeT0iNTAiIHI9IjM1IiBmaWxsPSJub25lIiBzdHJva2U9IiNlZjQ0NDQiIHN0cm9rZS13aWR0aD0iNiIvPgogIDxsaW5lIHgxPSIyNSIgeTE9Ijc1IiB4Mj0iNzUiIHkyPSIyNSIgc3Ryb2tlPSIjZWY0NDQ0IiBzdHJva2Utd2lkdGg9IjYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4=",
           "alternatives": [],
-          "source": "ai-generated"
+          "source": "ai-generated",
+          "customImage": true
         },
         {
           "displayWord": "biacaneve",
@@ -1620,8 +1643,8 @@
           "displayWord": "trovano",
           "searchTerm": "trovare",
           "category": "verb",
-          "pictogramId": 24773,
-          "imageUrl": "https://static.arasaac.org/pictograms/24773/24773_500.png",
+          "pictogramId": 6564,
+          "imageUrl": "https://static.arasaac.org/pictograms/6564/6564_500.png",
           "alternatives": [
             {
               "id": 24773,
@@ -1652,7 +1675,8 @@
               "imageUrl": "https://static.arasaac.org/pictograms/5990/5990_500.png"
             }
           ],
-          "source": "arasaac"
+          "source": "arasaac",
+          "customImage": false
         },
         {
           "displayWord": "biancaneve",
@@ -1863,8 +1887,8 @@
           "displayWord": "trova",
           "searchTerm": "trovare",
           "category": "verb",
-          "pictogramId": 24773,
-          "imageUrl": "https://static.arasaac.org/pictograms/24773/24773_500.png",
+          "pictogramId": 6564,
+          "imageUrl": "https://static.arasaac.org/pictograms/6564/6564_500.png",
           "alternatives": [
             {
               "id": 24773,
@@ -1895,7 +1919,8 @@
               "imageUrl": "https://static.arasaac.org/pictograms/5990/5990_500.png"
             }
           ],
-          "source": "arasaac"
+          "source": "arasaac",
+          "customImage": false
         },
         {
           "displayWord": "biancaneve",
@@ -1982,8 +2007,8 @@
           "displayWord": "bacia",
           "searchTerm": "baciare",
           "category": "verb",
-          "pictogramId": 6062,
-          "imageUrl": "https://static.arasaac.org/pictograms/6062/6062_500.png",
+          "pictogramId": 4576,
+          "imageUrl": "https://static.arasaac.org/pictograms/4576/4576_500.png",
           "alternatives": [
             {
               "id": 6062,
@@ -2018,7 +2043,8 @@
               "imageUrl": "https://static.arasaac.org/pictograms/32886/32886_500.png"
             }
           ],
-          "source": "arasaac"
+          "source": "arasaac",
+          "customImage": false
         },
         {
           "displayWord": "BIANCANEVE",
@@ -2068,8 +2094,8 @@
           "displayWord": "TUTTI",
           "searchTerm": "tutti",
           "category": "misc",
-          "pictogramId": 5596,
-          "imageUrl": "https://static.arasaac.org/pictograms/5596/5596_500.png",
+          "pictogramId": 36081,
+          "imageUrl": "https://static.arasaac.org/pictograms/36081/36081_500.png",
           "alternatives": [
             {
               "id": 5596,
@@ -2092,7 +2118,8 @@
               "imageUrl": "https://static.arasaac.org/pictograms/36398/36398_500.png"
             }
           ],
-          "source": "arasaac"
+          "source": "arasaac",
+          "customImage": false
         },
         {
           "displayWord": "FELICI",
@@ -2175,8 +2202,8 @@
         "displayWord": "battono",
         "searchTerm": "battere",
         "category": "verb",
-        "pictogramId": 8502,
-        "imageUrl": "https://static.arasaac.org/pictograms/8502/8502_500.png",
+        "pictogramId": "ai_1793043909962",
+        "imageUrl": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCI+CiAgPHJlY3Qgd2lkdGg9Ijk2IiBoZWlnaHQ9Ijk2IiB4PSIyIiB5PSIyIiByeD0iMTQiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iI2UyZThmMCIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPCEtLSBGaWd1cmEgY2hlIHZpbmNlIChicmFjY2lvIGFsemF0bykgLS0+CiAgPGNpcmNsZSBjeD0iNTAiIGN5PSIyNSIgcj0iOCIgZmlsbD0iI2ZkZTA0NyIgc3Ryb2tlPSIjMWUyOTNiIiBzdHJva2Utd2lkdGg9IjMiLz4KICA8cGF0aCBkPSJNNTAgMzMgTDUwIDYwIE01MCA0MCBMMzUgNTAgTTUwIDQwIEw2NSA1MCBNNDAgNzUgTDUwIDYwIEw2MCA3NSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMWUyOTNiIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgogIDwhLS0gRmlndXJhIHNjb25maXR0YSAoYSB0ZXJyYSkgLS0+CiAgPGVsbGlwc2UgY3g9IjI1IiBjeT0iODAiIHJ4PSI4IiByeT0iNSIgZmlsbD0iIzk0YTNiOCIgc3Ryb2tlPSIjMWUyOTNiIiBzdHJva2Utd2lkdGg9IjMiLz4KICA8cGF0aCBkPSJNMjUgNzUgTDI1IDYwIE0yNSA2NSBMMTUgNTUgTTI1IDY1IEwzNSA1NSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMWUyOTNiIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgogIDwhLS0gU2ltYm9sbyBkaSB2aXR0b3JpYS9zdXBlcmFtZW50byAoZnJlY2NpYSBvIHNlZ25vIGRpIHNwdW50YSkgLS0+CiAgPHBhdGggZD0iTTc1IDMwIEw4NSA0NSBMOTUgMjAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzE2YTM0YSIgc3Ryb2tlLXdpZHRoPSI2IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPC9zdmc+",
         "alternatives": [
           {
             "id": 8502,
@@ -2211,21 +2238,23 @@
             "imageUrl": "https://static.arasaac.org/pictograms/11226/11226_500.png"
           }
         ],
-        "source": "arasaac"
+        "source": "arasaac",
+        "customImage": true
       },
       {
         "displayWord": "CATTIVERIA",
         "searchTerm": "cattiveria",
         "category": "adjective",
-        "pictogramId": 32652,
-        "imageUrl": "https://static.arasaac.org/pictograms/32652/32652_500.png",
+        "pictogramId": "ai_1793044040850",
+        "imageUrl": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCI+CiAgPHJlY3Qgd2lkdGg9Ijk2IiBoZWlnaHQ9Ijk2IiB4PSIyIiB5PSIyIiByeD0iMTQiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iI2UyZThmMCIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPCEtLSBWb2x0byBhcnJhYmJpYXRvL2NhdHRpdm8gLS0+CiAgPGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iMzAiIGZpbGw9IiNmZWYwOGEiIHN0cm9rZT0iIzFlMjkzYiIgc3Ryb2tlLXdpZHRoPSIzIi8+CiAgPCEtLSBTb3ByYWNjaWdsaWEgaW5jbGluYXRlIHZlcnNvIGlsIGJhc3NvIC0tPgogIDxwYXRoIGQ9Ik0zNSA0MCBMNDUgNDUgTTY1IDQwIEw1NSA0NSIgc3Ryb2tlPSIjMWUyOTNiIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIDwhLS0gT2NjaGkgLS0+CiAgPGNpcmNsZSBjeD0iNDAiIGN5PSI0OCIgcj0iMyIgZmlsbD0iIzFlMjkzYiIvPgogIDxjaXJjbGUgY3g9IjYwIiBjeT0iNDgiIHI9IjMiIGZpbGw9IiMxZTI5M2IiLz4KICA8IS0tIEJvY2NhIGN1cnZhIHZlcnNvIGlsIGJhc3NvIChlc3ByZXNzaW9uZSBjYXR0aXZhKSAtLT4KICA8cGF0aCBkPSJNMzggNjUgUTUwIDU4IDYyIDY1IiBmaWxsPSJub25lIiBzdHJva2U9IiMxZTI5M2IiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPCEtLSBTaW1ib2xvIGRpIGRpdmlldG8vbmVnYXppb25lIHNvdnJhcHBvc3RvIC0tPgogIDxjaXJjbGUgY3g9IjUwIiBjeT0iNTAiIHI9IjM4IiBmaWxsPSJub25lIiBzdHJva2U9IiNlZjQ0NDQiIHN0cm9rZS13aWR0aD0iNiIvPgogIDxsaW5lIHgxPSIyNCIgeTE9IjI0IiB4Mj0iNzYiIHkyPSI3NiIgc3Ryb2tlPSIjZWY0NDQ0IiBzdHJva2Utd2lkdGg9IjYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4=",
         "alternatives": [
           {
             "id": 32652,
             "imageUrl": "https://static.arasaac.org/pictograms/32652/32652_500.png"
           }
         ],
-        "source": "arasaac"
+        "source": "arasaac",
+        "customImage": true
       }
     ]
   }

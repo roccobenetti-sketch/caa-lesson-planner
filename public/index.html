@@ -314,12 +314,15 @@
         <button id="btnCloseSearchModal" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg text-lg">✕</button>
       </div>
 
-      <!-- Tab Selettore: Catalogo ARASAAC vs Generatore IA -->
-      <div class="flex border-b border-slate-200 gap-2">
-        <button id="tabBtnArasaac" type="button" class="px-4 py-2 text-xs font-bold border-b-2 border-blue-600 text-blue-700 flex items-center gap-1.5 transition">
+      <!-- Tab Selettore: Catalogo ARASAAC vs I Miei Simboli vs Generatore IA -->
+      <div class="flex border-b border-slate-200 gap-1 sm:gap-2 overflow-x-auto">
+        <button id="tabBtnArasaac" type="button" class="px-3.5 py-2 text-xs font-bold border-b-2 border-blue-600 text-blue-700 flex items-center gap-1.5 transition whitespace-nowrap">
           📁 Catalogo ARASAAC
         </button>
-        <button id="tabBtnAiGenerator" type="button" class="px-4 py-2 text-xs font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-800 flex items-center gap-1.5 transition">
+        <button id="tabBtnCustomPictos" type="button" class="px-3.5 py-2 text-xs font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-800 flex items-center gap-1.5 transition whitespace-nowrap">
+          ⭐ I Miei Simboli <span id="customPictosBadge" class="ml-1 text-[10px] px-1.5 py-0.5 rounded-full bg-amber-100 text-amber-800 font-bold">0</span>
+        </button>
+        <button id="tabBtnAiGenerator" type="button" class="px-3.5 py-2 text-xs font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-800 flex items-center gap-1.5 transition whitespace-nowrap">
           ✨ Crea con IA
         </button>
       </div>
@@ -340,16 +343,31 @@
         </div>
       </div>
 
-      <!-- Sezione 2: Generazione con IA -->
+      <!-- Sezione 2: I Miei Simboli Personali Salvati -->
+      <div id="tabContentCustomPictos" class="space-y-3 hidden">
+        <div class="flex gap-2">
+          <input type="text" id="inputCustomPictoSearch" class="flex-1 px-3 py-2 border border-slate-300 rounded-lg text-sm text-slate-900 focus:ring-2 focus:ring-amber-500 focus:border-amber-500" placeholder="Cerca tra i tuoi simboli personalizzati salvati..." />
+          <button id="btnRefreshCustomPictos" type="button" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold transition" title="Ricarica elenco">
+            🔄
+          </button>
+        </div>
+
+        <!-- Griglia Simboli Personali -->
+        <div id="customPictosGrid" class="grid grid-cols-3 sm:grid-cols-4 gap-3 max-h-72 overflow-y-auto p-1">
+          <!-- Generato dinamicamente -->
+        </div>
+      </div>
+
+      <!-- Sezione 3: Generazione con IA -->
       <div id="tabContentAi" class="space-y-4 hidden">
         <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 rounded-xl p-3.5 text-xs text-slate-700 leading-relaxed">
-          <span class="font-bold text-blue-900">✨ Disegna con l'IA:</span> descrivi qualsiasi soggetto, personaggio o azione (anche complessa o fiabesca, come <em>"regina travestita da vecchia con cappuccio nero"</em>). L'IA creerà un pittogramma SVG vettoriale in stile CAA che verrà salvato permanentemente nella tua scheda.
+          <span class="font-bold text-blue-900">✨ Disegna con l'IA:</span> descrivi qualsiasi soggetto, personaggio o azione (es. <em>"regina travestita da vecchia con cappuccio nero"</em>). Potrai usarlo subito e salvarlo con un nome nel tuo archivio personale per riutilizzarlo sempre!
         </div>
 
         <div class="space-y-2">
           <label for="inputAiPictogramPrompt" class="block text-xs font-bold text-slate-700">Descrizione del Simbolo desiderato:</label>
           <div class="flex flex-col sm:flex-row gap-2">
-            <input type="text" id="inputAiPictogramPrompt" class="flex-1 px-3 py-2.5 border border-slate-300 rounded-xl text-sm text-slate-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Es: regina travestita con mantello nero e mela rossa..." />
+            <input type="text" id="inputAiPictogramPrompt" class="flex-1 px-3 py-2.5 border border-slate-300 rounded-xl text-sm text-slate-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Es: regina travestita con mantello nero e mela..." />
             <button id="btnGenerateAiPictogram" type="button" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl shadow-sm transition flex items-center justify-center gap-1.5 whitespace-nowrap">
               <span>✨ Genera con IA</span>
             </button>
