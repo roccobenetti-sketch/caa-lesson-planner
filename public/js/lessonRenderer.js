@@ -168,7 +168,7 @@ export const LessonRenderer = {
     let html = `
       <!-- Intestazione Scheda Stampabile -->
       <div class="print-sheet bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-200">
-        <div class="border-b border-slate-200 pb-4 mb-6">
+        <div class="lesson-header-print border-b border-slate-200 pb-4 mb-6">
           <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
             <div class="flex-1 min-w-0">
               <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full ${isInfanzia ? 'bg-amber-100 text-amber-800' : 'bg-blue-100 text-blue-800'} mb-2">
@@ -255,7 +255,7 @@ export const LessonRenderer = {
       if (card.sectionTitle && card.sectionTitle !== lastSectionTitle) {
         lastSectionTitle = card.sectionTitle;
         html += `
-          <div class="pt-4 pb-2 border-b-2 border-blue-100 mt-6 first:mt-0 flex items-center gap-2">
+          <div class="caa-section-header pt-4 pb-2 border-b-2 border-blue-100 mt-6 first:mt-0 flex items-center gap-2">
             <span class="w-3 h-3 rounded-full bg-blue-600 shrink-0"></span>
             <!-- Input per modificare il titolo della fase a video (No-Print) -->
             <input type="text"

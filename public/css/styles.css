@@ -84,14 +84,20 @@ body {
   border: 1px dashed #CBD5E1;
 }
 
+/* Configurazione Pagina per Stampa e PDF */
+@page {
+  size: A4 portrait;
+  margin: 1.2cm 1cm 1.2cm 1cm;
+}
+
 /* Stili specifici per la Stampa e il Salvataggio in PDF */
 @media print {
   body {
     background-color: #ffffff !important;
     color: #000000 !important;
-    font-size: 12pt;
-    margin: 0;
-    padding: 0;
+    font-size: 11pt;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
   /* Nascondi tutti i controlli non pertinenti alla stampa */
@@ -106,11 +112,12 @@ body {
   select,
   .print-controls,
   #settingsModal,
-  #searchModal {
+  #searchModal,
+  #projectsModal {
     display: none !important;
   }
 
-  /* Il contenitore stampabile occupa l'intera pagina */
+  /* Il contenitore stampabile occupa l'intera larghezza della pagina */
   #printableArea {
     display: block !important;
     width: 100% !important;
@@ -120,25 +127,97 @@ body {
   }
 
   .print-sheet {
-    page-break-after: always;
-    page-break-inside: avoid;
-    break-after: page;
-    break-inside: avoid;
-    padding: 1cm !important;
+    page-break-after: auto !important;
+    page-break-inside: auto !important;
+    break-after: auto !important;
+    break-inside: auto !important;
+    padding: 0 !important;
+    margin: 0 !important;
     box-sizing: border-box;
     width: 100% !important;
-    min-height: 98vh;
+    min-height: auto !important;
+    border: none !important;
+    box-shadow: none !important;
   }
 
-  .print-sheet:last-child {
-    page-break-after: auto;
-    break-after: auto;
+  /* Intestazione della lezione / titolo */
+  .lesson-header-print {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+    break-after: auto !important;
+    margin-bottom: 1.5rem !important;
   }
 
+  /* Banner intestazione di fase/sezione: non separare mai dal primo punto successivo */
+  .caa-section-header {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+    break-after: avoid !important;
+    page-break-after: avoid !important;
+    margin-top: 1.5rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  /* PUNTO DELLA STORIA / PASSAGGIO:
+     Non deve MAI essere spezzato a metà tra due pagine.
+     Se non entra nello spazio rimasto nella pagina corrente, il motore di stampa
+     deve passare interamente all'inizio della pagina successiva, lasciando lo spazio vuoto.
+  */
+  .caa-step-card {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+    break-before: auto !important;
+    page-break-before: auto !important;
+    margin-bottom: 1.5rem !important;
+    padding: 1rem !important;
+    background-color: #ffffff !important;
+    border: 1.5px solid #cbd5e1 !important;
+    border-radius: 0.75rem !important;
+    box-shadow: none !important;
+    display: block !important;
+    overflow: visible !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* La striscia di simboli all'interno del punto non deve essere divisa a metà */
+  .reading-strip {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 0.5rem !important;
+    background-color: #f8fafc !important;
+    border: 1px dashed #cbd5e1 !important;
+    padding: 0.5rem !important;
+    border-radius: 0.5rem !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Singola tessera CAA: integra e non divisibile */
   .caa-card {
     box-shadow: none !important;
-    break-inside: avoid;
-    page-break-inside: avoid;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+    background-color: #ffffff !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Sezione Morale e Insegnamento: blocco unico non divisibile */
+  #moralSection {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+    break-before: auto !important;
+    page-break-before: auto !important;
+    margin-top: 2rem !important;
+    margin-bottom: 1.5rem !important;
+    background-color: #fffbeb !important;
+    border: 2px solid #fcd34d !important;
+    box-shadow: none !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 
   /* Forza la resa dei colori di sfondo e bordi in stampa */
@@ -153,15 +232,6 @@ body {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-  }
-
-  .caa-card {
-    box-shadow: none !important;
-    break-inside: avoid;
-    page-break-inside: avoid;
-    background-color: #ffffff !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
