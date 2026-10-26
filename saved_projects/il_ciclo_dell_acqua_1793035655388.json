@@ -1,0 +1,836 @@
+{
+  "title": "Il Ciclo dell'Acqua",
+  "targetGrade": "primaria",
+  "primaryClass": "1",
+  "layoutType": "routine",
+  "contextSummary": "Scomposizione dettagliata del ciclo dell'acqua in fasi sequenziali logiche, dalla evaporazione alla precipitazione, con spiegazione pedagogica per la classe prima.",
+  "teacherGuide": "Utilizzare le schede per mostrare il movimento circolare dell'acqua. Enfatizzare il ruolo del sole come motore del ciclo e la trasformazione degli stati dell'acqua.",
+  "moral": {
+    "title": "L'importanza dell'acqua",
+    "explanation": "L'acqua è un bene prezioso che non si perde mai, ma si trasforma continuamente per dare vita alla natura.",
+    "tokens": [
+      {
+        "displayWord": "Acqua",
+        "searchTerm": "acqua",
+        "category": "noun",
+        "pictogramId": 32464,
+        "imageUrl": "https://static.arasaac.org/pictograms/32464/32464_500.png",
+        "alternatives": [
+          {
+            "id": 32464,
+            "imageUrl": "https://static.arasaac.org/pictograms/32464/32464_500.png"
+          },
+          {
+            "id": 2248,
+            "imageUrl": "https://static.arasaac.org/pictograms/2248/2248_500.png"
+          },
+          {
+            "id": 6889,
+            "imageUrl": "https://static.arasaac.org/pictograms/6889/6889_500.png"
+          },
+          {
+            "id": 37288,
+            "imageUrl": "https://static.arasaac.org/pictograms/37288/37288_500.png"
+          },
+          {
+            "id": 37291,
+            "imageUrl": "https://static.arasaac.org/pictograms/37291/37291_500.png"
+          },
+          {
+            "id": 15507,
+            "imageUrl": "https://static.arasaac.org/pictograms/15507/15507_500.png"
+          },
+          {
+            "id": 4768,
+            "imageUrl": "https://static.arasaac.org/pictograms/4768/4768_500.png"
+          },
+          {
+            "id": 8079,
+            "imageUrl": "https://static.arasaac.org/pictograms/8079/8079_500.png"
+          }
+        ],
+        "source": "arasaac"
+      },
+      {
+        "displayWord": "è",
+        "searchTerm": "essere",
+        "category": "verb",
+        "pictogramId": 36480,
+        "imageUrl": "https://static.arasaac.org/pictograms/36480/36480_500.png",
+        "alternatives": [
+          {
+            "id": 36480,
+            "imageUrl": "https://static.arasaac.org/pictograms/36480/36480_500.png"
+          }
+        ],
+        "source": "arasaac"
+      },
+      {
+        "displayWord": "vita",
+        "searchTerm": "vita",
+        "category": "noun",
+        "pictogramId": 8717,
+        "imageUrl": "https://static.arasaac.org/pictograms/8717/8717_500.png",
+        "alternatives": [
+          {
+            "id": 8717,
+            "imageUrl": "https://static.arasaac.org/pictograms/8717/8717_500.png"
+          },
+          {
+            "id": 16035,
+            "imageUrl": "https://static.arasaac.org/pictograms/16035/16035_500.png"
+          },
+          {
+            "id": 25720,
+            "imageUrl": "https://static.arasaac.org/pictograms/25720/25720_500.png"
+          },
+          {
+            "id": 25721,
+            "imageUrl": "https://static.arasaac.org/pictograms/25721/25721_500.png"
+          },
+          {
+            "id": 37854,
+            "imageUrl": "https://static.arasaac.org/pictograms/37854/37854_500.png"
+          },
+          {
+            "id": 38617,
+            "imageUrl": "https://static.arasaac.org/pictograms/38617/38617_500.png"
+          },
+          {
+            "id": 27065,
+            "imageUrl": "https://static.arasaac.org/pictograms/27065/27065_500.png"
+          }
+        ],
+        "source": "arasaac"
+      }
+    ]
+  },
+  "cards": [
+    {
+      "sectionTitle": "Fase 1",
+      "stepLabel": "Il sole scalda",
+      "pedagogicalExplanation": "Il sole riscalda l'acqua dei mari e dei laghi.",
+      "tokens": [
+        {
+          "displayWord": "Sole",
+          "searchTerm": "sole",
+          "category": "noun",
+          "pictogramId": 7252,
+          "imageUrl": "https://static.arasaac.org/pictograms/7252/7252_500.png",
+          "alternatives": [
+            {
+              "id": 7252,
+              "imageUrl": "https://static.arasaac.org/pictograms/7252/7252_500.png"
+            },
+            {
+              "id": 2798,
+              "imageUrl": "https://static.arasaac.org/pictograms/2798/2798_500.png"
+            },
+            {
+              "id": 39247,
+              "imageUrl": "https://static.arasaac.org/pictograms/39247/39247_500.png"
+            },
+            {
+              "id": 3330,
+              "imageUrl": "https://static.arasaac.org/pictograms/3330/3330_500.png"
+            },
+            {
+              "id": 5402,
+              "imageUrl": "https://static.arasaac.org/pictograms/5402/5402_500.png"
+            },
+            {
+              "id": 39105,
+              "imageUrl": "https://static.arasaac.org/pictograms/39105/39105_500.png"
+            },
+            {
+              "id": 8097,
+              "imageUrl": "https://static.arasaac.org/pictograms/8097/8097_500.png"
+            },
+            {
+              "id": 10725,
+              "imageUrl": "https://static.arasaac.org/pictograms/10725/10725_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "scalda",
+          "searchTerm": "riscaldare",
+          "category": "verb",
+          "pictogramId": 8520,
+          "imageUrl": "https://static.arasaac.org/pictograms/8520/8520_500.png",
+          "alternatives": [
+            {
+              "id": 8520,
+              "imageUrl": "https://static.arasaac.org/pictograms/8520/8520_500.png"
+            },
+            {
+              "id": 27644,
+              "imageUrl": "https://static.arasaac.org/pictograms/27644/27644_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "acqua",
+          "searchTerm": "acqua",
+          "category": "noun",
+          "pictogramId": 32464,
+          "imageUrl": "https://static.arasaac.org/pictograms/32464/32464_500.png",
+          "alternatives": [
+            {
+              "id": 32464,
+              "imageUrl": "https://static.arasaac.org/pictograms/32464/32464_500.png"
+            },
+            {
+              "id": 2248,
+              "imageUrl": "https://static.arasaac.org/pictograms/2248/2248_500.png"
+            },
+            {
+              "id": 6889,
+              "imageUrl": "https://static.arasaac.org/pictograms/6889/6889_500.png"
+            },
+            {
+              "id": 37288,
+              "imageUrl": "https://static.arasaac.org/pictograms/37288/37288_500.png"
+            },
+            {
+              "id": 37291,
+              "imageUrl": "https://static.arasaac.org/pictograms/37291/37291_500.png"
+            },
+            {
+              "id": 15507,
+              "imageUrl": "https://static.arasaac.org/pictograms/15507/15507_500.png"
+            },
+            {
+              "id": 4768,
+              "imageUrl": "https://static.arasaac.org/pictograms/4768/4768_500.png"
+            },
+            {
+              "id": 8079,
+              "imageUrl": "https://static.arasaac.org/pictograms/8079/8079_500.png"
+            }
+          ],
+          "source": "arasaac"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "Fase 2",
+      "stepLabel": "Evaporazione",
+      "pedagogicalExplanation": "L'acqua diventa vapore e sale verso il cielo.",
+      "tokens": [
+        {
+          "displayWord": "Acqua",
+          "searchTerm": "acqua",
+          "category": "noun",
+          "pictogramId": 32464,
+          "imageUrl": "https://static.arasaac.org/pictograms/32464/32464_500.png",
+          "alternatives": [
+            {
+              "id": 32464,
+              "imageUrl": "https://static.arasaac.org/pictograms/32464/32464_500.png"
+            },
+            {
+              "id": 2248,
+              "imageUrl": "https://static.arasaac.org/pictograms/2248/2248_500.png"
+            },
+            {
+              "id": 6889,
+              "imageUrl": "https://static.arasaac.org/pictograms/6889/6889_500.png"
+            },
+            {
+              "id": 37288,
+              "imageUrl": "https://static.arasaac.org/pictograms/37288/37288_500.png"
+            },
+            {
+              "id": 37291,
+              "imageUrl": "https://static.arasaac.org/pictograms/37291/37291_500.png"
+            },
+            {
+              "id": 15507,
+              "imageUrl": "https://static.arasaac.org/pictograms/15507/15507_500.png"
+            },
+            {
+              "id": 4768,
+              "imageUrl": "https://static.arasaac.org/pictograms/4768/4768_500.png"
+            },
+            {
+              "id": 8079,
+              "imageUrl": "https://static.arasaac.org/pictograms/8079/8079_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "mare",
+          "searchTerm": "mare",
+          "category": "noun",
+          "pictogramId": 2925,
+          "imageUrl": "https://static.arasaac.org/pictograms/2925/2925_500.png",
+          "alternatives": [
+            {
+              "id": 2925,
+              "imageUrl": "https://static.arasaac.org/pictograms/2925/2925_500.png"
+            },
+            {
+              "id": 30492,
+              "imageUrl": "https://static.arasaac.org/pictograms/30492/30492_500.png"
+            },
+            {
+              "id": 24362,
+              "imageUrl": "https://static.arasaac.org/pictograms/24362/24362_500.png"
+            },
+            {
+              "id": 24079,
+              "imageUrl": "https://static.arasaac.org/pictograms/24079/24079_500.png"
+            },
+            {
+              "id": 23859,
+              "imageUrl": "https://static.arasaac.org/pictograms/23859/23859_500.png"
+            },
+            {
+              "id": 23792,
+              "imageUrl": "https://static.arasaac.org/pictograms/23792/23792_500.png"
+            },
+            {
+              "id": 6014,
+              "imageUrl": "https://static.arasaac.org/pictograms/6014/6014_500.png"
+            },
+            {
+              "id": 2966,
+              "imageUrl": "https://static.arasaac.org/pictograms/2966/2966_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "lago",
+          "searchTerm": "lago",
+          "category": "noun",
+          "pictogramId": 6022,
+          "imageUrl": "https://static.arasaac.org/pictograms/6022/6022_500.png",
+          "alternatives": [
+            {
+              "id": 6022,
+              "imageUrl": "https://static.arasaac.org/pictograms/6022/6022_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "sale",
+          "searchTerm": "salire",
+          "category": "verb",
+          "pictogramId": 24725,
+          "imageUrl": "https://static.arasaac.org/pictograms/24725/24725_500.png",
+          "alternatives": [
+            {
+              "id": 24725,
+              "imageUrl": "https://static.arasaac.org/pictograms/24725/24725_500.png"
+            },
+            {
+              "id": 2795,
+              "imageUrl": "https://static.arasaac.org/pictograms/2795/2795_500.png"
+            },
+            {
+              "id": 6617,
+              "imageUrl": "https://static.arasaac.org/pictograms/6617/6617_500.png"
+            },
+            {
+              "id": 8226,
+              "imageUrl": "https://static.arasaac.org/pictograms/8226/8226_500.png"
+            },
+            {
+              "id": 19572,
+              "imageUrl": "https://static.arasaac.org/pictograms/19572/19572_500.png"
+            },
+            {
+              "id": 27279,
+              "imageUrl": "https://static.arasaac.org/pictograms/27279/27279_500.png"
+            },
+            {
+              "id": 27280,
+              "imageUrl": "https://static.arasaac.org/pictograms/27280/27280_500.png"
+            },
+            {
+              "id": 27278,
+              "imageUrl": "https://static.arasaac.org/pictograms/27278/27278_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "cielo",
+          "searchTerm": "cielo",
+          "category": "noun",
+          "pictogramId": 6978,
+          "imageUrl": "https://static.arasaac.org/pictograms/6978/6978_500.png",
+          "alternatives": [
+            {
+              "id": 6978,
+              "imageUrl": "https://static.arasaac.org/pictograms/6978/6978_500.png"
+            },
+            {
+              "id": 38270,
+              "imageUrl": "https://static.arasaac.org/pictograms/38270/38270_500.png"
+            },
+            {
+              "id": 35855,
+              "imageUrl": "https://static.arasaac.org/pictograms/35855/35855_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "vapore",
+          "searchTerm": "vapore",
+          "category": "noun",
+          "pictogramId": 31478,
+          "imageUrl": "https://static.arasaac.org/pictograms/31478/31478_500.png",
+          "alternatives": [
+            {
+              "id": 31478,
+              "imageUrl": "https://static.arasaac.org/pictograms/31478/31478_500.png"
+            },
+            {
+              "id": 39839,
+              "imageUrl": "https://static.arasaac.org/pictograms/39839/39839_500.png"
+            },
+            {
+              "id": 39021,
+              "imageUrl": "https://static.arasaac.org/pictograms/39021/39021_500.png"
+            },
+            {
+              "id": 39811,
+              "imageUrl": "https://static.arasaac.org/pictograms/39811/39811_500.png"
+            },
+            {
+              "id": 39590,
+              "imageUrl": "https://static.arasaac.org/pictograms/39590/39590_500.png"
+            }
+          ],
+          "source": "arasaac"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "Fase 3",
+      "stepLabel": "Condensazione",
+      "pedagogicalExplanation": "Il vapore si raffredda e forma le nuvole.",
+      "tokens": [
+        {
+          "displayWord": "Vapore",
+          "searchTerm": "vapore",
+          "category": "noun",
+          "pictogramId": 31478,
+          "imageUrl": "https://static.arasaac.org/pictograms/31478/31478_500.png",
+          "alternatives": [
+            {
+              "id": 31478,
+              "imageUrl": "https://static.arasaac.org/pictograms/31478/31478_500.png"
+            },
+            {
+              "id": 39839,
+              "imageUrl": "https://static.arasaac.org/pictograms/39839/39839_500.png"
+            },
+            {
+              "id": 39021,
+              "imageUrl": "https://static.arasaac.org/pictograms/39021/39021_500.png"
+            },
+            {
+              "id": 39811,
+              "imageUrl": "https://static.arasaac.org/pictograms/39811/39811_500.png"
+            },
+            {
+              "id": 39590,
+              "imageUrl": "https://static.arasaac.org/pictograms/39590/39590_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "forma",
+          "searchTerm": "formare",
+          "category": "verb",
+          "pictogramId": 4761,
+          "imageUrl": "https://static.arasaac.org/pictograms/4761/4761_500.png",
+          "alternatives": [
+            {
+              "id": 4761,
+              "imageUrl": "https://static.arasaac.org/pictograms/4761/4761_500.png"
+            },
+            {
+              "id": 37911,
+              "imageUrl": "https://static.arasaac.org/pictograms/37911/37911_500.png"
+            },
+            {
+              "id": 37733,
+              "imageUrl": "https://static.arasaac.org/pictograms/37733/37733_500.png"
+            },
+            {
+              "id": 34053,
+              "imageUrl": "https://static.arasaac.org/pictograms/34053/34053_500.png"
+            },
+            {
+              "id": 32586,
+              "imageUrl": "https://static.arasaac.org/pictograms/32586/32586_500.png"
+            },
+            {
+              "id": 4763,
+              "imageUrl": "https://static.arasaac.org/pictograms/4763/4763_500.png"
+            },
+            {
+              "id": 4715,
+              "imageUrl": "https://static.arasaac.org/pictograms/4715/4715_500.png"
+            },
+            {
+              "id": 4711,
+              "imageUrl": "https://static.arasaac.org/pictograms/4711/4711_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "nuvole",
+          "searchTerm": "nuvola",
+          "category": "noun",
+          "pictogramId": 2883,
+          "imageUrl": "https://static.arasaac.org/pictograms/2883/2883_500.png",
+          "alternatives": [
+            {
+              "id": 2883,
+              "imageUrl": "https://static.arasaac.org/pictograms/2883/2883_500.png"
+            }
+          ],
+          "source": "arasaac"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "Fase 4",
+      "stepLabel": "Precipitazione",
+      "pedagogicalExplanation": "Le nuvole diventano pesanti e cade la pioggia.",
+      "tokens": [
+        {
+          "displayWord": "Nuvole",
+          "searchTerm": "nuvola",
+          "category": "noun",
+          "pictogramId": 2883,
+          "imageUrl": "https://static.arasaac.org/pictograms/2883/2883_500.png",
+          "alternatives": [
+            {
+              "id": 2883,
+              "imageUrl": "https://static.arasaac.org/pictograms/2883/2883_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "freddo",
+          "searchTerm": "freddo",
+          "category": "adjective",
+          "pictogramId": 4652,
+          "imageUrl": "https://static.arasaac.org/pictograms/4652/4652_500.png",
+          "alternatives": [
+            {
+              "id": 4652,
+              "imageUrl": "https://static.arasaac.org/pictograms/4652/4652_500.png"
+            },
+            {
+              "id": 26865,
+              "imageUrl": "https://static.arasaac.org/pictograms/26865/26865_500.png"
+            },
+            {
+              "id": 28653,
+              "imageUrl": "https://static.arasaac.org/pictograms/28653/28653_500.png"
+            },
+            {
+              "id": 35557,
+              "imageUrl": "https://static.arasaac.org/pictograms/35557/35557_500.png"
+            },
+            {
+              "id": 35589,
+              "imageUrl": "https://static.arasaac.org/pictograms/35589/35589_500.png"
+            },
+            {
+              "id": 31886,
+              "imageUrl": "https://static.arasaac.org/pictograms/31886/31886_500.png"
+            },
+            {
+              "id": 7109,
+              "imageUrl": "https://static.arasaac.org/pictograms/7109/7109_500.png"
+            },
+            {
+              "id": 38743,
+              "imageUrl": "https://static.arasaac.org/pictograms/38743/38743_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "acqua",
+          "searchTerm": "acqua",
+          "category": "noun",
+          "pictogramId": 32464,
+          "imageUrl": "https://static.arasaac.org/pictograms/32464/32464_500.png",
+          "alternatives": [
+            {
+              "id": 32464,
+              "imageUrl": "https://static.arasaac.org/pictograms/32464/32464_500.png"
+            },
+            {
+              "id": 2248,
+              "imageUrl": "https://static.arasaac.org/pictograms/2248/2248_500.png"
+            },
+            {
+              "id": 6889,
+              "imageUrl": "https://static.arasaac.org/pictograms/6889/6889_500.png"
+            },
+            {
+              "id": 37288,
+              "imageUrl": "https://static.arasaac.org/pictograms/37288/37288_500.png"
+            },
+            {
+              "id": 37291,
+              "imageUrl": "https://static.arasaac.org/pictograms/37291/37291_500.png"
+            },
+            {
+              "id": 15507,
+              "imageUrl": "https://static.arasaac.org/pictograms/15507/15507_500.png"
+            },
+            {
+              "id": 4768,
+              "imageUrl": "https://static.arasaac.org/pictograms/4768/4768_500.png"
+            },
+            {
+              "id": 8079,
+              "imageUrl": "https://static.arasaac.org/pictograms/8079/8079_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "cadono",
+          "searchTerm": "cadere",
+          "category": "verb",
+          "pictogramId": 39440,
+          "imageUrl": "https://static.arasaac.org/pictograms/39440/39440_500.png",
+          "alternatives": [
+            {
+              "id": 39440,
+              "imageUrl": "https://static.arasaac.org/pictograms/39440/39440_500.png"
+            },
+            {
+              "id": 6067,
+              "imageUrl": "https://static.arasaac.org/pictograms/6067/6067_500.png"
+            },
+            {
+              "id": 2675,
+              "imageUrl": "https://static.arasaac.org/pictograms/2675/2675_500.png"
+            },
+            {
+              "id": 4582,
+              "imageUrl": "https://static.arasaac.org/pictograms/4582/4582_500.png"
+            },
+            {
+              "id": 7049,
+              "imageUrl": "https://static.arasaac.org/pictograms/7049/7049_500.png"
+            },
+            {
+              "id": 29674,
+              "imageUrl": "https://static.arasaac.org/pictograms/29674/29674_500.png"
+            },
+            {
+              "id": 31165,
+              "imageUrl": "https://static.arasaac.org/pictograms/31165/31165_500.png"
+            },
+            {
+              "id": 6215,
+              "imageUrl": "https://static.arasaac.org/pictograms/6215/6215_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "piove",
+          "searchTerm": "piovere",
+          "category": "verb",
+          "pictogramId": 7148,
+          "imageUrl": "https://static.arasaac.org/pictograms/7148/7148_500.png",
+          "alternatives": [
+            {
+              "id": 7148,
+              "imageUrl": "https://static.arasaac.org/pictograms/7148/7148_500.png"
+            }
+          ],
+          "source": "arasaac"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "Fase 5",
+      "stepLabel": "Ritorno al mare",
+      "pedagogicalExplanation": "La pioggia torna nei fiumi e poi nel mare.",
+      "tokens": [
+        {
+          "displayWord": "piove",
+          "searchTerm": "piovere",
+          "category": "verb",
+          "pictogramId": 7148,
+          "imageUrl": "https://static.arasaac.org/pictograms/7148/7148_500.png",
+          "alternatives": [
+            {
+              "id": 7148,
+              "imageUrl": "https://static.arasaac.org/pictograms/7148/7148_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "acqua",
+          "searchTerm": "acqua",
+          "category": "noun",
+          "pictogramId": 32464,
+          "imageUrl": "https://static.arasaac.org/pictograms/32464/32464_500.png",
+          "alternatives": [
+            {
+              "id": 32464,
+              "imageUrl": "https://static.arasaac.org/pictograms/32464/32464_500.png"
+            },
+            {
+              "id": 2248,
+              "imageUrl": "https://static.arasaac.org/pictograms/2248/2248_500.png"
+            },
+            {
+              "id": 6889,
+              "imageUrl": "https://static.arasaac.org/pictograms/6889/6889_500.png"
+            },
+            {
+              "id": 37288,
+              "imageUrl": "https://static.arasaac.org/pictograms/37288/37288_500.png"
+            },
+            {
+              "id": 37291,
+              "imageUrl": "https://static.arasaac.org/pictograms/37291/37291_500.png"
+            },
+            {
+              "id": 15507,
+              "imageUrl": "https://static.arasaac.org/pictograms/15507/15507_500.png"
+            },
+            {
+              "id": 4768,
+              "imageUrl": "https://static.arasaac.org/pictograms/4768/4768_500.png"
+            },
+            {
+              "id": 8079,
+              "imageUrl": "https://static.arasaac.org/pictograms/8079/8079_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "va",
+          "searchTerm": "andare",
+          "category": "verb",
+          "pictogramId": 32154,
+          "imageUrl": "https://static.arasaac.org/pictograms/32154/32154_500.png",
+          "alternatives": [
+            {
+              "id": 32154,
+              "imageUrl": "https://static.arasaac.org/pictograms/32154/32154_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "fiume",
+          "searchTerm": "fiume",
+          "category": "noun",
+          "pictogramId": 2811,
+          "imageUrl": "https://static.arasaac.org/pictograms/2811/2811_500.png",
+          "alternatives": [
+            {
+              "id": 2811,
+              "imageUrl": "https://static.arasaac.org/pictograms/2811/2811_500.png"
+            },
+            {
+              "id": 5446,
+              "imageUrl": "https://static.arasaac.org/pictograms/5446/5446_500.png"
+            },
+            {
+              "id": 34943,
+              "imageUrl": "https://static.arasaac.org/pictograms/34943/34943_500.png"
+            },
+            {
+              "id": 34941,
+              "imageUrl": "https://static.arasaac.org/pictograms/34941/34941_500.png"
+            },
+            {
+              "id": 34391,
+              "imageUrl": "https://static.arasaac.org/pictograms/34391/34391_500.png"
+            },
+            {
+              "id": 10306,
+              "imageUrl": "https://static.arasaac.org/pictograms/10306/10306_500.png"
+            },
+            {
+              "id": 34389,
+              "imageUrl": "https://static.arasaac.org/pictograms/34389/34389_500.png"
+            },
+            {
+              "id": 5518,
+              "imageUrl": "https://static.arasaac.org/pictograms/5518/5518_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "mare",
+          "searchTerm": "mare",
+          "category": "noun",
+          "pictogramId": 2925,
+          "imageUrl": "https://static.arasaac.org/pictograms/2925/2925_500.png",
+          "alternatives": [
+            {
+              "id": 2925,
+              "imageUrl": "https://static.arasaac.org/pictograms/2925/2925_500.png"
+            },
+            {
+              "id": 30492,
+              "imageUrl": "https://static.arasaac.org/pictograms/30492/30492_500.png"
+            },
+            {
+              "id": 24362,
+              "imageUrl": "https://static.arasaac.org/pictograms/24362/24362_500.png"
+            },
+            {
+              "id": 24079,
+              "imageUrl": "https://static.arasaac.org/pictograms/24079/24079_500.png"
+            },
+            {
+              "id": 23859,
+              "imageUrl": "https://static.arasaac.org/pictograms/23859/23859_500.png"
+            },
+            {
+              "id": 23792,
+              "imageUrl": "https://static.arasaac.org/pictograms/23792/23792_500.png"
+            },
+            {
+              "id": 6014,
+              "imageUrl": "https://static.arasaac.org/pictograms/6014/6014_500.png"
+            },
+            {
+              "id": 2966,
+              "imageUrl": "https://static.arasaac.org/pictograms/2966/2966_500.png"
+            }
+          ],
+          "source": "arasaac"
+        }
+      ]
+    }
+  ],
+  "id": "il_ciclo_dell_acqua_1793035655388",
+  "createdAt": "2026-10-26T17:27:35.388Z",
+  "updatedAt": "2026-10-26T17:32:13Z"
+}

@@ -144,6 +144,41 @@ class CAAApp {
       });
     }
 
+    // Gestione Tab Modale Simbolo (Catalogo ARASAAC vs Generatore IA)
+    const tabBtnArasaac = document.getElementById('tabBtnArasaac');
+    const tabBtnAiGenerator = document.getElementById('tabBtnAiGenerator');
+    const tabContentArasaac = document.getElementById('tabContentArasaac');
+    const tabContentAi = document.getElementById('tabContentAi');
+
+    if (tabBtnArasaac && tabBtnAiGenerator && tabContentArasaac && tabContentAi) {
+      tabBtnArasaac.addEventListener('click', () => {
+        tabBtnArasaac.className = 'px-4 py-2 text-xs font-bold border-b-2 border-blue-600 text-blue-700 flex items-center gap-1.5 transition';
+        tabBtnAiGenerator.className = 'px-4 py-2 text-xs font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-800 flex items-center gap-1.5 transition';
+        tabContentArasaac.classList.remove('hidden');
+        tabContentAi.classList.add('hidden');
+      });
+
+      tabBtnAiGenerator.addEventListener('click', () => {
+        tabBtnAiGenerator.className = 'px-4 py-2 text-xs font-bold border-b-2 border-indigo-600 text-indigo-700 flex items-center gap-1.5 transition';
+        tabBtnArasaac.className = 'px-4 py-2 text-xs font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-800 flex items-center gap-1.5 transition';
+        tabContentAi.classList.remove('hidden');
+        tabContentArasaac.classList.add('hidden');
+        document.getElementById('inputAiPictogramPrompt')?.focus();
+      });
+    }
+
+    // Bottone Generazione Simbolo con IA
+    const btnGenerateAiPictogram = document.getElementById('btnGenerateAiPictogram');
+    const inputAiPictogramPrompt = document.getElementById('inputAiPictogramPrompt');
+    if (btnGenerateAiPictogram) {
+      btnGenerateAiPictogram.addEventListener('click', () => this.handleGenerateAiPictogram());
+    }
+    if (inputAiPictogramPrompt) {
+      inputAiPictogramPrompt.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') this.handleGenerateAiPictogram();
+      });
+    }
+
     // Esportazione e Importazione JSON
     const btnExportJson = document.getElementById('btnExportJson');
     if (btnExportJson) {
@@ -371,9 +406,31 @@ class CAAApp {
     const modal = document.getElementById('searchModal');
     const input = document.getElementById('inputArasaacSearch');
     const title = document.getElementById('searchModalTokenTitle');
+    const inputAiPrompt = document.getElementById('inputAiPictogramPrompt');
+    const previewArea = document.getElementById('aiPictogramPreviewArea');
 
     if (title) title.textContent = `Cambia simbolo per: "${token.displayWord}"`;
     if (input) input.value = token.searchTerm || token.displayWord;
+    if (inputAiPrompt) inputAiPrompt.value = token.displayWord || token.searchTerm || '';
+
+    // Resetta l'anteprima IA
+    if (previewArea) {
+      previewArea.innerHTML = `
+        <p class="text-xs text-slate-400">Nessun simbolo IA generato al momento. Personalizza la descrizione sopra e premi "Genera con IA".</p>
+      `;
+    }
+
+    // Assicura che si apra sul tab ARASAAC
+    const tabBtnArasaac = document.getElementById('tabBtnArasaac');
+    const tabBtnAiGenerator = document.getElementById('tabBtnAiGenerator');
+    const tabContentArasaac = document.getElementById('tabContentArasaac');
+    const tabContentAi = document.getElementById('tabContentAi');
+    if (tabBtnArasaac && tabBtnAiGenerator && tabContentArasaac && tabContentAi) {
+      tabBtnArasaac.className = 'px-4 py-2 text-xs font-bold border-b-2 border-blue-600 text-blue-700 flex items-center gap-1.5 transition';
+      tabBtnAiGenerator.className = 'px-4 py-2 text-xs font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-800 flex items-center gap-1.5 transition';
+      tabContentArasaac.classList.remove('hidden');
+      tabContentAi.classList.add('hidden');
+    }
 
     modal?.classList.remove('hidden');
     this.renderPictogramResults(token.alternatives || []);
@@ -409,7 +466,7 @@ class CAAApp {
     if (!container) return;
 
     if (!items || items.length === 0) {
-      container.innerHTML = '<div class="col-span-full py-8 text-center text-slate-400 text-sm">Nessun simbolo trovato. Prova con una parola diversa o un verbo all\'infinito.</div>';
+      container.innerHTML = '<div class="col-span-full py-8 text-center text-slate-400 text-sm">Nessun simbolo trovato nel catalogo. Puoi crearlo subito con la scheda "✨ Crea con IA"!</div>';
       return;
     }
 
@@ -422,9 +479,78 @@ class CAAApp {
     `).join('');
   }
 
-  applyNewPictogram(pictogramId, imageUrl) {
+  /**
+   * Genera un pittogramma SVG personalizzato tramite l'IA di Gemini.
+   */
+  async handleGenerateAiPictogram() {
+    const input = document.getElementById('inputAiPictogramPrompt');
+    const promptText = input?.value?.trim();
+    if (!promptText) {
+      this.showToast('Inserisci una descrizione per il simbolo IA.', 'error');
+      return;
+    }
+
+    const previewArea = document.getElementById('aiPictogramPreviewArea');
+    if (previewArea) {
+      previewArea.innerHTML = `
+        <div class="py-6 flex flex-col items-center justify-center space-y-3">
+          <div class="w-10 h-10 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
+          <p class="text-xs font-semibold text-slate-700">Creazione del pittogramma vettoriale con l'IA...</p>
+        </div>
+      `;
+    }
+
+    try {
+      let category = 'misc';
+      if (this.selectedCardIndex === 'moral') {
+        category = LessonRenderer.currentLesson?.moral?.tokens?.[this.selectedTokenIndex]?.category || 'misc';
+      } else if (this.selectedCardIndex !== null && this.selectedTokenIndex !== null) {
+        category = LessonRenderer.currentLesson?.cards?.[this.selectedCardIndex]?.tokens?.[this.selectedTokenIndex]?.category || 'misc';
+      }
+
+      const svgDataUri = await GeminiService.generateAiPictogramSvg(promptText, category);
+      
+      if (previewArea) {
+        previewArea.innerHTML = `
+          <div class="flex flex-col sm:flex-row items-center gap-4 bg-white p-3 rounded-xl border border-indigo-100 shadow-sm w-full max-w-md mx-auto">
+            <div class="w-24 h-24 border border-slate-200 rounded-xl p-1 bg-white flex items-center justify-center shrink-0 shadow-inner">
+              <img src="${svgDataUri}" class="max-w-full max-h-full object-contain pointer-events-none" alt="Simbolo generato con IA" />
+            </div>
+            <div class="flex-1 text-left space-y-2">
+              <div class="text-xs font-bold text-slate-800">Simbolo creato con successo!</div>
+              <p class="text-[11px] text-slate-500 leading-tight">"${promptText}"</p>
+              <button type="button" 
+                      id="btnApplyAiPictogram"
+                      class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg shadow-sm transition flex items-center gap-1.5">
+                <span>✅ Usa Questo Simbolo</span>
+              </button>
+            </div>
+          </div>
+        `;
+
+        document.getElementById('btnApplyAiPictogram')?.addEventListener('click', () => {
+          this.applyNewPictogram(`ai_${Date.now()}`, svgDataUri, true);
+        });
+      }
+
+      this.showToast('Pittogramma generato dall\'IA!');
+    } catch (err) {
+      console.error(err);
+      if (previewArea) {
+        previewArea.innerHTML = `
+          <div class="py-4 text-center space-y-2">
+            <div class="text-xs font-bold text-red-600">Errore durante la generazione:</div>
+            <p class="text-xs text-slate-600">${err.message || 'Verifica la chiave API nelle impostazioni.'}</p>
+          </div>
+        `;
+      }
+      this.showToast(`Errore IA: ${err.message}`, 'error');
+    }
+  }
+
+  applyNewPictogram(pictogramId, imageUrl, isCustom = false) {
     if (this.selectedCardIndex === null || this.selectedTokenIndex === null) return;
-    LessonRenderer.updateTokenPictogram(this.selectedCardIndex, this.selectedTokenIndex, pictogramId, imageUrl);
+    LessonRenderer.updateTokenPictogram(this.selectedCardIndex, this.selectedTokenIndex, pictogramId, imageUrl, isCustom);
     LessonRenderer.render(document.getElementById('printableArea'), LessonRenderer.currentLesson);
     document.getElementById('searchModal')?.classList.add('hidden');
     this.showToast('Simbolo aggiornato!');
@@ -633,6 +759,46 @@ class CAAApp {
   }
 
   /**
+   * Unisce i nuovi token generati con quelli già esistenti, preservando le immagini
+   * già assegnate o personalizzate con l'IA per le parole non modificate.
+   */
+  mergeTokensPreservingExisting(newTokens, oldTokens = []) {
+    if (!oldTokens || oldTokens.length === 0) return newTokens;
+    const remainingOld = [...oldTokens];
+
+    return newTokens.map(newToken => {
+      const cleanNewDisplay = (newToken.displayWord || '').trim().toLowerCase();
+      const cleanNewSearch = (newToken.searchTerm || '').trim().toLowerCase();
+
+      // Cerca nei vecchi token uno che corrisponda alla parola e abbia già un'immagine valida
+      const matchIdx = remainingOld.findIndex(ot => {
+        const cleanOldDisplay = (ot.displayWord || '').trim().toLowerCase();
+        const cleanOldSearch = (ot.searchTerm || '').trim().toLowerCase();
+        const hasValidImg = ot.imageUrl && typeof ot.imageUrl === 'string' && ot.imageUrl.length > 10;
+        return hasValidImg && (
+          cleanOldDisplay === cleanNewDisplay ||
+          cleanOldSearch === cleanNewSearch ||
+          cleanOldDisplay === cleanNewSearch ||
+          cleanOldSearch === cleanNewDisplay
+        );
+      });
+
+      if (matchIdx !== -1) {
+        const matched = remainingOld.splice(matchIdx, 1)[0];
+        return {
+          ...newToken,
+          pictogramId: matched.pictogramId || newToken.pictogramId,
+          imageUrl: matched.imageUrl,
+          alternatives: matched.alternatives || newToken.alternatives || [],
+          customImage: matched.customImage || false,
+          category: matched.category || newToken.category
+        };
+      }
+      return newToken;
+    });
+  }
+
+  /**
    * Modifica la frase scritta di una riga e ne ricrea i simboli CAA.
    */
   async updateRowFromInput(cardIndex) {
@@ -649,16 +815,23 @@ class CAAApp {
     this.setLoadingState(true, `Conversione in simboli della riga ${cardIndex + 1}...`);
     try {
       const targetGrade = LessonRenderer.currentLesson?.targetGrade || 'primaria';
-      const tokens = await GeminiService.convertSentenceToTokens(newPhrase, targetGrade);
-      for (const t of tokens) {
-        await LessonRenderer.populateToken(t);
+      const rawTokens = await GeminiService.convertSentenceToTokens(newPhrase, targetGrade);
+      
+      // Preservazione intelligente delle immagini già esistenti
+      const mergedTokens = this.mergeTokensPreservingExisting(rawTokens, card.tokens);
+
+      for (const t of mergedTokens) {
+        if (!t.imageUrl) {
+          await LessonRenderer.populateToken(t);
+        }
       }
+
       if (!card.stepLabel) {
         card.stepLabel = newPhrase;
       }
-      card.tokens = tokens;
+      card.tokens = mergedTokens;
       LessonRenderer.render(document.getElementById('printableArea'), LessonRenderer.currentLesson);
-      this.showToast(`Riga ${cardIndex + 1} aggiornata con successo!`);
+      this.showToast(`Riga ${cardIndex + 1} aggiornata (simboli esistenti preservati)!`);
     } catch (e) {
       this.showToast(`Errore aggiornamento riga: ${e.message}`, 'error');
     } finally {
@@ -734,13 +907,17 @@ class CAAApp {
     this.setLoadingState(true, 'Conversione in simboli della morale...');
     try {
       const targetGrade = LessonRenderer.currentLesson.targetGrade || 'primaria';
-      const tokens = await GeminiService.convertSentenceToTokens(phrase, targetGrade);
-      for (const t of tokens) {
-        await LessonRenderer.populateToken(t);
+      const rawTokens = await GeminiService.convertSentenceToTokens(phrase, targetGrade);
+      const mergedTokens = this.mergeTokensPreservingExisting(rawTokens, LessonRenderer.currentLesson.moral.tokens);
+
+      for (const t of mergedTokens) {
+        if (!t.imageUrl) {
+          await LessonRenderer.populateToken(t);
+        }
       }
-      LessonRenderer.currentLesson.moral.tokens = tokens;
+      LessonRenderer.currentLesson.moral.tokens = mergedTokens;
       LessonRenderer.render(document.getElementById('printableArea'), LessonRenderer.currentLesson);
-      this.showToast('Simboli della morale aggiornati con successo!');
+      this.showToast('Simboli della morale aggiornati (simboli esistenti preservati)!');
     } catch (e) {
       this.showToast(`Errore aggiornamento morale: ${e.message}`, 'error');
     } finally {

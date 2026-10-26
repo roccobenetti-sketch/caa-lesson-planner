@@ -156,25 +156,55 @@ export const ArasaacService = {
     'bosco': ['foresta', 'albero'],
     'mela': ['mela', 'frutta'],
     'strega': ['strega', 'mago'],
-    'regina': ['regina', 'principessa'],
-    're': ['re', 'principe']
+    'regina': ['regina', 'principessa', 'sovrana'],
+    'reggina': ['regina', 'sovrana'],
+    're': ['re', 'principe', 'sovrano'],
+    'travestita': ['travestirsi', 'maschera', 'costume'],
+    'travestito': ['travestirsi', 'maschera', 'costume'],
+    'travestiti': ['travestirsi', 'maschera', 'costume'],
+    'matrigna': ['strega', 'madre'],
+    'avvelenata': ['veleno', 'pericolo'],
+    'avvelenato': ['veleno', 'pericolo'],
+    'specchio': ['specchio']
   },
 
   /**
-   * Normalizza una parola (rimuove punteggiatura, spazi superflui, minuscole).
+   * Normalizza una parola (rimuove punteggiatura, spazi superflui, minuscole e corregge refusi comuni).
    */
   normalizeTerm(term) {
     if (!term) return '';
-    return term.trim().toLowerCase().replace(/[.,;:!?()"'«»]/g, '');
+    let clean = term.trim().toLowerCase().replace(/[.,;:!?()"'«»]/g, '');
+    if (clean === 'reggina') clean = 'regina';
+    return clean;
   },
 
   /**
-   * Genera varianti morfologiche italiane (lemmatizzazione verbi e singolari).
+   * Genera varianti morfologiche italiane (lemmatizzazione verbi, participi e singolari).
    */
   generateMorphologicalVariants(term) {
     if (!term || term.length < 3) return [];
     const variants = [];
     const t = term.toLowerCase();
+
+    // Participi passati e aggettivi deverbali
+    if (t.endsWith('ita')) {
+      variants.push(t.slice(0, -3) + 'ire');
+      variants.push(t.slice(0, -3) + 'irsi');
+      variants.push(t.slice(0, -3) + 'ire');
+    } else if (t.endsWith('ito')) {
+      variants.push(t.slice(0, -3) + 'ire');
+      variants.push(t.slice(0, -3) + 'irsi');
+    } else if (t.endsWith('ata')) {
+      variants.push(t.slice(0, -3) + 'are');
+      variants.push(t.slice(0, -3) + 'arsi');
+    } else if (t.endsWith('ato')) {
+      variants.push(t.slice(0, -3) + 'are');
+      variants.push(t.slice(0, -3) + 'arsi');
+    } else if (t.endsWith('uta')) {
+      variants.push(t.slice(0, -3) + 'ere');
+    } else if (t.endsWith('uto')) {
+      variants.push(t.slice(0, -3) + 'ere');
+    }
 
     // Verbi coniugati
     if (t.endsWith('iscono')) {

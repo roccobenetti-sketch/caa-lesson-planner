@@ -417,5 +417,96 @@ Regole:
       <rect width="96" height="96" x="2" y="2" rx="14" fill="#ffffff" stroke="#f1f5f9" stroke-width="2"/>
       ${innerContent}
     </svg>`;
+  },
+
+  /**
+   * Genera un pittogramma SVG personalizzato tramite l'IA di Gemini partendo da una descrizione testuale.
+   * Restituisce un Data URI in formato base64 compatibile al 100% con tutti i browser e con la stampa.
+   * @param {string} description - Descrizione del soggetto o azione (es. "regina travestita con cappuccio")
+   * @param {string} [categoryHint='misc']
+   * @returns {Promise<string>} Data URI SVG
+   */
+  async generateAiPictogramSvg(description, categoryHint = 'misc') {
+    const activeKey = ConfigManager.getActiveApiKey();
+    const model = ConfigManager.state.model || 'gemini-3.1-flash-lite';
+
+    if (!activeKey) {
+      throw new Error('Chiave API Gemini mancante. Inserisci la tua chiave nelle impostazioni per generare con IA.');
+    }
+
+    const cleanDesc = (description || '').trim();
+    if (!cleanDesc) {
+      throw new Error('Inserisci una descrizione valida per generare il simbolo.');
+    }
+
+    const systemInstructions = `Sei un maestro illustratore specializzato in Comunicazione Aumentativa e Alternativa (CAA) e grafica vettoriale SVG didattica per bisogni comunicativi speciali (stile ARASAAC).
+Il tuo compito è generare ESCLUSIVAMENTE codice SVG puro per rappresentare visivamente e simbolicamente il soggetto richiesto.
+
+LINEE GUIDA VETTORIALI:
+1. Usa rigorosamente un riquadro: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+2. Includi un rettangolo di sfondo bianco pulito: <rect width="96" height="96" x="2" y="2" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="2"/>
+3. Disegna figure chiare, stilizzate, espressive ed essenziali, con contorni neri o scuri ben definiti: stroke="#1e293b" con stroke-width tra 2.5 e 3.5, stroke-linecap="round", stroke-linejoin="round".
+4. Usa campiture di colori piatti, vivaci, allegri e ad alto contrasto (es. rosso, giallo, blu, verde, arancione, toni pelle).
+5. NON inserire testo o scritte all'interno del disegno SVG (la scritta è gestita esternamente).
+6. Rispondi TASSATIVAMENTE con il solo codice SVG (<svg ...>...</svg>). Niente spiegazioni, niente markdown, niente testo prima o dopo.`;
+
+    const userPrompt = `Disegna il simbolo CAA per: "${cleanDesc}".`;
+
+    const geminiPayload = {
+      systemInstruction: { parts: [{ text: systemInstructions }] },
+      contents: [{ parts: [{ text: userPrompt }] }],
+      generationConfig: {
+        temperature: 0.2,
+        maxOutputTokens: 2048
+      }
+    };
+
+    let rawSvg = '';
+    try {
+      const response = await fetch('/api/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          apiKey: activeKey,
+          model: model,
+          geminiPayload: geminiPayload
+        })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error?.message || errorData.error || `HTTP ${response.status}`);
+      }
+
+      const result = await response.json();
+      rawSvg = result?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    } catch (err) {
+      console.warn('Proxy fallito, tentativo browser diretto:', err.message);
+      const directUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${activeKey}`;
+      const directResponse = await fetch(directUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(geminiPayload)
+      });
+      if (!directResponse.ok) {
+        const errJson = await directResponse.json().catch(() => ({}));
+        throw new Error(errJson.error?.message || `Errore Gemini HTTP ${directResponse.status}`);
+      }
+      const directResult = await directResponse.json();
+      rawSvg = directResult?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    }
+
+    // Estrai il tag SVG puro se avvolto da blocchi markdown
+    const svgMatch = rawSvg.match(/<svg[\s\S]*?<\/svg>/i);
+    let validSvg = svgMatch ? svgMatch[0] : '';
+
+    if (!validSvg || !validSvg.includes('viewBox')) {
+      console.warn('Risposta SVG non valida o assente, applico fallback procedurale arricchito');
+      validSvg = this.createProceduralSvg(cleanDesc, categoryHint);
+    }
+
+    // Converti in Data URI base64
+    const base64Svg = btoa(unescape(encodeURIComponent(validSvg)));
+    return `data:image/svg+xml;base64,${base64Svg}`;
   }
 };

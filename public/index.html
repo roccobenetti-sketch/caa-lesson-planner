@@ -301,29 +301,67 @@
     </div>
   </div>
 
-  <!-- Modale Ricerca e Cambio Pittogramma ARASAAC -->
+  <!-- Modale Selezione e Creazione Pittogramma (ARASAAC & IA) -->
   <div id="searchModal" class="no-print fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4 hidden">
     <div class="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-xl border border-slate-200 space-y-4">
       <div class="flex items-center justify-between pb-3 border-b border-slate-200">
         <div>
-          <h3 class="text-lg font-bold text-slate-900">Catalogo Simboli ARASAAC</h3>
-          <p id="searchModalTokenTitle" class="text-xs text-slate-500">Seleziona o cerca un'alternativa</p>
+          <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+            <span>🖼️ Simbolo CAA</span>
+          </h3>
+          <p id="searchModalTokenTitle" class="text-xs text-slate-500">Scegli dal catalogo o creane uno su misura con l'IA</p>
         </div>
-        <button id="btnCloseSearchModal" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg">✕</button>
+        <button id="btnCloseSearchModal" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg text-lg">✕</button>
       </div>
 
-      <!-- Barra di ricerca nel catalogo -->
-      <div class="flex gap-2">
-        <input type="text" id="inputArasaacSearch" class="flex-1 px-3 py-2 border border-slate-300 rounded-lg text-sm text-slate-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Cerca termine (es. mangiare, zaino, correre)..." />
-        <button id="btnSearchArasaac" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition">
-          Cerca
+      <!-- Tab Selettore: Catalogo ARASAAC vs Generatore IA -->
+      <div class="flex border-b border-slate-200 gap-2">
+        <button id="tabBtnArasaac" type="button" class="px-4 py-2 text-xs font-bold border-b-2 border-blue-600 text-blue-700 flex items-center gap-1.5 transition">
+          📁 Catalogo ARASAAC
+        </button>
+        <button id="tabBtnAiGenerator" type="button" class="px-4 py-2 text-xs font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-800 flex items-center gap-1.5 transition">
+          ✨ Crea con IA
         </button>
       </div>
 
-      <!-- Risultati Pittogrammi -->
-      <div id="arasaacSearchResults" class="grid grid-cols-3 sm:grid-cols-4 gap-3 max-h-80 overflow-y-auto p-1">
-        <!-- Generato dinamicamente -->
+      <!-- Sezione 1: Catalogo ARASAAC -->
+      <div id="tabContentArasaac" class="space-y-3">
+        <!-- Barra di ricerca nel catalogo -->
+        <div class="flex gap-2">
+          <input type="text" id="inputArasaacSearch" class="flex-1 px-3 py-2 border border-slate-300 rounded-lg text-sm text-slate-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Cerca termine (es. regina, corona, travestirsi, mela)..." />
+          <button id="btnSearchArasaac" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-semibold transition">
+            Cerca
+          </button>
+        </div>
+
+        <!-- Risultati Pittogrammi -->
+        <div id="arasaacSearchResults" class="grid grid-cols-3 sm:grid-cols-4 gap-3 max-h-72 overflow-y-auto p-1">
+          <!-- Generato dinamicamente -->
+        </div>
       </div>
+
+      <!-- Sezione 2: Generazione con IA -->
+      <div id="tabContentAi" class="space-y-4 hidden">
+        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 rounded-xl p-3.5 text-xs text-slate-700 leading-relaxed">
+          <span class="font-bold text-blue-900">✨ Disegna con l'IA:</span> descrivi qualsiasi soggetto, personaggio o azione (anche complessa o fiabesca, come <em>"regina travestita da vecchia con cappuccio nero"</em>). L'IA creerà un pittogramma SVG vettoriale in stile CAA che verrà salvato permanentemente nella tua scheda.
+        </div>
+
+        <div class="space-y-2">
+          <label for="inputAiPictogramPrompt" class="block text-xs font-bold text-slate-700">Descrizione del Simbolo desiderato:</label>
+          <div class="flex flex-col sm:flex-row gap-2">
+            <input type="text" id="inputAiPictogramPrompt" class="flex-1 px-3 py-2.5 border border-slate-300 rounded-xl text-sm text-slate-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Es: regina travestita con mantello nero e mela rossa..." />
+            <button id="btnGenerateAiPictogram" type="button" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl shadow-sm transition flex items-center justify-center gap-1.5 whitespace-nowrap">
+              <span>✨ Genera con IA</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Anteprima del simbolo IA generato -->
+        <div id="aiPictogramPreviewArea" class="border border-dashed border-slate-200 rounded-2xl p-4 bg-slate-50 flex flex-col items-center justify-center min-h-[140px] text-center">
+          <p class="text-xs text-slate-400">Nessun simbolo IA generato al momento. Scrivi la descrizione sopra e premi "Genera con IA".</p>
+        </div>
+      </div>
+
     </div>
   </div>
 

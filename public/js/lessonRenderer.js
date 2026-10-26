@@ -613,7 +613,7 @@ export const LessonRenderer = {
   /**
    * Sostituisce il pittogramma di un token specifico.
    */
-  updateTokenPictogram(cardRef, tokenIndex, pictogramId, imageUrl) {
+  updateTokenPictogram(cardRef, tokenIndex, pictogramId, imageUrl, isCustom = false) {
     if (!this.currentLesson) return;
     let token = null;
     if (cardRef === 'moral') {
@@ -624,6 +624,7 @@ export const LessonRenderer = {
     if (token) {
       token.pictogramId = pictogramId;
       token.imageUrl = imageUrl;
+      token.customImage = isCustom;
     }
   },
 

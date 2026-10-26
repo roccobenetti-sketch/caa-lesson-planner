@@ -1,0 +1,812 @@
+{
+  "title": "Routine della vita di classe",
+  "targetGrade": "primaria",
+  "primaryClass": "1",
+  "layoutType": "routine",
+  "contextSummary": "La routine è stata strutturata in punti essenziali per favorire la comprensione delle regole di convivenza in classe.",
+  "teacherGuide": "Utilizzare le schede per visualizzare la sequenza delle azioni quotidiane. Rinforzare positivamente ogni comportamento corretto associato alla regola.",
+  "moral": {
+    "title": "L'importanza delle regole",
+    "explanation": "Le regole ci aiutano a stare bene insieme, a rispettarci e a imparare meglio in un ambiente sereno.",
+    "tokens": [
+      {
+        "displayWord": "Regole",
+        "searchTerm": "regola",
+        "category": "noun",
+        "pictogramId": 34779,
+        "imageUrl": "https://static.arasaac.org/pictograms/34779/34779_500.png",
+        "alternatives": [
+          {
+            "id": 34779,
+            "imageUrl": "https://static.arasaac.org/pictograms/34779/34779_500.png"
+          },
+          {
+            "id": 34794,
+            "imageUrl": "https://static.arasaac.org/pictograms/34794/34794_500.png"
+          }
+        ],
+        "source": "arasaac"
+      },
+      {
+        "displayWord": "aiutano",
+        "searchTerm": "aiutare",
+        "category": "verb",
+        "pictogramId": 32648,
+        "imageUrl": "https://static.arasaac.org/pictograms/32648/32648_500.png",
+        "alternatives": [
+          {
+            "id": 32648,
+            "imageUrl": "https://static.arasaac.org/pictograms/32648/32648_500.png"
+          },
+          {
+            "id": 4570,
+            "imageUrl": "https://static.arasaac.org/pictograms/4570/4570_500.png"
+          },
+          {
+            "id": 9046,
+            "imageUrl": "https://static.arasaac.org/pictograms/9046/9046_500.png"
+          },
+          {
+            "id": 10141,
+            "imageUrl": "https://static.arasaac.org/pictograms/10141/10141_500.png"
+          },
+          {
+            "id": 10178,
+            "imageUrl": "https://static.arasaac.org/pictograms/10178/10178_500.png"
+          },
+          {
+            "id": 37538,
+            "imageUrl": "https://static.arasaac.org/pictograms/37538/37538_500.png"
+          },
+          {
+            "id": 37539,
+            "imageUrl": "https://static.arasaac.org/pictograms/37539/37539_500.png"
+          }
+        ],
+        "source": "arasaac"
+      },
+      {
+        "displayWord": "stare",
+        "searchTerm": "stare",
+        "category": "verb",
+        "pictogramId": 36392,
+        "imageUrl": "https://static.arasaac.org/pictograms/36392/36392_500.png",
+        "alternatives": [
+          {
+            "id": 36392,
+            "imageUrl": "https://static.arasaac.org/pictograms/36392/36392_500.png"
+          },
+          {
+            "id": 5466,
+            "imageUrl": "https://static.arasaac.org/pictograms/5466/5466_500.png"
+          },
+          {
+            "id": 5465,
+            "imageUrl": "https://static.arasaac.org/pictograms/5465/5465_500.png"
+          },
+          {
+            "id": 5858,
+            "imageUrl": "https://static.arasaac.org/pictograms/5858/5858_500.png"
+          },
+          {
+            "id": 35986,
+            "imageUrl": "https://static.arasaac.org/pictograms/35986/35986_500.png"
+          },
+          {
+            "id": 8033,
+            "imageUrl": "https://static.arasaac.org/pictograms/8033/8033_500.png"
+          },
+          {
+            "id": 13368,
+            "imageUrl": "https://static.arasaac.org/pictograms/13368/13368_500.png"
+          },
+          {
+            "id": 24036,
+            "imageUrl": "https://static.arasaac.org/pictograms/24036/24036_500.png"
+          }
+        ],
+        "source": "arasaac"
+      },
+      {
+        "displayWord": "bene",
+        "searchTerm": "bene",
+        "category": "adjective",
+        "pictogramId": 5397,
+        "imageUrl": "https://static.arasaac.org/pictograms/5397/5397_500.png",
+        "alternatives": [
+          {
+            "id": 5397,
+            "imageUrl": "https://static.arasaac.org/pictograms/5397/5397_500.png"
+          },
+          {
+            "id": 36259,
+            "imageUrl": "https://static.arasaac.org/pictograms/36259/36259_500.png"
+          },
+          {
+            "id": 6898,
+            "imageUrl": "https://static.arasaac.org/pictograms/6898/6898_500.png"
+          },
+          {
+            "id": 29634,
+            "imageUrl": "https://static.arasaac.org/pictograms/29634/29634_500.png"
+          },
+          {
+            "id": 24711,
+            "imageUrl": "https://static.arasaac.org/pictograms/24711/24711_500.png"
+          },
+          {
+            "id": 29635,
+            "imageUrl": "https://static.arasaac.org/pictograms/29635/29635_500.png"
+          },
+          {
+            "id": 6600,
+            "imageUrl": "https://static.arasaac.org/pictograms/6600/6600_500.png"
+          },
+          {
+            "id": 37721,
+            "imageUrl": "https://static.arasaac.org/pictograms/37721/37721_500.png"
+          }
+        ],
+        "source": "arasaac"
+      }
+    ]
+  },
+  "cards": [
+    {
+      "sectionTitle": "Ingresso",
+      "stepLabel": "Entrare in classe",
+      "pedagogicalExplanation": "Il momento dell'arrivo e dell'accoglienza.",
+      "tokens": [
+        {
+          "displayWord": "Io",
+          "searchTerm": "io",
+          "category": "person",
+          "pictogramId": 6632,
+          "imageUrl": "https://static.arasaac.org/pictograms/6632/6632_500.png",
+          "alternatives": [
+            {
+              "id": 6632,
+              "imageUrl": "https://static.arasaac.org/pictograms/6632/6632_500.png"
+            },
+            {
+              "id": 2617,
+              "imageUrl": "https://static.arasaac.org/pictograms/2617/2617_500.png"
+            },
+            {
+              "id": 7309,
+              "imageUrl": "https://static.arasaac.org/pictograms/7309/7309_500.png"
+            },
+            {
+              "id": 7310,
+              "imageUrl": "https://static.arasaac.org/pictograms/7310/7310_500.png"
+            },
+            {
+              "id": 31807,
+              "imageUrl": "https://static.arasaac.org/pictograms/31807/31807_500.png"
+            },
+            {
+              "id": 7180,
+              "imageUrl": "https://static.arasaac.org/pictograms/7180/7180_500.png"
+            },
+            {
+              "id": 5441,
+              "imageUrl": "https://static.arasaac.org/pictograms/5441/5441_500.png"
+            },
+            {
+              "id": 11593,
+              "imageUrl": "https://static.arasaac.org/pictograms/11593/11593_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "entro",
+          "searchTerm": "entrare",
+          "category": "verb",
+          "pictogramId": 2742,
+          "imageUrl": "https://static.arasaac.org/pictograms/2742/2742_500.png",
+          "alternatives": [
+            {
+              "id": 2742,
+              "imageUrl": "https://static.arasaac.org/pictograms/2742/2742_500.png"
+            },
+            {
+              "id": 6491,
+              "imageUrl": "https://static.arasaac.org/pictograms/6491/6491_500.png"
+            },
+            {
+              "id": 26811,
+              "imageUrl": "https://static.arasaac.org/pictograms/26811/26811_500.png"
+            },
+            {
+              "id": 28687,
+              "imageUrl": "https://static.arasaac.org/pictograms/28687/28687_500.png"
+            },
+            {
+              "id": 39398,
+              "imageUrl": "https://static.arasaac.org/pictograms/39398/39398_500.png"
+            },
+            {
+              "id": 31374,
+              "imageUrl": "https://static.arasaac.org/pictograms/31374/31374_500.png"
+            },
+            {
+              "id": 34647,
+              "imageUrl": "https://static.arasaac.org/pictograms/34647/34647_500.png"
+            },
+            {
+              "id": 37428,
+              "imageUrl": "https://static.arasaac.org/pictograms/37428/37428_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "in",
+          "searchTerm": "in",
+          "category": "misc",
+          "pictogramId": 7034,
+          "imageUrl": "https://static.arasaac.org/pictograms/7034/7034_500.png",
+          "alternatives": [
+            {
+              "id": 7034,
+              "imageUrl": "https://static.arasaac.org/pictograms/7034/7034_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "classe",
+          "searchTerm": "classe",
+          "category": "noun",
+          "pictogramId": 9815,
+          "imageUrl": "https://static.arasaac.org/pictograms/9815/9815_500.png",
+          "alternatives": [
+            {
+              "id": 9815,
+              "imageUrl": "https://static.arasaac.org/pictograms/9815/9815_500.png"
+            },
+            {
+              "id": 5913,
+              "imageUrl": "https://static.arasaac.org/pictograms/5913/5913_500.png"
+            },
+            {
+              "id": 9814,
+              "imageUrl": "https://static.arasaac.org/pictograms/9814/9814_500.png"
+            },
+            {
+              "id": 15734,
+              "imageUrl": "https://static.arasaac.org/pictograms/15734/15734_500.png"
+            },
+            {
+              "id": 33072,
+              "imageUrl": "https://static.arasaac.org/pictograms/33072/33072_500.png"
+            },
+            {
+              "id": 39686,
+              "imageUrl": "https://static.arasaac.org/pictograms/39686/39686_500.png"
+            },
+            {
+              "id": 39122,
+              "imageUrl": "https://static.arasaac.org/pictograms/39122/39122_500.png"
+            },
+            {
+              "id": 38627,
+              "imageUrl": "https://static.arasaac.org/pictograms/38627/38627_500.png"
+            }
+          ],
+          "source": "arasaac"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "Ascolto",
+      "stepLabel": "Ascoltare la maestra",
+      "pedagogicalExplanation": "L'importanza del silenzio per comprendere le istruzioni.",
+      "tokens": [
+        {
+          "displayWord": "Ascolto",
+          "searchTerm": "ascoltare",
+          "category": "verb",
+          "pictogramId": 6572,
+          "imageUrl": "https://static.arasaac.org/pictograms/6572/6572_500.png",
+          "alternatives": [
+            {
+              "id": 6572,
+              "imageUrl": "https://static.arasaac.org/pictograms/6572/6572_500.png"
+            },
+            {
+              "id": 2381,
+              "imageUrl": "https://static.arasaac.org/pictograms/2381/2381_500.png"
+            },
+            {
+              "id": 28659,
+              "imageUrl": "https://static.arasaac.org/pictograms/28659/28659_500.png"
+            },
+            {
+              "id": 39157,
+              "imageUrl": "https://static.arasaac.org/pictograms/39157/39157_500.png"
+            },
+            {
+              "id": 29719,
+              "imageUrl": "https://static.arasaac.org/pictograms/29719/29719_500.png"
+            },
+            {
+              "id": 35719,
+              "imageUrl": "https://static.arasaac.org/pictograms/35719/35719_500.png"
+            },
+            {
+              "id": 35741,
+              "imageUrl": "https://static.arasaac.org/pictograms/35741/35741_500.png"
+            },
+            {
+              "id": 29718,
+              "imageUrl": "https://static.arasaac.org/pictograms/29718/29718_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "la",
+          "searchTerm": "il",
+          "category": "misc",
+          "pictogramId": 2775,
+          "imageUrl": "https://static.arasaac.org/pictograms/2775/2775_500.png",
+          "alternatives": [
+            {
+              "id": 8476,
+              "imageUrl": "https://static.arasaac.org/pictograms/8476/8476_500.png"
+            },
+            {
+              "id": 27351,
+              "imageUrl": "https://static.arasaac.org/pictograms/27351/27351_500.png"
+            },
+            {
+              "id": 34667,
+              "imageUrl": "https://static.arasaac.org/pictograms/34667/34667_500.png"
+            },
+            {
+              "id": 38574,
+              "imageUrl": "https://static.arasaac.org/pictograms/38574/38574_500.png"
+            },
+            {
+              "id": 37920,
+              "imageUrl": "https://static.arasaac.org/pictograms/37920/37920_500.png"
+            },
+            {
+              "id": 38572,
+              "imageUrl": "https://static.arasaac.org/pictograms/38572/38572_500.png"
+            },
+            {
+              "id": 38573,
+              "imageUrl": "https://static.arasaac.org/pictograms/38573/38573_500.png"
+            },
+            {
+              "id": 35977,
+              "imageUrl": "https://static.arasaac.org/pictograms/35977/35977_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "maestra",
+          "searchTerm": "maestra",
+          "category": "person",
+          "pictogramId": 2456,
+          "imageUrl": "https://static.arasaac.org/pictograms/2456/2456_500.png",
+          "alternatives": [
+            {
+              "id": 2456,
+              "imageUrl": "https://static.arasaac.org/pictograms/2456/2456_500.png"
+            },
+            {
+              "id": 4955,
+              "imageUrl": "https://static.arasaac.org/pictograms/4955/4955_500.png"
+            },
+            {
+              "id": 6555,
+              "imageUrl": "https://static.arasaac.org/pictograms/6555/6555_500.png"
+            },
+            {
+              "id": 28003,
+              "imageUrl": "https://static.arasaac.org/pictograms/28003/28003_500.png"
+            }
+          ],
+          "source": "arasaac"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "Lavoro",
+      "stepLabel": "Lavorare al banco",
+      "pedagogicalExplanation": "L'impegno individuale durante le attività didattiche.",
+      "tokens": [
+        {
+          "displayWord": "Io",
+          "searchTerm": "io",
+          "category": "person",
+          "pictogramId": 6632,
+          "imageUrl": "https://static.arasaac.org/pictograms/6632/6632_500.png",
+          "alternatives": [
+            {
+              "id": 6632,
+              "imageUrl": "https://static.arasaac.org/pictograms/6632/6632_500.png"
+            },
+            {
+              "id": 2617,
+              "imageUrl": "https://static.arasaac.org/pictograms/2617/2617_500.png"
+            },
+            {
+              "id": 7309,
+              "imageUrl": "https://static.arasaac.org/pictograms/7309/7309_500.png"
+            },
+            {
+              "id": 7310,
+              "imageUrl": "https://static.arasaac.org/pictograms/7310/7310_500.png"
+            },
+            {
+              "id": 31807,
+              "imageUrl": "https://static.arasaac.org/pictograms/31807/31807_500.png"
+            },
+            {
+              "id": 7180,
+              "imageUrl": "https://static.arasaac.org/pictograms/7180/7180_500.png"
+            },
+            {
+              "id": 5441,
+              "imageUrl": "https://static.arasaac.org/pictograms/5441/5441_500.png"
+            },
+            {
+              "id": 11593,
+              "imageUrl": "https://static.arasaac.org/pictograms/11593/11593_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "lavoro",
+          "searchTerm": "lavorare",
+          "category": "verb",
+          "pictogramId": 6624,
+          "imageUrl": "https://static.arasaac.org/pictograms/6624/6624_500.png",
+          "alternatives": [
+            {
+              "id": 6624,
+              "imageUrl": "https://static.arasaac.org/pictograms/6624/6624_500.png"
+            },
+            {
+              "id": 2599,
+              "imageUrl": "https://static.arasaac.org/pictograms/2599/2599_500.png"
+            },
+            {
+              "id": 22147,
+              "imageUrl": "https://static.arasaac.org/pictograms/22147/22147_500.png"
+            },
+            {
+              "id": 34393,
+              "imageUrl": "https://static.arasaac.org/pictograms/34393/34393_500.png"
+            },
+            {
+              "id": 37038,
+              "imageUrl": "https://static.arasaac.org/pictograms/37038/37038_500.png"
+            },
+            {
+              "id": 36859,
+              "imageUrl": "https://static.arasaac.org/pictograms/36859/36859_500.png"
+            },
+            {
+              "id": 22801,
+              "imageUrl": "https://static.arasaac.org/pictograms/22801/22801_500.png"
+            },
+            {
+              "id": 26153,
+              "imageUrl": "https://static.arasaac.org/pictograms/26153/26153_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "al",
+          "searchTerm": "al",
+          "category": "misc",
+          "pictogramId": 7034,
+          "imageUrl": "https://static.arasaac.org/pictograms/7034/7034_500.png",
+          "alternatives": [
+            {
+              "id": 7034,
+              "imageUrl": "https://static.arasaac.org/pictograms/7034/7034_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "banco",
+          "searchTerm": "banco",
+          "category": "noun",
+          "pictogramId": 10242,
+          "imageUrl": "https://static.arasaac.org/pictograms/10242/10242_500.png",
+          "alternatives": [
+            {
+              "id": 10242,
+              "imageUrl": "https://static.arasaac.org/pictograms/10242/10242_500.png"
+            },
+            {
+              "id": 34298,
+              "imageUrl": "https://static.arasaac.org/pictograms/34298/34298_500.png"
+            },
+            {
+              "id": 36285,
+              "imageUrl": "https://static.arasaac.org/pictograms/36285/36285_500.png"
+            },
+            {
+              "id": 37356,
+              "imageUrl": "https://static.arasaac.org/pictograms/37356/37356_500.png"
+            },
+            {
+              "id": 38095,
+              "imageUrl": "https://static.arasaac.org/pictograms/38095/38095_500.png"
+            },
+            {
+              "id": 21984,
+              "imageUrl": "https://static.arasaac.org/pictograms/21984/21984_500.png"
+            },
+            {
+              "id": 37158,
+              "imageUrl": "https://static.arasaac.org/pictograms/37158/37158_500.png"
+            },
+            {
+              "id": 31480,
+              "imageUrl": "https://static.arasaac.org/pictograms/31480/31480_500.png"
+            }
+          ],
+          "source": "arasaac"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "Rispetto",
+      "stepLabel": "Aiutare i compagni",
+      "pedagogicalExplanation": "Promuovere la collaborazione e l'empatia tra pari.",
+      "tokens": [
+        {
+          "displayWord": "Aiuto",
+          "searchTerm": "aiutare",
+          "category": "verb",
+          "pictogramId": 32648,
+          "imageUrl": "https://static.arasaac.org/pictograms/32648/32648_500.png",
+          "alternatives": [
+            {
+              "id": 32648,
+              "imageUrl": "https://static.arasaac.org/pictograms/32648/32648_500.png"
+            },
+            {
+              "id": 4570,
+              "imageUrl": "https://static.arasaac.org/pictograms/4570/4570_500.png"
+            },
+            {
+              "id": 9046,
+              "imageUrl": "https://static.arasaac.org/pictograms/9046/9046_500.png"
+            },
+            {
+              "id": 10141,
+              "imageUrl": "https://static.arasaac.org/pictograms/10141/10141_500.png"
+            },
+            {
+              "id": 10178,
+              "imageUrl": "https://static.arasaac.org/pictograms/10178/10178_500.png"
+            },
+            {
+              "id": 37538,
+              "imageUrl": "https://static.arasaac.org/pictograms/37538/37538_500.png"
+            },
+            {
+              "id": 37539,
+              "imageUrl": "https://static.arasaac.org/pictograms/37539/37539_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "i",
+          "searchTerm": "il",
+          "category": "misc",
+          "pictogramId": 2775,
+          "imageUrl": "https://static.arasaac.org/pictograms/2775/2775_500.png",
+          "alternatives": [
+            {
+              "id": 8476,
+              "imageUrl": "https://static.arasaac.org/pictograms/8476/8476_500.png"
+            },
+            {
+              "id": 27351,
+              "imageUrl": "https://static.arasaac.org/pictograms/27351/27351_500.png"
+            },
+            {
+              "id": 34667,
+              "imageUrl": "https://static.arasaac.org/pictograms/34667/34667_500.png"
+            },
+            {
+              "id": 38574,
+              "imageUrl": "https://static.arasaac.org/pictograms/38574/38574_500.png"
+            },
+            {
+              "id": 37920,
+              "imageUrl": "https://static.arasaac.org/pictograms/37920/37920_500.png"
+            },
+            {
+              "id": 38572,
+              "imageUrl": "https://static.arasaac.org/pictograms/38572/38572_500.png"
+            },
+            {
+              "id": 38573,
+              "imageUrl": "https://static.arasaac.org/pictograms/38573/38573_500.png"
+            },
+            {
+              "id": 35977,
+              "imageUrl": "https://static.arasaac.org/pictograms/35977/35977_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "miei",
+          "searchTerm": "mio",
+          "category": "person",
+          "pictogramId": 12264,
+          "imageUrl": "https://static.arasaac.org/pictograms/12264/12264_500.png",
+          "alternatives": [
+            {
+              "id": 12264,
+              "imageUrl": "https://static.arasaac.org/pictograms/12264/12264_500.png"
+            },
+            {
+              "id": 7158,
+              "imageUrl": "https://static.arasaac.org/pictograms/7158/7158_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "compagni",
+          "searchTerm": "compagno",
+          "category": "person",
+          "pictogramId": 38939,
+          "imageUrl": "https://static.arasaac.org/pictograms/38939/38939_500.png",
+          "alternatives": [
+            {
+              "id": 38939,
+              "imageUrl": "https://static.arasaac.org/pictograms/38939/38939_500.png"
+            },
+            {
+              "id": 38940,
+              "imageUrl": "https://static.arasaac.org/pictograms/38940/38940_500.png"
+            },
+            {
+              "id": 39421,
+              "imageUrl": "https://static.arasaac.org/pictograms/39421/39421_500.png"
+            },
+            {
+              "id": 36870,
+              "imageUrl": "https://static.arasaac.org/pictograms/36870/36870_500.png"
+            }
+          ],
+          "source": "arasaac"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "Ordine",
+      "stepLabel": "Mettere in ordine",
+      "pedagogicalExplanation": "La cura degli spazi comuni e del materiale scolastico.",
+      "tokens": [
+        {
+          "displayWord": "Metto",
+          "searchTerm": "mettere",
+          "category": "verb",
+          "pictogramId": 32757,
+          "imageUrl": "https://static.arasaac.org/pictograms/32757/32757_500.png",
+          "alternatives": [
+            {
+              "id": 32757,
+              "imageUrl": "https://static.arasaac.org/pictograms/32757/32757_500.png"
+            },
+            {
+              "id": 6989,
+              "imageUrl": "https://static.arasaac.org/pictograms/6989/6989_500.png"
+            },
+            {
+              "id": 8166,
+              "imageUrl": "https://static.arasaac.org/pictograms/8166/8166_500.png"
+            },
+            {
+              "id": 37920,
+              "imageUrl": "https://static.arasaac.org/pictograms/37920/37920_500.png"
+            },
+            {
+              "id": 34661,
+              "imageUrl": "https://static.arasaac.org/pictograms/34661/34661_500.png"
+            },
+            {
+              "id": 6474,
+              "imageUrl": "https://static.arasaac.org/pictograms/6474/6474_500.png"
+            },
+            {
+              "id": 11745,
+              "imageUrl": "https://static.arasaac.org/pictograms/11745/11745_500.png"
+            },
+            {
+              "id": 30162,
+              "imageUrl": "https://static.arasaac.org/pictograms/30162/30162_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "in",
+          "searchTerm": "in",
+          "category": "misc",
+          "pictogramId": 7034,
+          "imageUrl": "https://static.arasaac.org/pictograms/7034/7034_500.png",
+          "alternatives": [
+            {
+              "id": 7034,
+              "imageUrl": "https://static.arasaac.org/pictograms/7034/7034_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "ordine",
+          "searchTerm": "ordine",
+          "category": "noun",
+          "pictogramId": 37822,
+          "imageUrl": "https://static.arasaac.org/pictograms/37822/37822_500.png",
+          "alternatives": [
+            {
+              "id": 37822,
+              "imageUrl": "https://static.arasaac.org/pictograms/37822/37822_500.png"
+            },
+            {
+              "id": 17300,
+              "imageUrl": "https://static.arasaac.org/pictograms/17300/17300_500.png"
+            },
+            {
+              "id": 36330,
+              "imageUrl": "https://static.arasaac.org/pictograms/36330/36330_500.png"
+            },
+            {
+              "id": 17302,
+              "imageUrl": "https://static.arasaac.org/pictograms/17302/17302_500.png"
+            },
+            {
+              "id": 17298,
+              "imageUrl": "https://static.arasaac.org/pictograms/17298/17298_500.png"
+            },
+            {
+              "id": 36329,
+              "imageUrl": "https://static.arasaac.org/pictograms/36329/36329_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "tutto",
+          "searchTerm": "tutto",
+          "category": "adjective",
+          "pictogramId": 5596,
+          "imageUrl": "https://static.arasaac.org/pictograms/5596/5596_500.png",
+          "alternatives": [
+            {
+              "id": 5596,
+              "imageUrl": "https://static.arasaac.org/pictograms/5596/5596_500.png"
+            }
+          ],
+          "source": "arasaac"
+        }
+      ]
+    }
+  ],
+  "id": "routine_della_vita_di_classe_1793039355491",
+  "createdAt": "2026-10-26T18:29:15.491Z",
+  "updatedAt": "2026-10-26T18:29:15Z"
+}
