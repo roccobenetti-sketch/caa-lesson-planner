@@ -16,6 +16,7 @@ class CAAApp {
     this.cachedProjects = [];
     this.currentProjectFilter = 'all';
     this.lastSavedSnapshot = null;
+    this.aiReferenceImages = [];
   }
 
   async init() {
@@ -190,6 +191,12 @@ class CAAApp {
       inputAiPictogramPrompt.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') this.handleGenerateAiPictogram();
       });
+    }
+
+    // File upload immagini di riferimento per l'IA
+    const inputAiRefImageFile = document.getElementById('inputAiRefImageFile');
+    if (inputAiRefImageFile) {
+      inputAiRefImageFile.addEventListener('change', (e) => this.handleAiRefFileUpload(e));
     }
 
     // Selettore dello stile grafico AI (Stilizzato CAA vs Realistico vs Fiabesco)
@@ -677,6 +684,7 @@ class CAAApp {
     // Assicura che si apra sul tab ARASAAC e aggiorna badge
     this.switchModalTab('arasaac');
     this.refreshCustomPictosBadge();
+    this.initAiReferenceCarousel(token);
 
     modal?.classList.remove('hidden');
 
@@ -757,7 +765,183 @@ class CAAApp {
   }
 
   /**
+   * Inizializza il carosello dei riferimenti visivi dell'IA con i simboli della lezione corrente.
+   * Se il token corrente possiede già un'immagine valida, lo imposta come riferimento attivo iniziale.
+   * @param {Object} currentToken
+   */
+  initAiReferenceCarousel(currentToken) {
+    this.aiReferenceImages = [];
+
+    // Se il token corrente ha già un'immagine reale, aggiungilo come riferimento predefinito
+    if (currentToken && currentToken.imageUrl && !String(currentToken.imageUrl).includes('placeholder')) {
+      this.aiReferenceImages.push({
+        name: (currentToken.displayWord || currentToken.searchTerm || 'PERSONAGGIO').toLocaleUpperCase('it-IT'),
+        imageUrl: currentToken.imageUrl
+      });
+    }
+
+    // Estrai tutti i simboli con immagine dalla lezione corrente
+    const carousel = document.getElementById('aiLessonTokensCarousel');
+    if (!carousel) return;
+
+    const availableTokens = [];
+    const seenUrls = new Set();
+
+    const addTokenCandidate = (tok) => {
+      if (!tok || !tok.imageUrl || String(tok.imageUrl).includes('placeholder')) return;
+      if (seenUrls.has(tok.imageUrl)) return;
+      seenUrls.add(tok.imageUrl);
+      availableTokens.push({
+        name: (tok.displayWord || tok.searchTerm || 'SIMBOLO').toLocaleUpperCase('it-IT'),
+        imageUrl: tok.imageUrl
+      });
+    };
+
+    if (LessonRenderer.currentLesson?.cards) {
+      LessonRenderer.currentLesson.cards.forEach(c => {
+        (c.tokens || []).forEach(addTokenCandidate);
+      });
+    }
+    if (LessonRenderer.currentLesson?.moral?.tokens) {
+      LessonRenderer.currentLesson.moral.tokens.forEach(addTokenCandidate);
+    }
+
+    if (availableTokens.length === 0) {
+      carousel.innerHTML = '<span class="text-[11px] text-slate-400 italic py-1">Nessun altro simbolo presente nella lezione attuale. Puoi caricare foto dal PC.</span>';
+    } else {
+      carousel.innerHTML = availableTokens.map((item, idx) => {
+        const safeName = this.escapeHtml(item.name);
+        const encodedUrl = encodeURIComponent(item.imageUrl);
+        return `
+          <button type="button" 
+                  class="ai-carousel-token-btn flex items-center gap-1.5 px-2 py-1 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 transition shrink-0 shadow-2xs group cursor-pointer text-left"
+                  data-img-url="${encodedUrl}"
+                  data-img-name="${safeName}"
+                  onclick="window.app.toggleAiReferenceImage('${safeName}', decodeURIComponent('${encodedUrl}'))"
+                  title="Clicca per aggiungere/rimuovere ${safeName} come riferimento visivo">
+            <img src="${item.imageUrl}" class="w-7 h-7 object-contain rounded bg-white shrink-0 pointer-events-none" alt="${safeName}" />
+            <span class="text-[11px] font-bold text-slate-700 group-hover:text-indigo-600 truncate max-w-[90px]">${safeName}</span>
+          </button>
+        `;
+      }).join('');
+    }
+
+    this.renderAiActiveReferenceList();
+  }
+
+  /**
+   * Aggiorna visivamente l'elenco dei riferimenti visivi attivi e gli stili nel carosello.
+   */
+  renderAiActiveReferenceList() {
+    const listEl = document.getElementById('aiActiveRefList');
+    const badgeCount = document.getElementById('aiRefImagesCount');
+    const placeholder = document.getElementById('aiActiveRefPlaceholder');
+
+    const count = this.aiReferenceImages.length;
+    if (badgeCount) {
+      badgeCount.textContent = String(count);
+      if (count > 0) {
+        badgeCount.classList.remove('hidden');
+      } else {
+        badgeCount.classList.add('hidden');
+      }
+    }
+
+    if (listEl) {
+      if (count === 0) {
+        listEl.innerHTML = '<span id="aiActiveRefPlaceholder" class="text-[11px] text-slate-400 italic">Nessun riferimento selezionato (l\'IA inventerà la figura da zero).</span>';
+      } else {
+        listEl.innerHTML = this.aiReferenceImages.map((ref, idx) => {
+          const safeName = this.escapeHtml(ref.name || `Riferimento ${idx + 1}`);
+          return `
+            <div class="inline-flex items-center gap-1.5 pl-1.5 pr-2 py-1 rounded-xl border-2 border-indigo-400 bg-indigo-50 shadow-xs text-xs font-bold text-indigo-950">
+              <img src="${ref.imageUrl}" class="w-6 h-6 object-contain rounded bg-white border border-indigo-200 shrink-0" alt="${safeName}" />
+              <span class="truncate max-w-[120px]">${safeName}</span>
+              <button type="button" 
+                      class="text-indigo-600 hover:text-red-600 hover:bg-red-50 p-0.5 rounded-full text-xs font-bold transition ml-0.5" 
+                      onclick="window.app.removeAiReferenceImage(${idx})"
+                      title="Rimuovi questo riferimento visivo">✕</button>
+            </div>
+          `;
+        }).join('');
+      }
+    }
+
+    // Aggiorna lo stato visivo (attivo / inattivo) nei bottoni del carosello
+    document.querySelectorAll('.ai-carousel-token-btn').forEach(btn => {
+      const url = decodeURIComponent(btn.getAttribute('data-img-url') || '');
+      const isSelected = this.aiReferenceImages.some(r => r.imageUrl === url);
+      if (isSelected) {
+        btn.className = 'ai-carousel-token-btn flex items-center gap-1.5 px-2 py-1 rounded-xl border-2 border-indigo-600 bg-indigo-100/70 shadow-xs shrink-0 cursor-pointer text-left';
+      } else {
+        btn.className = 'ai-carousel-token-btn flex items-center gap-1.5 px-2 py-1 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 transition shrink-0 shadow-2xs group cursor-pointer text-left';
+      }
+    });
+  }
+
+  /**
+   * Aggiunge o rimuove un riferimento visivo per l'IA.
+   * @param {string} name
+   * @param {string} imageUrl
+   */
+  toggleAiReferenceImage(name, imageUrl) {
+    if (!imageUrl) return;
+    const existingIdx = this.aiReferenceImages.findIndex(r => r.imageUrl === imageUrl);
+    if (existingIdx >= 0) {
+      this.aiReferenceImages.splice(existingIdx, 1);
+    } else {
+      if (this.aiReferenceImages.length >= 5) {
+        this.showToast('Puoi selezionare al massimo 5 immagini di riferimento contemporaneamente.', 'error');
+        return;
+      }
+      this.aiReferenceImages.push({ name: name || 'RIFERIMENTO', imageUrl });
+    }
+    this.renderAiActiveReferenceList();
+  }
+
+  /**
+   * Rimuove un riferimento visivo in base all'indice.
+   * @param {number} index
+   */
+  removeAiReferenceImage(index) {
+    if (index >= 0 && index < this.aiReferenceImages.length) {
+      this.aiReferenceImages.splice(index, 1);
+      this.renderAiActiveReferenceList();
+    }
+  }
+
+  /**
+   * Gestisce il caricamento manuale di foto/disegni dal computer dell'utente per l'IA.
+   * @param {Event} e
+   */
+  handleAiRefFileUpload(e) {
+    const files = Array.from(e.target.files || []);
+    if (!files.length) return;
+
+    files.forEach(file => {
+      if (this.aiReferenceImages.length >= 5) {
+        this.showToast('Limite di 5 immagini di riferimento raggiunto.', 'error');
+        return;
+      }
+      const reader = new FileReader();
+      const cleanName = file.name.replace(/\.[^/.]+$/, '').toLocaleUpperCase('it-IT');
+      reader.onload = (uploadEvt) => {
+        const dataUrl = uploadEvt.target.result;
+        this.aiReferenceImages.push({
+          name: cleanName,
+          imageUrl: dataUrl
+        });
+        this.renderAiActiveReferenceList();
+      };
+      reader.readAsDataURL(file);
+    });
+
+    e.target.value = '';
+  }
+
+  /**
    * Genera un pittogramma SVG personalizzato tramite l'IA di Gemini.
+   * Include il supporto multimodale per la continuità visiva di uno o più personaggi.
    */
   async handleGenerateAiPictogram() {
     const input = document.getElementById('inputAiPictogramPrompt');
@@ -768,11 +952,19 @@ class CAAApp {
     }
 
     const previewArea = document.getElementById('aiPictogramPreviewArea');
+    const refCount = this.aiReferenceImages.length;
+    const refNames = this.aiReferenceImages.map(r => r.name).join(' + ');
+
     if (previewArea) {
+      const waitMessage = refCount > 0
+        ? `Analisi visiva di "${refNames}" e generazione coerente...`
+        : `Creazione del pittogramma vettoriale con l'IA...`;
+
       previewArea.innerHTML = `
         <div class="py-6 flex flex-col items-center justify-center space-y-3">
           <div class="w-10 h-10 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
-          <p class="text-xs font-semibold text-slate-700">Creazione del pittogramma vettoriale con l'IA...</p>
+          <p class="text-xs font-semibold text-slate-700">${this.escapeHtml(waitMessage)}</p>
+          ${refCount > 0 ? `<span class="text-[10px] text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded-full font-bold border border-indigo-200">🎭 Guida visiva attiva: ${refCount} ${refCount === 1 ? 'figura' : 'figure'}</span>` : ''}
         </div>
       `;
     }
@@ -786,7 +978,12 @@ class CAAApp {
       }
 
       const selectedStyle = document.querySelector('input[name="aiPictogramStyle"]:checked')?.value || 'stylized';
-      const svgDataUri = await GeminiService.generateAiPictogramSvg(promptText, selectedStyle, category);
+      const svgDataUri = await GeminiService.generateAiPictogramSvg(
+        promptText,
+        selectedStyle,
+        category,
+        this.aiReferenceImages
+      );
       const defaultName = promptText.toLocaleUpperCase('it-IT');
       
       if (previewArea) {

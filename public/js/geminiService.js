@@ -420,17 +420,96 @@ Regole:
   },
 
   /**
+   * Converte un URL di immagine (remoto ARASAAC, data URI o SVG) in Base64 per le chiamate multimodali a Gemini.
+   * @param {string} imageUrl
+   * @param {number} [maxDim=512]
+   * @returns {Promise<{ mimeType: string, base64: string }>}
+   */
+  async convertImageToBase64Data(imageUrl, maxDim = 512) {
+    if (!imageUrl) throw new Error('URL immagine mancante');
+
+    // Se è già un Data URI base64 raster (png, jpeg, webp)
+    const base64Match = imageUrl.match(/^data:([^;]+);base64,(.+)$/);
+    if (base64Match && !base64Match[1].includes('svg')) {
+      return { mimeType: base64Match[1], base64: base64Match[2] };
+    }
+
+    // Caricamento su canvas HTML5 per renderizzare qualsiasi formato (SVG, PNG, JPEG) in PNG normalizzato
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+
+      const fallbackBlob = async () => {
+        try {
+          const resp = await fetch(imageUrl);
+          const blob = await resp.blob();
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            const match = String(reader.result).match(/^data:([^;]+);base64,(.+)$/);
+            if (match) resolve({ mimeType: match[1], base64: match[2] });
+            else reject(new Error('Conversione blob fallita'));
+          };
+          reader.onerror = reject;
+          reader.readAsDataURL(blob);
+        } catch (e) {
+          reject(e);
+        }
+      };
+
+      img.onload = () => {
+        try {
+          const canvas = document.createElement('canvas');
+          let width = img.naturalWidth || img.width || 256;
+          let height = img.naturalHeight || img.height || 256;
+          if (width > maxDim || height > maxDim) {
+            if (width > height) {
+              height = Math.round((height * maxDim) / width);
+              width = maxDim;
+            } else {
+              width = Math.round((width * maxDim) / height);
+              height = maxDim;
+            }
+          }
+          canvas.width = Math.max(width, 64);
+          canvas.height = Math.max(height, 64);
+          const ctx = canvas.getContext('2d');
+          ctx.fillStyle = '#ffffff';
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          const pngDataUrl = canvas.toDataURL('image/png');
+          const match = pngDataUrl.match(/^data:([^;]+);base64,(.+)$/);
+          if (match) {
+            resolve({ mimeType: 'image/png', base64: match[2] });
+          } else {
+            fallbackBlob();
+          }
+        } catch (cErr) {
+          fallbackBlob();
+        }
+      };
+
+      img.onerror = () => {
+        fallbackBlob();
+      };
+
+      img.src = imageUrl;
+    });
+  },
+
+  /**
    * Genera un pittogramma SVG personalizzato tramite l'IA di Gemini partendo da una descrizione testuale.
    * Supporta stili multipli: 'stylized' (simbolico CAA), 'realistic' (realistico dettagliato) e 'storybook' (fiabesco).
+   * Supporta riferimenti visivi multimodali (una o più immagini per continuità di personaggi e oggetti).
    * Restituisce un Data URI in formato base64 compatibile al 100% con tutti i browser e con la stampa.
-   * @param {string} description - Descrizione del soggetto o azione (es. "regina travestita con cappuccio")
+   * @param {string} description - Descrizione del soggetto o azione (es. "Biancaneve che si alza dal letto")
    * @param {'stylized'|'realistic'|'storybook'} [style='stylized'] - Stile grafico desiderato
    * @param {string} [categoryHint='misc']
+   * @param {Array<{ name?: string, imageUrl: string }>} [referenceImages=[]] - Lista di immagini di riferimento visivo
    * @returns {Promise<string>} Data URI SVG
    */
-  async generateAiPictogramSvg(description, style = 'stylized', categoryHint = 'misc') {
+  async generateAiPictogramSvg(description, style = 'stylized', categoryHint = 'misc', referenceImages = []) {
     const activeKey = ConfigManager.getActiveApiKey();
-    const model = ConfigManager.state.model || 'gemini-3.1-flash-lite';
+    const model = ConfigManager.state.model || 'gemini-2.5-flash';
 
     if (!activeKey) {
       throw new Error('Chiave API Gemini mancante. Inserisci la tua chiave nelle impostazioni per generare con IA.');
@@ -477,11 +556,55 @@ LINEE GUIDA VETTORIALI CAA:
 6. Rispondi TASSATIVAMENTE con il solo codice SVG (<svg ...>...</svg>). Niente spiegazioni, niente markdown, niente testo prima o dopo.`;
     }
 
-    const userPrompt = `Disegna il soggetto: "${cleanDesc}". Stile richiesto: ${style}.`;
+    // Costruzione delle parti del prompt (supporto multimodale se presenti immagini di riferimento)
+    const contentParts = [];
+    let userPromptText = '';
+
+    if (referenceImages && referenceImages.length > 0) {
+      for (let i = 0; i < referenceImages.length; i++) {
+        const ref = referenceImages[i];
+        try {
+          const converted = await this.convertImageToBase64Data(ref.imageUrl);
+          if (converted && converted.base64) {
+            contentParts.push({
+              inline_data: {
+                mime_type: converted.mimeType || 'image/png',
+                data: converted.base64
+              }
+            });
+          }
+        } catch (imgErr) {
+          console.warn(`Impossibile convertire immagine di riferimento ${i + 1} (${ref.name || 'rif'}):`, imgErr);
+        }
+      }
+    }
+
+    const hasRefImages = contentParts.length > 0;
+    if (hasRefImages) {
+      if (contentParts.length === 1) {
+        const refName = referenceImages[0]?.name || 'Personaggio / Soggetto';
+        userPromptText = `Ho allegato 1 immagine di riferimento visivo per il personaggio/elemento "${refName}".
+REGOLE DI CONTINUITÀ VISIVA E VEROSIMIGLIANZA:
+1. Esamina attentamente l'immagine allegata: osserva i tratti del personaggio (es. colore e acconciatura capelli, espressione, viso), i colori precisi degli abiti (vestito, mantello, accessori) e lo stile grafico generale.
+2. Disegna la nuova scena o azione richiesta: "${cleanDesc}". Stile richiesto: ${style}.
+3. Continuità assoluta: il soggetto nella nuova scena DEVE essere inequivocabilmente lo stesso personaggio dell'immagine allegata, con gli stessi colori e gli stessi abiti, ma adattato e raffigurato nella nuova azione/posa richiesta.`;
+      } else {
+        const namesList = referenceImages.map((r, idx) => `Immagine ${idx + 1} (${r.name || 'Soggetto ' + (idx + 1)})`).join(', ');
+        userPromptText = `Ho allegato ${contentParts.length} immagini di riferimento visivo (${namesList}).
+REGOLE DI CONTINUITÀ E FUSIONE MULTIPLA:
+1. Riconosci ciascun personaggio o elemento dalle rispettive immagini allegate: esamina i loro abiti caratteristici, i colori specifici, la fisionomia e i dettagli distintivi.
+2. Crea una nuova scena congiunta e coerente che li ritrae insieme nell'azione: "${cleanDesc}". Stile richiesto: ${style}.
+3. Mantieni l'aspetto e i colori distintivi di ciascun personaggio visibili nei riferimenti, fondendoli insieme in modo armonico nella stessa scena nello stile grafico "${style}".`;
+      }
+    } else {
+      userPromptText = `Disegna il soggetto: "${cleanDesc}". Stile richiesto: ${style}.`;
+    }
+
+    contentParts.push({ text: userPromptText });
 
     const geminiPayload = {
       systemInstruction: { parts: [{ text: systemInstructions }] },
-      contents: [{ parts: [{ text: userPrompt }] }],
+      contents: [{ parts: contentParts }],
       generationConfig: {
         temperature: style === 'realistic' ? 0.35 : 0.2,
         maxOutputTokens: 4096
