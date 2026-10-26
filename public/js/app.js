@@ -455,6 +455,38 @@ class CAAApp {
   }
 
   /**
+   * Attiva o disattiva l'inclusione di un passaggio nella stampa o nel file PDF.
+   */
+  toggleCardPrint(cardIndex, shouldInclude) {
+    const card = LessonRenderer.currentLesson?.cards?.[cardIndex];
+    if (!card) return;
+    card.includeInPrint = shouldInclude;
+
+    const cardContainer = document.querySelector(`[data-card-index="${cardIndex}"]`);
+    if (cardContainer) {
+      if (shouldInclude) {
+        cardContainer.classList.remove('opacity-70', 'bg-slate-50', 'border-dashed', 'border-slate-300', 'card-excluded-print');
+        cardContainer.classList.add('bg-white');
+      } else {
+        cardContainer.classList.add('opacity-70', 'bg-slate-50', 'border-dashed', 'border-slate-300', 'card-excluded-print');
+        cardContainer.classList.remove('bg-white');
+      }
+    }
+
+    const statusText = shouldInclude ? 'incluso nella stampa/PDF' : 'escluso dalla stampa/PDF';
+    this.showToast(`Passaggio ${cardIndex + 1} ${statusText}.`);
+  }
+
+  /**
+   * Gestisce errori di caricamento immagine sostituendoli al volo con vettoriali garantiti.
+   */
+  handleImageError(imgElement, word, category) {
+    if (!imgElement) return;
+    imgElement.onerror = null;
+    imgElement.src = GeminiService.createProceduralSvgDataUri(word, category);
+  }
+
+  /**
    * Modifica in tempo reale la descrizione del passaggio in alto (dopo il numero).
    */
   updateStepLabel(cardIndex, newLabel) {

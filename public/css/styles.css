@@ -147,6 +147,24 @@ body {
     print-color-adjust: exact !important;
   }
 
+  /* Esclusione delle schede deselezionate dalla stampa o dal PDF */
+  .card-excluded-print {
+    display: none !important;
+  }
+
+  /* Rinumerazione sequenziale automatica dei passaggi stampati */
+  #cardsContainer {
+    counter-reset: print-step-counter;
+  }
+
+  .caa-step-card:not(.card-excluded-print) {
+    counter-increment: print-step-counter;
+  }
+
+  .print-step-badge::before {
+    content: counter(print-step-counter);
+  }
+
   .print-only {
     display: inline-block !important;
   }

@@ -7,10 +7,161 @@
   "layoutType": "routine",
   "detailLevel": "detailed",
   "createdAt": "2026-10-26T15:00:00Z",
-  "updatedAt": "2026-10-26T16:43:15Z",
+  "updatedAt": "2026-10-26T17:01:32Z",
   "cards": [
     {
-      "sectionTitle": "Personaggi Principali",
+      "sectionTitle": "I PERSONAGGI PRINCIPALI ",
+      "stepLabel": "BIANCANEVE LA STREGA I 7 NANI IL PRINCIPE LO SPECCHIO",
+      "pedagogicalExplanation": "Passaggio personalizzato aggiunto dall'insegnante",
+      "tokens": [
+        {
+          "displayWord": "BIANCANEVE",
+          "searchTerm": "Biancaneve",
+          "category": "person",
+          "pictogramId": 21447,
+          "imageUrl": "https://static.arasaac.org/pictograms/21447/21447_500.png",
+          "alternatives": [
+            {
+              "id": 21447,
+              "imageUrl": "https://static.arasaac.org/pictograms/21447/21447_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "STREGA",
+          "searchTerm": "strega",
+          "category": "person",
+          "pictogramId": 5404,
+          "imageUrl": "https://static.arasaac.org/pictograms/5404/5404_500.png",
+          "alternatives": [
+            {
+              "id": 5404,
+              "imageUrl": "https://static.arasaac.org/pictograms/5404/5404_500.png"
+            },
+            {
+              "id": 5105,
+              "imageUrl": "https://static.arasaac.org/pictograms/5105/5105_500.png"
+            },
+            {
+              "id": 8697,
+              "imageUrl": "https://static.arasaac.org/pictograms/8697/8697_500.png"
+            },
+            {
+              "id": 36382,
+              "imageUrl": "https://static.arasaac.org/pictograms/36382/36382_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "7",
+          "searchTerm": "sette",
+          "category": "adjective",
+          "pictogramId": 2633,
+          "imageUrl": "https://static.arasaac.org/pictograms/2633/2633_500.png",
+          "alternatives": [
+            {
+              "id": 2633,
+              "imageUrl": "https://static.arasaac.org/pictograms/2633/2633_500.png"
+            },
+            {
+              "id": 4895,
+              "imageUrl": "https://static.arasaac.org/pictograms/4895/4895_500.png"
+            },
+            {
+              "id": 7248,
+              "imageUrl": "https://static.arasaac.org/pictograms/7248/7248_500.png"
+            },
+            {
+              "id": 35685,
+              "imageUrl": "https://static.arasaac.org/pictograms/35685/35685_500.png"
+            },
+            {
+              "id": 39384,
+              "imageUrl": "https://static.arasaac.org/pictograms/39384/39384_500.png"
+            },
+            {
+              "id": 39380,
+              "imageUrl": "https://static.arasaac.org/pictograms/39380/39380_500.png"
+            },
+            {
+              "id": 29540,
+              "imageUrl": "https://static.arasaac.org/pictograms/29540/29540_500.png"
+            },
+            {
+              "id": 39360,
+              "imageUrl": "https://static.arasaac.org/pictograms/39360/39360_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "NANI",
+          "searchTerm": "nano",
+          "category": "person",
+          "pictogramId": 5450,
+          "imageUrl": "https://static.arasaac.org/pictograms/5450/5450_500.png",
+          "alternatives": [
+            {
+              "id": 5450,
+              "imageUrl": "https://static.arasaac.org/pictograms/5450/5450_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "PRINCIPE",
+          "searchTerm": "principe",
+          "category": "person",
+          "pictogramId": 5555,
+          "imageUrl": "https://static.arasaac.org/pictograms/5555/5555_500.png",
+          "alternatives": [
+            {
+              "id": 5555,
+              "imageUrl": "https://static.arasaac.org/pictograms/5555/5555_500.png"
+            },
+            {
+              "id": 39169,
+              "imageUrl": "https://static.arasaac.org/pictograms/39169/39169_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "SPECCHIO",
+          "searchTerm": "specchio",
+          "category": "noun",
+          "pictogramId": 8573,
+          "imageUrl": "https://static.arasaac.org/pictograms/8573/8573_500.png",
+          "alternatives": [
+            {
+              "id": 8573,
+              "imageUrl": "https://static.arasaac.org/pictograms/8573/8573_500.png"
+            },
+            {
+              "id": 2385,
+              "imageUrl": "https://static.arasaac.org/pictograms/2385/2385_500.png"
+            },
+            {
+              "id": 37922,
+              "imageUrl": "https://static.arasaac.org/pictograms/37922/37922_500.png"
+            },
+            {
+              "id": 36408,
+              "imageUrl": "https://static.arasaac.org/pictograms/36408/36408_500.png"
+            },
+            {
+              "id": 35221,
+              "imageUrl": "https://static.arasaac.org/pictograms/35221/35221_500.png"
+            }
+          ],
+          "source": "arasaac"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "Inizio della storia",
       "stepLabel": "BIANCANEVE È PRINCIPESSA BUONA E BELLISSIMA",
       "pedagogicalExplanation": "Presentazione della protagonista e del suo carattere accogliente",
       "tokens": [
@@ -821,7 +972,7 @@
       ]
     },
     {
-      "sectionTitle": "Passaggi Aggiuntivi",
+      "sectionTitle": "I 7 nani si allontanano ",
       "stepLabel": "i 7 NANI VANNO A LAVORARE IN MINIERA",
       "pedagogicalExplanation": "Passaggio personalizzato aggiunto dall'insegnante",
       "tokens": [
@@ -1333,7 +1484,7 @@
       ]
     },
     {
-      "sectionTitle": "Passaggi Aggiuntivi",
+      "sectionTitle": "I 7 nani tornano",
       "stepLabel": "I 7NANI TORNANO DA LAVORO E TROVANO BIANCANEVE ADDORMENTATA",
       "pedagogicalExplanation": "Passaggio personalizzato aggiunto dall'insegnante",
       "tokens": [
@@ -1562,8 +1713,8 @@
       ]
     },
     {
-      "sectionTitle": "Passaggi Aggiuntivi",
-      "stepLabel": "IL PRINCIPE AZZURRO ARRIVA ALLA CASA DEI 7 NANI E TROVA BIANCANEVE ADDORMENTATA",
+      "sectionTitle": "Arrivo del principe azzurro",
+      "stepLabel": "Il principe azzurro arriva alla casa dei 7 nani e trova biancaneve addormentata",
       "pedagogicalExplanation": "Passaggio personalizzato aggiunto dall'insegnante",
       "tokens": [
         {
@@ -1884,48 +2035,6 @@
           "source": "arasaac"
         },
         {
-          "displayWord": "che",
-          "searchTerm": "che",
-          "category": "misc",
-          "pictogramId": 22620,
-          "imageUrl": "https://static.arasaac.org/pictograms/22620/22620_500.png",
-          "alternatives": [
-            {
-              "id": 22620,
-              "imageUrl": "https://static.arasaac.org/pictograms/22620/22620_500.png"
-            },
-            {
-              "id": 11351,
-              "imageUrl": "https://static.arasaac.org/pictograms/11351/11351_500.png"
-            },
-            {
-              "id": 22624,
-              "imageUrl": "https://static.arasaac.org/pictograms/22624/22624_500.png"
-            },
-            {
-              "id": 26989,
-              "imageUrl": "https://static.arasaac.org/pictograms/26989/26989_500.png"
-            },
-            {
-              "id": 38808,
-              "imageUrl": "https://static.arasaac.org/pictograms/38808/38808_500.png"
-            },
-            {
-              "id": 10274,
-              "imageUrl": "https://static.arasaac.org/pictograms/10274/10274_500.png"
-            },
-            {
-              "id": 10369,
-              "imageUrl": "https://static.arasaac.org/pictograms/10369/10369_500.png"
-            },
-            {
-              "id": 38483,
-              "imageUrl": "https://static.arasaac.org/pictograms/38483/38483_500.png"
-            }
-          ],
-          "source": "arasaac"
-        },
-        {
           "displayWord": "si",
           "searchTerm": "si",
           "category": "misc",
@@ -2091,48 +2200,6 @@
         "source": "arasaac"
       },
       {
-        "displayWord": "e",
-        "searchTerm": "e",
-        "category": "misc",
-        "pictogramId": 2361,
-        "imageUrl": "https://static.arasaac.org/pictograms/2361/2361_500.png",
-        "alternatives": [
-          {
-            "id": 3026,
-            "imageUrl": "https://static.arasaac.org/pictograms/3026/3026_500.png"
-          },
-          {
-            "id": 3096,
-            "imageUrl": "https://static.arasaac.org/pictograms/3096/3096_500.png"
-          },
-          {
-            "id": 11399,
-            "imageUrl": "https://static.arasaac.org/pictograms/11399/11399_500.png"
-          },
-          {
-            "id": 36744,
-            "imageUrl": "https://static.arasaac.org/pictograms/36744/36744_500.png"
-          },
-          {
-            "id": 36783,
-            "imageUrl": "https://static.arasaac.org/pictograms/36783/36783_500.png"
-          },
-          {
-            "id": 37578,
-            "imageUrl": "https://static.arasaac.org/pictograms/37578/37578_500.png"
-          },
-          {
-            "id": 6641,
-            "imageUrl": "https://static.arasaac.org/pictograms/6641/6641_500.png"
-          },
-          {
-            "id": 25544,
-            "imageUrl": "https://static.arasaac.org/pictograms/25544/25544_500.png"
-          }
-        ],
-        "source": "arasaac"
-      },
-      {
         "displayWord": "amicizia",
         "searchTerm": "amicizia",
         "category": "noun",
@@ -2189,7 +2256,7 @@
         "source": "arasaac"
       },
       {
-        "displayWord": "cattiveria",
+        "displayWord": "CATTIVERIA",
         "searchTerm": "cattiveria",
         "category": "adjective",
         "pictogramId": 32652,

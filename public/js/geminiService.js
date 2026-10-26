@@ -355,6 +355,29 @@ Regole:
   },
 
   /**
+   * Generatore procedurale garantito istantaneo di pittogrammi vettoriali in formato Data URI.
+   */
+  createProceduralSvgDataUri(word, category) {
+    const termKey = String(word || '').toLowerCase().trim();
+    if (this.svgFallbackCache.has(termKey)) {
+      return this.svgFallbackCache.get(termKey);
+    }
+    const svgCode = this.createProceduralSvg(termKey, category);
+    const dataUrl = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgCode)));
+    this.svgFallbackCache.set(termKey, dataUrl);
+    return dataUrl;
+  },
+
+  /**
+   * Restituisce un pittogramma SVG garantito per qualsiasi termine senza attese né errori di rete.
+   * @param {string} word
+   * @param {string} category
+   */
+  async generateFallbackPictogramSvg(word, category = 'misc') {
+    return this.createProceduralSvgDataUri(word, category);
+  },
+
+  /**
    * Generatore procedurale di pittogrammi vettoriali CAA istantaneo e garantito al 100%.
    */
   createProceduralSvg(word, category) {

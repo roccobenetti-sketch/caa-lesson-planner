@@ -8,6 +8,109 @@ export const ArasaacService = {
   STATIC_IMG_URL: 'https://static.arasaac.org/pictograms',
   cache: new Map(),
 
+  // Mappa diretta garantita per parole grammaticali frequenti e particelle CAA
+  DIRECT_MAP: {
+    // Congiunzioni e avverbi
+    'e': 11399,
+    'ed': 11399,
+    'o': 31550,
+    'oppure': 31550,
+    'ma': 31549,
+    'però': 31549,
+    'perché': 31551,
+    'poiché': 31551,
+    'se': 31552,
+    'non': 5526,
+    'no': 5526,
+    'sì': 5528,
+    'anche': 31548,
+    'molto': 2503,
+    'poco': 2504,
+    'subito': 32154,
+    'dopo': 7034,
+    'prima': 7034,
+    'poi': 7034,
+    'sempre': 31548,
+    
+    // Preposizioni semplici e articolate
+    'in': 7034,
+    'nel': 7034,
+    'nello': 7034,
+    'nella': 7034,
+    'nei': 7034,
+    'negli': 7034,
+    'nelle': 7034,
+    'dentro': 7034,
+    'con': 7064,
+    'col': 7064,
+    'coi': 7064,
+    'insieme': 7064,
+    'su': 7164,
+    'sul': 7164,
+    'sullo': 7164,
+    'sulla': 7164,
+    'sui': 7164,
+    'sugli': 7164,
+    'sulle': 7164,
+    'sopra': 7164,
+    'sotto': 7163,
+    'di': 31548,
+    'del': 31548,
+    'dello': 31548,
+    'della': 31548,
+    'dei': 31548,
+    'degli': 31548,
+    'delle': 31548,
+    'da': 7001,
+    'dal': 7001,
+    'dallo': 7001,
+    'dalla': 7001,
+    'dai': 7001,
+    'dagli': 7001,
+    'dalle': 7001,
+    'a': 7034,
+    'al': 7034,
+    'allo': 7034,
+    'alla': 7034,
+    'ai': 7034,
+    'agli': 7034,
+    'alle': 7034,
+    'verso': 7034,
+    'per': 7034,
+    'tra': 7064,
+    'fra': 7064,
+
+    // Verbi ausiliari e di stato
+    'è': 36480,
+    'era': 36480,
+    'sono': 36480,
+    'essere': 36480,
+    'c\'era': 36480,
+    'ha': 7015,
+    'hanno': 7015,
+    'avere': 7015,
+    'fa': 7015,
+    'fanno': 7015,
+    'fare': 7015,
+    'va': 32154,
+    'vanno': 32154,
+    'andare': 32154,
+
+    // Pronomi e numeri
+    'tutti': 5596,
+    'tutto': 5596,
+    'uno': 5456,
+    'due': 5457,
+    'tre': 5458,
+    'quattro': 5459,
+    'cinque': 5460,
+    'sei': 5461,
+    'sette': 5462,
+    'otto': 5463,
+    'nove': 5464,
+    'dieci': 5465
+  },
+
   // Mappa di lemmatizzazione e sinonimi italiani per termini frequenti in CAA
   SYNONYM_MAP: {
     'partono': ['partire', 'andare via', 'partenza', 'viaggiare', 'uscire'],
@@ -29,14 +132,32 @@ export const ArasaacService = {
     'porcellini': ['maiale', 'maialino'],
     'porcellino': ['maiale', 'maialino'],
     'mattoni': ['mattone', 'costruzione'],
+    'mattone': ['mattone', 'costruzione'],
     'paglia': ['paglia', 'fieno'],
+    'legno': ['legno', 'albero'],
     'fretta': ['veloce', 'correre'],
     'frettoloso': ['veloce', 'correre'],
     'pigro': ['dormire', 'stanco', 'riposare'],
     'pigrizia': ['dormire', 'riposare'],
     'saggio': ['pensare', 'intelligente', 'sapere'],
     'protegge': ['proteggere', 'difendere', 'casa'],
-    'proteggono': ['proteggere', 'difendere']
+    'proteggono': ['proteggere', 'difendere'],
+    'costruisce': ['costruire', 'fare', 'lavorare'],
+    'costruiscono': ['costruire', 'fare', 'lavorare'],
+    'mangia': ['mangiare', 'cibo'],
+    'mangiano': ['mangiare', 'cibo'],
+    'dorme': ['dormire', 'letto'],
+    'dormono': ['dormire', 'letto'],
+    'bacia': ['baciare', 'amore'],
+    'bacio': ['baciare', 'amore'],
+    'sveglia': ['svegliarsi', 'alzarsi'],
+    'svegliano': ['svegliarsi', 'alzarsi'],
+    'nani': ['nano', 'gnomo'],
+    'bosco': ['foresta', 'albero'],
+    'mela': ['mela', 'frutta'],
+    'strega': ['strega', 'mago'],
+    'regina': ['regina', 'principessa'],
+    're': ['re', 'principe']
   },
 
   /**
@@ -45,6 +166,50 @@ export const ArasaacService = {
   normalizeTerm(term) {
     if (!term) return '';
     return term.trim().toLowerCase().replace(/[.,;:!?()"'«»]/g, '');
+  },
+
+  /**
+   * Genera varianti morfologiche italiane (lemmatizzazione verbi e singolari).
+   */
+  generateMorphologicalVariants(term) {
+    if (!term || term.length < 3) return [];
+    const variants = [];
+    const t = term.toLowerCase();
+
+    // Verbi coniugati
+    if (t.endsWith('iscono')) {
+      variants.push(t.slice(0, -6) + 'ire');
+    } else if (t.endsWith('isce')) {
+      variants.push(t.slice(0, -4) + 'ire');
+    } else if (t.endsWith('ano')) {
+      variants.push(t.slice(0, -3) + 'are');
+    } else if (t.endsWith('ono')) {
+      variants.push(t.slice(0, -3) + 'ere');
+      variants.push(t.slice(0, -3) + 'ire');
+      variants.push(t.slice(0, -3) + 'are');
+    } else if (t.endsWith('a') && t.length > 3) {
+      variants.push(t.slice(0, -1) + 'are');
+    } else if (t.endsWith('e') && t.length > 3) {
+      variants.push(t.slice(0, -1) + 'ere');
+      variants.push(t.slice(0, -1) + 'ire');
+    }
+
+    // Plurali
+    if (t.endsWith('ini')) {
+      variants.push(t.slice(0, -3) + 'ino');
+      variants.push(t.slice(0, -3) + 'o');
+    } else if (t.endsWith('etti')) {
+      variants.push(t.slice(0, -4) + 'etto');
+    } else if (t.endsWith('elli')) {
+      variants.push(t.slice(0, -4) + 'ello');
+    } else if (t.endsWith('i') && t.length > 3) {
+      variants.push(t.slice(0, -1) + 'o');
+      variants.push(t.slice(0, -1) + 'e');
+    } else if (t.endsWith('e') && t.length > 3) {
+      variants.push(t.slice(0, -1) + 'a');
+    }
+
+    return variants;
   },
 
   /**
@@ -91,7 +256,7 @@ export const ArasaacService = {
   },
 
   /**
-   * Trova il miglior pittogramma per una data parola con strategie di espansione sinonimi.
+   * Trova il miglior pittogramma per una data parola con strategie di espansione sinonimi e lemmatizzazione.
    * @param {string} word 
    * @param {string} lemmaTerm - Lemma o infinito suggerito dall'IA
    */
@@ -99,6 +264,18 @@ export const ArasaacService = {
     const normWord = this.normalizeTerm(word);
     const normLemma = this.normalizeTerm(lemmaTerm);
 
+    // 1. Controllo immediato DIRECT_MAP
+    const directId = this.DIRECT_MAP[normWord] || (normLemma ? this.DIRECT_MAP[normLemma] : null);
+    if (directId) {
+      return {
+        id: directId,
+        imageUrl: this.getPictogramImageUrl(directId),
+        matchedTerm: normWord,
+        alternatives: [{ id: directId, imageUrl: this.getPictogramImageUrl(directId) }]
+      };
+    }
+
+    // 2. Costruzione lista candidati intelligente
     const candidates = [];
     if (normLemma) candidates.push(normLemma);
     if (normWord && normWord !== normLemma) candidates.push(normWord);
@@ -115,6 +292,14 @@ export const ArasaacService = {
       }
     }
 
+    // Aggiunta varianti morfologiche (lemmatizzazione verbi e plurali)
+    for (const v of [...this.generateMorphologicalVariants(normWord), ...this.generateMorphologicalVariants(normLemma)]) {
+      if (v && !candidates.includes(v)) {
+        candidates.push(v);
+      }
+    }
+
+    // Ricerca sequenziale con cache
     for (const term of candidates) {
       if (!term) continue;
       const results = await this.searchPictograms(term);

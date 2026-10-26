@@ -22,6 +22,11 @@ export const LessonRenderer = {
   async populateToken(token) {
     if (!token) return token;
     try {
+      // Se ha già un'immagine valida, mantienila
+      if (token.imageUrl && typeof token.imageUrl === 'string' && token.imageUrl.length > 10 && token.pictogramId !== 'placeholder') {
+        return token;
+      }
+
       const picto = await ArasaacService.getBestPictogram(token.displayWord, token.searchTerm);
       if (picto && picto.imageUrl) {
         token.pictogramId = picto.id;
@@ -29,20 +34,16 @@ export const LessonRenderer = {
         token.alternatives = picto.alternatives || [];
         token.source = 'arasaac';
       } else {
-        const fallbackSvg = await GeminiService.generateFallbackPictogramSvg(token.displayWord, token.category);
-        if (fallbackSvg) {
-          token.pictogramId = 'ai-generated';
-          token.imageUrl = fallbackSvg;
-          token.alternatives = [];
-          token.source = 'ai-generated';
-        } else {
-          token.pictogramId = null;
-          token.imageUrl = null;
-          token.source = 'placeholder';
-        }
+        const fallbackSvg = GeminiService.createProceduralSvgDataUri(token.displayWord, token.category);
+        token.pictogramId = 'procedural-svg';
+        token.imageUrl = fallbackSvg;
+        token.alternatives = [];
+        token.source = 'procedural-svg';
       }
     } catch (err) {
       console.warn(`Errore caricamento pittogramma per ${token.displayWord}:`, err);
+      token.imageUrl = GeminiService.createProceduralSvgDataUri(token.displayWord, token.category);
+      token.pictogramId = 'procedural-svg';
     }
     return token;
   },
@@ -247,12 +248,13 @@ export const LessonRenderer = {
       const currentPhrase = (card.tokens || []).map(t => (typeof t === 'string' ? t : t.displayWord)).join(' ');
 
       html += `
-        <div class="bg-white rounded-xl p-4 border border-slate-200 transition hover:border-slate-300 relative group" data-card-index="${cardIndex}">
+        <div class="caa-step-card bg-white rounded-xl p-4 border border-slate-200 transition hover:border-slate-300 relative group ${card.includeInPrint === false ? 'opacity-70 bg-slate-50 border-dashed border-slate-300 card-excluded-print' : ''}" data-card-index="${cardIndex}">
           
           <!-- Intestazione del Passaggio (Descrizione editabile dopo il numero) -->
           <div class="flex items-center justify-between gap-2 mb-2 border-b border-slate-100 pb-1.5 flex-wrap sm:flex-nowrap">
             <div class="flex items-center gap-2 flex-1 min-w-0">
-              <span class="w-6 h-6 rounded-full bg-blue-600 text-white text-xs flex items-center justify-center font-bold shrink-0 shadow-sm">${cardIndex + 1}</span>
+              <span class="w-6 h-6 rounded-full bg-blue-600 text-white text-xs flex items-center justify-center font-bold shrink-0 shadow-sm no-print">${cardIndex + 1}</span>
+              <span class="w-6 h-6 rounded-full bg-blue-600 text-white text-xs flex items-center justify-center font-bold shrink-0 shadow-sm print-only print-step-badge"></span>
               
               <!-- Input per modificare la descrizione del passaggio a video (No-Print) -->
               <input type="text" 
@@ -269,15 +271,30 @@ export const LessonRenderer = {
               </span>
             </div>
 
-            <!-- Spiegazione pedagogica editabile del passaggio (No-Print) -->
-            <div class="no-print flex items-center gap-1.5 bg-slate-50 border border-slate-200 hover:border-slate-300 rounded-lg px-2 py-1 text-xs text-slate-600">
-              <span class="shrink-0 text-amber-500 text-xs">💡</span>
-              <input type="text" 
-                     class="text-xs italic text-slate-600 bg-transparent border-none focus:outline-none focus:ring-0 w-36 sm:w-64 placeholder-slate-400"
-                     value="${this.escapeHtml(card.pedagogicalExplanation || '')}"
-                     oninput="window.app.updateCardPedagogicalExplanation(${cardIndex}, this.value)"
-                     placeholder="Nota pedagogica..."
-                     title="Clicca per modificare la nota pedagogica del passaggio" />
+            <!-- CONTROLLI: Checkbox Selezione Stampa + Nota Pedagogica (No-Print) -->
+            <div class="no-print flex items-center gap-2 shrink-0">
+              
+              <!-- Casella di spunta per includere/escludere dal PDF/Stampa -->
+              <label class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg border text-xs font-semibold cursor-pointer transition select-none ${card.includeInPrint === false ? 'bg-amber-50 border-amber-300 text-amber-800' : 'bg-emerald-50 border-emerald-300 text-emerald-800 hover:bg-emerald-100'}"
+                     title="Spunta per includere questo passaggio nella stampa o PDF, togli la spunta per escluderlo">
+                <input type="checkbox" 
+                       class="rounded text-emerald-600 focus:ring-emerald-500 h-4 w-4 border-slate-300 cursor-pointer" 
+                       ${card.includeInPrint !== false ? 'checked' : ''} 
+                       onchange="window.app.toggleCardPrint(${cardIndex}, this.checked)" />
+                <span class="hidden sm:inline">${card.includeInPrint !== false ? 'Incluso in Stampa' : 'Escluso da Stampa'}</span>
+                <span class="sm:hidden">${card.includeInPrint !== false ? '✓ PDF' : '✕ PDF'}</span>
+              </label>
+
+              <!-- Spiegazione pedagogica editabile del passaggio -->
+              <div class="flex items-center gap-1.5 bg-slate-50 border border-slate-200 hover:border-slate-300 rounded-lg px-2 py-1 text-xs text-slate-600">
+                <span class="shrink-0 text-amber-500 text-xs">💡</span>
+                <input type="text" 
+                       class="text-xs italic text-slate-600 bg-transparent border-none focus:outline-none focus:ring-0 w-28 sm:w-56 placeholder-slate-400"
+                       value="${this.escapeHtml(card.pedagogicalExplanation || '')}"
+                       oninput="window.app.updateCardPedagogicalExplanation(${cardIndex}, this.value)"
+                       placeholder="Nota pedagogica..."
+                       title="Clicca per modificare la nota pedagogica del passaggio" />
+              </div>
             </div>
           </div>
 
@@ -529,7 +546,9 @@ export const LessonRenderer = {
       : rawToken;
 
     const borderClass = this.getCategoryBorderClass(token.category);
-    const imgUrl = token.imageUrl || 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23f1f5f9"/><text x="50" y="55" font-size="28" font-family="sans-serif" text-anchor="middle" fill="%2394a3b8">?</text></svg>';
+    const imgUrl = (token.imageUrl && typeof token.imageUrl === 'string' && token.imageUrl.length > 5)
+      ? token.imageUrl
+      : GeminiService.createProceduralSvgDataUri(token.displayWord, token.category);
 
     return `
       <div class="caa-card ${borderClass} rounded-xl p-2 flex flex-col items-center justify-between w-28 h-36 md:w-32 md:h-40 cursor-pointer relative group select-none"
@@ -553,12 +572,13 @@ export const LessonRenderer = {
           ${this.escapeHtml(token.displayWord)}
         </div>
 
-        <!-- Immagine Pittogramma -->
+        <!-- Immagine Pittogramma (Con fallback automatico garantito anti-campo vuoto) -->
         <div class="w-20 h-20 md:w-24 md:h-24 flex items-center justify-center p-1 bg-white rounded">
           <img src="${imgUrl}" 
                alt="${this.escapeHtml(token.displayWord)}" 
                class="max-w-full max-h-full object-contain pointer-events-none" 
-               loading="lazy" />
+               loading="lazy"
+               onerror="window.app.handleImageError(this, '${this.escapeHtml(token.displayWord)}', '${token.category}')" />
         </div>
 
         <!-- Categoria o tooltip cambio -->
