@@ -21,6 +21,9 @@ class CAAApp {
     this.setupUIBindings();
     this.updateConfigStatusUI();
     await this.refreshProjectsCount();
+    window.addEventListener('resize', () => {
+      LessonRenderer.adjustAllTokenLabels(document.getElementById('printableArea'));
+    });
     console.log('CAA Lesson Planner inizializzato.');
   }
 
@@ -383,6 +386,17 @@ class CAAApp {
   }
 
   /**
+   * Modifica in tempo reale la descrizione del passaggio in alto (dopo il numero).
+   */
+  updateStepLabel(cardIndex, newLabel) {
+    const card = LessonRenderer.currentLesson?.cards?.[cardIndex];
+    if (!card) return;
+    card.stepLabel = newLabel;
+    const printEl = document.getElementById(`printStepLabel_${cardIndex}`);
+    if (printEl) printEl.textContent = newLabel;
+  }
+
+  /**
    * Modifica la frase scritta di una riga e ne ricrea i simboli CAA.
    */
   async updateRowFromInput(cardIndex) {
@@ -403,7 +417,9 @@ class CAAApp {
       for (const t of tokens) {
         await LessonRenderer.populateToken(t);
       }
-      card.stepLabel = newPhrase;
+      if (!card.stepLabel) {
+        card.stepLabel = newPhrase;
+      }
       card.tokens = tokens;
       LessonRenderer.render(document.getElementById('printableArea'), LessonRenderer.currentLesson);
       this.showToast(`Riga ${cardIndex + 1} aggiornata con successo!`);

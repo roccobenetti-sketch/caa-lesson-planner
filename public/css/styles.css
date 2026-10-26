@@ -47,6 +47,31 @@ body {
   letter-spacing: 0.05em;
 }
 
+/* Etichetta testuale CAA con ridimensionamento automatico dinamico (MAI troncata con '..') */
+.caa-word-label {
+  width: 100%;
+  text-align: center;
+  font-weight: 700;
+  color: #1e293b;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  white-space: normal;
+  word-break: normal;
+  overflow-wrap: break-word;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.2rem;
+  max-height: 2.6rem;
+  line-height: 1.15;
+  padding: 0 2px;
+}
+
+/* Classi visibilità per la stampa */
+.print-only {
+  display: none !important;
+}
+
 /* Striscia di lettura CAA continua */
 .reading-strip {
   display: flex;
@@ -120,5 +145,9 @@ body {
   * {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
+  }
+
+  .print-only {
+    display: inline-block !important;
   }
 }

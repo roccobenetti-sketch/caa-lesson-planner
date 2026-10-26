@@ -206,14 +206,28 @@ export const LessonRenderer = {
       html += `
         <div class="bg-white rounded-xl p-4 border border-slate-200 transition hover:border-slate-300 relative group" data-card-index="${cardIndex}">
           
-          <!-- Intestazione del Passaggio (visibile in stampa) -->
-          <div class="flex items-center justify-between gap-1 mb-2 border-b border-slate-100 pb-1.5">
-            <h3 class="text-sm sm:text-base font-semibold text-slate-800 caa-text flex items-center gap-2">
-              <span class="w-6 h-6 rounded-full bg-blue-600 text-white text-xs flex items-center justify-center font-bold shrink-0">${cardIndex + 1}</span>
-              ${this.escapeHtml(card.stepLabel || `Passo ${cardIndex + 1}`)}
-            </h3>
+          <!-- Intestazione del Passaggio (Descrizione editabile dopo il numero) -->
+          <div class="flex items-center justify-between gap-2 mb-2 border-b border-slate-100 pb-1.5 flex-wrap sm:flex-nowrap">
+            <div class="flex items-center gap-2 flex-1 min-w-0">
+              <span class="w-6 h-6 rounded-full bg-blue-600 text-white text-xs flex items-center justify-center font-bold shrink-0 shadow-sm">${cardIndex + 1}</span>
+              
+              <!-- Input per modificare la descrizione del passaggio a video (No-Print) -->
+              <input type="text" 
+                     class="no-print flex-1 text-sm sm:text-base font-bold text-slate-800 bg-slate-50/70 hover:bg-slate-100 focus:bg-white border border-slate-200 focus:border-blue-500 rounded-lg px-2.5 py-1 transition focus:outline-none focus:ring-2 focus:ring-blue-500/20" 
+                     value="${this.escapeHtml(card.stepLabel || `Passo ${cardIndex + 1}`)}" 
+                     id="inputStepLabel_${cardIndex}"
+                     oninput="window.app.updateStepLabel(${cardIndex}, this.value)"
+                     title="Clicca per modificare la descrizione di questo passaggio"
+                     placeholder="Descrizione del passaggio..." />
+
+              <!-- Testo stampato pulito senza elementi input (Print-Only) -->
+              <span class="print-only font-bold text-sm sm:text-base text-slate-900 caa-text" id="printStepLabel_${cardIndex}">
+                ${this.escapeHtml(card.stepLabel || `Passo ${cardIndex + 1}`)}
+              </span>
+            </div>
+
             ${card.pedagogicalExplanation ? `
-              <span class="text-xs text-slate-500 italic bg-slate-50 px-2 py-0.5 rounded border border-slate-100 no-print">
+              <span class="text-xs text-slate-500 italic bg-slate-50 px-2 py-0.5 rounded border border-slate-100 no-print shrink-0">
                 💡 ${this.escapeHtml(card.pedagogicalExplanation)}
               </span>
             ` : ''}
@@ -413,6 +427,48 @@ export const LessonRenderer = {
     `;
 
     containerElement.innerHTML = html;
+    // Auto-fit dinamico per garantire che ogni testo sia sempre visibile e completo al 100%
+    this.adjustAllTokenLabels(containerElement);
+  },
+
+  /**
+   * Calcola la dimensione del font dell'etichetta CAA in base alla lunghezza
+   * per garantire che la parola sia sempre completa e MAI troncata con '..'.
+   */
+  getWordLabelStyle(text) {
+    if (!text) return '';
+    const clean = String(text).trim();
+    const words = clean.split(/\s+/);
+    const maxWordLen = Math.max(...words.map(w => w.length));
+    const totalLen = clean.length;
+
+    let fontSize = '0.90rem';
+    if (maxWordLen >= 14 || totalLen >= 18) {
+      fontSize = '0.58rem';
+    } else if (maxWordLen >= 11 || totalLen >= 14) {
+      fontSize = '0.66rem';
+    } else if (maxWordLen >= 8 || totalLen >= 10) {
+      fontSize = '0.78rem';
+    }
+
+    return `font-size: ${fontSize};`;
+  },
+
+  /**
+   * Auto-fit fine-grained: riduce progressivamente il font se il testo supera i limiti della tessera.
+   */
+  adjustAllTokenLabels(container) {
+    if (!container) return;
+    const labels = container.querySelectorAll('.caa-word-label');
+    labels.forEach(el => {
+      let currentSize = parseFloat(window.getComputedStyle(el).fontSize);
+      let attempts = 0;
+      while ((el.scrollWidth > (el.clientWidth + 1) || el.scrollHeight > (el.clientHeight + 1)) && currentSize > 7.5 && attempts < 25) {
+        currentSize -= 0.5;
+        el.style.fontSize = `${currentSize}px`;
+        attempts++;
+      }
+    });
   },
 
   /**
@@ -438,8 +494,10 @@ export const LessonRenderer = {
                 onclick="event.stopPropagation(); window.app.deleteToken('${cardRef}', ${tokenIndex})"
                 title="Rimuovi questa parola">✕</button>
 
-        <!-- Etichetta testuale superiore -->
-        <div class="w-full text-center font-bold text-sm md:text-base text-slate-800 caa-text truncate px-1" title="${this.escapeHtml(token.displayWord)}">
+        <!-- Etichetta testuale superiore (Auto-ridimensionata, MAI troncata con '..') -->
+        <div class="caa-word-label caa-text px-1" 
+             style="${this.getWordLabelStyle(token.displayWord)}" 
+             title="${this.escapeHtml(token.displayWord)}">
           ${this.escapeHtml(token.displayWord)}
         </div>
 

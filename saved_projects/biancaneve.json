@@ -7,320 +7,2067 @@
   "layoutType": "routine",
   "detailLevel": "detailed",
   "createdAt": "2026-10-26T15:00:00Z",
-  "updatedAt": "2026-10-26T17:00:00Z",
+  "updatedAt": "2026-10-26T16:27:19Z",
   "cards": [
     {
       "sectionTitle": "Personaggi Principali",
-      "stepLabel": "C'era una volta la principessa Biancaneve buona e gentile",
+      "stepLabel": "BIANCANEVE È PRINCIPESSA BUONA bellissima",
       "pedagogicalExplanation": "Presentazione della protagonista e del suo carattere accogliente",
       "tokens": [
         {
           "displayWord": "BIANCANEVE",
           "searchTerm": "biancaneve",
-          "category": "properNoun",
-          "id": 21447,
-          "imageUrl": "https://api.arasaac.org/api/pictograms/21447?download=false"
+          "category": "person",
+          "pictogramId": 21447,
+          "imageUrl": "https://static.arasaac.org/pictograms/21447/21447_500.png",
+          "alternatives": [
+            {
+              "id": 21447,
+              "imageUrl": "https://static.arasaac.org/pictograms/21447/21447_500.png"
+            }
+          ],
+          "source": "arasaac"
         },
         {
           "displayWord": "È",
           "searchTerm": "essere",
           "category": "verb",
-          "id": 8113,
-          "imageUrl": "https://api.arasaac.org/api/pictograms/8113?download=false"
+          "pictogramId": 36480,
+          "imageUrl": "https://static.arasaac.org/pictograms/36480/36480_500.png",
+          "alternatives": [
+            {
+              "id": 36480,
+              "imageUrl": "https://static.arasaac.org/pictograms/36480/36480_500.png"
+            },
+            {
+              "id": 5466,
+              "imageUrl": "https://static.arasaac.org/pictograms/5466/5466_500.png"
+            },
+            {
+              "id": 5465,
+              "imageUrl": "https://static.arasaac.org/pictograms/5465/5465_500.png"
+            },
+            {
+              "id": 5581,
+              "imageUrl": "https://static.arasaac.org/pictograms/5581/5581_500.png"
+            },
+            {
+              "id": 5858,
+              "imageUrl": "https://static.arasaac.org/pictograms/5858/5858_500.png"
+            },
+            {
+              "id": 16000,
+              "imageUrl": "https://static.arasaac.org/pictograms/16000/16000_500.png"
+            },
+            {
+              "id": 16002,
+              "imageUrl": "https://static.arasaac.org/pictograms/16002/16002_500.png"
+            },
+            {
+              "id": 37609,
+              "imageUrl": "https://static.arasaac.org/pictograms/37609/37609_500.png"
+            }
+          ],
+          "source": "arasaac"
         },
         {
           "displayWord": "PRINCIPESSA",
           "searchTerm": "principessa",
-          "category": "noun",
-          "id": 31375,
-          "imageUrl": "https://api.arasaac.org/api/pictograms/31375?download=false"
+          "category": "person",
+          "pictogramId": 5554,
+          "imageUrl": "https://static.arasaac.org/pictograms/5554/5554_500.png",
+          "alternatives": [
+            {
+              "id": 5554,
+              "imageUrl": "https://static.arasaac.org/pictograms/5554/5554_500.png"
+            },
+            {
+              "id": 34571,
+              "imageUrl": "https://static.arasaac.org/pictograms/34571/34571_500.png"
+            }
+          ],
+          "source": "arasaac"
         },
         {
           "displayWord": "BUONA",
           "searchTerm": "buono",
           "category": "adjective",
-          "id": 2353,
-          "imageUrl": "https://api.arasaac.org/api/pictograms/2353?download=false"
+          "pictogramId": 4581,
+          "imageUrl": "https://static.arasaac.org/pictograms/4581/4581_500.png",
+          "alternatives": [
+            {
+              "id": 4581,
+              "imageUrl": "https://static.arasaac.org/pictograms/4581/4581_500.png"
+            },
+            {
+              "id": 32340,
+              "imageUrl": "https://static.arasaac.org/pictograms/32340/32340_500.png"
+            },
+            {
+              "id": 32432,
+              "imageUrl": "https://static.arasaac.org/pictograms/32432/32432_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "bellissima",
+          "searchTerm": "bello",
+          "category": "adjective",
+          "pictogramId": 26114,
+          "imageUrl": "https://static.arasaac.org/pictograms/26114/26114_500.png",
+          "alternatives": [
+            {
+              "id": 26114,
+              "imageUrl": "https://static.arasaac.org/pictograms/26114/26114_500.png"
+            },
+            {
+              "id": 11194,
+              "imageUrl": "https://static.arasaac.org/pictograms/11194/11194_500.png"
+            },
+            {
+              "id": 4660,
+              "imageUrl": "https://static.arasaac.org/pictograms/4660/4660_500.png"
+            },
+            {
+              "id": 31851,
+              "imageUrl": "https://static.arasaac.org/pictograms/31851/31851_500.png"
+            }
+          ],
+          "source": "arasaac"
         }
       ]
     },
     {
       "sectionTitle": "L'Invidia della Regina",
-      "stepLabel": "La regina cattiva chiede allo specchio magico chi è la più bella",
+      "stepLabel": "REGINA CATTIVA PARLA CON SPECCHIO MAGICO",
       "pedagogicalExplanation": "Introduzione dell'antagonista e del motivo della gelosia",
       "tokens": [
         {
           "displayWord": "REGINA",
           "searchTerm": "regina",
-          "category": "noun",
-          "id": 31374,
-          "imageUrl": "https://api.arasaac.org/api/pictograms/31374?download=false"
+          "category": "person",
+          "pictogramId": 5559,
+          "imageUrl": "https://static.arasaac.org/pictograms/5559/5559_500.png",
+          "alternatives": [
+            {
+              "id": 5559,
+              "imageUrl": "https://static.arasaac.org/pictograms/5559/5559_500.png"
+            },
+            {
+              "id": 34171,
+              "imageUrl": "https://static.arasaac.org/pictograms/34171/34171_500.png"
+            }
+          ],
+          "source": "arasaac"
         },
         {
           "displayWord": "CATTIVA",
           "searchTerm": "cattivo",
           "category": "adjective",
-          "id": 2354,
-          "imageUrl": "https://api.arasaac.org/api/pictograms/2354?download=false"
+          "pictogramId": 4690,
+          "imageUrl": "https://static.arasaac.org/pictograms/4690/4690_500.png",
+          "alternatives": [
+            {
+              "id": 4690,
+              "imageUrl": "https://static.arasaac.org/pictograms/4690/4690_500.png"
+            },
+            {
+              "id": 32192,
+              "imageUrl": "https://static.arasaac.org/pictograms/32192/32192_500.png"
+            },
+            {
+              "id": 32338,
+              "imageUrl": "https://static.arasaac.org/pictograms/32338/32338_500.png"
+            },
+            {
+              "id": 32526,
+              "imageUrl": "https://static.arasaac.org/pictograms/32526/32526_500.png"
+            },
+            {
+              "id": 32652,
+              "imageUrl": "https://static.arasaac.org/pictograms/32652/32652_500.png"
+            },
+            {
+              "id": 38390,
+              "imageUrl": "https://static.arasaac.org/pictograms/38390/38390_500.png"
+            },
+            {
+              "id": 6140,
+              "imageUrl": "https://static.arasaac.org/pictograms/6140/6140_500.png"
+            },
+            {
+              "id": 31957,
+              "imageUrl": "https://static.arasaac.org/pictograms/31957/31957_500.png"
+            }
+          ],
+          "source": "arasaac"
         },
         {
-          "displayWord": "PARLA CON",
+          "displayWord": "PARLA",
           "searchTerm": "parlare",
           "category": "verb",
-          "id": 7114,
-          "imageUrl": "https://api.arasaac.org/api/pictograms/7114?download=false"
+          "pictogramId": 9693,
+          "imageUrl": "https://static.arasaac.org/pictograms/9693/9693_500.png",
+          "alternatives": [
+            {
+              "id": 9693,
+              "imageUrl": "https://static.arasaac.org/pictograms/9693/9693_500.png"
+            },
+            {
+              "id": 6517,
+              "imageUrl": "https://static.arasaac.org/pictograms/6517/6517_500.png"
+            },
+            {
+              "id": 3345,
+              "imageUrl": "https://static.arasaac.org/pictograms/3345/3345_500.png"
+            },
+            {
+              "id": 9692,
+              "imageUrl": "https://static.arasaac.org/pictograms/9692/9692_500.png"
+            },
+            {
+              "id": 28663,
+              "imageUrl": "https://static.arasaac.org/pictograms/28663/28663_500.png"
+            },
+            {
+              "id": 36544,
+              "imageUrl": "https://static.arasaac.org/pictograms/36544/36544_500.png"
+            },
+            {
+              "id": 37415,
+              "imageUrl": "https://static.arasaac.org/pictograms/37415/37415_500.png"
+            },
+            {
+              "id": 6518,
+              "imageUrl": "https://static.arasaac.org/pictograms/6518/6518_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "CON",
+          "searchTerm": "con",
+          "category": "misc",
+          "pictogramId": 2775,
+          "imageUrl": "https://static.arasaac.org/pictograms/2775/2775_500.png",
+          "alternatives": [
+            {
+              "id": 7064,
+              "imageUrl": "https://static.arasaac.org/pictograms/7064/7064_500.png"
+            },
+            {
+              "id": 26989,
+              "imageUrl": "https://static.arasaac.org/pictograms/26989/26989_500.png"
+            },
+            {
+              "id": 27963,
+              "imageUrl": "https://static.arasaac.org/pictograms/27963/27963_500.png"
+            },
+            {
+              "id": 38383,
+              "imageUrl": "https://static.arasaac.org/pictograms/38383/38383_500.png"
+            },
+            {
+              "id": 32720,
+              "imageUrl": "https://static.arasaac.org/pictograms/32720/32720_500.png"
+            },
+            {
+              "id": 30188,
+              "imageUrl": "https://static.arasaac.org/pictograms/30188/30188_500.png"
+            },
+            {
+              "id": 30190,
+              "imageUrl": "https://static.arasaac.org/pictograms/30190/30190_500.png"
+            },
+            {
+              "id": 30186,
+              "imageUrl": "https://static.arasaac.org/pictograms/30186/30186_500.png"
+            }
+          ],
+          "source": "arasaac"
         },
         {
           "displayWord": "SPECCHIO",
           "searchTerm": "specchio",
           "category": "noun",
-          "id": 6176,
-          "imageUrl": "https://api.arasaac.org/api/pictograms/6176?download=false"
+          "pictogramId": 8573,
+          "imageUrl": "https://static.arasaac.org/pictograms/8573/8573_500.png",
+          "alternatives": [
+            {
+              "id": 8573,
+              "imageUrl": "https://static.arasaac.org/pictograms/8573/8573_500.png"
+            },
+            {
+              "id": 2385,
+              "imageUrl": "https://static.arasaac.org/pictograms/2385/2385_500.png"
+            },
+            {
+              "id": 37922,
+              "imageUrl": "https://static.arasaac.org/pictograms/37922/37922_500.png"
+            },
+            {
+              "id": 36408,
+              "imageUrl": "https://static.arasaac.org/pictograms/36408/36408_500.png"
+            },
+            {
+              "id": 35221,
+              "imageUrl": "https://static.arasaac.org/pictograms/35221/35221_500.png"
+            }
+          ],
+          "source": "arasaac"
         },
         {
           "displayWord": "MAGICO",
-          "searchTerm": "magia",
+          "searchTerm": "magico",
           "category": "adjective",
-          "id": 31922,
-          "imageUrl": "https://api.arasaac.org/api/pictograms/31922?download=false"
+          "pictogramId": 5999,
+          "imageUrl": "https://static.arasaac.org/pictograms/5999/5999_500.png",
+          "alternatives": [
+            {
+              "id": 5999,
+              "imageUrl": "https://static.arasaac.org/pictograms/5999/5999_500.png"
+            }
+          ],
+          "source": "arasaac"
         }
       ]
     },
     {
       "sectionTitle": "La Risposta dello Specchio",
-      "stepLabel": "Lo specchio dice che Biancaneve è la più bella del regno",
+      "stepLabel": "SPECCHIO DICE BIANCANEVE BELLA",
       "pedagogicalExplanation": "Momento scatenante del conflitto narrativo",
       "tokens": [
         {
           "displayWord": "SPECCHIO",
           "searchTerm": "specchio",
           "category": "noun",
-          "id": 6176,
-          "imageUrl": "https://api.arasaac.org/api/pictograms/6176?download=false"
+          "pictogramId": 8573,
+          "imageUrl": "https://static.arasaac.org/pictograms/8573/8573_500.png",
+          "alternatives": [
+            {
+              "id": 8573,
+              "imageUrl": "https://static.arasaac.org/pictograms/8573/8573_500.png"
+            },
+            {
+              "id": 2385,
+              "imageUrl": "https://static.arasaac.org/pictograms/2385/2385_500.png"
+            },
+            {
+              "id": 37922,
+              "imageUrl": "https://static.arasaac.org/pictograms/37922/37922_500.png"
+            },
+            {
+              "id": 36408,
+              "imageUrl": "https://static.arasaac.org/pictograms/36408/36408_500.png"
+            },
+            {
+              "id": 35221,
+              "imageUrl": "https://static.arasaac.org/pictograms/35221/35221_500.png"
+            }
+          ],
+          "source": "arasaac"
         },
         {
           "displayWord": "DICE",
           "searchTerm": "dire",
           "category": "verb",
-          "id": 2697,
-          "imageUrl": "https://api.arasaac.org/api/pictograms/2697?download=false"
+          "pictogramId": 9693,
+          "imageUrl": "https://static.arasaac.org/pictograms/9693/9693_500.png",
+          "alternatives": [
+            {
+              "id": 9693,
+              "imageUrl": "https://static.arasaac.org/pictograms/9693/9693_500.png"
+            },
+            {
+              "id": 9692,
+              "imageUrl": "https://static.arasaac.org/pictograms/9692/9692_500.png"
+            },
+            {
+              "id": 28663,
+              "imageUrl": "https://static.arasaac.org/pictograms/28663/28663_500.png"
+            },
+            {
+              "id": 34341,
+              "imageUrl": "https://static.arasaac.org/pictograms/34341/34341_500.png"
+            },
+            {
+              "id": 37807,
+              "imageUrl": "https://static.arasaac.org/pictograms/37807/37807_500.png"
+            },
+            {
+              "id": 32444,
+              "imageUrl": "https://static.arasaac.org/pictograms/32444/32444_500.png"
+            },
+            {
+              "id": 31973,
+              "imageUrl": "https://static.arasaac.org/pictograms/31973/31973_500.png"
+            },
+            {
+              "id": 34521,
+              "imageUrl": "https://static.arasaac.org/pictograms/34521/34521_500.png"
+            }
+          ],
+          "source": "arasaac"
         },
         {
           "displayWord": "BIANCANEVE",
-          "searchTerm": "biancaneve",
-          "category": "properNoun",
-          "id": 21447,
-          "imageUrl": "https://api.arasaac.org/api/pictograms/21447?download=false"
+          "searchTerm": "Biancaneve",
+          "category": "person",
+          "pictogramId": 21447,
+          "imageUrl": "https://static.arasaac.org/pictograms/21447/21447_500.png",
+          "alternatives": [
+            {
+              "id": 21447,
+              "imageUrl": "https://static.arasaac.org/pictograms/21447/21447_500.png"
+            }
+          ],
+          "source": "arasaac"
         },
         {
           "displayWord": "BELLA",
           "searchTerm": "bello",
           "category": "adjective",
-          "id": 2350,
-          "imageUrl": "https://api.arasaac.org/api/pictograms/2350?download=false"
+          "pictogramId": 26114,
+          "imageUrl": "https://static.arasaac.org/pictograms/26114/26114_500.png",
+          "alternatives": [
+            {
+              "id": 26114,
+              "imageUrl": "https://static.arasaac.org/pictograms/26114/26114_500.png"
+            },
+            {
+              "id": 11194,
+              "imageUrl": "https://static.arasaac.org/pictograms/11194/11194_500.png"
+            },
+            {
+              "id": 4660,
+              "imageUrl": "https://static.arasaac.org/pictograms/4660/4660_500.png"
+            },
+            {
+              "id": 31851,
+              "imageUrl": "https://static.arasaac.org/pictograms/31851/31851_500.png"
+            }
+          ],
+          "source": "arasaac"
         }
       ]
     },
     {
       "sectionTitle": "La Fuga nel Bosco",
-      "stepLabel": "Biancaneve ha paura e scappa nel bosco profondo",
+      "stepLabel": "BIANCANEVE HA PAURA CORRE NEL BOSCO",
       "pedagogicalExplanation": "Riconoscimento dell'emozione di paura e reazione protettiva",
       "tokens": [
         {
           "displayWord": "BIANCANEVE",
           "searchTerm": "biancaneve",
-          "category": "properNoun",
-          "id": 21447,
-          "imageUrl": "https://api.arasaac.org/api/pictograms/21447?download=false"
+          "category": "person",
+          "pictogramId": 21447,
+          "imageUrl": "https://static.arasaac.org/pictograms/21447/21447_500.png",
+          "alternatives": [
+            {
+              "id": 21447,
+              "imageUrl": "https://static.arasaac.org/pictograms/21447/21447_500.png"
+            }
+          ],
+          "source": "arasaac"
         },
         {
-          "displayWord": "HA PAURA",
+          "displayWord": "HA",
+          "searchTerm": "avere",
+          "category": "verb",
+          "pictogramId": 32761,
+          "imageUrl": "https://static.arasaac.org/pictograms/32761/32761_500.png",
+          "alternatives": [
+            {
+              "id": 32761,
+              "imageUrl": "https://static.arasaac.org/pictograms/32761/32761_500.png"
+            },
+            {
+              "id": 7271,
+              "imageUrl": "https://static.arasaac.org/pictograms/7271/7271_500.png"
+            },
+            {
+              "id": 32834,
+              "imageUrl": "https://static.arasaac.org/pictograms/32834/32834_500.png"
+            },
+            {
+              "id": 6019,
+              "imageUrl": "https://static.arasaac.org/pictograms/6019/6019_500.png"
+            },
+            {
+              "id": 22127,
+              "imageUrl": "https://static.arasaac.org/pictograms/22127/22127_500.png"
+            },
+            {
+              "id": 35577,
+              "imageUrl": "https://static.arasaac.org/pictograms/35577/35577_500.png"
+            },
+            {
+              "id": 2300,
+              "imageUrl": "https://static.arasaac.org/pictograms/2300/2300_500.png"
+            },
+            {
+              "id": 35569,
+              "imageUrl": "https://static.arasaac.org/pictograms/35569/35569_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "PAURA",
           "searchTerm": "paura",
-          "category": "emotion",
-          "id": 2577,
-          "imageUrl": "https://api.arasaac.org/api/pictograms/2577?download=false"
+          "category": "adjective",
+          "pictogramId": 10261,
+          "imageUrl": "https://static.arasaac.org/pictograms/10261/10261_500.png",
+          "alternatives": [
+            {
+              "id": 10261,
+              "imageUrl": "https://static.arasaac.org/pictograms/10261/10261_500.png"
+            },
+            {
+              "id": 35571,
+              "imageUrl": "https://static.arasaac.org/pictograms/35571/35571_500.png"
+            },
+            {
+              "id": 38417,
+              "imageUrl": "https://static.arasaac.org/pictograms/38417/38417_500.png"
+            },
+            {
+              "id": 39248,
+              "imageUrl": "https://static.arasaac.org/pictograms/39248/39248_500.png"
+            },
+            {
+              "id": 39668,
+              "imageUrl": "https://static.arasaac.org/pictograms/39668/39668_500.png"
+            },
+            {
+              "id": 39697,
+              "imageUrl": "https://static.arasaac.org/pictograms/39697/39697_500.png"
+            },
+            {
+              "id": 38258,
+              "imageUrl": "https://static.arasaac.org/pictograms/38258/38258_500.png"
+            }
+          ],
+          "source": "arasaac"
         },
         {
           "displayWord": "CORRE",
           "searchTerm": "correre",
           "category": "verb",
-          "id": 6982,
-          "imageUrl": "https://api.arasaac.org/api/pictograms/6982?download=false"
+          "pictogramId": 6465,
+          "imageUrl": "https://static.arasaac.org/pictograms/6465/6465_500.png",
+          "alternatives": [
+            {
+              "id": 6465,
+              "imageUrl": "https://static.arasaac.org/pictograms/6465/6465_500.png"
+            },
+            {
+              "id": 2719,
+              "imageUrl": "https://static.arasaac.org/pictograms/2719/2719_500.png"
+            },
+            {
+              "id": 8544,
+              "imageUrl": "https://static.arasaac.org/pictograms/8544/8544_500.png"
+            },
+            {
+              "id": 28439,
+              "imageUrl": "https://static.arasaac.org/pictograms/28439/28439_500.png"
+            },
+            {
+              "id": 28921,
+              "imageUrl": "https://static.arasaac.org/pictograms/28921/28921_500.png"
+            },
+            {
+              "id": 31841,
+              "imageUrl": "https://static.arasaac.org/pictograms/31841/31841_500.png"
+            },
+            {
+              "id": 32093,
+              "imageUrl": "https://static.arasaac.org/pictograms/32093/32093_500.png"
+            },
+            {
+              "id": 39403,
+              "imageUrl": "https://static.arasaac.org/pictograms/39403/39403_500.png"
+            }
+          ],
+          "source": "arasaac"
         },
         {
           "displayWord": "NEL",
           "searchTerm": "in",
-          "category": "preposition",
-          "id": 29887,
-          "imageUrl": "https://api.arasaac.org/api/pictograms/29887?download=false"
+          "category": "misc",
+          "pictogramId": 7034,
+          "imageUrl": "https://static.arasaac.org/pictograms/7034/7034_500.png",
+          "alternatives": [
+            {
+              "id": 7034,
+              "imageUrl": "https://static.arasaac.org/pictograms/7034/7034_500.png"
+            },
+            {
+              "id": 37189,
+              "imageUrl": "https://static.arasaac.org/pictograms/37189/37189_500.png"
+            },
+            {
+              "id": 34679,
+              "imageUrl": "https://static.arasaac.org/pictograms/34679/34679_500.png"
+            },
+            {
+              "id": 37518,
+              "imageUrl": "https://static.arasaac.org/pictograms/37518/37518_500.png"
+            },
+            {
+              "id": 11467,
+              "imageUrl": "https://static.arasaac.org/pictograms/11467/11467_500.png"
+            },
+            {
+              "id": 22209,
+              "imageUrl": "https://static.arasaac.org/pictograms/22209/22209_500.png"
+            },
+            {
+              "id": 27542,
+              "imageUrl": "https://static.arasaac.org/pictograms/27542/27542_500.png"
+            },
+            {
+              "id": 31312,
+              "imageUrl": "https://static.arasaac.org/pictograms/31312/31312_500.png"
+            }
+          ],
+          "source": "arasaac"
         },
         {
           "displayWord": "BOSCO",
           "searchTerm": "bosco",
           "category": "noun",
-          "id": 2341,
-          "imageUrl": "https://api.arasaac.org/api/pictograms/2341?download=false"
+          "pictogramId": 2666,
+          "imageUrl": "https://static.arasaac.org/pictograms/2666/2666_500.png",
+          "alternatives": [
+            {
+              "id": 2666,
+              "imageUrl": "https://static.arasaac.org/pictograms/2666/2666_500.png"
+            },
+            {
+              "id": 32462,
+              "imageUrl": "https://static.arasaac.org/pictograms/32462/32462_500.png"
+            },
+            {
+              "id": 35145,
+              "imageUrl": "https://static.arasaac.org/pictograms/35145/35145_500.png"
+            },
+            {
+              "id": 25869,
+              "imageUrl": "https://static.arasaac.org/pictograms/25869/25869_500.png"
+            }
+          ],
+          "source": "arasaac"
         }
       ]
     },
     {
       "sectionTitle": "L'Incontro con i Sette Nani",
-      "stepLabel": "Biancaneve trova una casetta e fa amicizia con sette nani lavoratori",
+      "stepLabel": "BIANCANEVE TROVA CASA SETTE NANI",
       "pedagogicalExplanation": "L'aiuto reciproco e la costruzione di un rifugio sicuro",
       "tokens": [
         {
           "displayWord": "BIANCANEVE",
           "searchTerm": "biancaneve",
-          "category": "properNoun",
-          "id": 21447,
-          "imageUrl": "https://api.arasaac.org/api/pictograms/21447?download=false"
+          "category": "person",
+          "pictogramId": 21447,
+          "imageUrl": "https://static.arasaac.org/pictograms/21447/21447_500.png",
+          "alternatives": [
+            {
+              "id": 21447,
+              "imageUrl": "https://static.arasaac.org/pictograms/21447/21447_500.png"
+            }
+          ],
+          "source": "arasaac"
         },
         {
           "displayWord": "TROVA",
           "searchTerm": "trovare",
           "category": "verb",
-          "id": 7183,
-          "imageUrl": "https://api.arasaac.org/api/pictograms/7183?download=false"
+          "pictogramId": 24773,
+          "imageUrl": "https://static.arasaac.org/pictograms/24773/24773_500.png",
+          "alternatives": [
+            {
+              "id": 24773,
+              "imageUrl": "https://static.arasaac.org/pictograms/24773/24773_500.png"
+            },
+            {
+              "id": 24742,
+              "imageUrl": "https://static.arasaac.org/pictograms/24742/24742_500.png"
+            },
+            {
+              "id": 24741,
+              "imageUrl": "https://static.arasaac.org/pictograms/24741/24741_500.png"
+            },
+            {
+              "id": 24774,
+              "imageUrl": "https://static.arasaac.org/pictograms/24774/24774_500.png"
+            },
+            {
+              "id": 37246,
+              "imageUrl": "https://static.arasaac.org/pictograms/37246/37246_500.png"
+            },
+            {
+              "id": 38136,
+              "imageUrl": "https://static.arasaac.org/pictograms/38136/38136_500.png"
+            },
+            {
+              "id": 5990,
+              "imageUrl": "https://static.arasaac.org/pictograms/5990/5990_500.png"
+            }
+          ],
+          "source": "arasaac"
         },
         {
           "displayWord": "CASA",
           "searchTerm": "casa",
           "category": "noun",
-          "id": 2383,
-          "imageUrl": "https://api.arasaac.org/api/pictograms/2383?download=false"
+          "pictogramId": 6964,
+          "imageUrl": "https://static.arasaac.org/pictograms/6964/6964_500.png",
+          "alternatives": [
+            {
+              "id": 6964,
+              "imageUrl": "https://static.arasaac.org/pictograms/6964/6964_500.png"
+            },
+            {
+              "id": 2317,
+              "imageUrl": "https://static.arasaac.org/pictograms/2317/2317_500.png"
+            },
+            {
+              "id": 5989,
+              "imageUrl": "https://static.arasaac.org/pictograms/5989/5989_500.png"
+            },
+            {
+              "id": 9861,
+              "imageUrl": "https://static.arasaac.org/pictograms/9861/9861_500.png"
+            },
+            {
+              "id": 39203,
+              "imageUrl": "https://static.arasaac.org/pictograms/39203/39203_500.png"
+            },
+            {
+              "id": 39001,
+              "imageUrl": "https://static.arasaac.org/pictograms/39001/39001_500.png"
+            },
+            {
+              "id": 38882,
+              "imageUrl": "https://static.arasaac.org/pictograms/38882/38882_500.png"
+            },
+            {
+              "id": 38658,
+              "imageUrl": "https://static.arasaac.org/pictograms/38658/38658_500.png"
+            }
+          ],
+          "source": "arasaac"
         },
         {
           "displayWord": "SETTE",
           "searchTerm": "sette",
-          "category": "number",
-          "id": 5462,
-          "imageUrl": "https://api.arasaac.org/api/pictograms/5462?download=false"
+          "category": "adjective",
+          "pictogramId": 2633,
+          "imageUrl": "https://static.arasaac.org/pictograms/2633/2633_500.png",
+          "alternatives": [
+            {
+              "id": 2633,
+              "imageUrl": "https://static.arasaac.org/pictograms/2633/2633_500.png"
+            },
+            {
+              "id": 4895,
+              "imageUrl": "https://static.arasaac.org/pictograms/4895/4895_500.png"
+            },
+            {
+              "id": 7248,
+              "imageUrl": "https://static.arasaac.org/pictograms/7248/7248_500.png"
+            },
+            {
+              "id": 35685,
+              "imageUrl": "https://static.arasaac.org/pictograms/35685/35685_500.png"
+            },
+            {
+              "id": 39384,
+              "imageUrl": "https://static.arasaac.org/pictograms/39384/39384_500.png"
+            },
+            {
+              "id": 39380,
+              "imageUrl": "https://static.arasaac.org/pictograms/39380/39380_500.png"
+            },
+            {
+              "id": 29540,
+              "imageUrl": "https://static.arasaac.org/pictograms/29540/29540_500.png"
+            },
+            {
+              "id": 39360,
+              "imageUrl": "https://static.arasaac.org/pictograms/39360/39360_500.png"
+            }
+          ],
+          "source": "arasaac"
         },
         {
           "displayWord": "NANI",
           "searchTerm": "nano",
+          "category": "person",
+          "pictogramId": 5450,
+          "imageUrl": "https://static.arasaac.org/pictograms/5450/5450_500.png",
+          "alternatives": [
+            {
+              "id": 5450,
+              "imageUrl": "https://static.arasaac.org/pictograms/5450/5450_500.png"
+            }
+          ],
+          "source": "arasaac"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "Passaggi Aggiuntivi",
+      "stepLabel": "i 7 nani vanno a lavoro nella miniera",
+      "pedagogicalExplanation": "Passaggio personalizzato aggiunto dall'insegnante",
+      "tokens": [
+        {
+          "displayWord": "7",
+          "searchTerm": "sette",
+          "category": "adjective",
+          "pictogramId": 2633,
+          "imageUrl": "https://static.arasaac.org/pictograms/2633/2633_500.png",
+          "alternatives": [
+            {
+              "id": 2633,
+              "imageUrl": "https://static.arasaac.org/pictograms/2633/2633_500.png"
+            },
+            {
+              "id": 4895,
+              "imageUrl": "https://static.arasaac.org/pictograms/4895/4895_500.png"
+            },
+            {
+              "id": 7248,
+              "imageUrl": "https://static.arasaac.org/pictograms/7248/7248_500.png"
+            },
+            {
+              "id": 35685,
+              "imageUrl": "https://static.arasaac.org/pictograms/35685/35685_500.png"
+            },
+            {
+              "id": 39384,
+              "imageUrl": "https://static.arasaac.org/pictograms/39384/39384_500.png"
+            },
+            {
+              "id": 39380,
+              "imageUrl": "https://static.arasaac.org/pictograms/39380/39380_500.png"
+            },
+            {
+              "id": 29540,
+              "imageUrl": "https://static.arasaac.org/pictograms/29540/29540_500.png"
+            },
+            {
+              "id": 39360,
+              "imageUrl": "https://static.arasaac.org/pictograms/39360/39360_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "nani",
+          "searchTerm": "nano",
+          "category": "person",
+          "pictogramId": 5450,
+          "imageUrl": "https://static.arasaac.org/pictograms/5450/5450_500.png",
+          "alternatives": [
+            {
+              "id": 5450,
+              "imageUrl": "https://static.arasaac.org/pictograms/5450/5450_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "vanno",
+          "searchTerm": "andare",
+          "category": "verb",
+          "pictogramId": 8142,
+          "imageUrl": "https://static.arasaac.org/pictograms/8142/8142_500.png",
+          "alternatives": [
+            {
+              "id": 8142,
+              "imageUrl": "https://static.arasaac.org/pictograms/8142/8142_500.png"
+            },
+            {
+              "id": 6044,
+              "imageUrl": "https://static.arasaac.org/pictograms/6044/6044_500.png"
+            },
+            {
+              "id": 2432,
+              "imageUrl": "https://static.arasaac.org/pictograms/2432/2432_500.png"
+            },
+            {
+              "id": 3251,
+              "imageUrl": "https://static.arasaac.org/pictograms/3251/3251_500.png"
+            },
+            {
+              "id": 31758,
+              "imageUrl": "https://static.arasaac.org/pictograms/31758/31758_500.png"
+            },
+            {
+              "id": 35093,
+              "imageUrl": "https://static.arasaac.org/pictograms/35093/35093_500.png"
+            },
+            {
+              "id": 32266,
+              "imageUrl": "https://static.arasaac.org/pictograms/32266/32266_500.png"
+            },
+            {
+              "id": 32501,
+              "imageUrl": "https://static.arasaac.org/pictograms/32501/32501_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "lavoro",
+          "searchTerm": "lavoro",
           "category": "noun",
-          "id": 5450,
-          "imageUrl": "https://api.arasaac.org/api/pictograms/5450?download=false"
+          "pictogramId": 6588,
+          "imageUrl": "https://static.arasaac.org/pictograms/6588/6588_500.png",
+          "alternatives": [
+            {
+              "id": 16087,
+              "imageUrl": "https://static.arasaac.org/pictograms/16087/16087_500.png"
+            },
+            {
+              "id": 22147,
+              "imageUrl": "https://static.arasaac.org/pictograms/22147/22147_500.png"
+            },
+            {
+              "id": 37038,
+              "imageUrl": "https://static.arasaac.org/pictograms/37038/37038_500.png"
+            },
+            {
+              "id": 37554,
+              "imageUrl": "https://static.arasaac.org/pictograms/37554/37554_500.png"
+            },
+            {
+              "id": 36950,
+              "imageUrl": "https://static.arasaac.org/pictograms/36950/36950_500.png"
+            },
+            {
+              "id": 25064,
+              "imageUrl": "https://static.arasaac.org/pictograms/25064/25064_500.png"
+            },
+            {
+              "id": 16180,
+              "imageUrl": "https://static.arasaac.org/pictograms/16180/16180_500.png"
+            },
+            {
+              "id": 16178,
+              "imageUrl": "https://static.arasaac.org/pictograms/16178/16178_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "nella",
+          "searchTerm": "in",
+          "category": "misc",
+          "pictogramId": 7034,
+          "imageUrl": "https://static.arasaac.org/pictograms/7034/7034_500.png",
+          "alternatives": [
+            {
+              "id": 7034,
+              "imageUrl": "https://static.arasaac.org/pictograms/7034/7034_500.png"
+            },
+            {
+              "id": 37189,
+              "imageUrl": "https://static.arasaac.org/pictograms/37189/37189_500.png"
+            },
+            {
+              "id": 34679,
+              "imageUrl": "https://static.arasaac.org/pictograms/34679/34679_500.png"
+            },
+            {
+              "id": 37518,
+              "imageUrl": "https://static.arasaac.org/pictograms/37518/37518_500.png"
+            },
+            {
+              "id": 11467,
+              "imageUrl": "https://static.arasaac.org/pictograms/11467/11467_500.png"
+            },
+            {
+              "id": 22209,
+              "imageUrl": "https://static.arasaac.org/pictograms/22209/22209_500.png"
+            },
+            {
+              "id": 27542,
+              "imageUrl": "https://static.arasaac.org/pictograms/27542/27542_500.png"
+            },
+            {
+              "id": 31312,
+              "imageUrl": "https://static.arasaac.org/pictograms/31312/31312_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "miniera",
+          "searchTerm": "miniera",
+          "category": "noun",
+          "pictogramId": 8630,
+          "imageUrl": "https://static.arasaac.org/pictograms/8630/8630_500.png",
+          "alternatives": [
+            {
+              "id": 8630,
+              "imageUrl": "https://static.arasaac.org/pictograms/8630/8630_500.png"
+            },
+            {
+              "id": 26220,
+              "imageUrl": "https://static.arasaac.org/pictograms/26220/26220_500.png"
+            },
+            {
+              "id": 11303,
+              "imageUrl": "https://static.arasaac.org/pictograms/11303/11303_500.png"
+            },
+            {
+              "id": 8631,
+              "imageUrl": "https://static.arasaac.org/pictograms/8631/8631_500.png"
+            },
+            {
+              "id": 8712,
+              "imageUrl": "https://static.arasaac.org/pictograms/8712/8712_500.png"
+            },
+            {
+              "id": 8186,
+              "imageUrl": "https://static.arasaac.org/pictograms/8186/8186_500.png"
+            },
+            {
+              "id": 5943,
+              "imageUrl": "https://static.arasaac.org/pictograms/5943/5943_500.png"
+            },
+            {
+              "id": 16721,
+              "imageUrl": "https://static.arasaac.org/pictograms/16721/16721_500.png"
+            }
+          ],
+          "source": "arasaac"
         }
       ]
     },
     {
       "sectionTitle": "L'Inganno della Mela",
-      "stepLabel": "La strega travestita offre una mela rossa avvelenata",
+      "stepLabel": "reggina travesita vecchietta DA MELA  avvVELENata biacaneve",
       "pedagogicalExplanation": "Il pericolo dell'inganno e la prudenza verso gli sconosciuti",
       "tokens": [
         {
-          "displayWord": "STREGA",
-          "searchTerm": "strega",
-          "category": "noun",
-          "id": 31393,
-          "imageUrl": "https://api.arasaac.org/api/pictograms/31393?download=false"
+          "displayWord": "reggina",
+          "searchTerm": "regina",
+          "category": "person",
+          "pictogramId": 5559,
+          "imageUrl": "https://static.arasaac.org/pictograms/5559/5559_500.png",
+          "alternatives": [
+            {
+              "id": 5559,
+              "imageUrl": "https://static.arasaac.org/pictograms/5559/5559_500.png"
+            },
+            {
+              "id": 34171,
+              "imageUrl": "https://static.arasaac.org/pictograms/34171/34171_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "travesita",
+          "searchTerm": "travestito",
+          "category": "adjective",
+          "pictogramId": "ai-generated",
+          "imageUrl": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCI+CiAgICAgIDxyZWN0IHdpZHRoPSI5NiIgaGVpZ2h0PSI5NiIgeD0iMiIgeT0iMiIgcng9IjE0IiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiNmMWY1ZjkiIHN0cm9rZS13aWR0aD0iMiIvPgogICAgICAKICAgICAgICA8cmVjdCB4PSIyNSIgeT0iMjUiIHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCIgcng9IjEyIiBmaWxsPSIjZWZmNmZmIiBzdHJva2U9IiMzYjgyZjYiIHN0cm9rZS13aWR0aD0iMy41Ii8+CiAgICAgICAgPGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iMTIiIGZpbGw9IiNiZmRiZmUiIHN0cm9rZT0iIzFkNGVkOCIgc3Ryb2tlLXdpZHRoPSIzIi8+CiAgICAgIAogICAgPC9zdmc+",
+          "alternatives": [],
+          "source": "ai-generated"
+        },
+        {
+          "displayWord": "vecchietta",
+          "searchTerm": "vecchietta",
+          "category": "person",
+          "pictogramId": "ai-generated",
+          "imageUrl": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCI+CiAgPCEtLSBDb3JwbyBlIHZlc3RpdG8gLS0+CiAgPHBhdGggZD0iTTMwIDk1IEw3MCA5NSBMNjUgNjAgTDM1IDYwIFoiIGZpbGw9IiNmOGZhZmMiIHN0cm9rZT0iIzFlMjkzYiIgc3Ryb2tlLXdpZHRoPSIzLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgogIAogIDwhLS0gVGVzdGEgLS0+CiAgPGNpcmNsZSBjeD0iNTAiIGN5PSIzNSIgcj0iMTUiIGZpbGw9IiNmZWYzYzciIHN0cm9rZT0iIzFlMjkzYiIgc3Ryb2tlLXdpZHRoPSIzLjUiLz4KICAKICA8IS0tIENhcGVsbGkgKGNoaWdub24pIC0tPgogIDxjaXJjbGUgY3g9IjUwIiBjeT0iMjAiIHI9IjYiIGZpbGw9IiNlMmU4ZjAiIHN0cm9rZT0iIzFlMjkzYiIgc3Ryb2tlLXdpZHRoPSIzLjUiLz4KICAKICA8IS0tIEJhc3RvbmUgLS0+CiAgPHBhdGggZD0iTTc1IDk1IEw3NSA1MCBRNzUgNDAgODUgNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzFlMjkzYiIgc3Ryb2tlLXdpZHRoPSIzLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIAogIDwhLS0gRGV0dGFnbGkgdmlzbyAob2NjaGlhbGkgZSBydWdoZSkgLS0+CiAgPHBhdGggZD0iTTQyIDMyIEw0OCAzMiBNNTIgMzIgTDU4IDMyIE00NSA0MiBRNTAgNDUgNTUgNDIiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzFlMjkzYiIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICAKICA8IS0tIEJyYWNjaWEgLS0+CiAgPHBhdGggZD0iTTM1IDY1IEwyMCA3NSBNNjUgNjUgTDc1IDU1IiBmaWxsPSJub25lIiBzdHJva2U9IiMxZTI5M2IiIHN0cm9rZS13aWR0aD0iMy41IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPC9zdmc+",
+          "alternatives": [],
+          "source": "ai-generated"
         },
         {
           "displayWord": "DA",
           "searchTerm": "dare",
           "category": "verb",
-          "id": 7001,
-          "imageUrl": "https://api.arasaac.org/api/pictograms/7001?download=false"
+          "pictogramId": 28431,
+          "imageUrl": "https://static.arasaac.org/pictograms/28431/28431_500.png",
+          "alternatives": [
+            {
+              "id": 28431,
+              "imageUrl": "https://static.arasaac.org/pictograms/28431/28431_500.png"
+            },
+            {
+              "id": 5447,
+              "imageUrl": "https://static.arasaac.org/pictograms/5447/5447_500.png"
+            },
+            {
+              "id": 17038,
+              "imageUrl": "https://static.arasaac.org/pictograms/17038/17038_500.png"
+            },
+            {
+              "id": 17040,
+              "imageUrl": "https://static.arasaac.org/pictograms/17040/17040_500.png"
+            },
+            {
+              "id": 37139,
+              "imageUrl": "https://static.arasaac.org/pictograms/37139/37139_500.png"
+            },
+            {
+              "id": 34343,
+              "imageUrl": "https://static.arasaac.org/pictograms/34343/34343_500.png"
+            },
+            {
+              "id": 34488,
+              "imageUrl": "https://static.arasaac.org/pictograms/34488/34488_500.png"
+            },
+            {
+              "id": 34489,
+              "imageUrl": "https://static.arasaac.org/pictograms/34489/34489_500.png"
+            }
+          ],
+          "source": "arasaac"
         },
         {
           "displayWord": "MELA",
           "searchTerm": "mela",
           "category": "noun",
-          "id": 2486,
-          "imageUrl": "https://api.arasaac.org/api/pictograms/2486?download=false"
+          "pictogramId": 2462,
+          "imageUrl": "https://static.arasaac.org/pictograms/2462/2462_500.png",
+          "alternatives": [
+            {
+              "id": 2462,
+              "imageUrl": "https://static.arasaac.org/pictograms/2462/2462_500.png"
+            },
+            {
+              "id": 13644,
+              "imageUrl": "https://static.arasaac.org/pictograms/13644/13644_500.png"
+            },
+            {
+              "id": 13645,
+              "imageUrl": "https://static.arasaac.org/pictograms/13645/13645_500.png"
+            },
+            {
+              "id": 11403,
+              "imageUrl": "https://static.arasaac.org/pictograms/11403/11403_500.png"
+            },
+            {
+              "id": 17010,
+              "imageUrl": "https://static.arasaac.org/pictograms/17010/17010_500.png"
+            },
+            {
+              "id": 25237,
+              "imageUrl": "https://static.arasaac.org/pictograms/25237/25237_500.png"
+            }
+          ],
+          "source": "arasaac"
         },
         {
-          "displayWord": "ROSSA",
-          "searchTerm": "rosso",
+          "displayWord": "avvVELENata",
+          "searchTerm": "avvelenato",
           "category": "adjective",
-          "id": 2728,
-          "imageUrl": "https://api.arasaac.org/api/pictograms/2728?download=false"
+          "pictogramId": "ai-generated",
+          "imageUrl": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCI+CiAgPCEtLSBTaW1ib2xvIGRlbCB0ZXNjaGlvIChwZXJpY29sby92ZWxlbm8pIC0tPgogIDxwYXRoIGQ9Ik0zMCA0MCBRMzAgMjAgNTAgMjAgUTcwIDIwIDcwIDQwIFE3MCA2MCA1MCA2NSBRMzAgNjAgMzAgNDAgWiIgZmlsbD0iI2Y4ZmFmYyIgc3Ryb2tlPSIjMWUyOTNiIiBzdHJva2Utd2lkdGg9IjMuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgPGNpcmNsZSBjeD0iNDAiIGN5PSIzNSIgcj0iNSIgZmlsbD0iIzFlMjkzYiIvPgogIDxjaXJjbGUgY3g9IjYwIiBjeT0iMzUiIHI9IjUiIGZpbGw9IiMxZTI5M2IiLz4KICA8cGF0aCBkPSJNNDUgNTAgTDU1IDUwIE01MCA0NSBMNTAgNTUiIHN0cm9rZT0iIzFlMjkzYiIgc3Ryb2tlLXdpZHRoPSIzLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogIAogIDwhLS0gU2ltYm9sbyBkZWxsZSBvc3NhIGluY3JvY2lhdGUgLS0+CiAgPHBhdGggZD0iTTI1IDI1IEw0MCA0MCBNNjAgNjAgTDc1IDc1IE03NSAyNSBMNjAgNDAgTTQwIDYwIEwyNSA3NSIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMWUyOTNiIiBzdHJva2Utd2lkdGg9IjMuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgCiAgPCEtLSBTZWduYWxlIGRpIGRpdmlldG8vYXR0ZW56aW9uZSAoY2VyY2hpbyByb3NzbykgLS0+CiAgPGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNDUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2VmNDQ0NCIgc3Ryb2tlLXdpZHRoPSI2Ii8+CiAgPGxpbmUgeDE9IjIwIiB5MT0iODAiIHgyPSI4MCIgeTI9IjIwIiBzdHJva2U9IiNlZjQ0NDQiIHN0cm9rZS13aWR0aD0iNiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+Cjwvc3ZnPg==",
+          "alternatives": [],
+          "source": "ai-generated"
         },
         {
-          "displayWord": "VELENO",
-          "searchTerm": "veleno",
-          "category": "noun",
-          "id": 6806,
-          "imageUrl": "https://api.arasaac.org/api/pictograms/6806?download=false"
+          "displayWord": "biacaneve",
+          "searchTerm": "biancaneve",
+          "category": "person",
+          "pictogramId": 21447,
+          "imageUrl": "https://static.arasaac.org/pictograms/21447/21447_500.png",
+          "alternatives": [
+            {
+              "id": 21447,
+              "imageUrl": "https://static.arasaac.org/pictograms/21447/21447_500.png"
+            }
+          ],
+          "source": "arasaac"
         }
       ]
     },
     {
       "sectionTitle": "Il Sonno Profondo",
-      "stepLabel": "Biancaneve morde la mela e cade in un sonno profondo",
+      "stepLabel": "BIANCANEVE MANGIA MELA DORME",
       "pedagogicalExplanation": "Momento drammatico della narrazione",
       "tokens": [
         {
           "displayWord": "BIANCANEVE",
           "searchTerm": "biancaneve",
-          "category": "properNoun",
-          "id": 21447,
-          "imageUrl": "https://api.arasaac.org/api/pictograms/21447?download=false"
+          "category": "person",
+          "pictogramId": 21447,
+          "imageUrl": "https://static.arasaac.org/pictograms/21447/21447_500.png",
+          "alternatives": [
+            {
+              "id": 21447,
+              "imageUrl": "https://static.arasaac.org/pictograms/21447/21447_500.png"
+            }
+          ],
+          "source": "arasaac"
         },
         {
           "displayWord": "MANGIA",
           "searchTerm": "mangiare",
           "category": "verb",
-          "id": 2471,
-          "imageUrl": "https://api.arasaac.org/api/pictograms/2471?download=false"
+          "pictogramId": 6456,
+          "imageUrl": "https://static.arasaac.org/pictograms/6456/6456_500.png",
+          "alternatives": [
+            {
+              "id": 6456,
+              "imageUrl": "https://static.arasaac.org/pictograms/6456/6456_500.png"
+            },
+            {
+              "id": 2349,
+              "imageUrl": "https://static.arasaac.org/pictograms/2349/2349_500.png"
+            },
+            {
+              "id": 28641,
+              "imageUrl": "https://static.arasaac.org/pictograms/28641/28641_500.png"
+            },
+            {
+              "id": 38413,
+              "imageUrl": "https://static.arasaac.org/pictograms/38413/38413_500.png"
+            },
+            {
+              "id": 28413,
+              "imageUrl": "https://static.arasaac.org/pictograms/28413/28413_500.png"
+            },
+            {
+              "id": 36655,
+              "imageUrl": "https://static.arasaac.org/pictograms/36655/36655_500.png"
+            },
+            {
+              "id": 8674,
+              "imageUrl": "https://static.arasaac.org/pictograms/8674/8674_500.png"
+            },
+            {
+              "id": 28414,
+              "imageUrl": "https://static.arasaac.org/pictograms/28414/28414_500.png"
+            }
+          ],
+          "source": "arasaac"
         },
         {
           "displayWord": "MELA",
           "searchTerm": "mela",
           "category": "noun",
-          "id": 2486,
-          "imageUrl": "https://api.arasaac.org/api/pictograms/2486?download=false"
+          "pictogramId": 2462,
+          "imageUrl": "https://static.arasaac.org/pictograms/2462/2462_500.png",
+          "alternatives": [
+            {
+              "id": 2462,
+              "imageUrl": "https://static.arasaac.org/pictograms/2462/2462_500.png"
+            },
+            {
+              "id": 13644,
+              "imageUrl": "https://static.arasaac.org/pictograms/13644/13644_500.png"
+            },
+            {
+              "id": 13645,
+              "imageUrl": "https://static.arasaac.org/pictograms/13645/13645_500.png"
+            },
+            {
+              "id": 11403,
+              "imageUrl": "https://static.arasaac.org/pictograms/11403/11403_500.png"
+            },
+            {
+              "id": 17010,
+              "imageUrl": "https://static.arasaac.org/pictograms/17010/17010_500.png"
+            },
+            {
+              "id": 25237,
+              "imageUrl": "https://static.arasaac.org/pictograms/25237/25237_500.png"
+            }
+          ],
+          "source": "arasaac"
         },
         {
           "displayWord": "DORME",
           "searchTerm": "dormire",
           "category": "verb",
-          "id": 2700,
-          "imageUrl": "https://api.arasaac.org/api/pictograms/2700?download=false"
+          "pictogramId": 6479,
+          "imageUrl": "https://static.arasaac.org/pictograms/6479/6479_500.png",
+          "alternatives": [
+            {
+              "id": 6479,
+              "imageUrl": "https://static.arasaac.org/pictograms/6479/6479_500.png"
+            },
+            {
+              "id": 2369,
+              "imageUrl": "https://static.arasaac.org/pictograms/2369/2369_500.png"
+            },
+            {
+              "id": 28623,
+              "imageUrl": "https://static.arasaac.org/pictograms/28623/28623_500.png"
+            },
+            {
+              "id": 32218,
+              "imageUrl": "https://static.arasaac.org/pictograms/32218/32218_500.png"
+            },
+            {
+              "id": 32236,
+              "imageUrl": "https://static.arasaac.org/pictograms/32236/32236_500.png"
+            },
+            {
+              "id": 37540,
+              "imageUrl": "https://static.arasaac.org/pictograms/37540/37540_500.png"
+            },
+            {
+              "id": 37203,
+              "imageUrl": "https://static.arasaac.org/pictograms/37203/37203_500.png"
+            },
+            {
+              "id": 38550,
+              "imageUrl": "https://static.arasaac.org/pictograms/38550/38550_500.png"
+            }
+          ],
+          "source": "arasaac"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "Passaggi Aggiuntivi",
+      "stepLabel": "7 nani tornano lavoro trovano biancaneve dorme",
+      "pedagogicalExplanation": "Passaggio personalizzato aggiunto dall'insegnante",
+      "tokens": [
+        {
+          "displayWord": "7",
+          "searchTerm": "sette",
+          "category": "adjective",
+          "pictogramId": 2633,
+          "imageUrl": "https://static.arasaac.org/pictograms/2633/2633_500.png",
+          "alternatives": [
+            {
+              "id": 2633,
+              "imageUrl": "https://static.arasaac.org/pictograms/2633/2633_500.png"
+            },
+            {
+              "id": 4895,
+              "imageUrl": "https://static.arasaac.org/pictograms/4895/4895_500.png"
+            },
+            {
+              "id": 7248,
+              "imageUrl": "https://static.arasaac.org/pictograms/7248/7248_500.png"
+            },
+            {
+              "id": 35685,
+              "imageUrl": "https://static.arasaac.org/pictograms/35685/35685_500.png"
+            },
+            {
+              "id": 39384,
+              "imageUrl": "https://static.arasaac.org/pictograms/39384/39384_500.png"
+            },
+            {
+              "id": 39380,
+              "imageUrl": "https://static.arasaac.org/pictograms/39380/39380_500.png"
+            },
+            {
+              "id": 29540,
+              "imageUrl": "https://static.arasaac.org/pictograms/29540/29540_500.png"
+            },
+            {
+              "id": 39360,
+              "imageUrl": "https://static.arasaac.org/pictograms/39360/39360_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "nani",
+          "searchTerm": "nano",
+          "category": "person",
+          "pictogramId": 5450,
+          "imageUrl": "https://static.arasaac.org/pictograms/5450/5450_500.png",
+          "alternatives": [
+            {
+              "id": 5450,
+              "imageUrl": "https://static.arasaac.org/pictograms/5450/5450_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "tornano",
+          "searchTerm": "tornare",
+          "category": "verb",
+          "pictogramId": 27065,
+          "imageUrl": "https://static.arasaac.org/pictograms/27065/27065_500.png",
+          "alternatives": [
+            {
+              "id": 27065,
+              "imageUrl": "https://static.arasaac.org/pictograms/27065/27065_500.png"
+            },
+            {
+              "id": 39494,
+              "imageUrl": "https://static.arasaac.org/pictograms/39494/39494_500.png"
+            },
+            {
+              "id": 36688,
+              "imageUrl": "https://static.arasaac.org/pictograms/36688/36688_500.png"
+            },
+            {
+              "id": 39738,
+              "imageUrl": "https://static.arasaac.org/pictograms/39738/39738_500.png"
+            },
+            {
+              "id": 37369,
+              "imageUrl": "https://static.arasaac.org/pictograms/37369/37369_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "lavoro",
+          "searchTerm": "lavoro",
+          "category": "noun",
+          "pictogramId": 6588,
+          "imageUrl": "https://static.arasaac.org/pictograms/6588/6588_500.png",
+          "alternatives": [
+            {
+              "id": 16087,
+              "imageUrl": "https://static.arasaac.org/pictograms/16087/16087_500.png"
+            },
+            {
+              "id": 22147,
+              "imageUrl": "https://static.arasaac.org/pictograms/22147/22147_500.png"
+            },
+            {
+              "id": 37038,
+              "imageUrl": "https://static.arasaac.org/pictograms/37038/37038_500.png"
+            },
+            {
+              "id": 37554,
+              "imageUrl": "https://static.arasaac.org/pictograms/37554/37554_500.png"
+            },
+            {
+              "id": 36950,
+              "imageUrl": "https://static.arasaac.org/pictograms/36950/36950_500.png"
+            },
+            {
+              "id": 25064,
+              "imageUrl": "https://static.arasaac.org/pictograms/25064/25064_500.png"
+            },
+            {
+              "id": 16180,
+              "imageUrl": "https://static.arasaac.org/pictograms/16180/16180_500.png"
+            },
+            {
+              "id": 16178,
+              "imageUrl": "https://static.arasaac.org/pictograms/16178/16178_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "trovano",
+          "searchTerm": "trovare",
+          "category": "verb",
+          "pictogramId": 24773,
+          "imageUrl": "https://static.arasaac.org/pictograms/24773/24773_500.png",
+          "alternatives": [
+            {
+              "id": 24773,
+              "imageUrl": "https://static.arasaac.org/pictograms/24773/24773_500.png"
+            },
+            {
+              "id": 24742,
+              "imageUrl": "https://static.arasaac.org/pictograms/24742/24742_500.png"
+            },
+            {
+              "id": 24741,
+              "imageUrl": "https://static.arasaac.org/pictograms/24741/24741_500.png"
+            },
+            {
+              "id": 24774,
+              "imageUrl": "https://static.arasaac.org/pictograms/24774/24774_500.png"
+            },
+            {
+              "id": 37246,
+              "imageUrl": "https://static.arasaac.org/pictograms/37246/37246_500.png"
+            },
+            {
+              "id": 38136,
+              "imageUrl": "https://static.arasaac.org/pictograms/38136/38136_500.png"
+            },
+            {
+              "id": 5990,
+              "imageUrl": "https://static.arasaac.org/pictograms/5990/5990_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "biancaneve",
+          "searchTerm": "biancaneve",
+          "category": "person",
+          "pictogramId": 21447,
+          "imageUrl": "https://static.arasaac.org/pictograms/21447/21447_500.png",
+          "alternatives": [
+            {
+              "id": 21447,
+              "imageUrl": "https://static.arasaac.org/pictograms/21447/21447_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "dorme",
+          "searchTerm": "dormire",
+          "category": "verb",
+          "pictogramId": 6479,
+          "imageUrl": "https://static.arasaac.org/pictograms/6479/6479_500.png",
+          "alternatives": [
+            {
+              "id": 6479,
+              "imageUrl": "https://static.arasaac.org/pictograms/6479/6479_500.png"
+            },
+            {
+              "id": 2369,
+              "imageUrl": "https://static.arasaac.org/pictograms/2369/2369_500.png"
+            },
+            {
+              "id": 28623,
+              "imageUrl": "https://static.arasaac.org/pictograms/28623/28623_500.png"
+            },
+            {
+              "id": 32218,
+              "imageUrl": "https://static.arasaac.org/pictograms/32218/32218_500.png"
+            },
+            {
+              "id": 32236,
+              "imageUrl": "https://static.arasaac.org/pictograms/32236/32236_500.png"
+            },
+            {
+              "id": 37540,
+              "imageUrl": "https://static.arasaac.org/pictograms/37540/37540_500.png"
+            },
+            {
+              "id": 37203,
+              "imageUrl": "https://static.arasaac.org/pictograms/37203/37203_500.png"
+            },
+            {
+              "id": 38550,
+              "imageUrl": "https://static.arasaac.org/pictograms/38550/38550_500.png"
+            }
+          ],
+          "source": "arasaac"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "Passaggi Aggiuntivi",
+      "stepLabel": "il principe arriva alla casa dei 7 nani e trova biancaneve che dorme",
+      "pedagogicalExplanation": "Passaggio personalizzato aggiunto dall'insegnante",
+      "tokens": [
+        {
+          "displayWord": "principe",
+          "searchTerm": "principe",
+          "category": "person",
+          "pictogramId": 5555,
+          "imageUrl": "https://static.arasaac.org/pictograms/5555/5555_500.png",
+          "alternatives": [
+            {
+              "id": 5555,
+              "imageUrl": "https://static.arasaac.org/pictograms/5555/5555_500.png"
+            },
+            {
+              "id": 39169,
+              "imageUrl": "https://static.arasaac.org/pictograms/39169/39169_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "arriva",
+          "searchTerm": "arrivare",
+          "category": "verb",
+          "pictogramId": 16807,
+          "imageUrl": "https://static.arasaac.org/pictograms/16807/16807_500.png",
+          "alternatives": [
+            {
+              "id": 16807,
+              "imageUrl": "https://static.arasaac.org/pictograms/16807/16807_500.png"
+            },
+            {
+              "id": 11708,
+              "imageUrl": "https://static.arasaac.org/pictograms/11708/11708_500.png"
+            },
+            {
+              "id": 13356,
+              "imageUrl": "https://static.arasaac.org/pictograms/13356/13356_500.png"
+            },
+            {
+              "id": 16805,
+              "imageUrl": "https://static.arasaac.org/pictograms/16805/16805_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "casa",
+          "searchTerm": "casa",
+          "category": "noun",
+          "pictogramId": 6964,
+          "imageUrl": "https://static.arasaac.org/pictograms/6964/6964_500.png",
+          "alternatives": [
+            {
+              "id": 6964,
+              "imageUrl": "https://static.arasaac.org/pictograms/6964/6964_500.png"
+            },
+            {
+              "id": 2317,
+              "imageUrl": "https://static.arasaac.org/pictograms/2317/2317_500.png"
+            },
+            {
+              "id": 5989,
+              "imageUrl": "https://static.arasaac.org/pictograms/5989/5989_500.png"
+            },
+            {
+              "id": 9861,
+              "imageUrl": "https://static.arasaac.org/pictograms/9861/9861_500.png"
+            },
+            {
+              "id": 39203,
+              "imageUrl": "https://static.arasaac.org/pictograms/39203/39203_500.png"
+            },
+            {
+              "id": 39001,
+              "imageUrl": "https://static.arasaac.org/pictograms/39001/39001_500.png"
+            },
+            {
+              "id": 38882,
+              "imageUrl": "https://static.arasaac.org/pictograms/38882/38882_500.png"
+            },
+            {
+              "id": 38658,
+              "imageUrl": "https://static.arasaac.org/pictograms/38658/38658_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "7",
+          "searchTerm": "sette",
+          "category": "adjective",
+          "pictogramId": 2633,
+          "imageUrl": "https://static.arasaac.org/pictograms/2633/2633_500.png",
+          "alternatives": [
+            {
+              "id": 2633,
+              "imageUrl": "https://static.arasaac.org/pictograms/2633/2633_500.png"
+            },
+            {
+              "id": 4895,
+              "imageUrl": "https://static.arasaac.org/pictograms/4895/4895_500.png"
+            },
+            {
+              "id": 7248,
+              "imageUrl": "https://static.arasaac.org/pictograms/7248/7248_500.png"
+            },
+            {
+              "id": 35685,
+              "imageUrl": "https://static.arasaac.org/pictograms/35685/35685_500.png"
+            },
+            {
+              "id": 39384,
+              "imageUrl": "https://static.arasaac.org/pictograms/39384/39384_500.png"
+            },
+            {
+              "id": 39380,
+              "imageUrl": "https://static.arasaac.org/pictograms/39380/39380_500.png"
+            },
+            {
+              "id": 29540,
+              "imageUrl": "https://static.arasaac.org/pictograms/29540/29540_500.png"
+            },
+            {
+              "id": 39360,
+              "imageUrl": "https://static.arasaac.org/pictograms/39360/39360_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "nani",
+          "searchTerm": "nano",
+          "category": "person",
+          "pictogramId": 5450,
+          "imageUrl": "https://static.arasaac.org/pictograms/5450/5450_500.png",
+          "alternatives": [
+            {
+              "id": 5450,
+              "imageUrl": "https://static.arasaac.org/pictograms/5450/5450_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "trova",
+          "searchTerm": "trovare",
+          "category": "verb",
+          "pictogramId": 24773,
+          "imageUrl": "https://static.arasaac.org/pictograms/24773/24773_500.png",
+          "alternatives": [
+            {
+              "id": 24773,
+              "imageUrl": "https://static.arasaac.org/pictograms/24773/24773_500.png"
+            },
+            {
+              "id": 24742,
+              "imageUrl": "https://static.arasaac.org/pictograms/24742/24742_500.png"
+            },
+            {
+              "id": 24741,
+              "imageUrl": "https://static.arasaac.org/pictograms/24741/24741_500.png"
+            },
+            {
+              "id": 24774,
+              "imageUrl": "https://static.arasaac.org/pictograms/24774/24774_500.png"
+            },
+            {
+              "id": 37246,
+              "imageUrl": "https://static.arasaac.org/pictograms/37246/37246_500.png"
+            },
+            {
+              "id": 38136,
+              "imageUrl": "https://static.arasaac.org/pictograms/38136/38136_500.png"
+            },
+            {
+              "id": 5990,
+              "imageUrl": "https://static.arasaac.org/pictograms/5990/5990_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "biancaneve",
+          "searchTerm": "biancaneve",
+          "category": "person",
+          "pictogramId": 21447,
+          "imageUrl": "https://static.arasaac.org/pictograms/21447/21447_500.png",
+          "alternatives": [
+            {
+              "id": 21447,
+              "imageUrl": "https://static.arasaac.org/pictograms/21447/21447_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "dorme",
+          "searchTerm": "dormire",
+          "category": "verb",
+          "pictogramId": 6479,
+          "imageUrl": "https://static.arasaac.org/pictograms/6479/6479_500.png",
+          "alternatives": [
+            {
+              "id": 6479,
+              "imageUrl": "https://static.arasaac.org/pictograms/6479/6479_500.png"
+            },
+            {
+              "id": 2369,
+              "imageUrl": "https://static.arasaac.org/pictograms/2369/2369_500.png"
+            },
+            {
+              "id": 28623,
+              "imageUrl": "https://static.arasaac.org/pictograms/28623/28623_500.png"
+            },
+            {
+              "id": 32218,
+              "imageUrl": "https://static.arasaac.org/pictograms/32218/32218_500.png"
+            },
+            {
+              "id": 32236,
+              "imageUrl": "https://static.arasaac.org/pictograms/32236/32236_500.png"
+            },
+            {
+              "id": 37540,
+              "imageUrl": "https://static.arasaac.org/pictograms/37540/37540_500.png"
+            },
+            {
+              "id": 37203,
+              "imageUrl": "https://static.arasaac.org/pictograms/37203/37203_500.png"
+            },
+            {
+              "id": 38550,
+              "imageUrl": "https://static.arasaac.org/pictograms/38550/38550_500.png"
+            }
+          ],
+          "source": "arasaac"
         }
       ]
     },
     {
       "sectionTitle": "Il Risveglio e il Lieto Fine",
-      "stepLabel": "Il principe bacia Biancaneve che si sveglia e sono tutti felici",
+      "stepLabel": "PRINCIPE bacia BIANCANEVE che si sveglia TUTTI FELICI",
       "pedagogicalExplanation": "La risoluzione positiva, l'affetto e la vittoria del bene",
       "tokens": [
         {
           "displayWord": "PRINCIPE",
           "searchTerm": "principe",
-          "category": "noun",
-          "id": 31376,
-          "imageUrl": "https://api.arasaac.org/api/pictograms/31376?download=false"
+          "category": "person",
+          "pictogramId": 5555,
+          "imageUrl": "https://static.arasaac.org/pictograms/5555/5555_500.png",
+          "alternatives": [
+            {
+              "id": 5555,
+              "imageUrl": "https://static.arasaac.org/pictograms/5555/5555_500.png"
+            },
+            {
+              "id": 39169,
+              "imageUrl": "https://static.arasaac.org/pictograms/39169/39169_500.png"
+            }
+          ],
+          "source": "arasaac"
         },
         {
-          "displayWord": "SVEGLIA",
-          "searchTerm": "svegliare",
+          "displayWord": "bacia",
+          "searchTerm": "baciare",
           "category": "verb",
-          "id": 7167,
-          "imageUrl": "https://api.arasaac.org/api/pictograms/7167?download=false"
+          "pictogramId": 6062,
+          "imageUrl": "https://static.arasaac.org/pictograms/6062/6062_500.png",
+          "alternatives": [
+            {
+              "id": 6062,
+              "imageUrl": "https://static.arasaac.org/pictograms/6062/6062_500.png"
+            },
+            {
+              "id": 4576,
+              "imageUrl": "https://static.arasaac.org/pictograms/4576/4576_500.png"
+            },
+            {
+              "id": 11525,
+              "imageUrl": "https://static.arasaac.org/pictograms/11525/11525_500.png"
+            },
+            {
+              "id": 11527,
+              "imageUrl": "https://static.arasaac.org/pictograms/11527/11527_500.png"
+            },
+            {
+              "id": 21437,
+              "imageUrl": "https://static.arasaac.org/pictograms/21437/21437_500.png"
+            },
+            {
+              "id": 21439,
+              "imageUrl": "https://static.arasaac.org/pictograms/21439/21439_500.png"
+            },
+            {
+              "id": 21435,
+              "imageUrl": "https://static.arasaac.org/pictograms/21435/21435_500.png"
+            },
+            {
+              "id": 32886,
+              "imageUrl": "https://static.arasaac.org/pictograms/32886/32886_500.png"
+            }
+          ],
+          "source": "arasaac"
         },
         {
           "displayWord": "BIANCANEVE",
-          "searchTerm": "biancaneve",
-          "category": "properNoun",
-          "id": 21447,
-          "imageUrl": "https://api.arasaac.org/api/pictograms/21447?download=false"
+          "searchTerm": "Biancaneve",
+          "category": "person",
+          "pictogramId": 21447,
+          "imageUrl": "https://static.arasaac.org/pictograms/21447/21447_500.png",
+          "alternatives": [
+            {
+              "id": 21447,
+              "imageUrl": "https://static.arasaac.org/pictograms/21447/21447_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "che",
+          "searchTerm": "che",
+          "category": "misc",
+          "pictogramId": 22620,
+          "imageUrl": "https://static.arasaac.org/pictograms/22620/22620_500.png",
+          "alternatives": [
+            {
+              "id": 22620,
+              "imageUrl": "https://static.arasaac.org/pictograms/22620/22620_500.png"
+            },
+            {
+              "id": 11351,
+              "imageUrl": "https://static.arasaac.org/pictograms/11351/11351_500.png"
+            },
+            {
+              "id": 22624,
+              "imageUrl": "https://static.arasaac.org/pictograms/22624/22624_500.png"
+            },
+            {
+              "id": 26989,
+              "imageUrl": "https://static.arasaac.org/pictograms/26989/26989_500.png"
+            },
+            {
+              "id": 38808,
+              "imageUrl": "https://static.arasaac.org/pictograms/38808/38808_500.png"
+            },
+            {
+              "id": 10274,
+              "imageUrl": "https://static.arasaac.org/pictograms/10274/10274_500.png"
+            },
+            {
+              "id": 10369,
+              "imageUrl": "https://static.arasaac.org/pictograms/10369/10369_500.png"
+            },
+            {
+              "id": 38483,
+              "imageUrl": "https://static.arasaac.org/pictograms/38483/38483_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "si",
+          "searchTerm": "si",
+          "category": "misc",
+          "pictogramId": 5584,
+          "imageUrl": "https://static.arasaac.org/pictograms/5584/5584_500.png",
+          "alternatives": [
+            {
+              "id": 5584,
+              "imageUrl": "https://static.arasaac.org/pictograms/5584/5584_500.png"
+            },
+            {
+              "id": 5583,
+              "imageUrl": "https://static.arasaac.org/pictograms/5583/5583_500.png"
+            },
+            {
+              "id": 6481,
+              "imageUrl": "https://static.arasaac.org/pictograms/6481/6481_500.png"
+            },
+            {
+              "id": 7028,
+              "imageUrl": "https://static.arasaac.org/pictograms/7028/7028_500.png"
+            },
+            {
+              "id": 7029,
+              "imageUrl": "https://static.arasaac.org/pictograms/7029/7029_500.png"
+            },
+            {
+              "id": 7032,
+              "imageUrl": "https://static.arasaac.org/pictograms/7032/7032_500.png"
+            },
+            {
+              "id": 7031,
+              "imageUrl": "https://static.arasaac.org/pictograms/7031/7031_500.png"
+            },
+            {
+              "id": 7033,
+              "imageUrl": "https://static.arasaac.org/pictograms/7033/7033_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "sveglia",
+          "searchTerm": "svegliarsi",
+          "category": "verb",
+          "pictogramId": 8989,
+          "imageUrl": "https://static.arasaac.org/pictograms/8989/8989_500.png",
+          "alternatives": [
+            {
+              "id": 8989,
+              "imageUrl": "https://static.arasaac.org/pictograms/8989/8989_500.png"
+            },
+            {
+              "id": 8988,
+              "imageUrl": "https://static.arasaac.org/pictograms/8988/8988_500.png"
+            },
+            {
+              "id": 25209,
+              "imageUrl": "https://static.arasaac.org/pictograms/25209/25209_500.png"
+            },
+            {
+              "id": 28625,
+              "imageUrl": "https://static.arasaac.org/pictograms/28625/28625_500.png"
+            },
+            {
+              "id": 31857,
+              "imageUrl": "https://static.arasaac.org/pictograms/31857/31857_500.png"
+            }
+          ],
+          "source": "arasaac"
         },
         {
           "displayWord": "TUTTI",
           "searchTerm": "tutti",
-          "category": "pronoun",
-          "id": 30514,
-          "imageUrl": "https://api.arasaac.org/api/pictograms/30514?download=false"
+          "category": "misc",
+          "pictogramId": 5596,
+          "imageUrl": "https://static.arasaac.org/pictograms/5596/5596_500.png",
+          "alternatives": [
+            {
+              "id": 5596,
+              "imageUrl": "https://static.arasaac.org/pictograms/5596/5596_500.png"
+            },
+            {
+              "id": 27091,
+              "imageUrl": "https://static.arasaac.org/pictograms/27091/27091_500.png"
+            },
+            {
+              "id": 32438,
+              "imageUrl": "https://static.arasaac.org/pictograms/32438/32438_500.png"
+            },
+            {
+              "id": 36081,
+              "imageUrl": "https://static.arasaac.org/pictograms/36081/36081_500.png"
+            },
+            {
+              "id": 36398,
+              "imageUrl": "https://static.arasaac.org/pictograms/36398/36398_500.png"
+            }
+          ],
+          "source": "arasaac"
         },
         {
           "displayWord": "FELICI",
           "searchTerm": "felice",
-          "category": "emotion",
-          "id": 2349,
-          "imageUrl": "https://api.arasaac.org/api/pictograms/2349?download=false"
+          "category": "adjective",
+          "pictogramId": 35547,
+          "imageUrl": "https://static.arasaac.org/pictograms/35547/35547_500.png",
+          "alternatives": [
+            {
+              "id": 35547,
+              "imageUrl": "https://static.arasaac.org/pictograms/35547/35547_500.png"
+            },
+            {
+              "id": 35533,
+              "imageUrl": "https://static.arasaac.org/pictograms/35533/35533_500.png"
+            },
+            {
+              "id": 6892,
+              "imageUrl": "https://static.arasaac.org/pictograms/6892/6892_500.png"
+            },
+            {
+              "id": 8582,
+              "imageUrl": "https://static.arasaac.org/pictograms/8582/8582_500.png"
+            },
+            {
+              "id": 9907,
+              "imageUrl": "https://static.arasaac.org/pictograms/9907/9907_500.png"
+            },
+            {
+              "id": 10192,
+              "imageUrl": "https://static.arasaac.org/pictograms/10192/10192_500.png"
+            },
+            {
+              "id": 28647,
+              "imageUrl": "https://static.arasaac.org/pictograms/28647/28647_500.png"
+            },
+            {
+              "id": 31849,
+              "imageUrl": "https://static.arasaac.org/pictograms/31849/31849_500.png"
+            }
+          ],
+          "source": "arasaac"
         }
       ]
     }
