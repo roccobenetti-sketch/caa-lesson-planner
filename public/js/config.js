@@ -16,6 +16,7 @@ export const ConfigManager = {
     isCustomKey: false,
     useUppercase: true,
     useColorBorders: true,
+    availableModels: []
   },
 
   async init() {
@@ -32,12 +33,7 @@ export const ConfigManager = {
       this.state.useColorBorders = savedColors === 'true';
     }
     if (savedModel) {
-      if (savedModel.includes('2.5') || savedModel.includes('1.5') || savedModel.includes('pro')) {
-        this.state.model = 'gemini-3.1-flash-lite';
-        localStorage.setItem(this.STORAGE_KEY_MODEL, 'gemini-3.1-flash-lite');
-      } else {
-        this.state.model = savedModel;
-      }
+      this.state.model = savedModel;
     }
 
     // 2. Interroga il server locale per verificare se è configurata una chiave predefinita
@@ -62,6 +58,27 @@ export const ConfigManager = {
       this.state.apiKey = this.state.defaultApiKey;
       this.state.isCustomKey = false;
     }
+
+    // 4. Carica l'elenco di tutti i modelli disponibili
+    await this.fetchAvailableModels();
+  },
+
+  /**
+   * Recupera in tempo reale tutti i modelli supportati dalla chiave API.
+   */
+  async fetchAvailableModels() {
+    const key = this.getActiveApiKey();
+    try {
+      const resp = await fetch(`/api/models?key=${encodeURIComponent(key)}`);
+      if (resp.ok) {
+        const data = await resp.json();
+        this.state.availableModels = data.models || [];
+        return this.state.availableModels;
+      }
+    } catch (e) {
+      console.warn('Recupero elenco modelli live fallito:', e);
+    }
+    return [];
   },
 
   getActiveApiKey() {

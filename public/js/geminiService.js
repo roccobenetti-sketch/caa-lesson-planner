@@ -430,10 +430,7 @@ Regole:
    */
   async generateAiPictogramSvg(description, style = 'stylized', categoryHint = 'misc') {
     const activeKey = ConfigManager.getActiveApiKey();
-    let model = ConfigManager.state.model || 'gemini-3.1-flash-lite';
-    if (model.includes('2.5') || model.includes('1.5') || model.includes('pro')) {
-      model = 'gemini-3.1-flash-lite';
-    }
+    const model = ConfigManager.state.model || 'gemini-3.1-flash-lite';
 
     if (!activeKey) {
       throw new Error('Chiave API Gemini mancante. Inserisci la tua chiave nelle impostazioni per generare con IA.');

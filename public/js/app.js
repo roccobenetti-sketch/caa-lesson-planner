@@ -22,6 +22,7 @@ class CAAApp {
     await ConfigManager.init();
     this.setupUIBindings();
     this.updateConfigStatusUI();
+    this.populateModelSelectors();
     await this.refreshProjectsCount();
     this.refreshCustomPictosBadge();
     window.addEventListener('resize', () => {
@@ -365,6 +366,66 @@ class CAAApp {
     }
   }
 
+  /**
+   * Popola dinamicamente i selettori di modello (in testata e nel modale impostazioni)
+   * con tutti i modelli resi disponibili dall'API Gemini di Google.
+   */
+  populateModelSelectors() {
+    const models = ConfigManager.state.availableModels || [];
+    const selectHeader = document.getElementById('selectHeaderModel');
+    const selectModal = document.getElementById('selectModel');
+
+    if (models.length === 0) return;
+
+    // Raggruppamento semantico dei modelli
+    const groups = {
+      flash: { title: '⚡ Flash & Veloci (Consigliati)', items: [] },
+      pro: { title: '🧠 Pro & Ragionamento Avanzato', items: [] },
+      image: { title: '🎨 Modelli Generazione Immagine', items: [] },
+      other: { title: '🔬 Altri Modelli & Sperimentali', items: [] }
+    };
+
+    models.forEach(m => {
+      const id = m.id;
+      const lower = id.toLowerCase();
+      if (lower.includes('image')) {
+        groups.image.items.push(m);
+      } else if (lower.includes('pro') || lower.includes('deep-research')) {
+        groups.pro.items.push(m);
+      } else if (lower.includes('flash')) {
+        groups.flash.items.push(m);
+      } else {
+        groups.other.items.push(m);
+      }
+    });
+
+    const currentModel = ConfigManager.state.model;
+
+    const buildOptionsHtml = (selectedVal) => {
+      let html = '';
+      for (const [key, group] of Object.entries(groups)) {
+        if (group.items.length === 0) continue;
+        html += `<optgroup label="${group.title}">`;
+        group.items.forEach(item => {
+          const isSel = item.id === selectedVal ? 'selected' : '';
+          html += `<option value="${item.id}" ${isSel}>${item.id}</option>`;
+        });
+        html += `</optgroup>`;
+      }
+      return html;
+    };
+
+    const optionsHtml = buildOptionsHtml(currentModel);
+    if (selectHeader) {
+      selectHeader.innerHTML = optionsHtml;
+      selectHeader.value = currentModel;
+    }
+    if (selectModal) {
+      selectModal.innerHTML = optionsHtml;
+      selectModal.value = currentModel;
+    }
+  }
+
   populateSettingsForm() {
     const inputKey = document.getElementById('inputApiKey');
     const selectModel = document.getElementById('selectModel');
@@ -376,7 +437,7 @@ class CAAApp {
     }
   }
 
-  handleSaveSettings() {
+  async handleSaveSettings() {
     const inputKey = document.getElementById('inputApiKey');
     const selectModel = document.getElementById('selectModel');
 
@@ -391,6 +452,11 @@ class CAAApp {
 
     document.getElementById('settingsModal')?.classList.add('hidden');
     this.updateConfigStatusUI();
+    
+    // Aggiorna l'elenco dei modelli disponibili con la nuova chiave
+    await ConfigManager.fetchAvailableModels();
+    this.populateModelSelectors();
+
     this.showToast('Impostazioni salvate con successo.');
   }
 

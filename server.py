@@ -80,6 +80,45 @@ class CAARequestHandler(http.server.SimpleHTTPRequestHandler):
             self.wfile.write(json.dumps(response_payload).encode("utf-8"))
             return
 
+        if parsed_url.path == "/api/models":
+            query_params = urllib.parse.parse_qs(parsed_url.query)
+            client_key = query_params.get("key", [None])[0]
+            api_key = client_key or DEFAULT_API_KEY
+            if not api_key:
+                self.send_response(400)
+                self.send_header("Content-Type", "application/json; charset=utf-8")
+                self.end_headers()
+                self.wfile.write(json.dumps({"error": "Chiave API mancante per il recupero dei modelli."}).encode("utf-8"))
+                return
+
+            google_url = f"https://generativelanguage.googleapis.com/v1beta/models?key={api_key}"
+            try:
+                with urllib.request.urlopen(google_url, timeout=20) as resp:
+                    data = json.loads(resp.read().decode("utf-8"))
+                    models = []
+                    for m in data.get("models", []):
+                        methods = m.get("supportedGenerationMethods", [])
+                        if "generateContent" in methods:
+                            clean_id = m.get("name", "").replace("models/", "")
+                            models.append({
+                                "id": clean_id,
+                                "displayName": m.get("displayName", clean_id),
+                                "description": m.get("description", ""),
+                                "inputTokenLimit": m.get("inputTokenLimit"),
+                                "outputTokenLimit": m.get("outputTokenLimit")
+                            })
+                    self.send_response(200)
+                    self.send_header("Content-Type", "application/json; charset=utf-8")
+                    self.end_headers()
+                    self.wfile.write(json.dumps({"models": models, "count": len(models)}).encode("utf-8"))
+                    return
+            except Exception as e:
+                self.send_response(500)
+                self.send_header("Content-Type", "application/json; charset=utf-8")
+                self.end_headers()
+                self.wfile.write(json.dumps({"error": f"Errore recupero modelli da Google: {str(e)}"}).encode("utf-8"))
+                return
+
         if parsed_url.path == "/api/projects":
             query_params = urllib.parse.parse_qs(parsed_url.query)
             project_id = query_params.get("id", [None])[0]
@@ -201,10 +240,7 @@ class CAARequestHandler(http.server.SimpleHTTPRequestHandler):
                 self.wfile.write(json.dumps({"error": "Nessuna chiave API Gemini fornita né configurata nel server."}).encode("utf-8"))
                 return
 
-            model_name = payload.get("model", DEFAULT_MODEL)
-            # Sanitizzazione modelli deprecati o non piÃ¹ supportati da Google
-            if not model_name or "2.5" in model_name or "1.5" in model_name or "pro" in model_name.lower():
-                model_name = DEFAULT_MODEL
+            model_name = payload.get("model") or DEFAULT_MODEL
 
             gemini_payload = payload.get("geminiPayload", {})
 
