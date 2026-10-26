@@ -219,7 +219,7 @@ class CAARequestHandler(http.server.SimpleHTTPRequestHandler):
             for attempt in range(max_retries + 1):
                 try:
                     req = build_request(current_model)
-                    with urllib.request.urlopen(req, timeout=50) as resp:
+                    with urllib.request.urlopen(req, timeout=90) as resp:
                         resp_data = resp.read()
                         self.send_response(resp.status)
                         self.send_header("Content-Type", "application/json; charset=utf-8")
@@ -244,10 +244,13 @@ class CAARequestHandler(http.server.SimpleHTTPRequestHandler):
                     self.wfile.write(error_body.encode("utf-8"))
                     return
                 except Exception as err:
-                    self.send_response(500)
+                    err_msg = str(err)
+                    if "timed out" in err_msg.lower() or isinstance(err, TimeoutError):
+                        err_msg = "Tempo di attesa esaurito (Timeout). Seleziona il modello ultra-rapido 'Gemini 3.1 Flash Lite' in alto per generazioni istantanee."
+                    self.send_response(504 if "timed out" in str(err).lower() else 500)
                     self.send_header("Content-Type", "application/json; charset=utf-8")
                     self.end_headers()
-                    self.wfile.write(json.dumps({"error": f"Errore di connessione: {str(err)}"}).encode("utf-8"))
+                    self.wfile.write(json.dumps({"error": f"Errore di connessione: {err_msg}"}).encode("utf-8"))
                     return
 
         self.send_response(404)

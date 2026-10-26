@@ -311,6 +311,19 @@ class CAAApp {
       }
     });
 
+    // Selettore Rapido Modello nell'Header
+    const selectHeaderModel = document.getElementById('selectHeaderModel');
+    if (selectHeaderModel) {
+      selectHeaderModel.addEventListener('change', (e) => {
+        const newModel = e.target.value;
+        ConfigManager.setModel(newModel);
+        const selectModalModel = document.getElementById('selectModel');
+        if (selectModalModel) selectModalModel.value = newModel;
+        this.updateConfigStatusUI();
+        this.showToast(`Modello attivo: ${selectHeaderModel.options[selectHeaderModel.selectedIndex]?.text || newModel}`);
+      });
+    }
+
     // Ricerca istantanea progetti
     const inputProjectSearch = document.getElementById('inputProjectSearch');
     if (inputProjectSearch) {
@@ -345,6 +358,11 @@ class CAAApp {
         keyBadge.textContent = 'Chiave Predefinita';
       }
     }
+
+    const selectHeaderModel = document.getElementById('selectHeaderModel');
+    if (selectHeaderModel && ConfigManager.state.model) {
+      selectHeaderModel.value = ConfigManager.state.model;
+    }
   }
 
   populateSettingsForm() {
@@ -367,6 +385,8 @@ class CAAApp {
     }
     if (selectModel) {
       ConfigManager.setModel(selectModel.value);
+      const selectHeaderModel = document.getElementById('selectHeaderModel');
+      if (selectHeaderModel) selectHeaderModel.value = selectModel.value;
     }
 
     document.getElementById('settingsModal')?.classList.add('hidden');

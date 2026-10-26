@@ -46,6 +46,16 @@
           <span id="projectsCountBadge" class="px-2 py-0.5 rounded-full text-xs bg-amber-200 text-amber-900 font-bold">...</span>
         </button>
 
+        <!-- Selettore Versione Modello IA Rapido -->
+        <div class="flex items-center gap-1.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-xl px-2.5 py-1 transition" title="Seleziona la versione del modello IA da usare">
+          <span class="text-xs text-slate-500 font-bold hidden md:inline">🤖 Modello:</span>
+          <select id="selectHeaderModel" class="bg-transparent text-xs font-bold text-slate-800 focus:outline-none cursor-pointer pr-1">
+            <option value="gemini-3.1-flash-lite">Gemini 3.1 Flash Lite ⚡ (Rapido)</option>
+            <option value="gemini-3.8-flash">Gemini 3.8 Flash (Potente)</option>
+            <option value="gemini-flash-latest">Gemini Flash Latest</option>
+          </select>
+        </div>
+
         <div id="keyStatusBadge" class="hidden sm:inline-flex px-2.5 py-1 text-xs rounded-full font-medium bg-slate-100 text-slate-700">
           Caricamento...
         </div>
