@@ -1,18 +1,26 @@
 /**
  * Modulo per la gestione dell'archivio personale di pittogrammi CAA personalizzati (creati con IA).
- * Permette salvataggio con nome/parola chiave, ricerca, riutilizzo e cancellazione.
+ * Sincronizzazione automatica Cloud KV + Locale associata al profilo utente.
  */
 
+import { AuthManager } from './authManager.js';
+
 const STORAGE_KEY = 'caa_custom_pictograms';
+const CLOUD_API = 'https://caa-api.roccobenetti.workers.dev/api/sync/custom-pictograms';
 
 export const CustomPictogramsManager = {
+  getUsername() {
+    return AuthManager.currentUser?.username?.toLowerCase() || 'rocco';
+  },
+
   /**
-   * Recupera tutti i pittogrammi personalizzati salvati nell'archivio locale.
+   * Recupera tutti i pittogrammi personalizzati salvati nell'archivio locale e nel Cloud.
    * @returns {Array<Object>}
    */
   getAll() {
+    const user = this.getUsername();
     try {
-      const data = localStorage.getItem(STORAGE_KEY);
+      const data = localStorage.getItem(`${STORAGE_KEY}_${user}`) || localStorage.getItem(STORAGE_KEY);
       return data ? JSON.parse(data) : [];
     } catch (e) {
       console.error('Errore recupero simboli personalizzati:', e);
@@ -21,12 +29,29 @@ export const CustomPictogramsManager = {
   },
 
   /**
-   * Salva un nuovo pittogramma personalizzato nell'archivio.
-   * @param {Object} params
-   * @param {string} params.name - Nome o parola chiave associata (es. 'REGINA TRAVESTITA')
-   * @param {string} params.imageUrl - Data URI SVG del simbolo
-   * @param {string} [params.prompt] - Prompt testuale usato per la generazione
-   * @returns {Object} Il pittogramma salvato
+   * Sincronizza i pittogrammi dal Cloud in background.
+   */
+  async syncFromCloud() {
+    const user = this.getUsername();
+    try {
+      const resp = await fetch(`${CLOUD_API}?user=${encodeURIComponent(user)}`, { cache: 'no-store' });
+      if (resp.ok) {
+        const data = await resp.json();
+        const cloudItems = data.pictograms || [];
+        if (cloudItems.length > 0) {
+          const localItems = this.getAll();
+          const map = new Map();
+          for (const item of localItems) map.set(item.id || item.name, item);
+          for (const item of cloudItems) map.set(item.id || item.name, item);
+          const merged = Array.from(map.values());
+          localStorage.setItem(`${STORAGE_KEY}_${user}`, JSON.stringify(merged));
+        }
+      }
+    } catch (e) {}
+  },
+
+  /**
+   * Salva un nuovo pittogramma personalizzato nell'archivio locale e Cloud.
    */
   save({ name, imageUrl, prompt = '' }) {
     if (!name || !imageUrl) {
@@ -35,8 +60,8 @@ export const CustomPictogramsManager = {
 
     const cleanName = String(name).trim().toLocaleUpperCase('it-IT');
     const items = this.getAll();
+    const user = this.getUsername();
 
-    // Se esiste già un simbolo con lo stesso ID, aggiorna; altrimenti aggiunge
     const id = 'custom_' + Date.now();
     const newPicto = {
       id,
@@ -46,18 +71,33 @@ export const CustomPictogramsManager = {
       createdAt: new Date().toISOString()
     };
 
-    // Aggiunge all'inizio della lista
     items.unshift(newPicto);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+    localStorage.setItem(`${STORAGE_KEY}_${user}`, JSON.stringify(items));
+
+    // Sincronizzazione Cloud in background
+    fetch(CLOUD_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ user, picto: newPicto })
+    }).catch(() => {});
+
     return newPicto;
   },
 
   /**
-   * Elimina un pittogramma dall'archivio personale.
+   * Elimina un pittogramma dall'archivio personale e Cloud.
    * @param {string} id 
    */
   delete(id) {
     let items = this.getAll();
+    const user = this.getUsername();
+    items = items.filter(item => item.id !== id);
+    localStorage.setItem(`${STORAGE_KEY}_${user}`, JSON.stringify(items));
+
+    fetch(`${CLOUD_API}?user=${encodeURIComponent(user)}&id=${encodeURIComponent(id)}`, {
+      method: 'DELETE'
+    }).catch(() => {});
+  },
     items = items.filter(item => item.id !== id);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
   },

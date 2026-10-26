@@ -23,12 +23,13 @@ class CAAApp {
   }
 
   async init() {
-    AuthManager.init();
+    await AuthManager.init();
     await ConfigManager.init();
     this.setupUIBindings();
     this.setupAuthUI();
     this.updateConfigStatusUI();
     this.populateModelSelectors();
+    await CustomPictogramsManager.syncFromCloud();
     await this.refreshProjectsCount();
     this.refreshCustomPictosBadge();
     window.addEventListener('resize', () => {

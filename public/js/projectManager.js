@@ -1,30 +1,42 @@
 /**
- * ProjectManager: Gestione salvataggio, richiamo e archiviazione locale/server
- * dei percorsi didattici CAA.
+ * ProjectManager: Gestione salvataggio, richiamo e sincronizzazione Cloud + Locale
+ * dei percorsi didattici CAA associati al profilo utente.
  */
+
+import { AuthManager } from './authManager.js';
 
 export class ProjectManager {
   static LOCAL_STORAGE_KEY = 'caa_saved_projects_v1';
+  static CLOUD_API = 'https://caa-api.roccobenetti.workers.dev/api/sync/projects';
+
+  static getUsername() {
+    return AuthManager.currentUser?.username?.toLowerCase() || 'rocco';
+  }
 
   /**
-   * Recupera la lista di tutti i progetti salvati (server + fallback localStorage).
+   * Recupera la lista di tutti i progetti salvati (Cloud KV + Locale).
    */
   static async listProjects() {
-    let serverProjects = [];
+    const user = this.getUsername();
+    let cloudProjects = [];
+
+    // 1. Tentativo di sincronizzazione Cloud KV
     try {
-      const resp = await fetch('/api/projects');
+      const resp = await fetch(`${this.CLOUD_API}?user=${encodeURIComponent(user)}`, {
+        cache: 'no-store'
+      });
       if (resp.ok) {
         const data = await resp.json();
-        serverProjects = data.projects || [];
+        cloudProjects = data.projects || [];
       }
     } catch (e) {
-      console.warn('Impossibile recuperare i progetti dal server:', e);
+      console.warn('Sincronizzazione Cloud non raggiungibile (uso memoria locale):', e);
     }
 
-    // Lettura backup locale in localStorage
+    // 2. Lettura progetti locali
     let localProjects = [];
     try {
-      const stored = localStorage.getItem(this.LOCAL_STORAGE_KEY);
+      const stored = localStorage.getItem(`${this.LOCAL_STORAGE_KEY}_${user}`) || localStorage.getItem(this.LOCAL_STORAGE_KEY);
       if (stored) {
         localProjects = JSON.parse(stored);
       }
@@ -32,12 +44,12 @@ export class ProjectManager {
       console.warn('Errore lettura localStorage progetti:', e);
     }
 
-    // Unione dei progetti (priorità al server o unione per id univoco)
+    // 3. Unione e deduplicazione
     const projectsMap = new Map();
     for (const p of localProjects) {
       if (p && p.id) projectsMap.set(p.id, p);
     }
-    for (const p of serverProjects) {
+    for (const p of cloudProjects) {
       if (p && p.id) projectsMap.set(p.id, p);
     }
 
@@ -48,6 +60,11 @@ export class ProjectManager {
       return dateB - dateA;
     });
 
+    // Salva l'unione aggiornata in locale per garantire funzionamento offline istantaneo
+    try {
+      localStorage.setItem(`${this.LOCAL_STORAGE_KEY}_${user}`, JSON.stringify(merged));
+    } catch (e) {}
+
     return merged;
   }
 
@@ -56,8 +73,32 @@ export class ProjectManager {
    */
   static async getProject(projectId) {
     if (!projectId) throw new Error('ID progetto mancante.');
+    const user = this.getUsername();
 
-    // Tentativo primario via server
+    // 1. Controlla prima in memoria locale (apertura istantanea a zero latenza)
+    try {
+      const stored = localStorage.getItem(`caa_proj_full_${projectId}`);
+      if (stored) {
+        return JSON.parse(stored);
+      }
+    } catch (e) {}
+
+    // 2. Recupero dal Cloud KV
+    try {
+      const resp = await fetch(`${this.CLOUD_API}?user=${encodeURIComponent(user)}&id=${encodeURIComponent(projectId)}`);
+      if (resp.ok) {
+        const fullData = await resp.json();
+        if (fullData && fullData.project) {
+          // Salva anche in locale per aperture future
+          localStorage.setItem(`caa_proj_full_${projectId}`, JSON.stringify(fullData.project));
+          return fullData.project;
+        }
+      }
+    } catch (e) {
+      console.warn(`Errore caricamento cloud per ${projectId}:`, e);
+    }
+
+    // 3. Tentativo con il server Python locale (se presente)
     try {
       const resp = await fetch(`/api/projects?id=${encodeURIComponent(projectId)}`);
       if (resp.ok) {
@@ -66,28 +107,17 @@ export class ProjectManager {
           return fullData;
         }
       }
-    } catch (e) {
-      console.warn(`Errore caricamento server per ${projectId}:`, e);
-    }
+    } catch (e) {}
 
-    // Fallback in localStorage
-    try {
-      const stored = localStorage.getItem(`caa_proj_full_${projectId}`);
-      if (stored) {
-        return JSON.parse(stored);
-      }
-    } catch (e) {
-      console.warn('Errore fallback localStorage:', e);
-    }
-
-    throw new Error('Progetto non trovato sul server né in memoria locale.');
+    throw new Error('Progetto non trovato in memoria locale né nel Cloud.');
   }
 
   /**
-   * Salva o aggiorna un percorso CAA sia su disco server che in memoria locale.
+   * Salva o aggiorna un percorso CAA sia in memoria locale che su Cloud KV.
    */
   static async saveProject(lessonData, customTitle = null) {
     if (!lessonData) throw new Error('Nessun progetto da salvare.');
+    const user = this.getUsername();
 
     if (customTitle && customTitle.trim()) {
       lessonData.title = customTitle.trim();
@@ -102,29 +132,12 @@ export class ProjectManager {
     const nowIso = new Date().toISOString();
     if (!lessonData.createdAt) lessonData.createdAt = nowIso;
     lessonData.updatedAt = nowIso;
+    lessonData.authorUser = user;
 
-    // Salvataggio server
-    let savedOnServer = false;
-    try {
-      const resp = await fetch('/api/projects', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(lessonData)
-      });
-      if (resp.ok) {
-        const res = await resp.json();
-        lessonData.id = res.id || lessonData.id;
-        savedOnServer = true;
-      }
-    } catch (e) {
-      console.warn('Errore salvataggio server (verrà salvato in locale):', e);
-    }
-
-    // Salvataggio di riserva in localStorage
+    // 1. Salvataggio immediato in memoria locale
     try {
       localStorage.setItem(`caa_proj_full_${lessonData.id}`, JSON.stringify(lessonData));
 
-      // Aggiorna anche l'elenco riassuntivo
       const summary = {
         id: lessonData.id,
         title: lessonData.title,
@@ -135,50 +148,72 @@ export class ProjectManager {
         cardCount: (lessonData.cards || []).length,
         hasMoral: Boolean(lessonData.moral),
         createdAt: lessonData.createdAt,
-        updatedAt: lessonData.updatedAt
+        updatedAt: lessonData.updatedAt,
+        authorUser: user
       };
 
-      const stored = localStorage.getItem(this.LOCAL_STORAGE_KEY);
+      const storageKey = `${this.LOCAL_STORAGE_KEY}_${user}`;
+      const stored = localStorage.getItem(storageKey);
       let list = stored ? JSON.parse(stored) : [];
       list = list.filter(item => item.id !== lessonData.id);
       list.unshift(summary);
-      localStorage.setItem(this.LOCAL_STORAGE_KEY, JSON.stringify(list));
+      localStorage.setItem(storageKey, JSON.stringify(list));
     } catch (e) {
       console.warn('Errore memorizzazione localStorage:', e);
+    }
+
+    // 2. Sincronizzazione Cloud KV in background
+    let savedOnCloud = false;
+    try {
+      const resp = await fetch(this.CLOUD_API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          user,
+          project: lessonData
+        })
+      });
+      if (resp.ok) {
+        savedOnCloud = true;
+      }
+    } catch (e) {
+      console.warn('Sincronizzazione cloud non riuscita (salvato in locale):', e);
     }
 
     return {
       success: true,
       id: lessonData.id,
-      savedOnServer,
+      savedOnCloud,
       project: lessonData
     };
   }
 
   /**
-   * Elimina un progetto sia dal server che da localStorage.
+   * Elimina un progetto sia da locale che dal Cloud.
    */
   static async deleteProject(projectId) {
     if (!projectId) return;
+    const user = this.getUsername();
 
-    try {
-      await fetch(`/api/projects?id=${encodeURIComponent(projectId)}`, {
-        method: 'DELETE'
-      });
-    } catch (e) {
-      console.warn(`Errore cancellazione server per ${projectId}:`, e);
-    }
-
+    // 1. Eliminazione locale
     try {
       localStorage.removeItem(`caa_proj_full_${projectId}`);
-      const stored = localStorage.getItem(this.LOCAL_STORAGE_KEY);
+      const storageKey = `${this.LOCAL_STORAGE_KEY}_${user}`;
+      const stored = localStorage.getItem(storageKey);
       if (stored) {
         let list = JSON.parse(stored);
         list = list.filter(item => item.id !== projectId);
-        localStorage.setItem(this.LOCAL_STORAGE_KEY, JSON.stringify(list));
+        localStorage.setItem(storageKey, JSON.stringify(list));
       }
+    } catch (e) {}
+
+    // 2. Eliminazione dal Cloud KV
+    try {
+      await fetch(`${this.CLOUD_API}?user=${encodeURIComponent(user)}&id=${encodeURIComponent(projectId)}`, {
+        method: 'DELETE'
+      });
     } catch (e) {
-      console.warn('Errore pulizia localStorage:', e);
+      console.warn('Errore cancellazione cloud:', e);
     }
 
     return { success: true };

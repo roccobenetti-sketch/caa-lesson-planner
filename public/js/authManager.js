@@ -5,11 +5,11 @@
 
 const STORAGE_USERS = 'caa_auth_users';
 const STORAGE_CURRENT_USER = 'caa_auth_current_user';
+const CLOUD_USERS_API = 'https://caa-api.roccobenetti.workers.dev/api/sync/users';
 
 // Utente amministratore predefinito
 const DEFAULT_ADMIN = {
   username: 'rocco',
-  // Password verificata direttamente
   role: 'admin',
   createdAt: '2026-10-27T00:00:00.000Z',
   name: 'Rocco (Amministratore)'
@@ -23,9 +23,32 @@ export const AuthManager = {
   /**
    * Inizializza il sistema di autenticazione e carica gli utenti.
    */
-  init() {
+  async init() {
     this.ensureAdminUser();
     this.restoreSession();
+    await this.syncUsersFromCloud();
+  },
+
+  /**
+   * Sincronizza l'elenco utenti dal Cloud in modo che un docente creato
+   * su un PC possa accedere istantaneamente da qualsiasi altro dispositivo.
+   */
+  async syncUsersFromCloud() {
+    try {
+      const resp = await fetch(CLOUD_USERS_API, { cache: 'no-store' });
+      if (resp.ok) {
+        const data = await resp.json();
+        const cloudUsers = data.users || [];
+        if (cloudUsers.length > 0) {
+          let localUsers = this.getUsersList();
+          const map = new Map();
+          for (const u of localUsers) map.set(u.username.toLowerCase(), u);
+          for (const u of cloudUsers) map.set(u.username.toLowerCase(), u);
+          const merged = Array.from(map.values());
+          localStorage.setItem(STORAGE_USERS, JSON.stringify(merged));
+        }
+      }
+    } catch (e) {}
   },
 
   /**
@@ -168,6 +191,13 @@ export const AuthManager = {
     users.push(newUser);
     localStorage.setItem(STORAGE_USERS, JSON.stringify(users));
 
+    // Sincronizza nel Cloud KV
+    fetch(CLOUD_USERS_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ user: newUser })
+    }).catch(() => {});
+
     return { success: true, user: newUser };
   },
 
@@ -192,6 +222,11 @@ export const AuthManager = {
     }
 
     localStorage.setItem(STORAGE_USERS, JSON.stringify(users));
+
+    // Rimuove dal Cloud KV
+    fetch(`${CLOUD_USERS_API}?username=${encodeURIComponent(usernameToDelete)}`, {
+      method: 'DELETE'
+    }).catch(() => {});
 
     // Rimuove anche la chiave API specifica dell'utente
     localStorage.removeItem(`caa_user_gemini_key_${usernameToDelete.toLowerCase()}`);
