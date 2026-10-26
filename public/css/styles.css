@@ -111,6 +111,9 @@ body {
   textarea,
   select,
   .print-controls,
+  #toastNotification,
+  .toast,
+  [role="alert"],
   #settingsModal,
   #searchModal,
   #projectsModal {
@@ -257,6 +260,19 @@ body {
     visibility: visible !important;
     opacity: 1 !important;
   }
+
+  /* Sezione Morale in stampa: evita salti pagina orfani e mantiene formato compatto */
+  #moralSection {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+    margin-top: 0.8rem !important;
+    margin-bottom: 0.8rem !important;
+    padding: 0.6rem 0.8rem !important;
+    background-color: #fffbeb !important;
+    border: 1.5px solid #fcd34d !important;
+    border-radius: 0.5rem !important;
+    box-shadow: none !important;
+    display: block !important;
   }
 
   /* Esclusione delle schede deselezionate dalla stampa o dal PDF */

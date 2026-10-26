@@ -417,7 +417,7 @@ export const LessonRenderer = {
               <span class="text-2xl">💡</span>
               <div>
                 <h2 class="text-base sm:text-lg font-bold text-amber-950">${this.escapeHtml(moralTitle)}</h2>
-                ${moralExplanation ? `<p class="text-xs sm:text-sm text-amber-900 mt-0.5">${this.escapeHtml(moralExplanation)}</p>` : ''}
+                ${moralExplanation ? `<p class="no-print text-xs sm:text-sm text-amber-900 mt-0.5">${this.escapeHtml(moralExplanation)}</p>` : ''}
               </div>
             </div>
           </div>
@@ -510,11 +510,6 @@ export const LessonRenderer = {
     }
 
     html += `
-        </div>
-        <!-- Piede di pagina per le stampe con attribuzione ARASAAC (CC BY-NC-SA) -->
-        <div class="mt-8 pt-4 border-t border-slate-200 text-center text-[10px] text-slate-400">
-          Simboli pittografici utilizzati: ARASAAC (http://www.arasaac.org) di Sergio Palao per il Governo di Aragona (licenza CC BY-NC-SA).
-          Strutturato e generato con CAA Lesson Planner.
         </div>
       </div>
     `;

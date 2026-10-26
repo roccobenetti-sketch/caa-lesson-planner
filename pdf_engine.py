@@ -160,9 +160,8 @@ def generate_lesson_pdf(project_data, output_path):
     def draw_page_footer(canv, page_num, pw, my):
         canv.saveState()
         canv.setFont("Helvetica", 8)
-        canv.setFillColor(colors.HexColor('#64748B'))
-        canv.drawString(margin_x, my - 15, "CAA Lesson Planner — Comunicazione Aumentativa e Alternativa")
-        canv.drawRightString(pw - margin_x, my - 15, f"Pagina {page_num}")
+        canv.setFillColor(colors.HexColor('#94A3B8'))
+        canv.drawRightString(pw - margin_x, my - 15, f"{page_num}")
         canv.restoreState()
 
     curr_y = page_h - margin_y
@@ -331,11 +330,22 @@ def generate_lesson_pdf(project_data, output_path):
     moral = project_data.get('moral')
     if moral:
         moral_title = moral.get('title', 'La Morale e l\'Insegnamento Chiave').upper()
-        moral_expl = moral.get('explanation', '').strip()
         moral_tokens = moral.get('tokens', [])
         m_num_tokens = len(moral_tokens)
-        m_num_rows = max(1, (m_num_tokens + cards_per_row - 1) // cards_per_row)
-        m_total_h = 36.0 + (m_num_rows * row_h) + 14.0
+        
+        # Disposizione tessere: 5 per riga se ci sono molti token (>8), altrimenti 4
+        m_cards_per_row = 5 if m_num_tokens > 8 else 4
+        m_num_rows = max(1, (m_num_tokens + m_cards_per_row - 1) // m_cards_per_row)
+        
+        m_card_gap = 8.0 if m_cards_per_row == 5 else card_gap
+        box_inner_w = content_w - 16.0
+        m_card_w = (box_inner_w - ((m_cards_per_row - 1) * m_card_gap)) / float(m_cards_per_row) if m_cards_per_row == 5 else card_w
+        m_card_h = 132.0 if m_cards_per_row == 5 else card_h
+        m_pic_size = 86.0 if m_cards_per_row == 5 else pic_size
+        m_row_h = m_card_h + 10.0 if m_cards_per_row == 5 else row_h
+
+        m_header_h = 24.0
+        m_total_h = m_header_h + (m_num_rows * m_row_h) + 12.0
 
         if (curr_y - m_total_h) < margin_y:
             curr_y = start_new_page()
@@ -347,48 +357,42 @@ def generate_lesson_pdf(project_data, output_path):
         c.setLineWidth(1.5)
         c.roundRect(margin_x, m_box_y, content_w, m_total_h, 6, fill=1, stroke=1)
 
-        # Intestazione Morale
+        # Intestazione Morale essenziale (nessun testo superfluo)
         c.setFillColor(colors.HexColor('#78350F'))
         c.setFont("Helvetica-Bold", 9)
-        c.drawString(margin_x + 12, curr_y - 14, f"💡 {moral_title}")
+        c.drawString(margin_x + 12, curr_y - 15, f"💡 {moral_title}")
 
-        if moral_expl:
-            c.setFont("Helvetica-Oblique", 7.5)
-            c.setFillColor(colors.HexColor('#92400E'))
-            c.drawString(margin_x + 12, curr_y - 25, moral_expl[:120])
-
-        m_tokens_start_y = curr_y - 32.0
+        m_tokens_start_y = curr_y - m_header_h - 4.0
 
         for mt_idx, raw_mtoken in enumerate(moral_tokens):
-            r_idx = mt_idx // cards_per_row
-            col_idx = mt_idx % cards_per_row
+            r_idx = mt_idx // m_cards_per_row
+            col_idx = mt_idx % m_cards_per_row
 
-            tx = margin_x + 8.0 + (col_idx * (card_w + card_gap))
-            ty = m_tokens_start_y - (r_idx * row_h) - card_h
+            tx = margin_x + 8.0 + (col_idx * (m_card_w + m_card_gap))
+            ty = m_tokens_start_y - (r_idx * m_row_h) - m_card_h
 
             mtoken_obj = raw_mtoken if isinstance(raw_mtoken, dict) else {'displayWord': str(raw_mtoken)}
             mword_str = str(mtoken_obj.get('displayWord', '')).upper()
             mcat = mtoken_obj.get('category', 'misc')
-            mimg_url = mtoken_obj.get('imageUrl')
 
             border_color = FITZGERALD_COLORS.get(mcat, FITZGERALD_COLORS['misc'])
             c.saveState()
             c.setFillColor(colors.white)
             c.setStrokeColor(border_color)
             c.setLineWidth(2.2)
-            c.roundRect(tx, ty, card_w, card_h, 6, fill=1, stroke=1)
+            c.roundRect(tx, ty, m_card_w, m_card_h, 6, fill=1, stroke=1)
 
             c.setFillColor(colors.HexColor('#0F172A'))
-            font_size = 9.5 if len(mword_str) <= 8 else (8.0 if len(mword_str) <= 12 else 6.8)
+            font_size = 9.0 if len(mword_str) <= 8 else (7.8 if len(mword_str) <= 12 else 6.5)
             c.setFont("Helvetica-Bold", font_size)
-            c.drawCentredString(tx + (card_w / 2.0), ty + card_h - 15, mword_str)
+            c.drawCentredString(tx + (m_card_w / 2.0), ty + m_card_h - 14, mword_str)
 
             mimg_reader = get_token_image(mtoken_obj, max_dim=240)
             if mimg_reader:
-                px = tx + ((card_w - pic_size) / 2.0)
-                py = ty + 10.0
+                px = tx + ((m_card_w - m_pic_size) / 2.0)
+                py = ty + 8.0
                 try:
-                    c.drawImage(mimg_reader, px, py, width=pic_size, height=pic_size, mask='auto')
+                    c.drawImage(mimg_reader, px, py, width=m_pic_size, height=m_pic_size, mask='auto')
                 except Exception:
                     pass
             c.restoreState()
