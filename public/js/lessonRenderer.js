@@ -605,7 +605,7 @@ export const LessonRenderer = {
         </div>
 
         <!-- Immagine Pittogramma (Con fallback automatico garantito anti-campo vuoto) -->
-        <div class="w-20 h-20 md:w-24 md:h-24 flex items-center justify-center p-1 bg-white rounded">
+        <div class="caa-picto-container w-20 h-20 md:w-24 md:h-24 flex items-center justify-center p-1 bg-white rounded">
           <img src="${imgUrl}" 
                alt="${this.escapeHtml(token.displayWord)}" 
                class="max-w-full max-h-full object-contain pointer-events-none" 

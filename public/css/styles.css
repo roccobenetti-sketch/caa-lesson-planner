@@ -159,6 +159,7 @@ body {
   }
 
   /* PUNTO DELLA STORIA / PASSAGGIO:
+     Compatto e proporzionato per foglio A4.
      Non deve MAI essere spezzato a metà tra due pagine.
      Se non entra nello spazio rimasto nella pagina corrente, il motore di stampa
      deve passare interamente all'inizio della pagina successiva, lasciando lo spazio vuoto.
@@ -168,11 +169,11 @@ body {
     page-break-inside: avoid !important;
     break-before: auto !important;
     page-break-before: auto !important;
-    margin-bottom: 1.5rem !important;
-    padding: 1rem !important;
+    margin-bottom: 0.8rem !important;
+    padding: 0.6rem 0.8rem !important;
     background-color: #ffffff !important;
-    border: 1.5px solid #cbd5e1 !important;
-    border-radius: 0.75rem !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 0.5rem !important;
     box-shadow: none !important;
     display: block !important;
     overflow: visible !important;
@@ -180,69 +181,82 @@ body {
     print-color-adjust: exact !important;
   }
 
-  /* La striscia di simboli all'interno del punto non deve essere divisa a metà */
+  /* La striscia di simboli all'interno del punto: compatta per accogliere 6-7 simboli per riga */
   .reading-strip {
     break-inside: avoid !important;
     page-break-inside: avoid !important;
     display: flex !important;
     flex-wrap: wrap !important;
-    gap: 0.5rem !important;
+    gap: 0.35rem !important;
     background-color: #f8fafc !important;
     border: 1px dashed #cbd5e1 !important;
-    padding: 0.5rem !important;
-    border-radius: 0.5rem !important;
+    padding: 0.35rem !important;
+    border-radius: 0.4rem !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
 
-  /* Singola tessera CAA: integra e non divisibile */
+  /* Singola tessera CAA: ridimensionata per stampa leggera (larghezza ~2.4cm, altezza ~3.1cm) */
   .caa-card {
+    width: 2.35cm !important;
+    min-width: 2.35cm !important;
+    max-width: 2.35cm !important;
+    height: 3.1cm !important;
+    min-height: 3.1cm !important;
+    max-height: 3.1cm !important;
+    padding: 0.15cm 0.1cm !important;
     box-shadow: none !important;
     break-inside: avoid !important;
     page-break-inside: avoid !important;
     background-color: #ffffff !important;
+    border-width: 2px !important;
+    border-radius: 0.35cm !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    box-sizing: border-box !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
 
-  /* Sezione Morale e Insegnamento: blocco unico non divisibile */
-  #moralSection {
-    break-inside: avoid !important;
-    page-break-inside: avoid !important;
-    break-before: auto !important;
-    page-break-before: auto !important;
-    margin-top: 2rem !important;
-    margin-bottom: 1.5rem !important;
-    background-color: #fffbeb !important;
-    border: 2px solid #fcd34d !important;
-    box-shadow: none !important;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
+  /* Testo della parola stampata: leggibile, compatto, non debordante */
+  .caa-card .caa-word-label {
+    font-size: 8pt !important;
+    font-weight: 700 !important;
+    line-height: 1.1 !important;
+    max-height: 0.85cm !important;
+    overflow: hidden !important;
+    text-align: center !important;
+    padding: 0 0.05cm !important;
+    margin: 0 !important;
+    letter-spacing: 0.01em !important;
   }
 
-  /* Forza la resa dei colori di sfondo e bordi in stampa */
-  * {
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-  }
-
-  /* Forza la visualizzazione nitida e completa di TUTTE le immagini in stampa e PDF */
-  img {
-    max-width: 100% !important;
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
+  /* Riquadro immagine simbolo: leggero e proporzionato */
+  .caa-card .caa-picto-container {
+    width: 1.65cm !important;
+    height: 1.65cm !important;
+    max-width: 1.65cm !important;
+    max-height: 1.65cm !important;
+    padding: 0 !important;
+    margin: 0 auto !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
 
   .caa-card img {
-    max-width: 100% !important;
-    max-height: 100% !important;
+    max-width: 1.65cm !important;
+    max-height: 1.65cm !important;
+    width: auto !important;
+    height: auto !important;
+    object-fit: contain !important;
     margin: 0 auto !important;
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
+  }
   }
 
   /* Esclusione delle schede deselezionate dalla stampa o dal PDF */

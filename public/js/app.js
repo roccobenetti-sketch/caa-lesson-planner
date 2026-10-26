@@ -1160,38 +1160,43 @@ class CAAApp {
   }
 
   /**
-   * Prepara, rasterizza e garantisce il caricamento al 100% di tutte le immagini prima di aprire il print dialog / PDF.
+   * Prepara, comprime e ridimensiona le immagini prima della stampa.
+   * Riduce drasticamente il peso del file PDF e del buffer spooler della stampante
+   * evitando blocchi di memoria su stampanti fisiche.
    */
   async handlePrint() {
-    this.setLoadingState(true, 'Verifica e rasterizzazione immagini per il PDF...');
+    this.setLoadingState(true, 'Ottimizzazione e compressione immagini per la stampante...');
+    const container = document.getElementById('printableArea');
+
+    const restoreOriginalImages = () => {
+      if (!container) return;
+      const modifiedImages = Array.from(container.querySelectorAll('img[data-original-src]'));
+      modifiedImages.forEach(img => {
+        const orig = img.getAttribute('data-original-src');
+        if (orig) {
+          img.src = orig;
+          img.removeAttribute('data-original-src');
+        }
+      });
+    };
+
     try {
-      const container = document.getElementById('printableArea');
       if (container) {
         const images = Array.from(container.querySelectorAll('img'));
         
-        // Disattiva qualsiasi ritardo di caricamento lazy
+        // Disattiva lazy loading
         images.forEach(img => {
           img.removeAttribute('loading');
           img.loading = 'eager';
         });
 
-        // Attesa parallela del completamento e decodifica di ogni immagine
+        // 1. Attesa del caricamento iniziale di tutte le immagini
         await Promise.all(images.map(img => {
           if (img.complete && img.naturalWidth > 0) {
-            if (img.decode) {
-              return img.decode().catch(() => Promise.resolve());
-            }
             return Promise.resolve();
           }
-
           return new Promise(resolve => {
-            img.onload = () => {
-              if (img.decode) {
-                img.decode().then(resolve).catch(resolve);
-              } else {
-                resolve();
-              }
-            };
+            img.onload = () => resolve();
             img.onerror = () => {
               const word = img.getAttribute('alt') || 'simbolo';
               img.src = GeminiService.createProceduralSvgDataUri(word, 'misc');
@@ -1201,14 +1206,63 @@ class CAAApp {
           });
         }));
 
-        // Breve pausa per permettere al motore grafico del browser di completare la rasterizzazione
-        await new Promise(r => setTimeout(r, 200));
+        // 2. Compressione e ridimensionamento a 180x180 px per la stampante
+        const MAX_PRINT_DIM = 180;
+        await Promise.all(images.map(img => {
+          return new Promise(resolve => {
+            try {
+              // Salva la sorgente originale se non già fatto
+              if (!img.getAttribute('data-original-src')) {
+                img.setAttribute('data-original-src', img.src);
+              }
+
+              const canvas = document.createElement('canvas');
+              let w = img.naturalWidth || img.width || MAX_PRINT_DIM;
+              let h = img.naturalHeight || img.height || MAX_PRINT_DIM;
+
+              if (w > MAX_PRINT_DIM || h > MAX_PRINT_DIM) {
+                if (w > h) {
+                  h = Math.round((h * MAX_PRINT_DIM) / w);
+                  w = MAX_PRINT_DIM;
+                } else {
+                  w = Math.round((w * MAX_PRINT_DIM) / h);
+                  h = MAX_PRINT_DIM;
+                }
+              }
+
+              canvas.width = Math.max(w, 40);
+              canvas.height = Math.max(h, 40);
+              const ctx = canvas.getContext('2d', { alpha: false });
+              ctx.fillStyle = '#ffffff';
+              ctx.fillRect(0, 0, canvas.width, canvas.height);
+              ctx.imageSmoothingEnabled = true;
+              ctx.imageSmoothingQuality = 'high';
+              ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+              // Esporta in JPEG leggero a qualità 0.82 (riduzione peso ~90% per lo spooler)
+              const lightweightDataUrl = canvas.toDataURL('image/jpeg', 0.82);
+              img.src = lightweightDataUrl;
+              resolve();
+            } catch (err) {
+              // In caso di eccezione (es. cross-origin canvas), mantieni immagine originale
+              resolve();
+            }
+          });
+        }));
+
+        // Breve pausa per permettere al browser di aggiornare il buffer di rendering
+        await new Promise(r => setTimeout(r, 150));
       }
     } catch (e) {
       console.warn('Errore pre-stampa:', e);
     } finally {
       this.setLoadingState(false);
     }
+
+    // Registra il ripristino delle immagini originali subito dopo la chiusura del print dialog
+    window.addEventListener('afterprint', restoreOriginalImages, { once: true });
+    // Timer di sicurezza se afterprint non viene scatenato dal browser
+    setTimeout(restoreOriginalImages, 8000);
 
     window.print();
   }
