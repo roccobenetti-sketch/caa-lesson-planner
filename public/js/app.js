@@ -386,6 +386,75 @@ class CAAApp {
   }
 
   /**
+   * Modifica in tempo reale il titolo principale della lezione.
+   */
+  updateLessonTitle(newTitle) {
+    if (!LessonRenderer.currentLesson) return;
+    LessonRenderer.currentLesson.title = newTitle;
+    const printEl = document.getElementById('printLessonTitle');
+    if (printEl) printEl.textContent = newTitle;
+  }
+
+  /**
+   * Modifica in tempo reale l'obiettivo pedagogico della lezione.
+   */
+  updateLessonContextSummary(newSummary) {
+    if (!LessonRenderer.currentLesson) return;
+    LessonRenderer.currentLesson.contextSummary = newSummary;
+    const printEl = document.getElementById('printLessonContextSummary');
+    if (printEl) printEl.textContent = newSummary;
+  }
+
+  /**
+   * Modifica in tempo reale la guida per l'educatore.
+   */
+  updateLessonTeacherGuide(newGuide) {
+    if (!LessonRenderer.currentLesson) return;
+    LessonRenderer.currentLesson.teacherGuide = newGuide;
+    const printEl = document.getElementById('printLessonTeacherGuide');
+    if (printEl) printEl.textContent = newGuide;
+  }
+
+  /**
+   * Modifica in tempo reale il titolo della sezione/fase.
+   */
+  updateSectionTitle(cardIndex, newTitle) {
+    const card = LessonRenderer.currentLesson?.cards?.[cardIndex];
+    if (!card) return;
+    card.sectionTitle = newTitle;
+    const printEl = document.getElementById(`printSectionTitle_${cardIndex}`);
+    if (printEl) printEl.textContent = newTitle;
+  }
+
+  /**
+   * Modifica in tempo reale la spiegazione pedagogica del passaggio.
+   */
+  updateCardPedagogicalExplanation(cardIndex, newExplanation) {
+    const card = LessonRenderer.currentLesson?.cards?.[cardIndex];
+    if (!card) return;
+    card.pedagogicalExplanation = newExplanation;
+  }
+
+  /**
+   * Modifica direttamente la parola visualizzata sopra una tessera CAA.
+   */
+  updateTokenWord(cardRef, tokenIndex, newWord) {
+    const cleanWord = (newWord || '').trim();
+    if (!cleanWord) return;
+
+    let token = null;
+    if (cardRef === 'moral') {
+      token = LessonRenderer.currentLesson?.moral?.tokens?.[tokenIndex];
+    } else {
+      token = LessonRenderer.currentLesson?.cards?.[cardRef]?.tokens?.[tokenIndex];
+    }
+    if (!token) return;
+
+    token.displayWord = cleanWord;
+    LessonRenderer.adjustAllTokenLabels(document.getElementById('printableArea'));
+  }
+
+  /**
    * Modifica in tempo reale la descrizione del passaggio in alto (dopo il numero).
    */
   updateStepLabel(cardIndex, newLabel) {

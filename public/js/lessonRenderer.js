@@ -160,27 +160,59 @@ export const LessonRenderer = {
       <!-- Intestazione Scheda Stampabile -->
       <div class="print-sheet bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-200">
         <div class="border-b border-slate-200 pb-4 mb-6">
-          <div class="flex flex-col md:flex-row md:items-center justify-between gap-2">
-            <div>
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+            <div class="flex-1 min-w-0">
               <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full ${isInfanzia ? 'bg-amber-100 text-amber-800' : 'bg-blue-100 text-blue-800'} mb-2">
                 ${gradeBadgeText}
               </span>
-              <h1 class="text-2xl md:text-3xl font-bold text-slate-900 caa-text">${this.escapeHtml(lesson.title)}</h1>
+              <!-- Titolo della Lezione Editabile a Video (No-Print) -->
+              <div class="no-print">
+                <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Titolo del percorso didattico:</label>
+                <input type="text"
+                       class="w-full text-xl sm:text-2xl md:text-3xl font-bold text-slate-900 bg-slate-50/70 hover:bg-slate-100 focus:bg-white border border-slate-200 focus:border-blue-500 rounded-xl px-3 py-1.5 transition focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                       value="${this.escapeHtml(lesson.title || '')}"
+                       id="inputLessonTitle"
+                       oninput="window.app.updateLessonTitle(this.value)"
+                       placeholder="Titolo del percorso didattico..."
+                       title="Clicca per modificare il titolo principale" />
+              </div>
+              <!-- Titolo per la Stampa (Print-Only) -->
+              <h1 class="print-only text-2xl md:text-3xl font-bold text-slate-900 caa-text" id="printLessonTitle">${this.escapeHtml(lesson.title || '')}</h1>
             </div>
-            <div class="text-xs text-slate-500 no-print">
-              Formato: <strong>${lesson.layoutType || 'Sequenza'}</strong> • Simboli: <strong>ARASAAC & IA</strong>
+
+            <div class="text-xs text-slate-500 no-print flex flex-col items-start md:items-end gap-1">
+              <span>Formato: <strong>${lesson.layoutType || 'Sequenza'}</strong></span>
+              <span>Simboli: <strong>ARASAAC & IA</strong></span>
             </div>
           </div>
-          ${lesson.contextSummary ? `
-            <div class="mt-3 p-3 bg-blue-50/80 rounded-lg text-sm text-blue-900 border border-blue-100">
-              <strong class="font-semibold">Obiettivo Pedagogico:</strong> ${this.escapeHtml(lesson.contextSummary)}
+
+          <!-- Obiettivo Pedagogico Editabile -->
+          <div class="mt-3 p-3 bg-blue-50/80 rounded-xl text-sm text-blue-900 border border-blue-100">
+            <div class="flex items-center justify-between mb-1">
+              <strong class="font-bold text-xs uppercase tracking-wider text-blue-900">Obiettivo Pedagogico:</strong>
             </div>
-          ` : ''}
-          ${lesson.teacherGuide ? `
-            <div class="mt-2 p-3 bg-slate-50 rounded-lg text-sm text-slate-600 border border-slate-100">
-              <strong class="text-slate-800">Guida per l'educatore:</strong> ${this.escapeHtml(lesson.teacherGuide)}
+            <textarea 
+              class="no-print w-full text-xs sm:text-sm font-medium bg-white/90 hover:bg-white border border-blue-200 focus:border-blue-500 rounded-lg p-2 transition focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-slate-800"
+              rows="2"
+              id="inputLessonContextSummary"
+              oninput="window.app.updateLessonContextSummary(this.value)"
+              placeholder="Descrivi l'obiettivo pedagogico di questa attività...">${this.escapeHtml(lesson.contextSummary || '')}</textarea>
+            <p class="print-only text-sm text-blue-900" id="printLessonContextSummary">${this.escapeHtml(lesson.contextSummary || '')}</p>
+          </div>
+
+          <!-- Guida per l'Educatore Editabile -->
+          <div class="mt-2 p-3 bg-slate-50 rounded-xl text-sm text-slate-700 border border-slate-200">
+            <div class="flex items-center justify-between mb-1">
+              <strong class="font-bold text-xs uppercase tracking-wider text-slate-700">Guida per l'educatore:</strong>
             </div>
-          ` : ''}
+            <textarea 
+              class="no-print w-full text-xs sm:text-sm font-medium bg-white hover:bg-white border border-slate-300 focus:border-blue-500 rounded-lg p-2 transition focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-slate-800"
+              rows="2"
+              id="inputLessonTeacherGuide"
+              oninput="window.app.updateLessonTeacherGuide(this.value)"
+              placeholder="Suggerimenti operativi e modalità di somministrazione della scheda...">${this.escapeHtml(lesson.teacherGuide || '')}</textarea>
+            <p class="print-only text-sm text-slate-700" id="printLessonTeacherGuide">${this.escapeHtml(lesson.teacherGuide || '')}</p>
+          </div>
         </div>
 
         <!-- Sezione Contenuto Schede Raggruppate per Fasi -->
@@ -195,8 +227,19 @@ export const LessonRenderer = {
         lastSectionTitle = card.sectionTitle;
         html += `
           <div class="pt-4 pb-2 border-b-2 border-blue-100 mt-6 first:mt-0 flex items-center gap-2">
-            <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
-            <h2 class="text-lg font-bold text-blue-900 tracking-tight">${this.escapeHtml(card.sectionTitle)}</h2>
+            <span class="w-3 h-3 rounded-full bg-blue-600 shrink-0"></span>
+            <!-- Input per modificare il titolo della fase a video (No-Print) -->
+            <input type="text"
+                   class="no-print flex-1 text-base sm:text-lg font-bold text-blue-900 bg-blue-50/50 hover:bg-blue-50 focus:bg-white border border-blue-200 focus:border-blue-500 rounded-lg px-2.5 py-1 transition focus:outline-none focus:ring-1 focus:ring-blue-500"
+                   value="${this.escapeHtml(card.sectionTitle)}"
+                   id="inputSectionTitle_${cardIndex}"
+                   oninput="window.app.updateSectionTitle(${cardIndex}, this.value)"
+                   placeholder="Titolo della fase o sezione..."
+                   title="Clicca per modificare il titolo di questa fase" />
+            <!-- Titolo della fase per la stampa (Print-Only) -->
+            <h2 class="print-only text-lg font-bold text-blue-900 tracking-tight" id="printSectionTitle_${cardIndex}">
+              ${this.escapeHtml(card.sectionTitle)}
+            </h2>
           </div>
         `;
       }
@@ -226,11 +269,16 @@ export const LessonRenderer = {
               </span>
             </div>
 
-            ${card.pedagogicalExplanation ? `
-              <span class="text-xs text-slate-500 italic bg-slate-50 px-2 py-0.5 rounded border border-slate-100 no-print shrink-0">
-                💡 ${this.escapeHtml(card.pedagogicalExplanation)}
-              </span>
-            ` : ''}
+            <!-- Spiegazione pedagogica editabile del passaggio (No-Print) -->
+            <div class="no-print flex items-center gap-1.5 bg-slate-50 border border-slate-200 hover:border-slate-300 rounded-lg px-2 py-1 text-xs text-slate-600">
+              <span class="shrink-0 text-amber-500 text-xs">💡</span>
+              <input type="text" 
+                     class="text-xs italic text-slate-600 bg-transparent border-none focus:outline-none focus:ring-0 w-36 sm:w-64 placeholder-slate-400"
+                     value="${this.escapeHtml(card.pedagogicalExplanation || '')}"
+                     oninput="window.app.updateCardPedagogicalExplanation(${cardIndex}, this.value)"
+                     placeholder="Nota pedagogica..."
+                     title="Clicca per modificare la nota pedagogica del passaggio" />
+            </div>
           </div>
 
           <!-- BARRA DI MODIFICA DELLA FRASE (No-Print) -->
@@ -494,10 +542,14 @@ export const LessonRenderer = {
                 onclick="event.stopPropagation(); window.app.deleteToken('${cardRef}', ${tokenIndex})"
                 title="Rimuovi questa parola">✕</button>
 
-        <!-- Etichetta testuale superiore (Auto-ridimensionata, MAI troncata con '..') -->
-        <div class="caa-word-label caa-text px-1" 
+        <!-- Etichetta testuale superiore (Auto-ridimensionata, Modificabile con click, MAI troncata con '..') -->
+        <div class="caa-word-label caa-text px-1 cursor-text" 
+             contenteditable="true"
              style="${this.getWordLabelStyle(token.displayWord)}" 
-             title="${this.escapeHtml(token.displayWord)}">
+             onclick="event.stopPropagation()"
+             onblur="window.app.updateTokenWord('${cardRef}', ${tokenIndex}, this.innerText)"
+             onkeydown="if(event.key==='Enter'){event.preventDefault(); this.blur();}"
+             title="Clicca direttamente per modificare il testo scritto sopra il simbolo">
           ${this.escapeHtml(token.displayWord)}
         </div>
 

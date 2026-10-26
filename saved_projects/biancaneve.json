@@ -7,11 +7,11 @@
   "layoutType": "routine",
   "detailLevel": "detailed",
   "createdAt": "2026-10-26T15:00:00Z",
-  "updatedAt": "2026-10-26T16:27:19Z",
+  "updatedAt": "2026-10-26T16:43:15Z",
   "cards": [
     {
       "sectionTitle": "Personaggi Principali",
-      "stepLabel": "BIANCANEVE È PRINCIPESSA BUONA bellissima",
+      "stepLabel": "BIANCANEVE È PRINCIPESSA BUONA E BELLISSIMA",
       "pedagogicalExplanation": "Presentazione della protagonista e del suo carattere accogliente",
       "tokens": [
         {
@@ -335,7 +335,7 @@
     },
     {
       "sectionTitle": "La Risposta dello Specchio",
-      "stepLabel": "SPECCHIO DICE BIANCANEVE BELLA",
+      "stepLabel": "SPECCHIO DICE CHE BIANCANEVE é PIù BELLA",
       "pedagogicalExplanation": "Momento scatenante del conflitto narrativo",
       "tokens": [
         {
@@ -454,7 +454,7 @@
     },
     {
       "sectionTitle": "La Fuga nel Bosco",
-      "stepLabel": "BIANCANEVE HA PAURA CORRE NEL BOSCO",
+      "stepLabel": "BIANCANEVE HA PAURA E SCAPPA NEL BOSCO",
       "pedagogicalExplanation": "Riconoscimento dell'emozione di paura e reazione protettiva",
       "tokens": [
         {
@@ -665,7 +665,7 @@
     },
     {
       "sectionTitle": "L'Incontro con i Sette Nani",
-      "stepLabel": "BIANCANEVE TROVA CASA SETTE NANI",
+      "stepLabel": "BIANCANEVE TROVA LA CASA DEI SETTE NANI",
       "pedagogicalExplanation": "L'aiuto reciproco e la costruzione di un rifugio sicuro",
       "tokens": [
         {
@@ -822,7 +822,7 @@
     },
     {
       "sectionTitle": "Passaggi Aggiuntivi",
-      "stepLabel": "i 7 nani vanno a lavoro nella miniera",
+      "stepLabel": "i 7 NANI VANNO A LAVORARE IN MINIERA",
       "pedagogicalExplanation": "Passaggio personalizzato aggiunto dall'insegnante",
       "tokens": [
         {
@@ -1053,7 +1053,7 @@
     },
     {
       "sectionTitle": "L'Inganno della Mela",
-      "stepLabel": "reggina travesita vecchietta DA MELA  avvVELENata biacaneve",
+      "stepLabel": "LA REGINA TRAVESTITA DA VECCHIETTA DA UNA MELA  AVVELENATA A BIANCANEVE",
       "pedagogicalExplanation": "Il pericolo dell'inganno e la prudenza verso gli sconosciuti",
       "tokens": [
         {
@@ -1195,7 +1195,7 @@
     },
     {
       "sectionTitle": "Il Sonno Profondo",
-      "stepLabel": "BIANCANEVE MANGIA MELA DORME",
+      "stepLabel": "BIANCANEVE MANGIA LA MELA E SI ADDORMETA",
       "pedagogicalExplanation": "Momento drammatico della narrazione",
       "tokens": [
         {
@@ -1334,7 +1334,7 @@
     },
     {
       "sectionTitle": "Passaggi Aggiuntivi",
-      "stepLabel": "7 nani tornano lavoro trovano biancaneve dorme",
+      "stepLabel": "I 7NANI TORNANO DA LAVORO E TROVANO BIANCANEVE ADDORMENTATA",
       "pedagogicalExplanation": "Passaggio personalizzato aggiunto dall'insegnante",
       "tokens": [
         {
@@ -1563,7 +1563,7 @@
     },
     {
       "sectionTitle": "Passaggi Aggiuntivi",
-      "stepLabel": "il principe arriva alla casa dei 7 nani e trova biancaneve che dorme",
+      "stepLabel": "IL PRINCIPE AZZURRO ARRIVA ALLA CASA DEI 7 NANI E TROVA BIANCANEVE ADDORMENTATA",
       "pedagogicalExplanation": "Passaggio personalizzato aggiunto dall'insegnante",
       "tokens": [
         {
@@ -1806,7 +1806,7 @@
     },
     {
       "sectionTitle": "Il Risveglio e il Lieto Fine",
-      "stepLabel": "PRINCIPE bacia BIANCANEVE che si sveglia TUTTI FELICI",
+      "stepLabel": "IL PRINCIPE BACIA BIANCANEVE CHE SI SVEGLIA E TUTTI SONO FELICI",
       "pedagogicalExplanation": "La risoluzione positiva, l'affetto e la vittoria del bene",
       "tokens": [
         {
@@ -2077,39 +2077,130 @@
     "explanation": "La bontà d'animo e la generosità vincono sempre sull'invidia, e l'aiuto sincero degli amici ci protegge nei momenti difficili.",
     "tokens": [
       {
-        "displayWord": "BONTÀ",
-        "searchTerm": "buono",
-        "category": "noun",
-        "id": 2353,
-        "imageUrl": "https://api.arasaac.org/api/pictograms/2353?download=false"
+        "displayWord": "Bontà",
+        "searchTerm": "bontà",
+        "category": "adjective",
+        "pictogramId": 37231,
+        "imageUrl": "https://static.arasaac.org/pictograms/37231/37231_500.png",
+        "alternatives": [
+          {
+            "id": 37231,
+            "imageUrl": "https://static.arasaac.org/pictograms/37231/37231_500.png"
+          }
+        ],
+        "source": "arasaac"
       },
       {
-        "displayWord": "E",
+        "displayWord": "e",
         "searchTerm": "e",
-        "category": "conjunction",
-        "id": 31548,
-        "imageUrl": "https://api.arasaac.org/api/pictograms/31548?download=false"
+        "category": "misc",
+        "pictogramId": 2361,
+        "imageUrl": "https://static.arasaac.org/pictograms/2361/2361_500.png",
+        "alternatives": [
+          {
+            "id": 3026,
+            "imageUrl": "https://static.arasaac.org/pictograms/3026/3026_500.png"
+          },
+          {
+            "id": 3096,
+            "imageUrl": "https://static.arasaac.org/pictograms/3096/3096_500.png"
+          },
+          {
+            "id": 11399,
+            "imageUrl": "https://static.arasaac.org/pictograms/11399/11399_500.png"
+          },
+          {
+            "id": 36744,
+            "imageUrl": "https://static.arasaac.org/pictograms/36744/36744_500.png"
+          },
+          {
+            "id": 36783,
+            "imageUrl": "https://static.arasaac.org/pictograms/36783/36783_500.png"
+          },
+          {
+            "id": 37578,
+            "imageUrl": "https://static.arasaac.org/pictograms/37578/37578_500.png"
+          },
+          {
+            "id": 6641,
+            "imageUrl": "https://static.arasaac.org/pictograms/6641/6641_500.png"
+          },
+          {
+            "id": 25544,
+            "imageUrl": "https://static.arasaac.org/pictograms/25544/25544_500.png"
+          }
+        ],
+        "source": "arasaac"
       },
       {
-        "displayWord": "AMICIZIA",
-        "searchTerm": "amico",
+        "displayWord": "amicizia",
+        "searchTerm": "amicizia",
         "category": "noun",
-        "id": 2315,
-        "imageUrl": "https://api.arasaac.org/api/pictograms/2315?download=false"
+        "pictogramId": 8488,
+        "imageUrl": "https://static.arasaac.org/pictograms/8488/8488_500.png",
+        "alternatives": [
+          {
+            "id": 8488,
+            "imageUrl": "https://static.arasaac.org/pictograms/8488/8488_500.png"
+          }
+        ],
+        "source": "arasaac"
       },
       {
-        "displayWord": "BATTONO",
-        "searchTerm": "vincere",
+        "displayWord": "battono",
+        "searchTerm": "battere",
         "category": "verb",
-        "id": 7200,
-        "imageUrl": "https://api.arasaac.org/api/pictograms/7200?download=false"
+        "pictogramId": 8502,
+        "imageUrl": "https://static.arasaac.org/pictograms/8502/8502_500.png",
+        "alternatives": [
+          {
+            "id": 8502,
+            "imageUrl": "https://static.arasaac.org/pictograms/8502/8502_500.png"
+          },
+          {
+            "id": 10155,
+            "imageUrl": "https://static.arasaac.org/pictograms/10155/10155_500.png"
+          },
+          {
+            "id": 27316,
+            "imageUrl": "https://static.arasaac.org/pictograms/27316/27316_500.png"
+          },
+          {
+            "id": 27315,
+            "imageUrl": "https://static.arasaac.org/pictograms/27315/27315_500.png"
+          },
+          {
+            "id": 39078,
+            "imageUrl": "https://static.arasaac.org/pictograms/39078/39078_500.png"
+          },
+          {
+            "id": 37288,
+            "imageUrl": "https://static.arasaac.org/pictograms/37288/37288_500.png"
+          },
+          {
+            "id": 11225,
+            "imageUrl": "https://static.arasaac.org/pictograms/11225/11225_500.png"
+          },
+          {
+            "id": 11226,
+            "imageUrl": "https://static.arasaac.org/pictograms/11226/11226_500.png"
+          }
+        ],
+        "source": "arasaac"
       },
       {
-        "displayWord": "INVIDIA",
-        "searchTerm": "geloso",
-        "category": "emotion",
-        "id": 2573,
-        "imageUrl": "https://api.arasaac.org/api/pictograms/2573?download=false"
+        "displayWord": "cattiveria",
+        "searchTerm": "cattiveria",
+        "category": "adjective",
+        "pictogramId": 32652,
+        "imageUrl": "https://static.arasaac.org/pictograms/32652/32652_500.png",
+        "alternatives": [
+          {
+            "id": 32652,
+            "imageUrl": "https://static.arasaac.org/pictograms/32652/32652_500.png"
+          }
+        ],
+        "source": "arasaac"
       }
     ]
   }
