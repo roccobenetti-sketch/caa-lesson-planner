@@ -1,0 +1,481 @@
+{
+  "id": "tre_porcellini",
+  "title": "La Fiaba dei Tre Porcellini e il Lupo",
+  "subtitle": "Percorso narrativo dettagliato sui tre materiali, l'impegno e la protezione",
+  "targetGrade": "primaria",
+  "primaryClass": "1",
+  "layoutType": "routine",
+  "detailLevel": "detailed",
+  "createdAt": "2026-10-26T14:00:00Z",
+  "updatedAt": "2026-10-26T16:50:00Z",
+  "cards": [
+    {
+      "sectionTitle": "La Partenza dei Fratelli",
+      "stepLabel": "Tre porcellini salutano la mamma e partono per il bosco",
+      "pedagogicalExplanation": "L'inizio dell'autonomia e del viaggio dei tre protagonisti",
+      "tokens": [
+        {
+          "displayWord": "TRE",
+          "searchTerm": "tre",
+          "category": "number",
+          "id": 5458,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/5458?download=false"
+        },
+        {
+          "displayWord": "PORCELLINI",
+          "searchTerm": "maiale",
+          "category": "noun",
+          "id": 2487,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/2487?download=false"
+        },
+        {
+          "displayWord": "PARTONO",
+          "searchTerm": "andare via",
+          "category": "verb",
+          "id": 32154,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/32154?download=false"
+        },
+        {
+          "displayWord": "NEL",
+          "searchTerm": "in",
+          "category": "preposition",
+          "id": 29887,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/29887?download=false"
+        },
+        {
+          "displayWord": "BOSCO",
+          "searchTerm": "bosco",
+          "category": "noun",
+          "id": 2341,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/2341?download=false"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "La Prima Casa di Paglia",
+      "stepLabel": "Il primo porcellino pigro costruisce una casa di paglia in fretta",
+      "pedagogicalExplanation": "La scelta della fretta e del materiale debole per giocare prima",
+      "tokens": [
+        {
+          "displayWord": "PORCELLINO",
+          "searchTerm": "maiale",
+          "category": "noun",
+          "id": 2487,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/2487?download=false"
+        },
+        {
+          "displayWord": "COSTRUISCE",
+          "searchTerm": "costruire",
+          "category": "verb",
+          "id": 6984,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/6984?download=false"
+        },
+        {
+          "displayWord": "CASA",
+          "searchTerm": "casa",
+          "category": "noun",
+          "id": 2383,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/2383?download=false"
+        },
+        {
+          "displayWord": "DI PAGLIA",
+          "searchTerm": "paglia",
+          "category": "noun",
+          "id": 3390,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/3390?download=false"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "La Seconda Casa di Legno",
+      "stepLabel": "Il secondo porcellino costruisce una casa di legno",
+      "pedagogicalExplanation": "Una costruzione poco resistente fatta rapidamente",
+      "tokens": [
+        {
+          "displayWord": "PORCELLINO",
+          "searchTerm": "maiale",
+          "category": "noun",
+          "id": 2487,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/2487?download=false"
+        },
+        {
+          "displayWord": "FA",
+          "searchTerm": "fare",
+          "category": "verb",
+          "id": 7015,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/7015?download=false"
+        },
+        {
+          "displayWord": "CASA",
+          "searchTerm": "casa",
+          "category": "noun",
+          "id": 2383,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/2383?download=false"
+        },
+        {
+          "displayWord": "DI LEGNO",
+          "searchTerm": "legno",
+          "category": "noun",
+          "id": 2465,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/2465?download=false"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "La Terza Casa di Mattoni",
+      "stepLabel": "Il terzo porcellino lavora con pazienza e fa una casa di mattoni forte",
+      "pedagogicalExplanation": "L'impegno profuso per garantire massima sicurezza e solidità",
+      "tokens": [
+        {
+          "displayWord": "PORCELLINO",
+          "searchTerm": "maiale",
+          "category": "noun",
+          "id": 2487,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/2487?download=false"
+        },
+        {
+          "displayWord": "LAVORA",
+          "searchTerm": "lavorare",
+          "category": "verb",
+          "id": 7076,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/7076?download=false"
+        },
+        {
+          "displayWord": "CASA",
+          "searchTerm": "casa",
+          "category": "noun",
+          "id": 2383,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/2383?download=false"
+        },
+        {
+          "displayWord": "DI MATTONI",
+          "searchTerm": "mattone",
+          "category": "noun",
+          "id": 2484,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/2484?download=false"
+        },
+        {
+          "displayWord": "FORTE",
+          "searchTerm": "forte",
+          "category": "adjective",
+          "id": 2503,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/2503?download=false"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "Il Crollo della Casa di Paglia",
+      "stepLabel": "Il lupo soffia forte e la casa di paglia crolla subito",
+      "pedagogicalExplanation": "La debolezza della paglia di fronte alla minaccia del lupo",
+      "tokens": [
+        {
+          "displayWord": "LUPO",
+          "searchTerm": "lupo",
+          "category": "noun",
+          "id": 2468,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/2468?download=false"
+        },
+        {
+          "displayWord": "SOFFIA",
+          "searchTerm": "soffiare",
+          "category": "verb",
+          "id": 7160,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/7160?download=false"
+        },
+        {
+          "displayWord": "CASA",
+          "searchTerm": "casa",
+          "category": "noun",
+          "id": 2383,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/2383?download=false"
+        },
+        {
+          "displayWord": "CROLLA",
+          "searchTerm": "cadere",
+          "category": "verb",
+          "id": 6965,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/6965?download=false"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "La Prima Fuga",
+      "stepLabel": "Il porcellino scappa veloce nella casa di legno del fratello",
+      "pedagogicalExplanation": "La fuga per mettersi in salvo dal secondo fratello",
+      "tokens": [
+        {
+          "displayWord": "PORCELLINO",
+          "searchTerm": "maiale",
+          "category": "noun",
+          "id": 2487,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/2487?download=false"
+        },
+        {
+          "displayWord": "SCAPPA",
+          "searchTerm": "fuggire",
+          "category": "verb",
+          "id": 7034,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/7034?download=false"
+        },
+        {
+          "displayWord": "NELLA",
+          "searchTerm": "in",
+          "category": "preposition",
+          "id": 29887,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/29887?download=false"
+        },
+        {
+          "displayWord": "CASA",
+          "searchTerm": "casa",
+          "category": "noun",
+          "id": 2383,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/2383?download=false"
+        },
+        {
+          "displayWord": "DI LEGNO",
+          "searchTerm": "legno",
+          "category": "noun",
+          "id": 2465,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/2465?download=false"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "Il Crollo della Casa di Legno",
+      "stepLabel": "Il lupo soffia fortissimo e distrugge anche la casa di legno",
+      "pedagogicalExplanation": "Anche il legno cede alla forza del soffio del lupo",
+      "tokens": [
+        {
+          "displayWord": "LUPO",
+          "searchTerm": "lupo",
+          "category": "noun",
+          "id": 2468,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/2468?download=false"
+        },
+        {
+          "displayWord": "SOFFIA",
+          "searchTerm": "soffiare",
+          "category": "verb",
+          "id": 7160,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/7160?download=false"
+        },
+        {
+          "displayWord": "ROMPE",
+          "searchTerm": "rompere",
+          "category": "verb",
+          "id": 7136,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/7136?download=false"
+        },
+        {
+          "displayWord": "CASA",
+          "searchTerm": "casa",
+          "category": "noun",
+          "id": 2383,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/2383?download=false"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "Il Rifugio nella Casa di Mattoni",
+      "stepLabel": "I due fratelli scappano nella casa di mattoni e si chiudono dentro",
+      "pedagogicalExplanation": "La solidarietà fraterna e la ricerca del rifugio più solido",
+      "tokens": [
+        {
+          "displayWord": "DUE",
+          "searchTerm": "due",
+          "category": "number",
+          "id": 5457,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/5457?download=false"
+        },
+        {
+          "displayWord": "PORCELLINI",
+          "searchTerm": "maiale",
+          "category": "noun",
+          "id": 2487,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/2487?download=false"
+        },
+        {
+          "displayWord": "CORRONO",
+          "searchTerm": "correre",
+          "category": "verb",
+          "id": 6982,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/6982?download=false"
+        },
+        {
+          "displayWord": "CASA",
+          "searchTerm": "casa",
+          "category": "noun",
+          "id": 2383,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/2383?download=false"
+        },
+        {
+          "displayWord": "DI MATTONI",
+          "searchTerm": "mattone",
+          "category": "noun",
+          "id": 2484,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/2484?download=false"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "La Resistenza dei Mattoni",
+      "stepLabel": "Il lupo soffia con rabbia ma la casa di mattoni resiste ferma",
+      "pedagogicalExplanation": "La vittoria della perseveranza: il lavoro ben fatto garantisce sicurezza",
+      "tokens": [
+        {
+          "displayWord": "LUPO",
+          "searchTerm": "lupo",
+          "category": "noun",
+          "id": 2468,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/2468?download=false"
+        },
+        {
+          "displayWord": "SOFFIA",
+          "searchTerm": "soffiare",
+          "category": "verb",
+          "id": 7160,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/7160?download=false"
+        },
+        {
+          "displayWord": "CASA",
+          "searchTerm": "casa",
+          "category": "noun",
+          "id": 2383,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/2383?download=false"
+        },
+        {
+          "displayWord": "RESISTE",
+          "searchTerm": "resistere",
+          "category": "verb",
+          "id": 2503,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/2503?download=false"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "La Sconfitta del Lupo",
+      "stepLabel": "Il lupo scende dal camino ma scotta la coda e fugge lontano",
+      "pedagogicalExplanation": "Il pericolo viene allontanato definitivamente con l'astuzia",
+      "tokens": [
+        {
+          "displayWord": "LUPO",
+          "searchTerm": "lupo",
+          "category": "noun",
+          "id": 2468,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/2468?download=false"
+        },
+        {
+          "displayWord": "CADE",
+          "searchTerm": "cadere",
+          "category": "verb",
+          "id": 6965,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/6965?download=false"
+        },
+        {
+          "displayWord": "NELLA",
+          "searchTerm": "in",
+          "category": "preposition",
+          "id": 29887,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/29887?download=false"
+        },
+        {
+          "displayWord": "PENTOLA",
+          "searchTerm": "pentola",
+          "category": "noun",
+          "id": 2526,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/2526?download=false"
+        },
+        {
+          "displayWord": "SCAPPA",
+          "searchTerm": "fuggire",
+          "category": "verb",
+          "id": 7034,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/7034?download=false"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "La Festa Insieme",
+      "stepLabel": "I tre porcellini sono al sicuro e felici insieme nella casa",
+      "pedagogicalExplanation": "L'armonia ritrovata e la celebrazione della sicurezza comune",
+      "tokens": [
+        {
+          "displayWord": "TRE",
+          "searchTerm": "tre",
+          "category": "number",
+          "id": 5458,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/5458?download=false"
+        },
+        {
+          "displayWord": "PORCELLINI",
+          "searchTerm": "maiale",
+          "category": "noun",
+          "id": 2487,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/2487?download=false"
+        },
+        {
+          "displayWord": "SONO",
+          "searchTerm": "essere",
+          "category": "verb",
+          "id": 8113,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/8113?download=false"
+        },
+        {
+          "displayWord": "AL SICURO",
+          "searchTerm": "sicuro",
+          "category": "adjective",
+          "id": 31922,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/31922?download=false"
+        },
+        {
+          "displayWord": "FELICI",
+          "searchTerm": "felice",
+          "category": "emotion",
+          "id": 2349,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/2349?download=false"
+        }
+      ]
+    }
+  ],
+  "moral": {
+    "title": "La Morale e l'Insegnamento Chiave",
+    "explanation": "L'impegno, la pazienza e il lavoro serio ci proteggono dalle difficoltà della vita molto più della fretta e della pigrizia.",
+    "tokens": [
+      {
+        "displayWord": "IMPEGNO",
+        "searchTerm": "lavorare",
+        "category": "noun",
+        "id": 7076,
+        "imageUrl": "https://api.arasaac.org/api/pictograms/7076?download=false"
+      },
+      {
+        "displayWord": "E",
+        "searchTerm": "e",
+        "category": "conjunction",
+        "id": 31548,
+        "imageUrl": "https://api.arasaac.org/api/pictograms/31548?download=false"
+      },
+      {
+        "displayWord": "PAZIENZA",
+        "searchTerm": "aspettare",
+        "category": "noun",
+        "id": 6939,
+        "imageUrl": "https://api.arasaac.org/api/pictograms/6939?download=false"
+      },
+      {
+        "displayWord": "BATTONO",
+        "searchTerm": "vincere",
+        "category": "verb",
+        "id": 7200,
+        "imageUrl": "https://api.arasaac.org/api/pictograms/7200?download=false"
+      },
+      {
+        "displayWord": "PIGRIZIA",
+        "searchTerm": "stanco",
+        "category": "emotion",
+        "id": 2580,
+        "imageUrl": "https://api.arasaac.org/api/pictograms/2580?download=false"
+      }
+    ]
+  }
+}

@@ -1,0 +1,369 @@
+{
+  "id": "biancaneve",
+  "title": "La Fiaba di Biancaneve e i Sette Nani",
+  "subtitle": "Percorso narrativo strutturato in CAA per comprendere sequenze logiche, emozioni e morale",
+  "targetGrade": "primaria",
+  "primaryClass": "2",
+  "layoutType": "routine",
+  "detailLevel": "detailed",
+  "createdAt": "2026-10-26T15:00:00Z",
+  "updatedAt": "2026-10-26T17:00:00Z",
+  "cards": [
+    {
+      "sectionTitle": "Personaggi Principali",
+      "stepLabel": "C'era una volta la principessa Biancaneve buona e gentile",
+      "pedagogicalExplanation": "Presentazione della protagonista e del suo carattere accogliente",
+      "tokens": [
+        {
+          "displayWord": "BIANCANEVE",
+          "searchTerm": "biancaneve",
+          "category": "properNoun",
+          "id": 21447,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/21447?download=false"
+        },
+        {
+          "displayWord": "È",
+          "searchTerm": "essere",
+          "category": "verb",
+          "id": 8113,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/8113?download=false"
+        },
+        {
+          "displayWord": "PRINCIPESSA",
+          "searchTerm": "principessa",
+          "category": "noun",
+          "id": 31375,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/31375?download=false"
+        },
+        {
+          "displayWord": "BUONA",
+          "searchTerm": "buono",
+          "category": "adjective",
+          "id": 2353,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/2353?download=false"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "L'Invidia della Regina",
+      "stepLabel": "La regina cattiva chiede allo specchio magico chi è la più bella",
+      "pedagogicalExplanation": "Introduzione dell'antagonista e del motivo della gelosia",
+      "tokens": [
+        {
+          "displayWord": "REGINA",
+          "searchTerm": "regina",
+          "category": "noun",
+          "id": 31374,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/31374?download=false"
+        },
+        {
+          "displayWord": "CATTIVA",
+          "searchTerm": "cattivo",
+          "category": "adjective",
+          "id": 2354,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/2354?download=false"
+        },
+        {
+          "displayWord": "PARLA CON",
+          "searchTerm": "parlare",
+          "category": "verb",
+          "id": 7114,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/7114?download=false"
+        },
+        {
+          "displayWord": "SPECCHIO",
+          "searchTerm": "specchio",
+          "category": "noun",
+          "id": 6176,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/6176?download=false"
+        },
+        {
+          "displayWord": "MAGICO",
+          "searchTerm": "magia",
+          "category": "adjective",
+          "id": 31922,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/31922?download=false"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "La Risposta dello Specchio",
+      "stepLabel": "Lo specchio dice che Biancaneve è la più bella del regno",
+      "pedagogicalExplanation": "Momento scatenante del conflitto narrativo",
+      "tokens": [
+        {
+          "displayWord": "SPECCHIO",
+          "searchTerm": "specchio",
+          "category": "noun",
+          "id": 6176,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/6176?download=false"
+        },
+        {
+          "displayWord": "DICE",
+          "searchTerm": "dire",
+          "category": "verb",
+          "id": 2697,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/2697?download=false"
+        },
+        {
+          "displayWord": "BIANCANEVE",
+          "searchTerm": "biancaneve",
+          "category": "properNoun",
+          "id": 21447,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/21447?download=false"
+        },
+        {
+          "displayWord": "BELLA",
+          "searchTerm": "bello",
+          "category": "adjective",
+          "id": 2350,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/2350?download=false"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "La Fuga nel Bosco",
+      "stepLabel": "Biancaneve ha paura e scappa nel bosco profondo",
+      "pedagogicalExplanation": "Riconoscimento dell'emozione di paura e reazione protettiva",
+      "tokens": [
+        {
+          "displayWord": "BIANCANEVE",
+          "searchTerm": "biancaneve",
+          "category": "properNoun",
+          "id": 21447,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/21447?download=false"
+        },
+        {
+          "displayWord": "HA PAURA",
+          "searchTerm": "paura",
+          "category": "emotion",
+          "id": 2577,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/2577?download=false"
+        },
+        {
+          "displayWord": "CORRE",
+          "searchTerm": "correre",
+          "category": "verb",
+          "id": 6982,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/6982?download=false"
+        },
+        {
+          "displayWord": "NEL",
+          "searchTerm": "in",
+          "category": "preposition",
+          "id": 29887,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/29887?download=false"
+        },
+        {
+          "displayWord": "BOSCO",
+          "searchTerm": "bosco",
+          "category": "noun",
+          "id": 2341,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/2341?download=false"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "L'Incontro con i Sette Nani",
+      "stepLabel": "Biancaneve trova una casetta e fa amicizia con sette nani lavoratori",
+      "pedagogicalExplanation": "L'aiuto reciproco e la costruzione di un rifugio sicuro",
+      "tokens": [
+        {
+          "displayWord": "BIANCANEVE",
+          "searchTerm": "biancaneve",
+          "category": "properNoun",
+          "id": 21447,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/21447?download=false"
+        },
+        {
+          "displayWord": "TROVA",
+          "searchTerm": "trovare",
+          "category": "verb",
+          "id": 7183,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/7183?download=false"
+        },
+        {
+          "displayWord": "CASA",
+          "searchTerm": "casa",
+          "category": "noun",
+          "id": 2383,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/2383?download=false"
+        },
+        {
+          "displayWord": "SETTE",
+          "searchTerm": "sette",
+          "category": "number",
+          "id": 5462,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/5462?download=false"
+        },
+        {
+          "displayWord": "NANI",
+          "searchTerm": "nano",
+          "category": "noun",
+          "id": 5450,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/5450?download=false"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "L'Inganno della Mela",
+      "stepLabel": "La strega travestita offre una mela rossa avvelenata",
+      "pedagogicalExplanation": "Il pericolo dell'inganno e la prudenza verso gli sconosciuti",
+      "tokens": [
+        {
+          "displayWord": "STREGA",
+          "searchTerm": "strega",
+          "category": "noun",
+          "id": 31393,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/31393?download=false"
+        },
+        {
+          "displayWord": "DA",
+          "searchTerm": "dare",
+          "category": "verb",
+          "id": 7001,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/7001?download=false"
+        },
+        {
+          "displayWord": "MELA",
+          "searchTerm": "mela",
+          "category": "noun",
+          "id": 2486,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/2486?download=false"
+        },
+        {
+          "displayWord": "ROSSA",
+          "searchTerm": "rosso",
+          "category": "adjective",
+          "id": 2728,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/2728?download=false"
+        },
+        {
+          "displayWord": "VELENO",
+          "searchTerm": "veleno",
+          "category": "noun",
+          "id": 6806,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/6806?download=false"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "Il Sonno Profondo",
+      "stepLabel": "Biancaneve morde la mela e cade in un sonno profondo",
+      "pedagogicalExplanation": "Momento drammatico della narrazione",
+      "tokens": [
+        {
+          "displayWord": "BIANCANEVE",
+          "searchTerm": "biancaneve",
+          "category": "properNoun",
+          "id": 21447,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/21447?download=false"
+        },
+        {
+          "displayWord": "MANGIA",
+          "searchTerm": "mangiare",
+          "category": "verb",
+          "id": 2471,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/2471?download=false"
+        },
+        {
+          "displayWord": "MELA",
+          "searchTerm": "mela",
+          "category": "noun",
+          "id": 2486,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/2486?download=false"
+        },
+        {
+          "displayWord": "DORME",
+          "searchTerm": "dormire",
+          "category": "verb",
+          "id": 2700,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/2700?download=false"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "Il Risveglio e il Lieto Fine",
+      "stepLabel": "Il principe bacia Biancaneve che si sveglia e sono tutti felici",
+      "pedagogicalExplanation": "La risoluzione positiva, l'affetto e la vittoria del bene",
+      "tokens": [
+        {
+          "displayWord": "PRINCIPE",
+          "searchTerm": "principe",
+          "category": "noun",
+          "id": 31376,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/31376?download=false"
+        },
+        {
+          "displayWord": "SVEGLIA",
+          "searchTerm": "svegliare",
+          "category": "verb",
+          "id": 7167,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/7167?download=false"
+        },
+        {
+          "displayWord": "BIANCANEVE",
+          "searchTerm": "biancaneve",
+          "category": "properNoun",
+          "id": 21447,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/21447?download=false"
+        },
+        {
+          "displayWord": "TUTTI",
+          "searchTerm": "tutti",
+          "category": "pronoun",
+          "id": 30514,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/30514?download=false"
+        },
+        {
+          "displayWord": "FELICI",
+          "searchTerm": "felice",
+          "category": "emotion",
+          "id": 2349,
+          "imageUrl": "https://api.arasaac.org/api/pictograms/2349?download=false"
+        }
+      ]
+    }
+  ],
+  "moral": {
+    "title": "La Morale e l'Insegnamento Chiave",
+    "explanation": "La bontà d'animo e la generosità vincono sempre sull'invidia, e l'aiuto sincero degli amici ci protegge nei momenti difficili.",
+    "tokens": [
+      {
+        "displayWord": "BONTÀ",
+        "searchTerm": "buono",
+        "category": "noun",
+        "id": 2353,
+        "imageUrl": "https://api.arasaac.org/api/pictograms/2353?download=false"
+      },
+      {
+        "displayWord": "E",
+        "searchTerm": "e",
+        "category": "conjunction",
+        "id": 31548,
+        "imageUrl": "https://api.arasaac.org/api/pictograms/31548?download=false"
+      },
+      {
+        "displayWord": "AMICIZIA",
+        "searchTerm": "amico",
+        "category": "noun",
+        "id": 2315,
+        "imageUrl": "https://api.arasaac.org/api/pictograms/2315?download=false"
+      },
+      {
+        "displayWord": "BATTONO",
+        "searchTerm": "vincere",
+        "category": "verb",
+        "id": 7200,
+        "imageUrl": "https://api.arasaac.org/api/pictograms/7200?download=false"
+      },
+      {
+        "displayWord": "INVIDIA",
+        "searchTerm": "geloso",
+        "category": "emotion",
+        "id": 2573,
+        "imageUrl": "https://api.arasaac.org/api/pictograms/2573?download=false"
+      }
+    ]
+  }
+}

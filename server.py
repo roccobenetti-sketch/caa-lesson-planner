@@ -9,13 +9,16 @@ import http.server
 import os
 import json
 import socket
+import time
 import urllib.request
 import urllib.error
+import urllib.parse
 from pathlib import Path
 
 # Percorso base del progetto
 BASE_DIR = Path(__file__).resolve().parent
 PUBLIC_DIR = BASE_DIR / "public"
+PROJECTS_DIR = BASE_DIR / "saved_projects"
 ENV_FILE = BASE_DIR / ".env"
 
 # Caricamento variabili d'ambiente da file .env semplice
@@ -53,7 +56,7 @@ class CAARequestHandler(http.server.SimpleHTTPRequestHandler):
     def end_headers(self):
         # Header CORS e cache control per sviluppo
         self.send_header("Access-Control-Allow-Origin", "*")
-        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS")
         self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization, x-api-key")
         super().end_headers()
 
@@ -62,7 +65,9 @@ class CAARequestHandler(http.server.SimpleHTTPRequestHandler):
         self.end_headers()
 
     def do_GET(self):
-        if self.path == "/api/config":
+        parsed_url = urllib.parse.urlparse(self.path)
+
+        if parsed_url.path == "/api/config":
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")
             self.end_headers()
@@ -75,10 +80,106 @@ class CAARequestHandler(http.server.SimpleHTTPRequestHandler):
             self.wfile.write(json.dumps(response_payload).encode("utf-8"))
             return
 
+        if parsed_url.path == "/api/projects":
+            query_params = urllib.parse.parse_qs(parsed_url.query)
+            project_id = query_params.get("id", [None])[0]
+            if project_id:
+                safe_id = "".join(c for c in project_id if c.isalnum() or c in ("-", "_"))
+                target_file = PROJECTS_DIR / f"{safe_id}.json"
+                if target_file.exists():
+                    self.send_response(200)
+                    self.send_header("Content-Type", "application/json; charset=utf-8")
+                    self.end_headers()
+                    with open(target_file, "rb") as f:
+                        self.wfile.write(f.read())
+                    return
+                else:
+                    self.send_response(404)
+                    self.send_header("Content-Type", "application/json; charset=utf-8")
+                    self.end_headers()
+                    self.wfile.write(json.dumps({"error": "Progetto non trovato"}).encode("utf-8"))
+                    return
+            else:
+                projects = []
+                if PROJECTS_DIR.exists():
+                    for f in PROJECTS_DIR.glob("*.json"):
+                        try:
+                            with open(f, "r", encoding="utf-8") as pf:
+                                pdata = json.load(pf)
+                                projects.append({
+                                    "id": pdata.get("id", f.stem),
+                                    "title": pdata.get("title", f.stem),
+                                    "subtitle": pdata.get("subtitle", ""),
+                                    "targetGrade": pdata.get("targetGrade", "infanzia"),
+                                    "primaryClass": pdata.get("primaryClass", ""),
+                                    "layoutType": pdata.get("layoutType", "routine"),
+                                    "cardCount": len(pdata.get("cards", [])),
+                                    "hasMoral": bool(pdata.get("moral")),
+                                    "createdAt": pdata.get("createdAt", ""),
+                                    "updatedAt": pdata.get("updatedAt", "")
+                                })
+                        except Exception:
+                            continue
+                projects.sort(key=lambda x: x.get("updatedAt", "") or x.get("createdAt", ""), reverse=True)
+                self.send_response(200)
+                self.send_header("Content-Type", "application/json; charset=utf-8")
+                self.end_headers()
+                self.wfile.write(json.dumps({"projects": projects}).encode("utf-8"))
+                return
+
         # Fallback al serving file statici
         return super().do_GET()
 
     def do_POST(self):
+        if self.path == "/api/projects":
+            content_length = int(self.headers.get("Content-Length", 0))
+            request_body = self.rfile.read(content_length)
+            try:
+                payload = json.loads(request_body.decode("utf-8"))
+            except Exception as e:
+                self.send_response(400)
+                self.send_header("Content-Type", "application/json; charset=utf-8")
+                self.end_headers()
+                self.wfile.write(json.dumps({"error": f"JSON non valido: {str(e)}"}).encode("utf-8"))
+                return
+
+            project_id = payload.get("id")
+            if not project_id:
+                raw_title = (payload.get("title") or "progetto").lower().strip()
+                title_slug = "".join(c if c.isalnum() else "_" for c in raw_title)
+                title_slug = "_".join(filter(None, title_slug.split("_")))[:30]
+                project_id = f"{title_slug}_{int(time.time())}"
+
+            safe_id = "".join(c for c in project_id if c.isalnum() or c in ("-", "_"))
+            payload["id"] = safe_id
+            now_iso = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+            if "createdAt" not in payload:
+                payload["createdAt"] = now_iso
+            payload["updatedAt"] = now_iso
+
+            PROJECTS_DIR.mkdir(parents=True, exist_ok=True)
+            target_file = PROJECTS_DIR / f"{safe_id}.json"
+            tmp_file = PROJECTS_DIR / f"{safe_id}.tmp"
+
+            try:
+                with open(tmp_file, "w", encoding="utf-8") as f:
+                    json.dump(payload, f, ensure_ascii=False, indent=2)
+                os.replace(tmp_file, target_file)
+            except Exception as write_err:
+                if tmp_file.exists():
+                    tmp_file.unlink(missing_ok=True)
+                self.send_response(500)
+                self.send_header("Content-Type", "application/json; charset=utf-8")
+                self.end_headers()
+                self.wfile.write(json.dumps({"error": f"Errore scrittura file: {str(write_err)}"}).encode("utf-8"))
+                return
+
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.end_headers()
+            self.wfile.write(json.dumps({"success": True, "id": safe_id, "project": payload}).encode("utf-8"))
+            return
+
         if self.path == "/api/generate":
             content_length = int(self.headers.get("Content-Length", 0))
             request_body = self.rfile.read(content_length)
@@ -127,7 +228,6 @@ class CAARequestHandler(http.server.SimpleHTTPRequestHandler):
                 except urllib.error.HTTPError as http_err:
                     last_err = http_err
                     if http_err.code in (503, 429) and attempt < max_retries:
-                        import time
                         # Attesa progressiva per rate limit (429) o sovraccarico (503)
                         delay = 5.0 * (attempt + 1) if http_err.code == 429 else 2.5 * (attempt + 1)
                         time.sleep(delay)
@@ -144,6 +244,39 @@ class CAARequestHandler(http.server.SimpleHTTPRequestHandler):
                     self.end_headers()
                     self.wfile.write(json.dumps({"error": f"Errore di connessione: {str(err)}"}).encode("utf-8"))
                     return
+
+        self.send_response(404)
+        self.end_headers()
+
+    def do_DELETE(self):
+        parsed_url = urllib.parse.urlparse(self.path)
+        if parsed_url.path == "/api/projects":
+            query_params = urllib.parse.parse_qs(parsed_url.query)
+            project_id = query_params.get("id", [None])[0]
+            if not project_id:
+                self.send_response(400)
+                self.send_header("Content-Type", "application/json; charset=utf-8")
+                self.end_headers()
+                self.wfile.write(json.dumps({"error": "Parametro id mancante"}).encode("utf-8"))
+                return
+
+            safe_id = "".join(c for c in project_id if c.isalnum() or c in ("-", "_"))
+            target_file = PROJECTS_DIR / f"{safe_id}.json"
+            if target_file.exists():
+                try:
+                    target_file.unlink()
+                except Exception as del_err:
+                    self.send_response(500)
+                    self.send_header("Content-Type", "application/json; charset=utf-8")
+                    self.end_headers()
+                    self.wfile.write(json.dumps({"error": str(del_err)}).encode("utf-8"))
+                    return
+
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.end_headers()
+            self.wfile.write(json.dumps({"success": True, "id": safe_id}).encode("utf-8"))
+            return
 
         self.send_response(404)
         self.end_headers()

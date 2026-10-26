@@ -6,17 +6,21 @@ import { ConfigManager } from './config.js';
 import { GeminiService } from './geminiService.js';
 import { ArasaacService } from './arasaacService.js';
 import { LessonRenderer } from './lessonRenderer.js';
+import { ProjectManager } from './projectManager.js';
 
 class CAAApp {
   constructor() {
     this.selectedCardIndex = null;
     this.selectedTokenIndex = null;
+    this.cachedProjects = [];
+    this.currentProjectFilter = 'all';
   }
 
   async init() {
     await ConfigManager.init();
     this.setupUIBindings();
     this.updateConfigStatusUI();
+    await this.refreshProjectsCount();
     console.log('CAA Lesson Planner inizializzato.');
   }
 
@@ -146,6 +150,55 @@ class CAAApp {
     if (fileImportJson) {
       fileImportJson.addEventListener('change', (e) => this.importLessonJson(e));
     }
+
+    const fileImportJsonModal = document.getElementById('fileImportJsonModal');
+    if (fileImportJsonModal) {
+      fileImportJsonModal.addEventListener('change', (e) => this.importLessonJson(e));
+    }
+
+    // Gestione Archivio Progetti
+    const btnOpenProjectsModal = document.getElementById('btnOpenProjectsModal');
+    if (btnOpenProjectsModal) {
+      btnOpenProjectsModal.addEventListener('click', () => this.openProjectsModal());
+    }
+
+    const btnOpenProjectsModalFromBar = document.getElementById('btnOpenProjectsModalFromBar');
+    if (btnOpenProjectsModalFromBar) {
+      btnOpenProjectsModalFromBar.addEventListener('click', () => this.openProjectsModal());
+    }
+
+    const btnCloseProjectsModal = document.getElementById('btnCloseProjectsModal');
+    if (btnCloseProjectsModal) {
+      btnCloseProjectsModal.addEventListener('click', () => this.closeProjectsModal());
+    }
+
+    const btnCloseProjectsModalBottom = document.getElementById('btnCloseProjectsModalBottom');
+    if (btnCloseProjectsModalBottom) {
+      btnCloseProjectsModalBottom.addEventListener('click', () => this.closeProjectsModal());
+    }
+
+    const btnSaveCurrentProject = document.getElementById('btnSaveCurrentProject');
+    if (btnSaveCurrentProject) {
+      btnSaveCurrentProject.addEventListener('click', () => this.handleSaveCurrentProject());
+    }
+
+    // Ricerca istantanea progetti
+    const inputProjectSearch = document.getElementById('inputProjectSearch');
+    if (inputProjectSearch) {
+      inputProjectSearch.addEventListener('input', () => this.applyProjectsFilter());
+    }
+
+    // Filtri per ordine scolastico
+    document.querySelectorAll('.project-filter-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        document.querySelectorAll('.project-filter-btn').forEach(b => {
+          b.className = 'project-filter-btn px-3 py-2 rounded-lg bg-slate-50 text-slate-600 border border-slate-200 hover:bg-slate-100';
+        });
+        e.currentTarget.className = 'project-filter-btn px-3 py-2 rounded-lg bg-blue-50 text-blue-700 border border-blue-200';
+        this.currentProjectFilter = e.currentTarget.getAttribute('data-filter') || 'all';
+        this.applyProjectsFilter();
+      });
+    });
   }
 
   updateConfigStatusUI() {
@@ -237,7 +290,15 @@ class CAAApp {
       document.getElementById('lessonActions')?.classList.remove('hidden');
       document.getElementById('emptyState')?.classList.add('hidden');
       
-      this.showToast('Lezione CAA generata con successo!');
+      // Salvataggio automatico nell'archivio
+      try {
+        await ProjectManager.saveProject(fullLesson);
+        await this.refreshProjectsCount();
+      } catch (saveErr) {
+        console.warn('Salvataggio automatico non riuscito:', saveErr);
+      }
+
+      this.showToast('Lezione CAA generata e salvata nell\'archivio!');
       container.scrollIntoView({ behavior: 'smooth' });
     } catch (err) {
       console.error(err);
@@ -577,15 +638,248 @@ class CAAApp {
     }
   }
 
+  /**
+   * Aggiorna il contatore dei progetti salvati nell'header.
+   */
+  async refreshProjectsCount() {
+    try {
+      const projects = await ProjectManager.listProjects();
+      this.cachedProjects = projects;
+      const count = projects.length;
+      const headerBadge = document.getElementById('projectsCountBadge');
+      const modalBadge = document.getElementById('projectsModalCountBadge');
+      if (headerBadge) headerBadge.textContent = String(count);
+      if (modalBadge) modalBadge.textContent = `${count} ${count === 1 ? 'progetto' : 'progetti'}`;
+    } catch (e) {
+      console.warn('Errore refreshProjectsCount:', e);
+    }
+  }
+
+  /**
+   * Apre la finestra modale dell'archivio progetti.
+   */
+  async openProjectsModal() {
+    const modal = document.getElementById('projectsModal');
+    if (!modal) return;
+    modal.classList.remove('hidden');
+
+    const searchInput = document.getElementById('inputProjectSearch');
+    if (searchInput) {
+      searchInput.value = '';
+      searchInput.focus();
+    }
+    this.currentProjectFilter = 'all';
+
+    const container = document.getElementById('projectsListContainer');
+    if (container) {
+      container.innerHTML = '<div class="py-12 text-center text-slate-500 text-sm">Caricamento archivio progetti...</div>';
+    }
+
+    try {
+      await this.refreshProjectsCount();
+      this.applyProjectsFilter();
+    } catch (e) {
+      if (container) {
+        container.innerHTML = `<div class="py-8 text-center text-red-500 text-sm">Errore caricamento archivio: ${e.message}</div>`;
+      }
+    }
+  }
+
+  /**
+   * Chiude la finestra modale dell'archivio progetti.
+   */
+  closeProjectsModal() {
+    document.getElementById('projectsModal')?.classList.add('hidden');
+  }
+
+  /**
+   * Filtra la lista dei progetti per testo di ricerca e target scolastico.
+   */
+  applyProjectsFilter() {
+    const searchInput = document.getElementById('inputProjectSearch');
+    const term = (searchInput?.value || '').toLowerCase().trim();
+    const filter = this.currentProjectFilter || 'all';
+
+    let filtered = this.cachedProjects || [];
+
+    if (filter !== 'all') {
+      filtered = filtered.filter(p => (p.targetGrade || 'infanzia').toLowerCase() === filter);
+    }
+
+    if (term) {
+      filtered = filtered.filter(p => {
+        const titleMatch = (p.title || '').toLowerCase().includes(term);
+        const subMatch = (p.subtitle || '').toLowerCase().includes(term);
+        return titleMatch || subMatch;
+      });
+    }
+
+    this.renderProjectsList(filtered);
+  }
+
+  /**
+   * Renderizza le card dei progetti all'interno del modale.
+   */
+  renderProjectsList(projects) {
+    const container = document.getElementById('projectsListContainer');
+    if (!container) return;
+
+    if (!projects || projects.length === 0) {
+      container.innerHTML = `
+        <div class="py-12 text-center text-slate-400">
+          <svg class="w-12 h-12 mx-auto mb-2 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path>
+          </svg>
+          <p class="text-sm font-medium">Nessun progetto trovato per questa ricerca.</p>
+          <p class="text-xs text-slate-400 mt-1">Prova a cambiare i filtri o genera un nuovo percorso con l'IA.</p>
+        </div>
+      `;
+      return;
+    }
+
+    container.innerHTML = projects.map(proj => {
+      const isPrimaria = proj.targetGrade === 'primaria';
+      const gradeBadgeText = isPrimaria
+        ? `Primaria ${proj.primaryClass ? `(Classe ${proj.primaryClass}ª)` : ''}`
+        : "Scuola dell'Infanzia";
+      
+      const gradeBadgeClass = isPrimaria
+        ? 'bg-blue-100 text-blue-800 border-blue-200'
+        : 'bg-emerald-100 text-emerald-800 border-emerald-200';
+
+      const dateStr = proj.updatedAt || proj.createdAt;
+      const formattedDate = dateStr
+        ? new Date(dateStr).toLocaleDateString('it-IT', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })
+        : 'Non disponibile';
+
+      const safeId = String(proj.id).replace(/'/g, "\\'");
+      const safeTitle = (proj.title || '').replace(/'/g, "\\'");
+
+      return `
+        <div class="p-4 rounded-xl border border-slate-200 hover:border-blue-400 hover:shadow-md bg-white transition flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2 flex-wrap mb-1">
+              <span class="px-2 py-0.5 rounded-md text-[11px] font-bold border ${gradeBadgeClass}">
+                ${gradeBadgeText}
+              </span>
+              <span class="px-2 py-0.5 rounded-md text-[11px] font-medium bg-slate-100 text-slate-600 border border-slate-200">
+                ${proj.cardCount || 0} passaggi
+              </span>
+              ${proj.hasMoral ? '<span class="px-2 py-0.5 rounded-md text-[11px] font-medium bg-amber-50 text-amber-800 border border-amber-200">✨ Morale</span>' : ''}
+            </div>
+
+            <h4 class="text-base font-bold text-slate-900 truncate">
+              ${proj.title || 'Senza Titolo'}
+            </h4>
+            ${proj.subtitle ? `<p class="text-xs text-slate-500 line-clamp-1 mt-0.5">${proj.subtitle}</p>` : ''}
+            
+            <p class="text-[11px] text-slate-400 mt-1.5 flex items-center gap-1">
+              <span>Modificato: ${formattedDate}</span>
+            </p>
+          </div>
+
+          <div class="flex items-center gap-2 flex-shrink-0 self-end sm:self-center">
+            <button type="button" onclick="window.app.loadProjectById('${safeId}')" class="px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-bold shadow-sm transition flex items-center gap-1.5" title="Carica subito questo progetto a video">
+              <span>📂 Apri a video</span>
+            </button>
+            <button type="button" onclick="window.app.exportProjectById('${safeId}')" class="p-2 border border-slate-200 hover:bg-slate-50 text-slate-600 rounded-lg text-xs transition" title="Scarica il file JSON">
+              ⬇️
+            </button>
+            <button type="button" onclick="window.app.deleteProjectById('${safeId}', '${safeTitle}')" class="p-2 border border-slate-200 hover:bg-red-50 text-red-600 hover:border-red-200 rounded-lg text-xs transition" title="Elimina dall'archivio">
+              🗑️
+            </button>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  /**
+   * Richiama e visualizza immediatamente a video un progetto salvato.
+   */
+  async loadProjectById(projectId) {
+    if (!projectId) return;
+
+    this.setLoadingState(true, 'Caricamento progetto a video...');
+    try {
+      const fullLesson = await ProjectManager.getProject(projectId);
+      
+      // Assicura che i token abbiano i pittogrammi
+      await LessonRenderer.prepareLesson(fullLesson);
+
+      const container = document.getElementById('printableArea');
+      LessonRenderer.render(container, fullLesson);
+
+      document.getElementById('lessonActions')?.classList.remove('hidden');
+      document.getElementById('emptyState')?.classList.add('hidden');
+
+      this.closeProjectsModal();
+      this.showToast(`Progetto "${fullLesson.title}" richiamato a video!`);
+
+      // Scroll fluido verso la scheda didattica a video
+      container.scrollIntoView({ behavior: 'smooth' });
+    } catch (e) {
+      console.error(e);
+      this.showToast(`Errore apertura progetto: ${e.message}`, 'error');
+    } finally {
+      this.setLoadingState(false);
+    }
+  }
+
+  /**
+   * Salva il progetto attualmente visualizzato a video nell'archivio.
+   */
+  async handleSaveCurrentProject() {
+    if (!LessonRenderer.currentLesson) {
+      this.showToast('Nessun percorso didattico attivo a video da salvare.', 'error');
+      return;
+    }
+
+    this.setLoadingState(true, 'Salvataggio progetto in archivio...');
+    try {
+      const res = await ProjectManager.saveProject(LessonRenderer.currentLesson);
+      await this.refreshProjectsCount();
+      this.showToast(`Progetto "${res.project.title}" salvato nell'archivio!`);
+    } catch (e) {
+      this.showToast(`Errore salvataggio: ${e.message}`, 'error');
+    } finally {
+      this.setLoadingState(false);
+    }
+  }
+
+  /**
+   * Esporta un progetto specifico dall'archivio come file JSON.
+   */
+  async exportProjectById(projectId) {
+    try {
+      const project = await ProjectManager.getProject(projectId);
+      ProjectManager.exportProjectFile(project);
+      this.showToast(`Progetto "${project.title}" scaricato!`);
+    } catch (e) {
+      this.showToast(`Errore esportazione: ${e.message}`, 'error');
+    }
+  }
+
+  /**
+   * Elimina un progetto dall'archivio previa conferma.
+   */
+  async deleteProjectById(projectId, projectTitle) {
+    const ok = confirm(`Sei sicuro di voler eliminare il progetto "${projectTitle || projectId}" dall'archivio?`);
+    if (!ok) return;
+
+    try {
+      await ProjectManager.deleteProject(projectId);
+      await this.refreshProjectsCount();
+      this.applyProjectsFilter();
+      this.showToast(`Progetto eliminato dall'archivio.`);
+    } catch (e) {
+      this.showToast(`Errore eliminazione: ${e.message}`, 'error');
+    }
+  }
+
   exportLessonJson() {
     if (!LessonRenderer.currentLesson) return;
-    const blob = new Blob([JSON.stringify(LessonRenderer.currentLesson, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `lezione-caa-${Date.now()}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
+    ProjectManager.exportProjectFile(LessonRenderer.currentLesson);
   }
 
   importLessonJson(event) {
@@ -593,16 +887,24 @@ class CAAApp {
     if (!file) return;
 
     const reader = new FileReader();
-    reader.onload = (e) => {
+    reader.onload = async (e) => {
       try {
         const data = JSON.parse(e.target.result);
         if (!data.cards || !data.title) {
           throw new Error('Formato JSON non riconosciuto per una lezione CAA.');
         }
+        
+        await LessonRenderer.prepareLesson(data);
         LessonRenderer.render(document.getElementById('printableArea'), data);
         document.getElementById('lessonActions')?.classList.remove('hidden');
         document.getElementById('emptyState')?.classList.add('hidden');
-        this.showToast('Lezione caricata con successo!');
+        
+        // Salva anche nell'archivio
+        await ProjectManager.saveProject(data);
+        await this.refreshProjectsCount();
+
+        this.closeProjectsModal();
+        this.showToast(`Progetto "${data.title}" importato e salvato!`);
       } catch (err) {
         this.showToast(`Errore caricamento: ${err.message}`, 'error');
       }
