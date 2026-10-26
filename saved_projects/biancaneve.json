@@ -7,7 +7,7 @@
   "layoutType": "routine",
   "detailLevel": "detailed",
   "createdAt": "2026-10-26T15:00:00Z",
-  "updatedAt": "2026-10-26T17:01:32Z",
+  "updatedAt": "2026-10-26T17:16:02Z",
   "cards": [
     {
       "sectionTitle": "I PERSONAGGI PRINCIPALI ",
@@ -2030,48 +2030,6 @@
             {
               "id": 21447,
               "imageUrl": "https://static.arasaac.org/pictograms/21447/21447_500.png"
-            }
-          ],
-          "source": "arasaac"
-        },
-        {
-          "displayWord": "si",
-          "searchTerm": "si",
-          "category": "misc",
-          "pictogramId": 5584,
-          "imageUrl": "https://static.arasaac.org/pictograms/5584/5584_500.png",
-          "alternatives": [
-            {
-              "id": 5584,
-              "imageUrl": "https://static.arasaac.org/pictograms/5584/5584_500.png"
-            },
-            {
-              "id": 5583,
-              "imageUrl": "https://static.arasaac.org/pictograms/5583/5583_500.png"
-            },
-            {
-              "id": 6481,
-              "imageUrl": "https://static.arasaac.org/pictograms/6481/6481_500.png"
-            },
-            {
-              "id": 7028,
-              "imageUrl": "https://static.arasaac.org/pictograms/7028/7028_500.png"
-            },
-            {
-              "id": 7029,
-              "imageUrl": "https://static.arasaac.org/pictograms/7029/7029_500.png"
-            },
-            {
-              "id": 7032,
-              "imageUrl": "https://static.arasaac.org/pictograms/7032/7032_500.png"
-            },
-            {
-              "id": 7031,
-              "imageUrl": "https://static.arasaac.org/pictograms/7031/7031_500.png"
-            },
-            {
-              "id": 7033,
-              "imageUrl": "https://static.arasaac.org/pictograms/7033/7033_500.png"
             }
           ],
           "source": "arasaac"

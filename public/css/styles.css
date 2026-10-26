@@ -147,6 +147,34 @@ body {
     print-color-adjust: exact !important;
   }
 
+  /* Forza la visualizzazione nitida e completa di TUTTE le immagini in stampa e PDF */
+  img {
+    max-width: 100% !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .caa-card {
+    box-shadow: none !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    background-color: #ffffff !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .caa-card img {
+    max-width: 100% !important;
+    max-height: 100% !important;
+    margin: 0 auto !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
   /* Esclusione delle schede deselezionate dalla stampa o dal PDF */
   .card-excluded-print {
     display: none !important;

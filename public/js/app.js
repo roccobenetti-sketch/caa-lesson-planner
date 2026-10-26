@@ -49,10 +49,10 @@ class CAAApp {
       btnGenerate.addEventListener('click', () => this.handleGenerate());
     }
 
-    // Pulsante Stampa
+    // Pulsante Stampa / PDF con pre-caricamento e rasterizzazione garantita di tutte le immagini
     const btnPrint = document.getElementById('btnPrint');
     if (btnPrint) {
-      btnPrint.addEventListener('click', () => window.print());
+      btnPrint.addEventListener('click', () => this.handlePrint());
     }
 
     // Pulsante Impostazioni
@@ -452,6 +452,96 @@ class CAAApp {
 
     token.displayWord = cleanWord;
     LessonRenderer.adjustAllTokenLabels(document.getElementById('printableArea'));
+  }
+
+  /**
+   * Prepara, rasterizza e garantisce il caricamento al 100% di tutte le immagini prima di aprire il print dialog / PDF.
+   */
+  async handlePrint() {
+    this.setLoadingState(true, 'Verifica e rasterizzazione immagini per il PDF...');
+    try {
+      const container = document.getElementById('printableArea');
+      if (container) {
+        const images = Array.from(container.querySelectorAll('img'));
+        
+        // Disattiva qualsiasi ritardo di caricamento lazy
+        images.forEach(img => {
+          img.removeAttribute('loading');
+          img.loading = 'eager';
+        });
+
+        // Attesa parallela del completamento e decodifica di ogni immagine
+        await Promise.all(images.map(img => {
+          if (img.complete && img.naturalWidth > 0) {
+            if (img.decode) {
+              return img.decode().catch(() => Promise.resolve());
+            }
+            return Promise.resolve();
+          }
+
+          return new Promise(resolve => {
+            img.onload = () => {
+              if (img.decode) {
+                img.decode().then(resolve).catch(resolve);
+              } else {
+                resolve();
+              }
+            };
+            img.onerror = () => {
+              const word = img.getAttribute('alt') || 'simbolo';
+              img.src = GeminiService.createProceduralSvgDataUri(word, 'misc');
+              resolve();
+            };
+            setTimeout(resolve, 800);
+          });
+        }));
+
+        // Breve pausa per permettere al motore grafico del browser di completare la rasterizzazione
+        await new Promise(r => setTimeout(r, 200));
+      }
+    } catch (e) {
+      console.warn('Errore pre-stampa:', e);
+    } finally {
+      this.setLoadingState(false);
+    }
+
+    window.print();
+  }
+
+  /**
+   * Attiva o disattiva l'inclusione dell'obiettivo pedagogico nella stampa o nel PDF.
+   */
+  toggleContextSummaryPrint(shouldInclude) {
+    if (!LessonRenderer.currentLesson) return;
+    LessonRenderer.currentLesson.includeContextSummaryInPrint = shouldInclude;
+    const el = document.getElementById('containerContextSummary');
+    if (el) {
+      if (shouldInclude) {
+        el.classList.remove('card-excluded-print', 'opacity-75');
+      } else {
+        el.classList.add('card-excluded-print', 'opacity-75');
+      }
+    }
+    const statusText = shouldInclude ? 'incluso nella stampa/PDF' : 'escluso dalla stampa/PDF';
+    this.showToast(`Obiettivo pedagogico ${statusText}.`);
+  }
+
+  /**
+   * Attiva o disattiva l'inclusione della guida per l'educatore nella stampa o nel PDF.
+   */
+  toggleTeacherGuidePrint(shouldInclude) {
+    if (!LessonRenderer.currentLesson) return;
+    LessonRenderer.currentLesson.includeTeacherGuideInPrint = shouldInclude;
+    const el = document.getElementById('containerTeacherGuide');
+    if (el) {
+      if (shouldInclude) {
+        el.classList.remove('card-excluded-print', 'opacity-75');
+      } else {
+        el.classList.add('card-excluded-print', 'opacity-75');
+      }
+    }
+    const statusText = shouldInclude ? 'inclusa nella stampa/PDF' : 'esclusa dalla stampa/PDF';
+    this.showToast(`Guida per l'educatore ${statusText}.`);
   }
 
   /**

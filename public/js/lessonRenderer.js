@@ -187,10 +187,20 @@ export const LessonRenderer = {
             </div>
           </div>
 
-          <!-- Obiettivo Pedagogico Editabile -->
-          <div class="mt-3 p-3 bg-blue-50/80 rounded-xl text-sm text-blue-900 border border-blue-100">
-            <div class="flex items-center justify-between mb-1">
+          <!-- Obiettivo Pedagogico Editabile con Checkbox Stampa/PDF -->
+          <div class="mt-3 p-3 bg-blue-50/80 rounded-xl text-sm text-blue-900 border border-blue-100 ${lesson.includeContextSummaryInPrint === false ? 'card-excluded-print opacity-75' : ''}" id="containerContextSummary">
+            <div class="flex items-center justify-between mb-1.5 flex-wrap gap-2">
               <strong class="font-bold text-xs uppercase tracking-wider text-blue-900">Obiettivo Pedagogico:</strong>
+              
+              <!-- Checkbox Stampa Obiettivo -->
+              <label class="no-print flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg border text-xs font-semibold cursor-pointer select-none transition ${lesson.includeContextSummaryInPrint !== false ? 'bg-blue-100 border-blue-300 text-blue-900' : 'bg-slate-100 border-slate-300 text-slate-500'}"
+                     title="Spunta per includere l'obiettivo pedagogico nel PDF/stampa, deseleziona per escluderlo">
+                <input type="checkbox"
+                       class="rounded text-blue-600 focus:ring-blue-500 h-3.5 w-3.5 border-slate-300 cursor-pointer"
+                       ${lesson.includeContextSummaryInPrint !== false ? 'checked' : ''}
+                       onchange="window.app.toggleContextSummaryPrint(this.checked)" />
+                <span>${lesson.includeContextSummaryInPrint !== false ? 'Includi in Stampa / PDF' : 'Escluso da Stampa'}</span>
+              </label>
             </div>
             <textarea 
               class="no-print w-full text-xs sm:text-sm font-medium bg-white/90 hover:bg-white border border-blue-200 focus:border-blue-500 rounded-lg p-2 transition focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-slate-800"
@@ -201,10 +211,20 @@ export const LessonRenderer = {
             <p class="print-only text-sm text-blue-900" id="printLessonContextSummary">${this.escapeHtml(lesson.contextSummary || '')}</p>
           </div>
 
-          <!-- Guida per l'Educatore Editabile -->
-          <div class="mt-2 p-3 bg-slate-50 rounded-xl text-sm text-slate-700 border border-slate-200">
-            <div class="flex items-center justify-between mb-1">
+          <!-- Guida per l'Educatore Editabile con Checkbox Stampa/PDF -->
+          <div class="mt-2 p-3 bg-slate-50 rounded-xl text-sm text-slate-700 border border-slate-200 ${lesson.includeTeacherGuideInPrint === false ? 'card-excluded-print opacity-75' : ''}" id="containerTeacherGuide">
+            <div class="flex items-center justify-between mb-1.5 flex-wrap gap-2">
               <strong class="font-bold text-xs uppercase tracking-wider text-slate-700">Guida per l'educatore:</strong>
+
+              <!-- Checkbox Stampa Guida -->
+              <label class="no-print flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg border text-xs font-semibold cursor-pointer select-none transition ${lesson.includeTeacherGuideInPrint !== false ? 'bg-slate-200 border-slate-400 text-slate-900' : 'bg-slate-100 border-slate-300 text-slate-500'}"
+                     title="Spunta per includere la guida per l'educatore nel PDF/stampa, deseleziona per escluderla">
+                <input type="checkbox"
+                       class="rounded text-slate-700 focus:ring-slate-500 h-3.5 w-3.5 border-slate-300 cursor-pointer"
+                       ${lesson.includeTeacherGuideInPrint !== false ? 'checked' : ''}
+                       onchange="window.app.toggleTeacherGuidePrint(this.checked)" />
+                <span>${lesson.includeTeacherGuideInPrint !== false ? 'Includi in Stampa / PDF' : 'Escluso da Stampa'}</span>
+              </label>
             </div>
             <textarea 
               class="no-print w-full text-xs sm:text-sm font-medium bg-white hover:bg-white border border-slate-300 focus:border-blue-500 rounded-lg p-2 transition focus:outline-none focus:ring-2 focus:ring-blue-500/20 text-slate-800"
@@ -577,7 +597,7 @@ export const LessonRenderer = {
           <img src="${imgUrl}" 
                alt="${this.escapeHtml(token.displayWord)}" 
                class="max-w-full max-h-full object-contain pointer-events-none" 
-               loading="lazy"
+               loading="eager"
                onerror="window.app.handleImageError(this, '${this.escapeHtml(token.displayWord)}', '${token.category}')" />
         </div>
 
