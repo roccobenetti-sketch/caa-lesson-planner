@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CAA Lesson Planner - Lezioni e Schede Didattiche Stampabili</title>
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#2563EB" />
+  
+  <!-- Tailwind CSS via CDN per stile moderno e reattivo -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Foglio di stile personalizzato per tessere CAA e stampa A4 -->
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col antialiased">
+
+  <!-- Intestazione Principale (No-Print) -->
+  <header class="no-print bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      
+      <!-- Brand & Titolo -->
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white font-bold text-lg shadow-sm">
+          CAA
+        </div>
+        <div>
+          <h1 class="text-lg font-bold text-slate-900 leading-tight">CAA Lesson Planner</h1>
+          <p class="text-xs text-slate-500">Infanzia & Primaria • Simboli ARASAAC & IA</p>
+        </div>
+      </div>
+
+      <!-- Azioni Rapide & Impostazioni -->
+      <div class="flex items-center gap-3">
+        <div id="keyStatusBadge" class="hidden sm:inline-flex px-2.5 py-1 text-xs rounded-full font-medium bg-slate-100 text-slate-700">
+          Caricamento...
+        </div>
+
+        <button id="btnOpenSettings" class="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-sm font-medium text-slate-700 shadow-sm transition">
+          <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+          </svg>
+          <span class="hidden sm:inline">Chiave & Impostazioni</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Contenitore Principale -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+
+    <!-- Card di Creazione Progetto (No-Print) -->
+    <section class="no-print bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8">
+      <div class="max-w-3xl">
+        <h2 class="text-xl md:text-2xl font-bold text-slate-900 mb-2">Crea un nuovo percorso in simboli CAA</h2>
+        <p class="text-sm text-slate-600 mb-6">
+          Inserisci l'attività o il concetto che desideri proporre. L'intelligenza artificiale strutturerà i passaggi didattici e assocerà automaticamente i pittogrammi ufficiali di <strong>ARASAAC</strong> con la convenzione colori di Fitzgerald.
+        </p>
+
+        <!-- Selezione Ordine Scolastico / Target -->
+        <div class="mb-6">
+          <label class="block text-sm font-semibold text-slate-700 mb-2">Fascia di Età e Target Didattico:</label>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
+            <label class="relative flex items-center p-3 rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50 transition">
+              <input type="radio" name="targetGrade" value="infanzia" checked class="h-4 w-4 text-blue-600 border-slate-300 focus:ring-blue-500" />
+              <div class="ml-3">
+                <span class="block text-sm font-bold text-slate-800">Scuola dell'Infanzia (3-5 anni)</span>
+                <span class="block text-xs text-slate-500">Frasi minime (1-2 parole), azioni concrete, routine quotidiane</span>
+              </div>
+            </label>
+
+            <label class="relative flex items-center p-3 rounded-xl border border-slate-200 cursor-pointer hover:bg-slate-50 transition">
+              <input type="radio" name="targetGrade" value="primaria" class="h-4 w-4 text-blue-600 border-slate-300 focus:ring-blue-500" />
+              <div class="ml-3">
+                <span class="block text-sm font-bold text-slate-800">Scuola Primaria</span>
+                <span class="block text-xs text-slate-500">Frasi strutturate, narrazioni complete e sequenze logiche</span>
+              </div>
+            </label>
+          </div>
+
+          <!-- Selettore Classe Primaria (visibile solo se selezionata Primaria) -->
+          <div id="primaryGradeContainer" class="hidden bg-blue-50/70 border border-blue-200 rounded-xl p-3.5 transition-all">
+            <label class="block text-xs font-bold text-blue-900 mb-2">Classe della Scuola Primaria:</label>
+            <div class="flex flex-wrap gap-2">
+              <label class="flex items-center gap-1.5 px-3 py-1.5 bg-white rounded-lg border border-blue-200 text-xs font-semibold text-slate-800 cursor-pointer hover:bg-blue-100/50">
+                <input type="radio" name="primaryClass" value="1" checked class="text-blue-600 focus:ring-blue-500" />
+                <span>1ª Primaria (Primi lettori, S-V-O)</span>
+              </label>
+              <label class="flex items-center gap-1.5 px-3 py-1.5 bg-white rounded-lg border border-blue-200 text-xs font-semibold text-slate-800 cursor-pointer hover:bg-blue-100/50">
+                <input type="radio" name="primaryClass" value="2" class="text-blue-600 focus:ring-blue-500" />
+                <span>2ª Primaria (Espansioni & congiunzioni)</span>
+              </label>
+              <label class="flex items-center gap-1.5 px-3 py-1.5 bg-white rounded-lg border border-blue-200 text-xs font-semibold text-slate-800 cursor-pointer hover:bg-blue-100/50">
+                <input type="radio" name="primaryClass" value="3" class="text-blue-600 focus:ring-blue-500" />
+                <span>3ª Primaria (Causa-effetto, tempo)</span>
+              </label>
+              <label class="flex items-center gap-1.5 px-3 py-1.5 bg-white rounded-lg border border-blue-200 text-xs font-semibold text-slate-800 cursor-pointer hover:bg-blue-100/50">
+                <input type="radio" name="primaryClass" value="4" class="text-blue-600 focus:ring-blue-500" />
+                <span>4ª Primaria (Sequenze complesse, discipline)</span>
+              </label>
+              <label class="flex items-center gap-1.5 px-3 py-1.5 bg-white rounded-lg border border-blue-200 text-xs font-semibold text-slate-800 cursor-pointer hover:bg-blue-100/50">
+                <input type="radio" name="primaryClass" value="5" class="text-blue-600 focus:ring-blue-500" />
+                <span>5ª Primaria (Narrazioni ampie & argomentazione)</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Selezione Formato Layout e Livello di Dettaglio -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+          <div>
+            <label for="selectLayout" class="block text-sm font-semibold text-slate-700 mb-2">Tipologia di Scheda:</label>
+            <select id="selectLayout" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <option value="routine" selected>Sequenza a tappe (Routine / Passaggi numerati)</option>
+              <option value="strip">Strisce di comunicazione (Frasi orizzontali)</option>
+              <option value="table">Tabella tematica di simboli (Bacheca CAA)</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="selectDetailLevel" class="block text-sm font-semibold text-slate-700 mb-2">Modalità di Sviluppo:</label>
+            <select id="selectDetailLevel" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium">
+              <option value="detailed" selected>Dettagliato (Passaggio per passaggio: 1 a N passaggi naturali)</option>
+              <option value="compact">Sintetico (Solo punti fondamentali essenziali)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Idee Rapide (Chips) -->
+        <div class="mb-4">
+          <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Esempi veloci da cui partire:</label>
+          <div class="flex flex-wrap gap-2">
+            <button type="button" class="idea-chip px-3 py-1 rounded-full text-xs font-medium bg-slate-100 hover:bg-blue-50 hover:text-blue-700 text-slate-700 border border-slate-200 transition" data-idea="La fiaba dei tre porcellini: tre porcellini, tre case di materiale diverso e il perché delle scelte, il lupo che soffia, i due crolli e le fughe dei fratelli, la casa di mattoni che resiste e la morale finale">
+              🐷 I tre porcellini
+            </button>
+            <button type="button" class="idea-chip px-3 py-1 rounded-full text-xs font-medium bg-slate-100 hover:bg-blue-50 hover:text-blue-700 text-slate-700 border border-slate-200 transition" data-idea="Lavarsi le mani e i denti passo dopo passo">
+              🧼 Igiene personale
+            </button>
+            <button type="button" class="idea-chip px-3 py-1 rounded-full text-xs font-medium bg-slate-100 hover:bg-blue-50 hover:text-blue-700 text-slate-700 border border-slate-200 transition" data-idea="Momento della merenda: scegliere cosa mangiare e sparecchiare">
+              🍎 La merenda
+            </button>
+            <button type="button" class="idea-chip px-3 py-1 rounded-full text-xs font-medium bg-slate-100 hover:bg-blue-50 hover:text-blue-700 text-slate-700 border border-slate-200 transition" data-idea="Regole di convivenza in classe: ascoltare, alzare la mano, stare seduti">
+              🏫 Regole in classe
+            </button>
+            <button type="button" class="idea-chip px-3 py-1 rounded-full text-xs font-medium bg-slate-100 hover:bg-blue-50 hover:text-blue-700 text-slate-700 border border-slate-200 transition" data-idea="Gestione della rabbia: fare un respiro profondo, contare, chiedere aiuto">
+              🧘 Emozioni e calma
+            </button>
+            <button type="button" class="idea-chip px-3 py-1 rounded-full text-xs font-medium bg-slate-100 hover:bg-blue-50 hover:text-blue-700 text-slate-700 border border-slate-200 transition" data-idea="Andare al parco giochi: scivolo, altalena, giocare insieme con i compagni">
+              🎡 Il parco giochi
+            </button>
+          </div>
+        </div>
+
+        <!-- Textarea Input Idea -->
+        <div class="mb-6">
+          <label for="promptInput" class="block text-sm font-semibold text-slate-700 mb-2">Descrivi la tua idea o attività:</label>
+          <textarea id="promptInput" rows="3" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm placeholder-slate-400 text-slate-900" placeholder="Es: Voglio creare una routine per la preparazione dello zaino di scuola o una scheda per chiedere aiuto alla maestra..."></textarea>
+        </div>
+
+        <!-- Bottone di Generazione -->
+        <button id="btnGenerate" class="w-full sm:w-auto px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl shadow-sm transition flex items-center justify-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+          </svg>
+          Genera Lezione CAA con IA
+        </button>
+      </div>
+    </section>
+
+    <!-- Barra Controlli & Personalizzazione Stampa (No-Print) -->
+    <section id="lessonActions" class="no-print hidden bg-white rounded-2xl shadow-sm border border-slate-200 p-4 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex flex-wrap items-center gap-4 text-sm font-medium text-slate-700">
+        <label class="flex items-center gap-2 cursor-pointer">
+          <input type="checkbox" id="toggleUppercase" checked class="h-4 w-4 rounded text-blue-600 focus:ring-blue-500 border-slate-300" />
+          <span>Testo MAIUSCOLO (Infanzia)</span>
+        </label>
+        
+        <label class="flex items-center gap-2 cursor-pointer">
+          <input type="checkbox" id="toggleColors" checked class="h-4 w-4 rounded text-blue-600 focus:ring-blue-500 border-slate-300" />
+          <span>Bordi Colorati (Fitzgerald)</span>
+        </label>
+      </div>
+
+      <div class="flex items-center gap-2 w-full md:w-auto justify-end">
+        <button id="btnExportJson" class="px-3 py-2 rounded-lg border border-slate-200 hover:bg-slate-50 text-xs font-medium text-slate-700 flex items-center gap-1.5 transition" title="Scarica il file del progetto per riutilizzarlo">
+          💾 Salva Progetto
+        </button>
+
+        <label class="px-3 py-2 rounded-lg border border-slate-200 hover:bg-slate-50 text-xs font-medium text-slate-700 flex items-center gap-1.5 transition cursor-pointer" title="Carica un progetto CAA salvato in precedenza">
+          📂 Apri
+          <input type="file" id="fileImportJson" accept=".json" class="hidden" />
+        </label>
+
+        <button id="btnPrint" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-semibold shadow-sm flex items-center gap-2 transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
+          </svg>
+          Stampa / Salva PDF (A4)
+        </button>
+      </div>
+    </section>
+
+    <!-- Area Didattica Stampabile -->
+    <div id="printableArea">
+      <!-- Stato Iniziale Vuoto -->
+      <div id="emptyState" class="no-print bg-white rounded-2xl border-2 border-dashed border-slate-200 p-12 text-center">
+        <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+          </svg>
+        </div>
+        <h3 class="text-base font-semibold text-slate-800 mb-1">Nessun progetto generato</h3>
+        <p class="text-sm text-slate-500 max-w-sm mx-auto">
+          Scrivi un'idea o seleziona uno degli esempi sopra per visualizzare le schede CAA personalizzabili e pronte per la stampa.
+        </p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Modale Impostazioni (Chiave API & Modello) -->
+  <div id="settingsModal" class="no-print fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-xl border border-slate-200 space-y-4">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-200">
+        <h3 class="text-lg font-bold text-slate-900">Configurazione API Gemini</h3>
+        <button id="btnCloseSettings" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg">✕</button>
+      </div>
+
+      <div class="space-y-4">
+        <div>
+          <label for="inputApiKey" class="block text-sm font-semibold text-slate-700 mb-1">Chiave API Google Gemini:</label>
+          <input type="password" id="inputApiKey" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm text-slate-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-mono" placeholder="Incolla qui la tua chiave API (es. AIzaSy...)" />
+          <p class="text-xs text-slate-500 mt-1">
+            Puoi inserire liberamente la tua chiave. Viene salvata localmente nel tuo browser.
+          </p>
+        </div>
+
+        <div>
+          <label for="selectModel" class="block text-sm font-semibold text-slate-700 mb-1">Modello Gemini:</label>
+          <select id="selectModel" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm text-slate-700 focus:ring-2 focus:ring-blue-500">
+            <option value="gemini-3.1-flash-lite">Gemini 3.1 Flash Lite (Consigliato, velocissimo)</option>
+            <option value="gemini-3.8-flash">Gemini 3.8 Flash</option>
+            <option value="gemini-flash-latest">Gemini Flash Latest</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="pt-4 border-t border-slate-200 flex items-center justify-between gap-3">
+        <button id="btnResetApiKey" type="button" class="text-xs text-slate-500 hover:text-slate-800 underline">
+          Reimposta chiave di sistema
+        </button>
+        <div class="flex items-center gap-2">
+          <button id="btnSaveSettings" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg shadow-sm transition">
+            Salva Impostazioni
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modale Ricerca e Cambio Pittogramma ARASAAC -->
+  <div id="searchModal" class="no-print fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-xl border border-slate-200 space-y-4">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-200">
+        <div>
+          <h3 class="text-lg font-bold text-slate-900">Catalogo Simboli ARASAAC</h3>
+          <p id="searchModalTokenTitle" class="text-xs text-slate-500">Seleziona o cerca un'alternativa</p>
+        </div>
+        <button id="btnCloseSearchModal" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg">✕</button>
+      </div>
+
+      <!-- Barra di ricerca nel catalogo -->
+      <div class="flex gap-2">
+        <input type="text" id="inputArasaacSearch" class="flex-1 px-3 py-2 border border-slate-300 rounded-lg text-sm text-slate-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Cerca termine (es. mangiare, zaino, correre)..." />
+        <button id="btnSearchArasaac" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition">
+          Cerca
+        </button>
+      </div>
+
+      <!-- Risultati Pittogrammi -->
+      <div id="arasaacSearchResults" class="grid grid-cols-3 sm:grid-cols-4 gap-3 max-h-80 overflow-y-auto p-1">
+        <!-- Generato dinamicamente -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading Overlay -->
+  <div id="loadingOverlay" class="no-print fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center hidden">
+    <div class="bg-white p-6 rounded-2xl shadow-xl max-w-sm w-full text-center space-y-4">
+      <div class="w-12 h-12 mx-auto border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+      <p id="loadingMessage" class="text-sm font-medium text-slate-700">Elaborazione del percorso CAA in corso...</p>
+    </div>
+  </div>
+
+  <!-- Notifica Toast -->
+  <div id="toastNotification" class="fixed bottom-4 right-4 z-50 px-4 py-3 rounded-xl shadow-lg text-sm font-medium hidden opacity-0 transition-opacity"></div>
+
+  <!-- Script Modulare dell'Applicazione -->
+  <script type="module" src="/js/app.js"></script>
+</body>
+</html>

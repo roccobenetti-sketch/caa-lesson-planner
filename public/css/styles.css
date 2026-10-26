@@ -1,0 +1,124 @@
+/* Stili dedicati per CAA Lesson Planner */
+
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&display=swap');
+
+:root {
+  --fitzgerald-person: #FACC15;    /* Giallo: Persone e Pronomi */
+  --fitzgerald-verb: #22C55E;      /* Verde: Verbi e Azioni */
+  --fitzgerald-noun: #F97316;      /* Arancione: Sostantivi e Oggetti */
+  --fitzgerald-adjective: #3B82F6; /* Blu: Aggettivi e Descrittori */
+  --fitzgerald-social: #EC4899;    /* Rosa: Sociale, Cortesia, Sì/No */
+  --fitzgerald-misc: #94A3B8;      /* Grigio/Bianco: Preposizioni e Altro */
+}
+
+body {
+  font-family: 'Lexend', system-ui, -apple-system, sans-serif;
+}
+
+/* Tessere CAA */
+.caa-card {
+  transition: all 0.2s ease-in-out;
+  border-width: 3px;
+  border-style: solid;
+  background-color: #ffffff;
+}
+
+.caa-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+/* Classi Fitzgerald Key per i bordi */
+.border-cat-person { border-color: var(--fitzgerald-person) !important; }
+.border-cat-verb { border-color: var(--fitzgerald-verb) !important; }
+.border-cat-noun { border-color: var(--fitzgerald-noun) !important; }
+.border-cat-adjective { border-color: var(--fitzgerald-adjective) !important; }
+.border-cat-social { border-color: var(--fitzgerald-social) !important; }
+.border-cat-misc { border-color: var(--fitzgerald-misc) !important; }
+
+/* Modalità senza colori per stampa in bianco e nero */
+.monochrome-mode .caa-card {
+  border-color: #334155 !important;
+}
+
+/* Modalità maiuscolo per primi lettori */
+.uppercase-mode .caa-text {
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em;
+}
+
+/* Striscia di lettura CAA continua */
+.reading-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: stretch;
+  background-color: #F8FAFC;
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  border: 1px dashed #CBD5E1;
+}
+
+/* Stili specifici per la Stampa e il Salvataggio in PDF */
+@media print {
+  body {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    font-size: 12pt;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Nascondi tutti i controlli non pertinenti alla stampa */
+  .no-print,
+  nav,
+  header,
+  footer,
+  aside,
+  button,
+  input,
+  textarea,
+  select,
+  .print-controls,
+  #settingsModal,
+  #searchModal {
+    display: none !important;
+  }
+
+  /* Il contenitore stampabile occupa l'intera pagina */
+  #printableArea {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .print-sheet {
+    page-break-after: always;
+    page-break-inside: avoid;
+    break-after: page;
+    break-inside: avoid;
+    padding: 1cm !important;
+    box-sizing: border-box;
+    width: 100% !important;
+    min-height: 98vh;
+  }
+
+  .print-sheet:last-child {
+    page-break-after: auto;
+    break-after: auto;
+  }
+
+  .caa-card {
+    box-shadow: none !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* Forza la resa dei colori di sfondo e bordi in stampa */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
