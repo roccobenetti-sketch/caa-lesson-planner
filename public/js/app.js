@@ -14,6 +14,7 @@ class CAAApp {
     this.selectedTokenIndex = null;
     this.cachedProjects = [];
     this.currentProjectFilter = 'all';
+    this.lastSavedSnapshot = null;
   }
 
   async init() {
@@ -185,6 +186,49 @@ class CAAApp {
       btnSaveCurrentProject.addEventListener('click', () => this.handleSaveCurrentProject());
     }
 
+    // Chiusura progetto e ritorno a foglio bianco
+    const btnHeaderCloseProject = document.getElementById('btnHeaderCloseProject');
+    if (btnHeaderCloseProject) {
+      btnHeaderCloseProject.addEventListener('click', () => this.requestCloseCurrentProject());
+    }
+
+    const btnCloseProject = document.getElementById('btnCloseProject');
+    if (btnCloseProject) {
+      btnCloseProject.addEventListener('click', () => this.requestCloseCurrentProject());
+    }
+
+    // Gestione modale modifiche non salvate
+    const btnCancelCloseProject = document.getElementById('btnCancelCloseProject');
+    if (btnCancelCloseProject) {
+      btnCancelCloseProject.addEventListener('click', () => this.closeUnsavedChangesModal());
+    }
+
+    const btnDiscardAndCloseProject = document.getElementById('btnDiscardAndCloseProject');
+    if (btnDiscardAndCloseProject) {
+      btnDiscardAndCloseProject.addEventListener('click', () => {
+        this.closeUnsavedChangesModal();
+        this.doCloseProject();
+        this.showToast('Progetto chiuso senza salvare le modifiche.');
+      });
+    }
+
+    const btnSaveAndCloseProject = document.getElementById('btnSaveAndCloseProject');
+    if (btnSaveAndCloseProject) {
+      btnSaveAndCloseProject.addEventListener('click', async () => {
+        try {
+          if (LessonRenderer.currentLesson) {
+            const res = await ProjectManager.saveProject(LessonRenderer.currentLesson);
+            await this.refreshProjectsCount();
+            this.showToast(`Progetto "${res.project.title}" salvato!`);
+          }
+          this.closeUnsavedChangesModal();
+          this.doCloseProject();
+        } catch (e) {
+          this.showToast(`Errore salvataggio: ${e.message}`, 'error');
+        }
+      });
+    }
+
     // Ricerca istantanea progetti
     const inputProjectSearch = document.getElementById('inputProjectSearch');
     if (inputProjectSearch) {
@@ -301,6 +345,7 @@ class CAAApp {
         console.warn('Salvataggio automatico non riuscito:', saveErr);
       }
 
+      this.markClean();
       this.showToast('Lezione CAA generata e salvata nell\'archivio!');
       container.scrollIntoView({ behavior: 'smooth' });
     } catch (err) {
@@ -1021,6 +1066,7 @@ class CAAApp {
       document.getElementById('emptyState')?.classList.add('hidden');
 
       this.closeProjectsModal();
+      this.markClean();
       this.showToast(`Progetto "${fullLesson.title}" richiamato a video!`);
 
       // Scroll fluido verso la scheda didattica a video
@@ -1046,6 +1092,7 @@ class CAAApp {
     try {
       const res = await ProjectManager.saveProject(LessonRenderer.currentLesson);
       await this.refreshProjectsCount();
+      this.markClean();
       this.showToast(`Progetto "${res.project.title}" salvato nell'archivio!`);
     } catch (e) {
       this.showToast(`Errore salvataggio: ${e.message}`, 'error');
@@ -1109,6 +1156,7 @@ class CAAApp {
         // Salva anche nell'archivio
         await ProjectManager.saveProject(data);
         await this.refreshProjectsCount();
+        this.markClean();
 
         this.closeProjectsModal();
         this.showToast(`Progetto "${data.title}" importato e salvato!`);
@@ -1118,6 +1166,168 @@ class CAAApp {
     };
     reader.readAsText(file);
     event.target.value = '';
+  }
+
+  /**
+   * Salva uno snapshot dello stato del progetto per il rilevamento delle modifiche pendenti.
+   */
+  markClean() {
+    if (LessonRenderer.currentLesson) {
+      this.lastSavedSnapshot = JSON.stringify(LessonRenderer.currentLesson);
+    } else {
+      this.lastSavedSnapshot = null;
+    }
+    this.updateCloseButtonVisibility();
+  }
+
+  /**
+   * Verifica se il progetto attualmente a video è stato modificato rispetto all'ultimo salvataggio.
+   */
+  isProjectDirty() {
+    if (!LessonRenderer.currentLesson) return false;
+    if (!this.lastSavedSnapshot) return true;
+    return JSON.stringify(LessonRenderer.currentLesson) !== this.lastSavedSnapshot;
+  }
+
+  /**
+   * Aggiorna la visibilità del pulsante rapido di chiusura nella barra di navigazione in alto.
+   */
+  updateCloseButtonVisibility() {
+    const btnHeaderClose = document.getElementById('btnHeaderCloseProject');
+    if (btnHeaderClose) {
+      if (LessonRenderer.currentLesson) {
+        btnHeaderClose.classList.remove('hidden');
+        btnHeaderClose.classList.add('flex');
+      } else {
+        btnHeaderClose.classList.add('hidden');
+        btnHeaderClose.classList.remove('flex');
+      }
+    }
+  }
+
+  /**
+   * Chiude il modale di conferma per modifiche pendenti.
+   */
+  closeUnsavedChangesModal() {
+    const modal = document.getElementById('unsavedChangesModal');
+    if (modal) {
+      modal.classList.add('hidden');
+    }
+  }
+
+  /**
+   * Richiede la chiusura del progetto a video.
+   * Se vi sono modifiche non salvate, interroga l'utente con l'apposito modale.
+   */
+  requestCloseCurrentProject() {
+    if (!LessonRenderer.currentLesson) {
+      this.showToast('Nessun progetto aperto a video.');
+      return;
+    }
+
+    if (this.isProjectDirty()) {
+      const modal = document.getElementById('unsavedChangesModal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        return;
+      }
+    }
+
+    // Se non ci sono modifiche pendenti, chiude direttamente tornando a foglio bianco
+    this.doCloseProject();
+  }
+
+  /**
+   * Esegue la chiusura effettiva del progetto attivo, ripristinando il foglio bianco iniziale.
+   */
+  doCloseProject() {
+    LessonRenderer.currentLesson = null;
+    this.lastSavedSnapshot = null;
+
+    document.getElementById('lessonActions')?.classList.add('hidden');
+    this.updateCloseButtonVisibility();
+
+    const container = document.getElementById('printableArea');
+    if (container) {
+      container.innerHTML = `
+        <div id="emptyState" class="text-center py-20 px-4 border-2 border-dashed border-slate-200 rounded-3xl bg-white/50">
+          <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+            </svg>
+          </div>
+          <h3 class="text-base font-bold text-slate-800 mb-1">Nessun percorso CAA aperto a video</h3>
+          <p class="text-xs text-slate-500 max-w-md mx-auto mb-6">
+            Descrivi un tema o una fiaba nel pannello a sinistra per generare un nuovo percorso con l'Intelligenza Artificiale, apri un progetto salvato dall'archivio, oppure crea subito un foglio bianco.
+          </p>
+          <div class="flex flex-wrap items-center justify-center gap-3">
+            <button type="button" onclick="window.app.startBlankProject()" class="px-4 py-2.5 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-900 border border-blue-200 text-xs font-bold transition flex items-center gap-2 shadow-sm">
+              <span>📄 Nuovo Foglio Bianco</span>
+            </button>
+            <button type="button" onclick="window.app.openProjectsModal()" class="px-4 py-2.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 text-xs font-bold transition flex items-center gap-2 shadow-sm">
+              <span>📁 I Miei Progetti</span>
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    const promptInput = document.getElementById('promptInput');
+    if (promptInput) {
+      promptInput.value = '';
+    }
+
+    this.showToast('Progetto chiuso. Foglio bianco pronto.');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /**
+   * Crea un nuovo foglio bianco CAA completamente editabile direttamente a video.
+   */
+  async startBlankProject() {
+    if (LessonRenderer.currentLesson && this.isProjectDirty()) {
+      this.requestCloseCurrentProject();
+      return;
+    }
+
+    this.setLoadingState(true, 'Creazione nuovo foglio bianco...');
+    try {
+      const blankLesson = {
+        id: 'project_' + Date.now(),
+        title: 'Nuovo Percorso Didattico CAA',
+        targetGrade: 'infanzia',
+        gradeDetails: 'Progetto personalizzato',
+        pedagogicalObjective: 'Inserisci qui l\'obiettivo pedagogico e didattico...',
+        educatorGuide: 'Guida per l\'educatore: personalizza liberamente i passaggi e i simboli.',
+        cards: [
+          {
+            stepNumber: 1,
+            actionTitle: 'Primo Passaggio',
+            pedagogicalExplanation: 'Descrizione dell\'azione per il primo passaggio.',
+            rawSentence: 'io inizio lavoro',
+            tokens: []
+          }
+        ],
+        moral: {
+          text: 'Bravissimo! Percorso completato con successo!',
+          tokens: []
+        }
+      };
+
+      await LessonRenderer.prepareLesson(blankLesson);
+      const container = document.getElementById('printableArea');
+      LessonRenderer.render(container, blankLesson);
+
+      document.getElementById('lessonActions')?.classList.remove('hidden');
+      this.updateCloseButtonVisibility();
+      this.markClean();
+      this.showToast('Nuovo foglio bianco pronto per la personalizzazione!');
+      container.scrollIntoView({ behavior: 'smooth' });
+    } catch (e) {
+      this.showToast(`Errore creazione foglio: ${e.message}`, 'error');
+    } finally {
+      this.setLoadingState(false);
+    }
   }
 
   setLoadingState(isLoading, message = '') {

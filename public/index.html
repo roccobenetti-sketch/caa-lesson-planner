@@ -31,7 +31,12 @@
       </div>
 
       <!-- Azioni Rapide & Impostazioni -->
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Bottone Chiudi Progetto rapido nell'header (visibile solo a progetto aperto) -->
+        <button id="btnHeaderCloseProject" class="hidden items-center gap-1.5 px-3 py-1.5 rounded-lg border border-red-200 bg-red-50 hover:bg-red-100 text-xs font-bold text-red-700 shadow-sm transition" title="Chiudi il progetto attuale e torna al foglio bianco">
+          ✕ <span class="hidden sm:inline">Chiudi Progetto</span>
+        </button>
+
         <!-- Archivio Progetti Salvati -->
         <button id="btnOpenProjectsModal" class="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-amber-300 bg-amber-50 hover:bg-amber-100/80 text-sm font-semibold text-amber-900 shadow-sm transition">
           <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -192,6 +197,10 @@
       </div>
 
       <div class="flex items-center gap-2 w-full md:w-auto justify-end flex-wrap">
+        <button id="btnCloseProject" class="px-3.5 py-2 rounded-lg border border-red-200 bg-red-50 hover:bg-red-100 text-xs font-bold text-red-700 flex items-center gap-1.5 shadow-sm transition" title="Chiudi il progetto attuale e torna al foglio bianco">
+          ✕ Chiudi Progetto
+        </button>
+
         <button id="btnSaveCurrentProject" class="px-3.5 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-xs font-bold text-white flex items-center gap-1.5 shadow-sm transition" title="Salva questo progetto nell'archivio per ritrovarlo sempre">
           💾 Salva Progetto
         </button>
@@ -229,11 +238,14 @@
         </div>
         <h3 class="text-base font-semibold text-slate-800 mb-1">Nessun progetto a video</h3>
         <p class="text-sm text-slate-500 max-w-md mx-auto mb-5">
-          Genera una nuova lezione con l'IA oppure richiama subito uno dei progetti salvati nell'archivio.
+          Genera una nuova lezione con l'IA, apri un foglio bianco per comporla manualmente, oppure richiama un progetto dall'archivio.
         </p>
 
-        <!-- Accesso Rapido ai Progetti Preimpostati -->
+        <!-- Accesso Rapido ai Progetti Preimpostati & Foglio Bianco -->
         <div class="flex flex-wrap items-center justify-center gap-3">
+          <button type="button" onclick="window.app.startBlankProject()" class="px-4 py-2.5 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-900 border border-blue-200 text-xs font-bold transition flex items-center gap-2 shadow-sm">
+            <span>📄 Nuovo Foglio Bianco</span>
+          </button>
           <button type="button" onclick="window.app.loadProjectById('biancaneve')" class="px-4 py-2.5 rounded-xl bg-purple-50 hover:bg-purple-100 text-purple-900 border border-purple-200 text-xs font-bold transition flex items-center gap-2 shadow-sm">
             <span>🍎 Apri a video: Biancaneve e i 7 Nani</span>
           </button>
@@ -241,7 +253,7 @@
             <span>🐷 Apri a video: I Tre Porcellini</span>
           </button>
           <button type="button" onclick="window.app.openProjectsModal()" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300 text-xs font-bold transition flex items-center gap-2 shadow-sm">
-            <span>📁 Sfoglia Tutti i Progetti</span>
+            <span>📁 Sfoglia Archivio</span>
           </button>
         </div>
       </div>
@@ -364,6 +376,37 @@
         </button>
       </div>
 
+    </div>
+  </div>
+
+  <!-- Modale di Conferma Chiusura Progetto con Modifiche Non Salvate -->
+  <div id="unsavedChangesModal" class="no-print fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-4 animate-in fade-in zoom-in-95 duration-150">
+      <div class="flex items-start gap-3">
+        <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center shrink-0">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+          </svg>
+        </div>
+        <div class="flex-1">
+          <h3 class="text-base font-bold text-slate-900">Salvare le modifiche al progetto?</h3>
+          <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+            Il progetto a video è stato modificato o non è ancora stato salvato nell'archivio. Come desideri procedere prima di chiuderlo e tornare al foglio bianco?
+          </p>
+        </div>
+      </div>
+
+      <div class="pt-3 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-end gap-2 text-xs font-semibold">
+        <button id="btnCancelCloseProject" type="button" class="w-full sm:w-auto px-3.5 py-2 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 transition">
+          Annulla
+        </button>
+        <button id="btnDiscardAndCloseProject" type="button" class="w-full sm:w-auto px-3.5 py-2 rounded-xl bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200 transition">
+          Chiudi senza Salvare
+        </button>
+        <button id="btnSaveAndCloseProject" type="button" class="w-full sm:w-auto px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition">
+          💾 Salva e Chiudi
+        </button>
+      </div>
     </div>
   </div>
 
