@@ -49,10 +49,61 @@
         <!-- Selettore Versione Modello IA Rapido -->
         <div class="flex items-center gap-1.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-xl px-2.5 py-1 transition" title="Seleziona la versione del modello IA da usare">
           <span class="text-xs text-slate-500 font-bold hidden md:inline">🤖 Modello:</span>
-          <select id="selectHeaderModel" class="bg-transparent text-xs font-bold text-slate-800 focus:outline-none cursor-pointer pr-1">
-            <option value="gemini-3.1-flash-lite">Gemini 3.1 Flash Lite ⚡ (Rapido)</option>
-            <option value="gemini-3.8-flash">Gemini 3.8 Flash (Potente)</option>
-            <option value="gemini-flash-latest">Gemini Flash Latest</option>
+          <select id="selectHeaderModel" class="bg-transparent text-xs font-bold text-slate-800 focus:outline-none cursor-pointer pr-1 max-w-[200px] sm:max-w-[260px] truncate">
+            <optgroup label="⚡ Flash & Veloci (Consigliati)">
+              <option value="gemini-3.1-flash-lite" selected>gemini-3.1-flash-lite ⚡ (Rapido)</option>
+              <option value="gemini-3.8-flash">gemini-3.8-flash (Potente)</option>
+              <option value="gemini-3.7-flash">gemini-3.7-flash</option>
+              <option value="gemini-3.6-flash">gemini-3.6-flash</option>
+              <option value="gemini-3.5-flash">gemini-3.5-flash</option>
+              <option value="gemini-3.5-flash-lite">gemini-3.5-flash-lite</option>
+              <option value="gemini-3-flash-preview">gemini-3-flash-preview</option>
+              <option value="gemini-flash-latest">gemini-flash-latest</option>
+              <option value="gemini-flash-lite-latest">gemini-flash-lite-latest</option>
+              <option value="gemini-2.5-flash">gemini-2.5-flash</option>
+              <option value="gemini-2.5-flash-lite">gemini-2.5-flash-lite</option>
+              <option value="gemini-3.1-flash-lite-preview">gemini-3.1-flash-lite-preview</option>
+              <option value="gemini-omni-1.1-flash">gemini-omni-1.1-flash</option>
+              <option value="gemini-omni-flash-preview">gemini-omni-flash-preview</option>
+            </optgroup>
+            <optgroup label="🧠 Pro & Ragionamento Avanzato">
+              <option value="gemini-3.1-pro-preview">gemini-3.1-pro-preview</option>
+              <option value="gemini-3.1-pro-preview-customtools">gemini-3.1-pro-preview-customtools</option>
+              <option value="gemini-pro-latest">gemini-pro-latest</option>
+              <option value="gemini-2.5-pro">gemini-2.5-pro</option>
+              <option value="deep-research-preview-04-2026">deep-research-preview-04-2026</option>
+              <option value="deep-research-pro-preview-12-2025">deep-research-pro-preview-12-2025</option>
+              <option value="deep-research-max-preview-04-2026">deep-research-max-preview-04-2026</option>
+            </optgroup>
+            <optgroup label="🎨 Generazione Immagine & Multimodale">
+              <option value="gemini-3.1-flash-image">gemini-3.1-flash-image</option>
+              <option value="gemini-3.1-flash-image-preview">gemini-3.1-flash-image-preview</option>
+              <option value="gemini-3.1-flash-lite-image">gemini-3.1-flash-lite-image</option>
+              <option value="gemini-3-pro-image">gemini-3-pro-image</option>
+              <option value="gemini-3-pro-image-preview">gemini-3-pro-image-preview</option>
+              <option value="gemini-2.5-flash-image">gemini-2.5-flash-image</option>
+            </optgroup>
+            <optgroup label="🔬 Altri Modelli, Ricerca & Preview">
+              <option value="gemini-4-argon">gemini-4-argon</option>
+              <option value="gemini-nano-banana-2.1">gemini-nano-banana-2.1</option>
+              <option value="nano-banana-pro-preview">nano-banana-pro-preview</option>
+              <option value="gemini-robotics-er-2-preview">gemini-robotics-er-2-preview</option>
+              <option value="gemini-2.5-computer-use-preview-10-2025">gemini-2.5-computer-use-preview-10-2025</option>
+              <option value="gemma-4-31b-it">gemma-4-31b-it</option>
+              <option value="gemma-4-26b-a4b-it">gemma-4-26b-a4b-it</option>
+              <option value="antigravity-preview-latest">antigravity-preview-latest</option>
+              <option value="antigravity-preview-09-2026">antigravity-preview-09-2026</option>
+              <option value="antigravity-preview-05-2026">antigravity-preview-05-2026</option>
+              <option value="gemini-3.5-transcribe">gemini-3.5-transcribe</option>
+              <option value="gemini-3.8-flash-tts">gemini-3.8-flash-tts</option>
+              <option value="gemini-3.8-flash-lite-tts">gemini-3.8-flash-lite-tts</option>
+              <option value="gemini-3.1-flash-tts-preview">gemini-3.1-flash-tts-preview</option>
+              <option value="gemini-2.5-flash-preview-tts">gemini-2.5-flash-preview-tts</option>
+              <option value="gemini-2.5-pro-preview-tts">gemini-2.5-pro-preview-tts</option>
+              <option value="lyria-3.5">lyria-3.5</option>
+              <option value="lyria-3-pro-preview">lyria-3-pro-preview</option>
+              <option value="lyria-3-clip-preview">lyria-3-clip-preview</option>
+            </optgroup>
           </select>
         </div>
 
@@ -291,9 +342,60 @@
         <div>
           <label for="selectModel" class="block text-sm font-semibold text-slate-700 mb-1">Modello Gemini:</label>
           <select id="selectModel" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm text-slate-700 focus:ring-2 focus:ring-blue-500">
-            <option value="gemini-3.1-flash-lite">Gemini 3.1 Flash Lite (Consigliato, velocissimo)</option>
-            <option value="gemini-3.8-flash">Gemini 3.8 Flash</option>
-            <option value="gemini-flash-latest">Gemini Flash Latest</option>
+            <optgroup label="⚡ Flash & Veloci (Consigliati)">
+              <option value="gemini-3.1-flash-lite" selected>gemini-3.1-flash-lite ⚡ (Rapido)</option>
+              <option value="gemini-3.8-flash">gemini-3.8-flash (Potente)</option>
+              <option value="gemini-3.7-flash">gemini-3.7-flash</option>
+              <option value="gemini-3.6-flash">gemini-3.6-flash</option>
+              <option value="gemini-3.5-flash">gemini-3.5-flash</option>
+              <option value="gemini-3.5-flash-lite">gemini-3.5-flash-lite</option>
+              <option value="gemini-3-flash-preview">gemini-3-flash-preview</option>
+              <option value="gemini-flash-latest">gemini-flash-latest</option>
+              <option value="gemini-flash-lite-latest">gemini-flash-lite-latest</option>
+              <option value="gemini-2.5-flash">gemini-2.5-flash</option>
+              <option value="gemini-2.5-flash-lite">gemini-2.5-flash-lite</option>
+              <option value="gemini-3.1-flash-lite-preview">gemini-3.1-flash-lite-preview</option>
+              <option value="gemini-omni-1.1-flash">gemini-omni-1.1-flash</option>
+              <option value="gemini-omni-flash-preview">gemini-omni-flash-preview</option>
+            </optgroup>
+            <optgroup label="🧠 Pro & Ragionamento Avanzato">
+              <option value="gemini-3.1-pro-preview">gemini-3.1-pro-preview</option>
+              <option value="gemini-3.1-pro-preview-customtools">gemini-3.1-pro-preview-customtools</option>
+              <option value="gemini-pro-latest">gemini-pro-latest</option>
+              <option value="gemini-2.5-pro">gemini-2.5-pro</option>
+              <option value="deep-research-preview-04-2026">deep-research-preview-04-2026</option>
+              <option value="deep-research-pro-preview-12-2025">deep-research-pro-preview-12-2025</option>
+              <option value="deep-research-max-preview-04-2026">deep-research-max-preview-04-2026</option>
+            </optgroup>
+            <optgroup label="🎨 Generazione Immagine & Multimodale">
+              <option value="gemini-3.1-flash-image">gemini-3.1-flash-image</option>
+              <option value="gemini-3.1-flash-image-preview">gemini-3.1-flash-image-preview</option>
+              <option value="gemini-3.1-flash-lite-image">gemini-3.1-flash-lite-image</option>
+              <option value="gemini-3-pro-image">gemini-3-pro-image</option>
+              <option value="gemini-3-pro-image-preview">gemini-3-pro-image-preview</option>
+              <option value="gemini-2.5-flash-image">gemini-2.5-flash-image</option>
+            </optgroup>
+            <optgroup label="🔬 Altri Modelli, Ricerca & Preview">
+              <option value="gemini-4-argon">gemini-4-argon</option>
+              <option value="gemini-nano-banana-2.1">gemini-nano-banana-2.1</option>
+              <option value="nano-banana-pro-preview">nano-banana-pro-preview</option>
+              <option value="gemini-robotics-er-2-preview">gemini-robotics-er-2-preview</option>
+              <option value="gemini-2.5-computer-use-preview-10-2025">gemini-2.5-computer-use-preview-10-2025</option>
+              <option value="gemma-4-31b-it">gemma-4-31b-it</option>
+              <option value="gemma-4-26b-a4b-it">gemma-4-26b-a4b-it</option>
+              <option value="antigravity-preview-latest">antigravity-preview-latest</option>
+              <option value="antigravity-preview-09-2026">antigravity-preview-09-2026</option>
+              <option value="antigravity-preview-05-2026">antigravity-preview-05-2026</option>
+              <option value="gemini-3.5-transcribe">gemini-3.5-transcribe</option>
+              <option value="gemini-3.8-flash-tts">gemini-3.8-flash-tts</option>
+              <option value="gemini-3.8-flash-lite-tts">gemini-3.8-flash-lite-tts</option>
+              <option value="gemini-3.1-flash-tts-preview">gemini-3.1-flash-tts-preview</option>
+              <option value="gemini-2.5-flash-preview-tts">gemini-2.5-flash-preview-tts</option>
+              <option value="gemini-2.5-pro-preview-tts">gemini-2.5-pro-preview-tts</option>
+              <option value="lyria-3.5">lyria-3.5</option>
+              <option value="lyria-3-pro-preview">lyria-3-pro-preview</option>
+              <option value="lyria-3-clip-preview">lyria-3-clip-preview</option>
+            </optgroup>
           </select>
         </div>
       </div>
