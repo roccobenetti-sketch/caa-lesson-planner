@@ -8,6 +8,9 @@ import { ArasaacService } from './arasaacService.js';
 import { LessonRenderer } from './lessonRenderer.js';
 import { ProjectManager } from './projectManager.js';
 import { CustomPictogramsManager } from './customPictogramsManager.js';
+import { AuthManager } from './authManager.js';
+import { BackupManager } from './backupManager.js';
+import { PdfClientEngine } from './pdfClientEngine.js';
 
 class CAAApp {
   constructor() {
@@ -20,8 +23,10 @@ class CAAApp {
   }
 
   async init() {
+    AuthManager.init();
     await ConfigManager.init();
     this.setupUIBindings();
+    this.setupAuthUI();
     this.updateConfigStatusUI();
     this.populateModelSelectors();
     await this.refreshProjectsCount();
@@ -81,6 +86,72 @@ class CAAApp {
     if (btnCloseSettings && settingsModal) {
       btnCloseSettings.addEventListener('click', () => {
         settingsModal.classList.add('hidden');
+      });
+    }
+
+    // Banner Configurazione Chiave per Utenti Secondari
+    const btnBannerOpenSettings = document.getElementById('btnBannerOpenSettings');
+    if (btnBannerOpenSettings && settingsModal) {
+      btnBannerOpenSettings.addEventListener('click', () => {
+        this.populateSettingsForm();
+        settingsModal.classList.remove('hidden');
+      });
+    }
+
+    // Login Form
+    const formLogin = document.getElementById('formLogin');
+    if (formLogin) {
+      formLogin.addEventListener('submit', (e) => {
+        e.preventDefault();
+        this.handleLoginSubmit();
+      });
+    }
+
+    // Logout
+    const btnLogout = document.getElementById('btnLogout');
+    if (btnLogout) {
+      btnLogout.addEventListener('click', () => this.handleLogout());
+    }
+
+    // Gestione Utenti (Admin)
+    const btnOpenUsersModal = document.getElementById('btnOpenUsersModal');
+    const btnCloseUsersModal = document.getElementById('btnCloseUsersModal');
+    const btnCloseUsersModalBottom = document.getElementById('btnCloseUsersModalBottom');
+    const usersModal = document.getElementById('usersModal');
+
+    if (btnOpenUsersModal && usersModal) {
+      btnOpenUsersModal.addEventListener('click', () => {
+        this.renderUsersList();
+        usersModal.classList.remove('hidden');
+      });
+    }
+    if (btnCloseUsersModal && usersModal) {
+      btnCloseUsersModal.addEventListener('click', () => usersModal.classList.add('hidden'));
+    }
+    if (btnCloseUsersModalBottom && usersModal) {
+      btnCloseUsersModalBottom.addEventListener('click', () => usersModal.classList.add('hidden'));
+    }
+
+    const btnCreateUserSubmit = document.getElementById('btnCreateUserSubmit');
+    if (btnCreateUserSubmit) {
+      btnCreateUserSubmit.addEventListener('click', () => this.handleCreateUser());
+    }
+
+    // Esportazione Archivio Completo (Backup Progetti + Immagini IA)
+    const btnExportFullArchive = document.getElementById('btnExportFullArchive');
+    if (btnExportFullArchive) {
+      btnExportFullArchive.addEventListener('click', () => this.handleExportFullArchive());
+    }
+
+    // Importazione Archivio Completo (Anti-duplicati)
+    const fileImportArchiveModal = document.getElementById('fileImportArchiveModal');
+    if (fileImportArchiveModal) {
+      fileImportArchiveModal.addEventListener('change', (e) => {
+        const file = e.target.files?.[0];
+        if (file) {
+          this.handleImportFullArchive(file);
+          e.target.value = '';
+        }
       });
     }
 
@@ -1177,35 +1248,45 @@ class CAAApp {
 
     this.setLoadingState(true, 'Creazione PDF leggero (< 500 KB) in corso...');
     try {
-      const resp = await fetch('/api/export-pdf', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(LessonRenderer.currentLesson)
-      });
+      // 1. Tentativo con il server backend Python (se attivo)
+      let downloadedViaServer = false;
+      try {
+        const resp = await fetch('/api/export-pdf', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(LessonRenderer.currentLesson)
+        });
 
-      if (!resp.ok) {
-        const err = await resp.json().catch(() => ({}));
-        throw new Error(err.error || `HTTP ${resp.status}`);
+        if (resp.ok) {
+          const blob = await resp.blob();
+          const titleSlug = (LessonRenderer.currentLesson.title || 'lezione_caa')
+            .toLowerCase()
+            .replace(/[^a-z0-9]/g, '_')
+            .replace(/_+/g, '_')
+            .slice(0, 30);
+          
+          const downloadUrl = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = downloadUrl;
+          a.download = `${titleSlug}_leggero.pdf`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(downloadUrl);
+
+          const sizeKb = Math.round(blob.size / 1024);
+          this.showToast(`PDF leggero scaricato (${sizeKb} KB)! Pronto per la stampante.`);
+          downloadViaServer = true;
+          return;
+        }
+      } catch (srvErr) {
+        // Server non disponibile: passa al generatore PDF client-side
       }
 
-      const blob = await resp.blob();
-      const titleSlug = (LessonRenderer.currentLesson.title || 'lezione_caa')
-        .toLowerCase()
-        .replace(/[^a-z0-9]/g, '_')
-        .replace(/_+/g, '_')
-        .slice(0, 30);
-      
-      const downloadUrl = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = downloadUrl;
-      a.download = `${titleSlug}_leggero.pdf`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(downloadUrl);
-
-      const sizeKb = Math.round(blob.size / 1024);
-      this.showToast(`PDF leggero scaricato (${sizeKb} KB)! Pronto per la stampante HP.`);
+      // 2. Fallback universale Client-Side (funziona su Mac, iOS, Android e GitHub Pages)
+      const res = await PdfClientEngine.generateAndDownload(LessonRenderer.currentLesson);
+      const sizeKb = Math.round(res.sizeBytes / 1024);
+      this.showToast(`PDF leggero generato direttamente nel browser (${sizeKb} KB, ${res.pages} pag.)!`);
     } catch (err) {
       console.error('Errore download PDF leggero:', err);
       this.showToast(`Errore PDF: ${err.message}`, 'error');
@@ -2197,6 +2278,217 @@ class CAAApp {
       toast.classList.add('opacity-0');
       setTimeout(() => toast.classList.add('hidden'), 300);
     }, 3500);
+  }
+
+  /* ==========================================================================
+     METODI DI AUTENTICAZIONE, GESTIONE UTENTI & BACKUP ARCHIVIO
+     ========================================================================== */
+
+  setupAuthUI() {
+    const loginModal = document.getElementById('loginModal');
+    const userBadgeName = document.getElementById('userBadgeName');
+    const btnOpenUsersModal = document.getElementById('btnOpenUsersModal');
+    const userKeyMissingBanner = document.getElementById('userKeyMissingBanner');
+
+    if (!AuthManager.isAuthenticated()) {
+      if (loginModal) loginModal.classList.remove('hidden');
+      return;
+    }
+
+    if (loginModal) loginModal.classList.add('hidden');
+
+    const user = AuthManager.currentUser;
+    if (userBadgeName) {
+      userBadgeName.textContent = user.role === 'admin' ? `${user.username} (Admin)` : user.username;
+    }
+
+    if (btnOpenUsersModal) {
+      if (AuthManager.isAdmin()) {
+        btnOpenUsersModal.classList.remove('hidden');
+        btnOpenUsersModal.classList.add('inline-flex');
+      } else {
+        btnOpenUsersModal.classList.add('hidden');
+        btnOpenUsersModal.classList.remove('inline-flex');
+      }
+    }
+
+    // Per utenti non-admin: controlla se hanno inserito la propria chiave Gemini
+    if (userKeyMissingBanner) {
+      if (!AuthManager.isAdmin() && !AuthManager.getUserApiKey()) {
+        userKeyMissingBanner.classList.remove('hidden');
+      } else {
+        userKeyMissingBanner.classList.add('hidden');
+      }
+    }
+  }
+
+  handleLoginSubmit() {
+    const userInput = document.getElementById('inputLoginUsername');
+    const passInput = document.getElementById('inputLoginPassword');
+    const errorBox = document.getElementById('loginErrorMessage');
+
+    const u = userInput ? userInput.value : '';
+    const p = passInput ? passInput.value : '';
+
+    const res = AuthManager.login(u, p);
+    if (!res.success) {
+      if (errorBox) {
+        errorBox.textContent = res.message;
+        errorBox.classList.remove('hidden');
+      }
+      return;
+    }
+
+    if (errorBox) errorBox.classList.add('hidden');
+    const loginModal = document.getElementById('loginModal');
+    if (loginModal) loginModal.classList.add('hidden');
+
+    this.setupAuthUI();
+    this.updateConfigStatusUI();
+    this.showToast(`Benvenuto, ${res.user.name || res.user.username}!`);
+  }
+
+  handleLogout() {
+    AuthManager.logout();
+    this.showToast('Disconnessione effettuata.');
+    const loginModal = document.getElementById('loginModal');
+    if (loginModal) {
+      const userInput = document.getElementById('inputLoginUsername');
+      const passInput = document.getElementById('inputLoginPassword');
+      if (passInput) passInput.value = '';
+      loginModal.classList.remove('hidden');
+    }
+    this.setupAuthUI();
+  }
+
+  renderUsersList() {
+    const container = document.getElementById('usersListContainer');
+    if (!container) return;
+
+    const users = AuthManager.getUsersList();
+    if (!users || users.length === 0) {
+      container.innerHTML = '<p class="text-xs text-slate-400">Nessun utente registrato.</p>';
+      return;
+    }
+
+    container.innerHTML = users.map(u => {
+      const isAdmin = (u.role === 'admin') || (u.username.toLowerCase() === 'rocco');
+      const hasKey = AuthManager.getUserApiKey() || (isAdmin ? 'Configurata (Admin)' : '');
+      const userKey = !isAdmin ? localStorage.getItem(`caa_user_gemini_key_${u.username.toLowerCase()}`) : 'Default di Sistema';
+
+      return `
+        <div class="flex items-center justify-between p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs">
+          <div class="flex items-center gap-2.5">
+            <span class="w-8 h-8 rounded-full ${isAdmin ? 'bg-purple-600 text-white' : 'bg-blue-100 text-blue-800'} flex items-center justify-center font-bold">
+              ${u.username.slice(0, 1).toUpperCase()}
+            </span>
+            <div>
+              <div class="flex items-center gap-1.5">
+                <span class="font-bold text-slate-900">${this.escapeHtml(u.username)}</span>
+                <span class="text-[10px] px-2 py-0.5 rounded-full font-bold ${isAdmin ? 'bg-purple-100 text-purple-800' : 'bg-slate-200 text-slate-700'}">
+                  ${isAdmin ? 'Amministratore' : 'Docente'}
+                </span>
+              </div>
+              <p class="text-[11px] text-slate-500 mt-0.5">
+                Chiave IA: <span class="${userKey ? 'text-emerald-700 font-semibold' : 'text-amber-700 font-semibold'}">${userKey ? 'Presente ✓' : 'Non ancora inserita'}</span>
+              </p>
+            </div>
+          </div>
+
+          <div>
+            ${isAdmin ? `
+              <span class="text-[11px] text-slate-400 italic px-2">Principale</span>
+            ` : `
+              <button type="button" 
+                      class="px-2.5 py-1 text-xs text-rose-700 hover:bg-rose-100 rounded-lg border border-rose-200 font-medium transition"
+                      onclick="window.app.handleDeleteUser('${this.escapeHtml(u.username)}')">
+                🗑️ Elimina
+              </button>
+            `}
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  handleCreateUser() {
+    const userInput = document.getElementById('inputNewUsername');
+    const passInput = document.getElementById('inputNewPassword');
+    const msgBox = document.getElementById('createUserMessage');
+
+    const u = userInput ? userInput.value : '';
+    const p = passInput ? passInput.value : '';
+
+    const res = AuthManager.createUser(u, p);
+    if (!res.success) {
+      if (msgBox) {
+        msgBox.textContent = res.message;
+        msgBox.className = 'text-xs font-semibold text-rose-600';
+      }
+      return;
+    }
+
+    if (userInput) userInput.value = '';
+    if (passInput) passInput.value = '';
+    if (msgBox) {
+      msgBox.textContent = `Utente "${res.user.username}" creato con successo!`;
+      msgBox.className = 'text-xs font-semibold text-emerald-600';
+      setTimeout(() => { msgBox.textContent = ''; }, 3000);
+    }
+
+    this.renderUsersList();
+    this.showToast(`Utente "${res.user.username}" aggiunto.`);
+  }
+
+  handleDeleteUser(username) {
+    if (!confirm(`Sei sicuro di voler eliminare l'account "${username}"?`)) {
+      return;
+    }
+
+    const res = AuthManager.deleteUser(username);
+    if (!res.success) {
+      this.showToast(res.message, 'error');
+      return;
+    }
+
+    this.renderUsersList();
+    this.showToast(`Utente "${username}" rimosso.`);
+  }
+
+  async handleExportFullArchive() {
+    this.setLoadingState(true, 'Creazione archivio completo in corso...');
+    try {
+      const username = AuthManager.currentUser?.username || 'utente';
+      const stats = await BackupManager.exportFullArchive(username);
+      this.showToast(`Archivio esportato (${stats.totalProjects} progetti, ${stats.totalCustomPictograms} simboli IA)!`);
+    } catch (err) {
+      this.showToast(`Errore esportazione: ${err.message}`, 'error');
+    } finally {
+      this.setLoadingState(false);
+    }
+  }
+
+  async handleImportFullArchive(file) {
+    if (!file) return;
+    this.setLoadingState(true, 'Analisi e importazione archivio con deduplicazione...');
+    try {
+      const text = await file.text();
+      const report = await BackupManager.importArchive(text);
+
+      let msg = `Importati: ${report.projectsImported} progetti, ${report.pictogramsImported} simboli IA.`;
+      if (report.projectsSkipped > 0 || report.pictogramsSkipped > 0) {
+        msg += ` (${report.projectsSkipped} progetti e ${report.pictogramsSkipped} simboli già esistenti saltati senza duplicati).`;
+      }
+
+      this.showToast(msg);
+      await this.refreshProjectsCount();
+      this.refreshCustomPictosBadge();
+      await this.openProjectsModal();
+    } catch (err) {
+      this.showToast(`Errore importazione: ${err.message}`, 'error');
+    } finally {
+      this.setLoadingState(false);
+    }
   }
 }
 

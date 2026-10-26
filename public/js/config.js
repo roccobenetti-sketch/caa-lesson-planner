@@ -3,6 +3,8 @@
  * Gestisce chiavi API, modelli Gemini e persistenza locale nel browser.
  */
 
+import { AuthManager } from './authManager.js';
+
 export const ConfigManager = {
   STORAGE_KEY_API: 'caa_gemini_api_key',
   STORAGE_KEY_MODEL: 'caa_gemini_model',
@@ -129,15 +131,35 @@ export const ConfigManager = {
   },
 
   getActiveApiKey() {
+    // 1. Se l'utente è autenticato ed è un utente secondario, usa la sua chiave personale
+    if (AuthManager.isAuthenticated()) {
+      if (!AuthManager.isAdmin()) {
+        return AuthManager.getUserApiKey();
+      } else {
+        // Se è l'admin Rocco, usa la chiave impostata su admin o la default
+        const adminKey = AuthManager.getUserApiKey();
+        if (adminKey) return adminKey;
+      }
+    }
     return this.state.apiKey || this.state.defaultApiKey || '';
   },
 
   setApiKey(key) {
     const trimmed = (key || '').trim();
+    if (AuthManager.isAuthenticated() && !AuthManager.isAdmin()) {
+      AuthManager.setUserApiKey(trimmed);
+      this.state.apiKey = trimmed;
+      this.state.isCustomKey = Boolean(trimmed);
+      return;
+    }
+
     if (trimmed) {
       this.state.apiKey = trimmed;
       this.state.isCustomKey = true;
       localStorage.setItem(this.STORAGE_KEY_API, trimmed);
+      if (AuthManager.isAdmin()) {
+        AuthManager.setUserApiKey(trimmed);
+      }
     } else {
       this.resetToDefaultApiKey();
     }
