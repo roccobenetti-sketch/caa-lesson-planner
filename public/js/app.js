@@ -1261,8 +1261,8 @@ class CAAApp {
           });
         }));
 
-        // 2. Compressione e ridimensionamento a 180x180 px per la stampante
-        const MAX_PRINT_DIM = 180;
+        // 2. Compressione e ridimensionamento a 240x240 px (formato figurina) per la stampante
+        const MAX_PRINT_DIM = 240;
         await Promise.all(images.map(img => {
           return new Promise(resolve => {
             try {

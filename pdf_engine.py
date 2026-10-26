@@ -31,7 +31,7 @@ FITZGERALD_COLORS = {
 # Cache delle immagini in memoria durante la sessione di generazione
 _IMAGE_CACHE = {}
 
-def get_optimized_image(url_or_data, max_dim=150):
+def get_optimized_image(url_or_data, max_dim=240):
     """
     Scarica o decodifica un'immagine, la ridimensiona a max_dim x max_dim e la converte in JPEG leggero.
     Restituisce un oggetto ImageReader pronto per ReportLab, oppure None.
@@ -81,7 +81,7 @@ def get_optimized_image(url_or_data, max_dim=150):
 
     return None
 
-def get_token_image(token_obj, max_dim=140):
+def get_token_image(token_obj, max_dim=240):
     """
     Recupera l'immagine per un token, con fallback intelligente su alternatives o catalogo ARASAAC.
     """
@@ -131,16 +131,17 @@ def generate_lesson_pdf(project_data, output_path):
     Genera un file PDF A4 leggero e stampabile dal dizionario del progetto CAA.
     """
     page_w, page_h = A4  # 595.27 x 841.89 pt
-    margin_x = 36.0      # Margine sinistro/destro ~1.27 cm
-    margin_y = 36.0      # Margine inferiore ~1.27 cm
+    margin_x = 30.0      # Margine sinistro/destro
+    margin_y = 30.0      # Margine inferiore
     content_w = page_w - (margin_x * 2)
 
-    # Parametri tessere CAA
-    card_w = 68.0
-    card_h = 92.0
-    card_gap = 7.0
-    cards_per_row = int((content_w + card_gap) // (card_w + card_gap))  # 7 per riga
-    row_h = card_h + 10.0
+    # Parametri tessere CAA formato "FIGURINA DA ALBUM" (4 per riga, larghezza ~4.3 cm, altezza ~5.4 cm)
+    card_w = 122.0
+    card_h = 154.0
+    card_gap = 10.0
+    cards_per_row = 4
+    row_h = card_h + 12.0
+    pic_size = 100.0     # Disegno grande ~3.5 cm x 3.5 cm
 
     c = canvas.Canvas(str(output_path), pagesize=A4)
     c.setTitle(project_data.get('title', 'Scheda Didattica CAA'))
@@ -293,21 +294,20 @@ def generate_lesson_pdf(project_data, output_path):
             c.saveState()
             c.setFillColor(colors.white)
             c.setStrokeColor(border_color)
-            c.setLineWidth(1.8)
-            c.roundRect(tx, ty, card_w, card_h, 4, fill=1, stroke=1)
+            c.setLineWidth(2.2)
+            c.roundRect(tx, ty, card_w, card_h, 6, fill=1, stroke=1)
 
-            # Etichetta testo in alto (mai troncata)
+            # Etichetta testo in alto (alta leggibilità formato figurina)
             c.setFillColor(colors.HexColor('#0F172A'))
-            font_size = 7.5 if len(word_str) <= 8 else (6.5 if len(word_str) <= 12 else 5.5)
+            font_size = 9.5 if len(word_str) <= 8 else (8.0 if len(word_str) <= 12 else 6.8)
             c.setFont("Helvetica-Bold", font_size)
-            c.drawCentredString(tx + (card_w / 2.0), ty + card_h - 12, word_str)
+            c.drawCentredString(tx + (card_w / 2.0), ty + card_h - 15, word_str)
 
-            # Immagine simbolo centrata
-            img_reader = get_token_image(token_obj, max_dim=140)
+            # Immagine simbolo grande (dimensione figurina ~3.5 cm x 3.5 cm)
+            img_reader = get_token_image(token_obj, max_dim=240)
             if img_reader:
-                pic_size = 48.0
                 px = tx + ((card_w - pic_size) / 2.0)
-                py = ty + 6.0
+                py = ty + 10.0
                 try:
                     c.drawImage(img_reader, px, py, width=pic_size, height=pic_size, mask='auto')
                 except Exception as draw_err:
@@ -315,12 +315,12 @@ def generate_lesson_pdf(project_data, output_path):
             else:
                 # Placeholder pulito se immagine assente
                 c.setFillColor(colors.HexColor('#F8FAFC'))
-                c.setStrokeColor(colors.HexColor('#E2E8F0'))
-                c.setLineWidth(0.8)
-                c.roundRect(tx + 10, ty + 10, card_w - 20, card_h - 30, 3, fill=1, stroke=1)
+                c.setStrokeColor(colors.HexColor('#CBD5E1'))
+                c.setLineWidth(1.0)
+                c.roundRect(tx + 12, ty + 12, card_w - 24, card_h - 38, 4, fill=1, stroke=1)
                 c.setFillColor(colors.HexColor('#94A3B8'))
-                c.setFont("Helvetica-Bold", 8)
-                c.drawCentredString(tx + (card_w / 2.0), ty + (card_h / 2.0) - 8, word_str[:3])
+                c.setFont("Helvetica-Bold", 11)
+                c.drawCentredString(tx + (card_w / 2.0), ty + (card_h / 2.0) - 10, word_str[:3])
 
             c.restoreState()
 
@@ -375,19 +375,18 @@ def generate_lesson_pdf(project_data, output_path):
             c.saveState()
             c.setFillColor(colors.white)
             c.setStrokeColor(border_color)
-            c.setLineWidth(1.8)
-            c.roundRect(tx, ty, card_w, card_h, 4, fill=1, stroke=1)
+            c.setLineWidth(2.2)
+            c.roundRect(tx, ty, card_w, card_h, 6, fill=1, stroke=1)
 
             c.setFillColor(colors.HexColor('#0F172A'))
-            font_size = 7.5 if len(mword_str) <= 8 else 6.0
+            font_size = 9.5 if len(mword_str) <= 8 else (8.0 if len(mword_str) <= 12 else 6.8)
             c.setFont("Helvetica-Bold", font_size)
-            c.drawCentredString(tx + (card_w / 2.0), ty + card_h - 12, mword_str)
+            c.drawCentredString(tx + (card_w / 2.0), ty + card_h - 15, mword_str)
 
-            mimg_reader = get_token_image(mtoken_obj, max_dim=140)
+            mimg_reader = get_token_image(mtoken_obj, max_dim=240)
             if mimg_reader:
-                pic_size = 48.0
                 px = tx + ((card_w - pic_size) / 2.0)
-                py = ty + 6.0
+                py = ty + 10.0
                 try:
                     c.drawImage(mimg_reader, px, py, width=pic_size, height=pic_size, mask='auto')
                 except Exception:
