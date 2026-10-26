@@ -1867,6 +1867,16 @@ class CAAApp {
     if (msgEl) msgEl.textContent = message;
   }
 
+  escapeHtml(str) {
+    if (!str) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
   showToast(message, type = 'success') {
     const toast = document.getElementById('toastNotification');
     if (!toast) return;
