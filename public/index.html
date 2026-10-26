@@ -414,20 +414,20 @@
   </div>
 
   <!-- Modale Selezione e Creazione Pittogramma (ARASAAC & IA) -->
-  <div id="searchModal" class="no-print fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4 hidden">
-    <div class="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-xl border border-slate-200 space-y-4">
-      <div class="flex items-center justify-between pb-3 border-b border-slate-200">
+  <div id="searchModal" class="no-print fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 hidden">
+    <div class="bg-white rounded-2xl max-w-3xl w-full p-5 sm:p-6 shadow-2xl border border-slate-200 flex flex-col max-h-[92vh] overflow-hidden">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-200 shrink-0">
         <div>
           <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
             <span>🖼️ Simbolo CAA</span>
           </h3>
           <p id="searchModalTokenTitle" class="text-xs text-slate-500">Scegli dal catalogo o creane uno su misura con l'IA</p>
         </div>
-        <button id="btnCloseSearchModal" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg text-lg">✕</button>
+        <button id="btnCloseSearchModal" class="text-slate-400 hover:text-slate-600 p-1.5 rounded-lg text-lg font-bold transition hover:bg-slate-100">✕</button>
       </div>
 
       <!-- Tab Selettore: Catalogo ARASAAC vs I Miei Simboli vs Generatore IA -->
-      <div class="flex border-b border-slate-200 gap-1 sm:gap-2 overflow-x-auto">
+      <div class="flex border-b border-slate-200 gap-1 sm:gap-2 overflow-x-auto shrink-0 pt-2">
         <button id="tabBtnArasaac" type="button" class="px-3.5 py-2 text-xs font-bold border-b-2 border-blue-600 text-blue-700 flex items-center gap-1.5 transition whitespace-nowrap">
           📁 Catalogo ARASAAC
         </button>
@@ -439,123 +439,127 @@
         </button>
       </div>
 
-      <!-- Sezione 1: Catalogo ARASAAC -->
-      <div id="tabContentArasaac" class="space-y-3">
-        <!-- Barra di ricerca nel catalogo -->
-        <div class="flex gap-2">
-          <input type="text" id="inputArasaacSearch" class="flex-1 px-3 py-2 border border-slate-300 rounded-lg text-sm text-slate-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Cerca termine (es. regina, corona, travestirsi, mela)..." />
-          <button id="btnSearchArasaac" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-semibold transition">
-            Cerca
-          </button>
-        </div>
+      <!-- Corpo del Modale a Scorrimento Verticale -->
+      <div class="flex-1 overflow-y-auto pr-1 pt-3.5 space-y-4">
 
-        <!-- Risultati Pittogrammi -->
-        <div id="arasaacSearchResults" class="grid grid-cols-3 sm:grid-cols-4 gap-3 max-h-72 overflow-y-auto p-1">
-          <!-- Generato dinamicamente -->
-        </div>
-      </div>
+        <!-- Sezione 1: Catalogo ARASAAC -->
+        <div id="tabContentArasaac" class="space-y-3">
+          <!-- Barra di ricerca nel catalogo -->
+          <div class="flex gap-2">
+            <input type="text" id="inputArasaacSearch" class="flex-1 px-3 py-2 border border-slate-300 rounded-lg text-sm text-slate-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Cerca termine (es. regina, corona, travestirsi, mela)..." />
+            <button id="btnSearchArasaac" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-semibold transition">
+              Cerca
+            </button>
+          </div>
 
-      <!-- Sezione 2: I Miei Simboli Personali Salvati -->
-      <div id="tabContentCustomPictos" class="space-y-3 hidden">
-        <div class="flex gap-2">
-          <input type="text" id="inputCustomPictoSearch" class="flex-1 px-3 py-2 border border-slate-300 rounded-lg text-sm text-slate-900 focus:ring-2 focus:ring-amber-500 focus:border-amber-500" placeholder="Cerca tra i tuoi simboli personalizzati salvati..." />
-          <button id="btnRefreshCustomPictos" type="button" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold transition" title="Ricarica elenco">
-            🔄
-          </button>
-        </div>
-
-        <!-- Griglia Simboli Personali -->
-        <div id="customPictosGrid" class="grid grid-cols-3 sm:grid-cols-4 gap-3 max-h-72 overflow-y-auto p-1">
-          <!-- Generato dinamicamente -->
-        </div>
-      </div>
-
-      <!-- Sezione 3: Generazione con IA -->
-      <div id="tabContentAi" class="space-y-4 hidden">
-        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 rounded-xl p-3.5 text-xs text-slate-700 leading-relaxed">
-          <span class="font-bold text-blue-900">✨ Disegna con l'IA:</span> descrivi qualsiasi soggetto, personaggio o azione (es. <em>"regina travestita da vecchia con cappuccio nero"</em>). Potrai usarlo subito e salvarlo con un nome nel tuo archivio personale per riutilizzarlo sempre!
-        </div>
-
-        <!-- Scelta dello Stile Visivo del Disegno -->
-        <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1.5">Stile Grafico del Disegno:</label>
-          <div class="grid grid-cols-3 gap-2">
-            <label class="ai-style-option flex flex-col items-center justify-center p-2 rounded-xl border-2 border-indigo-600 bg-indigo-50/70 cursor-pointer text-center text-xs font-bold text-indigo-900 transition shadow-sm" data-style="stylized">
-              <input type="radio" name="aiPictogramStyle" value="stylized" class="hidden" checked />
-              <span class="text-base mb-0.5">🏷️</span>
-              <span>Stilizzato CAA</span>
-              <span class="text-[9px] font-medium text-indigo-700 mt-0.5">Iconico ARASAAC</span>
-            </label>
-
-            <label class="ai-style-option flex flex-col items-center justify-center p-2 rounded-xl border border-slate-200 bg-white cursor-pointer text-center text-xs font-bold text-slate-700 transition hover:bg-slate-50" data-style="realistic">
-              <input type="radio" name="aiPictogramStyle" value="realistic" class="hidden" />
-              <span class="text-base mb-0.5">📸</span>
-              <span>Realistico</span>
-              <span class="text-[9px] font-medium text-slate-500 mt-0.5">Dettagli & Luci</span>
-            </label>
-
-            <label class="ai-style-option flex flex-col items-center justify-center p-2 rounded-xl border border-slate-200 bg-white cursor-pointer text-center text-xs font-bold text-slate-700 transition hover:bg-slate-50" data-style="storybook">
-              <input type="radio" name="aiPictogramStyle" value="storybook" class="hidden" />
-              <span class="text-base mb-0.5">📖</span>
-              <span>Fiabesco</span>
-              <span class="text-[9px] font-medium text-slate-500 mt-0.5">Libro Illustrato</span>
-            </label>
+          <!-- Risultati Pittogrammi -->
+          <div id="arasaacSearchResults" class="grid grid-cols-3 sm:grid-cols-4 gap-3 max-h-72 overflow-y-auto p-1">
+            <!-- Generato dinamicamente -->
           </div>
         </div>
 
-        <!-- Sezione Riferimenti Visivi Multimodali (Continuità Personaggi & Fusione) -->
-        <div class="bg-indigo-50/40 border border-indigo-100 rounded-2xl p-3.5 space-y-2.5">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center gap-1.5">
-              <span class="text-sm">🎭</span>
-              <span class="text-xs font-bold text-slate-800">Riferimenti Visivi per l'IA (Personaggi / Oggetti)</span>
-              <span id="aiRefImagesCount" class="hidden text-[10px] px-1.5 py-0.2 rounded-full bg-indigo-600 text-white font-bold">0</span>
-            </div>
-            <div>
-              <label for="inputAiRefImageFile" class="text-[11px] font-bold text-indigo-700 hover:text-indigo-900 cursor-pointer flex items-center gap-1 bg-white hover:bg-indigo-50 px-2.5 py-1 rounded-lg border border-indigo-200 shadow-2xs transition" title="Carica una foto o disegno dal tuo computer">
-                <span>📁 Carica dal PC</span>
-                <input type="file" id="inputAiRefImageFile" accept="image/*" class="hidden" multiple />
+        <!-- Sezione 2: I Miei Simboli Personali Salvati -->
+        <div id="tabContentCustomPictos" class="space-y-3 hidden">
+          <div class="flex gap-2">
+            <input type="text" id="inputCustomPictoSearch" class="flex-1 px-3 py-2 border border-slate-300 rounded-lg text-sm text-slate-900 focus:ring-2 focus:ring-amber-500 focus:border-amber-500" placeholder="Cerca tra i tuoi simboli personalizzati salvati..." />
+            <button id="btnRefreshCustomPictos" type="button" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold transition" title="Ricarica elenco">
+              🔄
+            </button>
+          </div>
+
+          <!-- Griglia Simboli Personali -->
+          <div id="customPictosGrid" class="grid grid-cols-3 sm:grid-cols-4 gap-3 max-h-72 overflow-y-auto p-1">
+            <!-- Generato dinamicamente -->
+          </div>
+        </div>
+
+        <!-- Sezione 3: Generazione con IA -->
+        <div id="tabContentAi" class="space-y-4 hidden pb-2">
+          <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 rounded-xl p-3.5 text-xs text-slate-700 leading-relaxed">
+            <span class="font-bold text-blue-900">✨ Disegna con l'IA:</span> descrivi qualsiasi soggetto, personaggio o azione (es. <em>"regina travestita da vecchia con cappuccio nero"</em>). Potrai usarlo subito e salvarlo con un nome nel tuo archivio personale per riutilizzarlo sempre!
+          </div>
+
+          <!-- Scelta dello Stile Visivo del Disegno -->
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1.5">Stile Grafico del Disegno:</label>
+            <div class="grid grid-cols-3 gap-2">
+              <label class="ai-style-option flex flex-col items-center justify-center p-2 rounded-xl border-2 border-indigo-600 bg-indigo-50/70 cursor-pointer text-center text-xs font-bold text-indigo-900 transition shadow-sm" data-style="stylized">
+                <input type="radio" name="aiPictogramStyle" value="stylized" class="hidden" checked />
+                <span class="text-base mb-0.5">🏷️</span>
+                <span>Stilizzato CAA</span>
+                <span class="text-[9px] font-medium text-indigo-700 mt-0.5">Iconico ARASAAC</span>
+              </label>
+
+              <label class="ai-style-option flex flex-col items-center justify-center p-2 rounded-xl border border-slate-200 bg-white cursor-pointer text-center text-xs font-bold text-slate-700 transition hover:bg-slate-50" data-style="realistic">
+                <input type="radio" name="aiPictogramStyle" value="realistic" class="hidden" />
+                <span class="text-base mb-0.5">📸</span>
+                <span>Realistico</span>
+                <span class="text-[9px] font-medium text-slate-500 mt-0.5">Dettagli & Luci</span>
+              </label>
+
+              <label class="ai-style-option flex flex-col items-center justify-center p-2 rounded-xl border border-slate-200 bg-white cursor-pointer text-center text-xs font-bold text-slate-700 transition hover:bg-slate-50" data-style="storybook">
+                <input type="radio" name="aiPictogramStyle" value="storybook" class="hidden" />
+                <span class="text-base mb-0.5">📖</span>
+                <span>Fiabesco</span>
+                <span class="text-[9px] font-medium text-slate-500 mt-0.5">Libro Illustrato</span>
               </label>
             </div>
           </div>
 
-          <p class="text-[11px] text-slate-600 leading-tight">
-            Clicca sui personaggi della storia qui sotto (o carica un'immagine dal PC): l'IA ne analizzerà fisionomia, colori degli abiti e stile per ricrearli fedelmente nella nuova scena!
-          </p>
-
-          <!-- Riferimenti attivi selezionati -->
-          <div id="aiActiveRefList" class="flex flex-wrap items-center gap-2 pt-0.5 min-h-[32px]">
-            <span id="aiActiveRefPlaceholder" class="text-[11px] text-slate-400 italic">Nessun riferimento selezionato (l'IA inventerà la figura da zero).</span>
-          </div>
-
-          <!-- Carosello simboli già presenti nella lezione corrente -->
-          <div id="aiLessonRefSection" class="pt-2 border-t border-indigo-100/60">
-            <div class="flex items-center justify-between mb-1.5">
-              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Personaggi e simboli della lezione corrente:</span>
-              <span class="text-[10px] text-indigo-600 font-medium">Clicca per aggiungere/togliere</span>
+          <!-- Sezione Riferimenti Visivi Multimodali (Continuità Personaggi & Fusione) -->
+          <div class="bg-indigo-50/40 border border-indigo-100 rounded-2xl p-3.5 space-y-2.5">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-1.5">
+                <span class="text-sm">🎭</span>
+                <span class="text-xs font-bold text-slate-800">Riferimenti Visivi per l'IA (Personaggi / Oggetti)</span>
+                <span id="aiRefImagesCount" class="hidden text-[10px] px-1.5 py-0.2 rounded-full bg-indigo-600 text-white font-bold">0</span>
+              </div>
+              <div>
+                <label for="inputAiRefImageFile" class="text-[11px] font-bold text-indigo-700 hover:text-indigo-900 cursor-pointer flex items-center gap-1 bg-white hover:bg-indigo-50 px-2.5 py-1 rounded-lg border border-indigo-200 shadow-2xs transition" title="Carica una foto o disegno dal tuo computer">
+                  <span>📁 Carica dal PC</span>
+                  <input type="file" id="inputAiRefImageFile" accept="image/*" class="hidden" multiple />
+                </label>
+              </div>
             </div>
-            <div id="aiLessonTokensCarousel" class="flex items-center gap-2 overflow-x-auto pb-1 max-w-full">
-              <!-- Riempito dinamicamente all'apertura -->
+
+            <p class="text-[11px] text-slate-600 leading-tight">
+              Clicca sui personaggi della storia qui sotto (o carica un'immagine dal PC): l'IA ne analizzerà fisionomia, colori degli abiti e stile per ricrearli fedelmente nella nuova scena!
+            </p>
+
+            <!-- Riferimenti attivi selezionati -->
+            <div id="aiActiveRefList" class="flex flex-wrap items-center gap-2 pt-0.5 min-h-[32px]">
+              <span id="aiActiveRefPlaceholder" class="text-[11px] text-slate-400 italic">Nessun riferimento selezionato (l'IA inventerà la figura da zero).</span>
+            </div>
+
+            <!-- Carosello simboli già presenti nella lezione corrente -->
+            <div id="aiLessonRefSection" class="pt-2 border-t border-indigo-100/60">
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Personaggi e simboli della lezione corrente:</span>
+                <span class="text-[10px] text-indigo-600 font-medium">Clicca per aggiungere/togliere</span>
+              </div>
+              <div id="aiLessonTokensCarousel" class="flex items-center gap-2 overflow-x-auto pb-1 max-w-full">
+                <!-- Riempito dinamicamente all'apertura -->
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="space-y-2">
-          <label for="inputAiPictogramPrompt" class="block text-xs font-bold text-slate-700">Descrizione del Simbolo desiderato:</label>
-          <div class="flex flex-col sm:flex-row gap-2">
-            <input type="text" id="inputAiPictogramPrompt" class="flex-1 px-3 py-2.5 border border-slate-300 rounded-xl text-sm text-slate-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Es: regina travestita con mantello nero e mela..." />
-            <button id="btnGenerateAiPictogram" type="button" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl shadow-sm transition flex items-center justify-center gap-1.5 whitespace-nowrap">
-              <span>✨ Genera con IA</span>
-            </button>
+          <div class="space-y-2">
+            <label for="inputAiPictogramPrompt" class="block text-xs font-bold text-slate-700">Descrizione del Simbolo desiderato:</label>
+            <div class="flex flex-col sm:flex-row gap-2">
+              <input type="text" id="inputAiPictogramPrompt" class="flex-1 px-3 py-2.5 border border-slate-300 rounded-xl text-sm text-slate-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Es: regina travestita con mantello nero e mela..." />
+              <button id="btnGenerateAiPictogram" type="button" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl shadow-sm transition flex items-center justify-center gap-1.5 whitespace-nowrap">
+                <span>✨ Genera con IA</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Anteprima del simbolo IA generato -->
+          <div id="aiPictogramPreviewArea" class="border border-dashed border-slate-200 rounded-2xl p-4 bg-slate-50 flex flex-col items-center justify-center min-h-[140px] text-center">
+            <p class="text-xs text-slate-400">Nessun simbolo IA generato al momento. Scrivi la descrizione sopra e premi "Genera con IA".</p>
           </div>
         </div>
 
-        <!-- Anteprima del simbolo IA generato -->
-        <div id="aiPictogramPreviewArea" class="border border-dashed border-slate-200 rounded-2xl p-4 bg-slate-50 flex flex-col items-center justify-center min-h-[140px] text-center">
-          <p class="text-xs text-slate-400">Nessun simbolo IA generato al momento. Scrivi la descrizione sopra e premi "Genera con IA".</p>
-        </div>
       </div>
-
     </div>
   </div>
 
