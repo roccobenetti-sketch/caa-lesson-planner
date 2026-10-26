@@ -54,7 +54,13 @@ class CAAApp {
       btnGenerate.addEventListener('click', () => this.handleGenerate());
     }
 
-    // Pulsante Stampa / PDF con pre-caricamento e rasterizzazione garantita di tutte le immagini
+    // Pulsante Download PDF Leggero (< 500 KB) Anti-Blocco Stampante
+    const btnDownloadLightPdf = document.getElementById('btnDownloadLightPdf');
+    if (btnDownloadLightPdf) {
+      btnDownloadLightPdf.addEventListener('click', () => this.handleDownloadLightPdf());
+    }
+
+    // Pulsante Stampa Rapida Browser
     const btnPrint = document.getElementById('btnPrint');
     if (btnPrint) {
       btnPrint.addEventListener('click', () => this.handlePrint());
@@ -1157,6 +1163,55 @@ class CAAApp {
 
     token.displayWord = cleanWord;
     LessonRenderer.adjustAllTokenLabels(document.getElementById('printableArea'));
+  }
+
+  /**
+   * Scarica il file PDF generato dal motore nativo compatto (< 500 KB).
+   * Ideale per stampanti HP e dispositivi con memoria buffer ridotta.
+   */
+  async handleDownloadLightPdf() {
+    if (!LessonRenderer.currentLesson) {
+      this.showToast('Nessun progetto da esportare in PDF.', 'error');
+      return;
+    }
+
+    this.setLoadingState(true, 'Creazione PDF leggero (< 500 KB) in corso...');
+    try {
+      const resp = await fetch('/api/export-pdf', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(LessonRenderer.currentLesson)
+      });
+
+      if (!resp.ok) {
+        const err = await resp.json().catch(() => ({}));
+        throw new Error(err.error || `HTTP ${resp.status}`);
+      }
+
+      const blob = await resp.blob();
+      const titleSlug = (LessonRenderer.currentLesson.title || 'lezione_caa')
+        .toLowerCase()
+        .replace(/[^a-z0-9]/g, '_')
+        .replace(/_+/g, '_')
+        .slice(0, 30);
+      
+      const downloadUrl = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = downloadUrl;
+      a.download = `${titleSlug}_leggero.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(downloadUrl);
+
+      const sizeKb = Math.round(blob.size / 1024);
+      this.showToast(`PDF leggero scaricato (${sizeKb} KB)! Pronto per la stampante HP.`);
+    } catch (err) {
+      console.error('Errore download PDF leggero:', err);
+      this.showToast(`Errore PDF: ${err.message}`, 'error');
+    } finally {
+      this.setLoadingState(false);
+    }
   }
 
   /**

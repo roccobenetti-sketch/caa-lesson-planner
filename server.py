@@ -13,6 +13,7 @@ import time
 import urllib.request
 import urllib.error
 import urllib.parse
+import sys
 from pathlib import Path
 
 # Percorso base del progetto
@@ -20,6 +21,15 @@ BASE_DIR = Path(__file__).resolve().parent
 PUBLIC_DIR = BASE_DIR / "public"
 PROJECTS_DIR = BASE_DIR / "saved_projects"
 ENV_FILE = BASE_DIR / ".env"
+
+if str(BASE_DIR) not in sys.path:
+    sys.path.insert(0, str(BASE_DIR))
+
+try:
+    import pdf_engine
+except Exception as _pdf_err:
+    print("Avviso caricamento pdf_engine:", _pdf_err)
+    pdf_engine = None
 
 # Caricamento variabili d'ambiente da file .env semplice
 def load_env_variables() -> dict[str, str]:
@@ -122,6 +132,34 @@ class CAARequestHandler(http.server.SimpleHTTPRequestHandler):
                 self.wfile.write(json.dumps({"error": f"Errore recupero modelli da Google: {str(e)}"}).encode("utf-8"))
                 return
 
+        if parsed_url.path == "/api/export-pdf":
+            query_params = urllib.parse.parse_qs(parsed_url.query)
+            project_id = query_params.get("id", [None])[0]
+            if project_id and pdf_engine:
+                safe_id = "".join(c for c in project_id if c.isalnum() or c in ("-", "_"))
+                target_file = PROJECTS_DIR / f"{safe_id}.json"
+                if target_file.exists():
+                    try:
+                        with open(target_file, "r", encoding="utf-8") as f:
+                            pdata = json.load(f)
+                        tmp_pdf = BASE_DIR / f"temp_{safe_id}.pdf"
+                        pdf_engine.generate_lesson_pdf(pdata, tmp_pdf)
+                        with open(tmp_pdf, "rb") as pf:
+                            pdf_bytes = pf.read()
+                        tmp_pdf.unlink(missing_ok=True)
+                        self.send_response(200)
+                        self.send_header("Content-Type", "application/pdf")
+                        self.send_header("Content-Disposition", f'attachment; filename="{safe_id}_leggero.pdf"')
+                        self.end_headers()
+                        self.wfile.write(pdf_bytes)
+                        return
+                    except Exception as pe:
+                        self.send_response(500)
+                        self.send_header("Content-Type", "application/json; charset=utf-8")
+                        self.end_headers()
+                        self.wfile.write(json.dumps({"error": f"Errore generazione PDF: {str(pe)}"}).encode("utf-8"))
+                        return
+
         if parsed_url.path == "/api/projects":
             query_params = urllib.parse.parse_qs(parsed_url.query)
             project_id = query_params.get("id", [None])[0]
@@ -221,6 +259,45 @@ class CAARequestHandler(http.server.SimpleHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(json.dumps({"success": True, "id": safe_id, "project": payload}).encode("utf-8"))
             return
+
+        if self.path == "/api/export-pdf":
+            content_length = int(self.headers.get("Content-Length", 0))
+            request_body = self.rfile.read(content_length)
+            try:
+                payload = json.loads(request_body.decode("utf-8"))
+            except Exception as e:
+                self.send_response(400)
+                self.send_header("Content-Type", "application/json; charset=utf-8")
+                self.end_headers()
+                self.wfile.write(json.dumps({"error": "JSON non valido"}).encode("utf-8"))
+                return
+
+            if not pdf_engine:
+                self.send_response(500)
+                self.send_header("Content-Type", "application/json; charset=utf-8")
+                self.end_headers()
+                self.wfile.write(json.dumps({"error": "Modulo pdf_engine non disponibile"}).encode("utf-8"))
+                return
+
+            try:
+                title_slug = "".join(c for c in payload.get("title", "scheda_caa").lower() if c.isalnum() or c == "_")[:25] or "lezione_caa"
+                tmp_pdf = BASE_DIR / f"temp_{int(time.time()*1000)}.pdf"
+                pdf_engine.generate_lesson_pdf(payload, tmp_pdf)
+                with open(tmp_pdf, "rb") as pf:
+                    pdf_bytes = pf.read()
+                tmp_pdf.unlink(missing_ok=True)
+                self.send_response(200)
+                self.send_header("Content-Type", "application/pdf")
+                self.send_header("Content-Disposition", f'attachment; filename="{title_slug}_leggero.pdf"')
+                self.end_headers()
+                self.wfile.write(pdf_bytes)
+                return
+            except Exception as pe:
+                self.send_response(500)
+                self.send_header("Content-Type", "application/json; charset=utf-8")
+                self.end_headers()
+                self.wfile.write(json.dumps({"error": f"Errore generazione PDF: {str(pe)}"}).encode("utf-8"))
+                return
 
         if self.path == "/api/generate":
             content_length = int(self.headers.get("Content-Length", 0))
