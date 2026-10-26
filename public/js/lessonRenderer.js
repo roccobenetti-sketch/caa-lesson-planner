@@ -57,11 +57,15 @@ export const LessonRenderer = {
     this.currentLesson = JSON.parse(JSON.stringify(lessonData));
     const cards = this.currentLesson.cards || [];
     
-    // Normalizzazione preventiva dei token
+    // Normalizzazione preventiva dei token (conversione garantita in Stampatello Maiuscolo per la CAA)
     cards.forEach(card => {
       card.tokens = (card.tokens || []).map(t => {
         if (typeof t === 'string') {
-          return { displayWord: t, searchTerm: t, category: 'misc' };
+          const upper = t.toLocaleUpperCase('it-IT');
+          return { displayWord: upper, searchTerm: t, category: 'misc' };
+        }
+        if (t && t.displayWord) {
+          t.displayWord = t.displayWord.toLocaleUpperCase('it-IT');
         }
         return t;
       });
@@ -70,7 +74,11 @@ export const LessonRenderer = {
     if (this.currentLesson.moral?.tokens) {
       this.currentLesson.moral.tokens = (this.currentLesson.moral.tokens || []).map(t => {
         if (typeof t === 'string') {
-          return { displayWord: t, searchTerm: t, category: 'misc' };
+          const upper = t.toLocaleUpperCase('it-IT');
+          return { displayWord: upper, searchTerm: t, category: 'misc' };
+        }
+        if (t && t.displayWord) {
+          t.displayWord = t.displayWord.toLocaleUpperCase('it-IT');
         }
         return t;
       });
@@ -562,8 +570,12 @@ export const LessonRenderer = {
   renderTokenCard(rawToken, cardRef, tokenIndex) {
     if (!rawToken) return '';
     const token = typeof rawToken === 'string'
-      ? { displayWord: rawToken, searchTerm: rawToken, category: 'misc' }
+      ? { displayWord: rawToken.toLocaleUpperCase('it-IT'), searchTerm: rawToken, category: 'misc' }
       : rawToken;
+
+    if (token.displayWord) {
+      token.displayWord = String(token.displayWord).toLocaleUpperCase('it-IT');
+    }
 
     const borderClass = this.getCategoryBorderClass(token.category);
     const imgUrl = (token.imageUrl && typeof token.imageUrl === 'string' && token.imageUrl.length > 5)

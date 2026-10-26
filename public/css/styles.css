@@ -41,10 +41,10 @@ body {
   border-color: #334155 !important;
 }
 
-/* Modalità maiuscolo per primi lettori */
-.uppercase-mode .caa-text {
+/* Standard CAA: Testo e parole sempre in Stampatello Maiuscolo ad alta leggibilità */
+.caa-word-label, .caa-text {
   text-transform: uppercase !important;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
 }
 
 /* Etichetta testuale CAA con ridimensionamento automatico dinamico (MAI troncata con '..') */

@@ -264,6 +264,31 @@ class CAAApp {
       });
     }
 
+    // Auto-conversione continua in Stampatello Maiuscolo (inclusi accenti È, Ò, À, Ù, É, Ì)
+    document.addEventListener('input', (e) => {
+      const target = e.target;
+      if (!target || !target.value) return;
+
+      const isCaaInput = target.id && (
+        target.id.startsWith('inputPhraseCard_') ||
+        target.id === 'inputPhraseMoral' ||
+        target.id === 'inputNewRowPhrase' ||
+        target.id === 'inputAiPictogramPrompt'
+      );
+
+      if (isCaaInput) {
+        const start = target.selectionStart;
+        const end = target.selectionEnd;
+        const upper = target.value.toLocaleUpperCase('it-IT');
+        if (target.value !== upper) {
+          target.value = upper;
+          if (start !== null && end !== null) {
+            target.setSelectionRange(start, end);
+          }
+        }
+      }
+    });
+
     // Ricerca istantanea progetti
     const inputProjectSearch = document.getElementById('inputProjectSearch');
     if (inputProjectSearch) {
@@ -610,7 +635,7 @@ class CAAApp {
    * Modifica direttamente la parola visualizzata sopra una tessera CAA.
    */
   updateTokenWord(cardRef, tokenIndex, newWord) {
-    const cleanWord = (newWord || '').trim();
+    const cleanWord = (newWord || '').trim().toLocaleUpperCase('it-IT');
     if (!cleanWord) return;
 
     let token = null;
@@ -983,15 +1008,17 @@ class CAAApp {
 
     const word = prompt('Inserisci la parola da aggiungere:');
     if (!word || !word.trim()) return;
+    const upperWord = word.trim().toLocaleUpperCase('it-IT');
 
-    this.setLoadingState(true, `Aggiunta del simbolo "${word}"...`);
+    this.setLoadingState(true, `Aggiunta del simbolo "${upperWord}"...`);
     try {
       const tokens = await GeminiService.convertSentenceToTokens(word.trim());
-      const token = tokens[0] || { displayWord: word.trim(), searchTerm: word.trim(), category: 'noun' };
+      const token = tokens[0] || { displayWord: upperWord, searchTerm: word.trim(), category: 'noun' };
+      token.displayWord = (token.displayWord || upperWord).toLocaleUpperCase('it-IT');
       await LessonRenderer.populateToken(token);
       targetTokens.push(token);
       LessonRenderer.render(document.getElementById('printableArea'), LessonRenderer.currentLesson);
-      this.showToast(`Parola "${word}" aggiunta!`);
+      this.showToast(`Parola "${upperWord}" aggiunta!`);
     } catch (e) {
       this.showToast(`Errore: ${e.message}`, 'error');
     } finally {
