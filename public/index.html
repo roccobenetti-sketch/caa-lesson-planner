@@ -607,15 +607,27 @@
     <div class="bg-white rounded-2xl max-w-3xl w-full p-6 shadow-2xl border border-slate-200 flex flex-col max-h-[90vh]">
       
       <!-- Intestazione Modale -->
-      <div class="flex items-center justify-between pb-4 border-b border-slate-200">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-200">
         <div>
           <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
-            <span>📁 Archivio Progetti CAA</span>
+            <span>📁 Archivio Percorsi CAA</span>
             <span id="projectsModalCountBadge" class="text-xs px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-800 font-bold">...</span>
           </h3>
-          <p class="text-xs text-slate-500 mt-0.5">Richiama un progetto a video, modificalo, stampalo o scaricalo</p>
+          <p class="text-xs text-slate-500 mt-0.5">Gestisci i tuoi progetti personali e scopri i percorsi didattici condivisi dai colleghi</p>
         </div>
         <button id="btnCloseProjectsModal" class="text-slate-400 hover:text-slate-600 p-1.5 rounded-lg text-lg">✕</button>
+      </div>
+
+      <!-- Tab di Navigazione: Personali vs Condivisi -->
+      <div class="flex items-center gap-2 border-b border-slate-200 pt-3 pb-2">
+        <button id="tabMyProjects" type="button" class="tab-projects-btn px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 bg-blue-50 text-blue-700 border border-blue-200 shadow-sm" data-tab="mine">
+          <span>👤 I Miei Percorsi</span>
+          <span id="badgeMyProjectsCount" class="px-2 py-0.5 rounded-full text-[10px] bg-blue-200 text-blue-900 font-extrabold">0</span>
+        </button>
+        <button id="tabSharedProjects" type="button" class="tab-projects-btn px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 bg-slate-50 text-slate-600 border border-slate-200 hover:bg-slate-100" data-tab="shared">
+          <span>🌐 Condivisi dai Colleghi</span>
+          <span id="badgeSharedProjectsCount" class="px-2 py-0.5 rounded-full text-[10px] bg-amber-100 text-amber-800 font-extrabold">0</span>
+        </button>
       </div>
 
       <!-- Barra Ricerca & Filtri -->
@@ -805,6 +817,6 @@
   <div id="toastNotification" class="no-print fixed bottom-4 right-4 z-50 px-4 py-3 rounded-xl shadow-lg text-sm font-medium hidden opacity-0 transition-opacity"></div>
 
   <!-- Script Modulare dell'Applicazione -->
-  <script type="module" src="./js/app.js?v=2.5.0"></script>
+  <script type="module" src="./js/app.js?v=2.6.0"></script>
 </body>
 </html>

@@ -87,10 +87,14 @@ export default {
             return jsonResponse({ error: 'Progetto o ID mancante' }, 400);
           }
 
-          // 1. Salva il documento completo
+          const isShared = Boolean(project.isShared);
+          project.isShared = isShared;
+          project.authorUser = targetUser;
+
+          // 1. Salva il documento completo dell'utente
           await env.CAA_KV.put(`proj:${targetUser}:${project.id}`, JSON.stringify(project));
 
-          // 2. Aggiorna l'indice riassuntivo
+          // 2. Aggiorna l'indice riassuntivo dell'utente
           const rawIndex = await env.CAA_KV.get(`index:proj:${targetUser}`);
           let index = rawIndex ? JSON.parse(rawIndex) : [];
           index = index.filter(p => p.id !== project.id);
@@ -102,12 +106,41 @@ export default {
             layoutType: project.layoutType || 'routine',
             cardCount: (project.cards || []).length,
             hasMoral: Boolean(project.moral),
+            isShared: isShared,
+            authorUser: targetUser,
             createdAt: project.createdAt || new Date().toISOString(),
             updatedAt: project.updatedAt || new Date().toISOString()
           });
 
           await env.CAA_KV.put(`index:proj:${targetUser}`, JSON.stringify(index));
-          return jsonResponse({ success: true, id: project.id, savedAt: new Date().toISOString() });
+
+          // 3. Gestisci indice globale Progetti Condivisi
+          const rawShared = await env.CAA_KV.get('index:shared_projects');
+          let sharedIndex = rawShared ? JSON.parse(rawShared) : [];
+          sharedIndex = sharedIndex.filter(p => p.id !== project.id);
+
+          if (isShared) {
+            sharedIndex.unshift({
+              id: project.id,
+              title: project.title,
+              targetGrade: project.targetGrade || 'infanzia',
+              primaryClass: project.primaryClass || '',
+              layoutType: project.layoutType || 'routine',
+              cardCount: (project.cards || []).length,
+              hasMoral: Boolean(project.moral),
+              isShared: true,
+              authorUser: targetUser,
+              authorName: body.authorName || targetUser,
+              createdAt: project.createdAt || new Date().toISOString(),
+              updatedAt: project.updatedAt || new Date().toISOString()
+            });
+            await env.CAA_KV.put(`shared_proj:${project.id}`, JSON.stringify(project));
+          } else {
+            await env.CAA_KV.delete(`shared_proj:${project.id}`);
+          }
+          await env.CAA_KV.put('index:shared_projects', JSON.stringify(sharedIndex));
+
+          return jsonResponse({ success: true, id: project.id, isShared, savedAt: new Date().toISOString() });
         }
 
         if (request.method === 'DELETE') {
@@ -121,7 +154,89 @@ export default {
             index = index.filter(p => p.id !== projId);
             await env.CAA_KV.put(`index:proj:${user}`, JSON.stringify(index));
           }
+
+          // Rimuovi anche dai condivisi se presente
+          await env.CAA_KV.delete(`shared_proj:${projId}`);
+          const rawShared = await env.CAA_KV.get('index:shared_projects');
+          if (rawShared) {
+            let sharedIndex = JSON.parse(rawShared);
+            sharedIndex = sharedIndex.filter(p => p.id !== projId);
+            await env.CAA_KV.put('index:shared_projects', JSON.stringify(sharedIndex));
+          }
+
           return jsonResponse({ success: true, deletedId: projId });
+        }
+      }
+
+      // --- TOGGLE CONDIVISIONE SINGOLO PROGETTO ---
+      if (pathname === '/api/sync/projects/share-toggle' && request.method === 'POST') {
+        const body = await request.json();
+        const user = (body.user || 'rocco').toLowerCase().trim();
+        const projId = body.id || body.projectId;
+        const isShared = Boolean(body.isShared);
+
+        if (!projId) return jsonResponse({ error: 'ID progetto mancante' }, 400);
+
+        const raw = await env.CAA_KV.get(`proj:${user}:${projId}`);
+        if (!raw) return jsonResponse({ error: 'Progetto non trovato' }, 404);
+
+        const proj = JSON.parse(raw);
+        proj.isShared = isShared;
+        proj.updatedAt = new Date().toISOString();
+        await env.CAA_KV.put(`proj:${user}:${projId}`, JSON.stringify(proj));
+
+        // Aggiorna indice utente
+        const rawIndex = await env.CAA_KV.get(`index:proj:${user}`);
+        if (rawIndex) {
+          let index = JSON.parse(rawIndex);
+          const target = index.find(p => p.id === projId);
+          if (target) {
+            target.isShared = isShared;
+            target.updatedAt = proj.updatedAt;
+            await env.CAA_KV.put(`index:proj:${user}`, JSON.stringify(index));
+          }
+        }
+
+        // Aggiorna indice globale condivisi
+        const rawShared = await env.CAA_KV.get('index:shared_projects');
+        let sharedIndex = rawShared ? JSON.parse(rawShared) : [];
+        sharedIndex = sharedIndex.filter(p => p.id !== projId);
+
+        if (isShared) {
+          sharedIndex.unshift({
+            id: proj.id,
+            title: proj.title,
+            targetGrade: proj.targetGrade || 'infanzia',
+            primaryClass: proj.primaryClass || '',
+            layoutType: proj.layoutType || 'routine',
+            cardCount: (proj.cards || []).length,
+            hasMoral: Boolean(proj.moral),
+            isShared: true,
+            authorUser: user,
+            authorName: body.authorName || user,
+            createdAt: proj.createdAt || proj.updatedAt,
+            updatedAt: proj.updatedAt
+          });
+          await env.CAA_KV.put(`shared_proj:${proj.id}`, JSON.stringify(proj));
+        } else {
+          await env.CAA_KV.delete(`shared_proj:${proj.id}`);
+        }
+        await env.CAA_KV.put('index:shared_projects', JSON.stringify(sharedIndex));
+
+        return jsonResponse({ success: true, projectId: projId, isShared });
+      }
+
+      // --- FEED PROGETTI CONDIVISI DA TUTTI GLI UTENTI ---
+      if (pathname === '/api/sync/shared-projects' && request.method === 'GET') {
+        const projId = url.searchParams.get('id');
+        if (projId) {
+          const raw = await env.CAA_KV.get(`shared_proj:${projId}`);
+          if (!raw) return jsonResponse({ error: 'Progetto condiviso non trovato' }, 404);
+          return jsonResponse({ success: true, project: JSON.parse(raw) });
+        } else {
+          const rawShared = await env.CAA_KV.get('index:shared_projects');
+          const sharedList = rawShared ? JSON.parse(rawShared) : [];
+          return jsonResponse({ success: true, sharedProjects: sharedList });
         }
       }
 

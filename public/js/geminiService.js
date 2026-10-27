@@ -9,7 +9,7 @@
  * - Generazione vettoriale SVG garantita per termini non presenti nei cataloghi.
  */
 
-import { ConfigManager } from './config.js?v=2.5.0';
+import { ConfigManager } from './config.js?v=2.6.0';
 
 export const GeminiService = {
   svgFallbackCache: new Map(),

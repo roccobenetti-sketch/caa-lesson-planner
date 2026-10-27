@@ -2,21 +2,23 @@
  * Controller principale dell'applicazione CAA Lesson Planner.
  */
 
-import { ConfigManager } from './config.js?v=2.5.0';
-import { GeminiService } from './geminiService.js?v=2.5.0';
-import { ArasaacService } from './arasaacService.js?v=2.5.0';
-import { LessonRenderer } from './lessonRenderer.js?v=2.5.0';
-import { ProjectManager } from './projectManager.js?v=2.5.0';
-import { CustomPictogramsManager } from './customPictogramsManager.js?v=2.5.0';
-import { AuthManager } from './authManager.js?v=2.5.0';
-import { BackupManager } from './backupManager.js?v=2.5.0';
-import { PdfClientEngine } from './pdfClientEngine.js?v=2.5.0';
+import { ConfigManager } from './config.js?v=2.6.0';
+import { GeminiService } from './geminiService.js?v=2.6.0';
+import { ArasaacService } from './arasaacService.js?v=2.6.0';
+import { LessonRenderer } from './lessonRenderer.js?v=2.6.0';
+import { ProjectManager } from './projectManager.js?v=2.6.0';
+import { CustomPictogramsManager } from './customPictogramsManager.js?v=2.6.0';
+import { AuthManager } from './authManager.js?v=2.6.0';
+import { BackupManager } from './backupManager.js?v=2.6.0';
+import { PdfClientEngine } from './pdfClientEngine.js?v=2.6.0';
 
 class CAAApp {
   constructor() {
     this.selectedCardIndex = null;
     this.selectedTokenIndex = null;
     this.cachedProjects = [];
+    this.cachedSharedProjects = [];
+    this.currentProjectTab = 'mine'; // 'mine' | 'shared'
     this.currentProjectFilter = 'all';
     this.lastSavedSnapshot = null;
     this.aiReferenceImages = [];
@@ -339,6 +341,15 @@ class CAAApp {
     const btnCloseProjectsModalBottom = document.getElementById('btnCloseProjectsModalBottom');
     if (btnCloseProjectsModalBottom) {
       btnCloseProjectsModalBottom.addEventListener('click', () => this.closeProjectsModal());
+    }
+
+    const tabMyProjects = document.getElementById('tabMyProjects');
+    const tabSharedProjects = document.getElementById('tabSharedProjects');
+    if (tabMyProjects) {
+      tabMyProjects.addEventListener('click', () => this.switchProjectsTab('mine'));
+    }
+    if (tabSharedProjects) {
+      tabSharedProjects.addEventListener('click', () => this.switchProjectsTab('shared'));
     }
 
     const btnSaveCurrentProject = document.getElementById('btnSaveCurrentProject');
@@ -1812,20 +1823,56 @@ class CAAApp {
   }
 
   /**
-   * Aggiorna il contatore dei progetti salvati nell'header.
+   * Aggiorna i contatori dei progetti personali e condivisi.
    */
   async refreshProjectsCount() {
     try {
-      const projects = await ProjectManager.listProjects();
-      this.cachedProjects = projects;
-      const count = projects.length;
+      const [myProjects, sharedProjects] = await Promise.all([
+        ProjectManager.listProjects(),
+        ProjectManager.fetchSharedProjects()
+      ]);
+
+      this.cachedProjects = myProjects || [];
+      this.cachedSharedProjects = sharedProjects || [];
+
+      const myCount = this.cachedProjects.length;
+      const sharedCount = this.cachedSharedProjects.length;
+
       const headerBadge = document.getElementById('projectsCountBadge');
       const modalBadge = document.getElementById('projectsModalCountBadge');
-      if (headerBadge) headerBadge.textContent = String(count);
-      if (modalBadge) modalBadge.textContent = `${count} ${count === 1 ? 'progetto' : 'progetti'}`;
+      const badgeMy = document.getElementById('badgeMyProjectsCount');
+      const badgeShared = document.getElementById('badgeSharedProjectsCount');
+
+      if (headerBadge) headerBadge.textContent = String(myCount);
+      if (modalBadge) modalBadge.textContent = `${myCount} personali • ${sharedCount} condivisi`;
+      if (badgeMy) badgeMy.textContent = String(myCount);
+      if (badgeShared) badgeShared.textContent = String(sharedCount);
     } catch (e) {
       console.warn('Errore refreshProjectsCount:', e);
     }
+  }
+
+  /**
+   * Passa tra la scheda dei progetti personali e quella dei progetti condivisi.
+   */
+  switchProjectsTab(tab = 'mine') {
+    this.currentProjectTab = tab;
+    const tabMy = document.getElementById('tabMyProjects');
+    const tabShared = document.getElementById('tabSharedProjects');
+
+    if (tab === 'mine') {
+      tabMy?.classList.remove('bg-slate-50', 'text-slate-600', 'border-slate-200');
+      tabMy?.classList.add('bg-blue-50', 'text-blue-700', 'border-blue-200', 'shadow-sm');
+      tabShared?.classList.remove('bg-blue-50', 'text-blue-700', 'border-blue-200', 'shadow-sm');
+      tabShared?.classList.add('bg-slate-50', 'text-slate-600', 'border-slate-200');
+    } else {
+      tabShared?.classList.remove('bg-slate-50', 'text-slate-600', 'border-slate-200');
+      tabShared?.classList.add('bg-blue-50', 'text-blue-700', 'border-blue-200', 'shadow-sm');
+      tabMy?.classList.remove('bg-blue-50', 'text-blue-700', 'border-blue-200', 'shadow-sm');
+      tabMy?.classList.add('bg-slate-50', 'text-slate-600', 'border-slate-200');
+    }
+
+    this.applyProjectsFilter();
   }
 
   /**
@@ -1845,12 +1892,12 @@ class CAAApp {
 
     const container = document.getElementById('projectsListContainer');
     if (container) {
-      container.innerHTML = '<div class="py-12 text-center text-slate-500 text-sm">Caricamento archivio progetti...</div>';
+      container.innerHTML = '<div class="py-12 text-center text-slate-500 text-sm">Caricamento archivio progetti e condivisi...</div>';
     }
 
     try {
       await this.refreshProjectsCount();
-      this.applyProjectsFilter();
+      this.switchProjectsTab(this.currentProjectTab || 'mine');
     } catch (e) {
       if (container) {
         container.innerHTML = `<div class="py-8 text-center text-red-500 text-sm">Errore caricamento archivio: ${e.message}</div>`;
@@ -1873,7 +1920,11 @@ class CAAApp {
     const term = (searchInput?.value || '').toLowerCase().trim();
     const filter = this.currentProjectFilter || 'all';
 
-    let filtered = this.cachedProjects || [];
+    const sourceList = this.currentProjectTab === 'shared'
+      ? this.cachedSharedProjects
+      : this.cachedProjects;
+
+    let filtered = sourceList || [];
 
     if (filter !== 'all') {
       filtered = filtered.filter(p => (p.targetGrade || 'infanzia').toLowerCase() === filter);
@@ -1883,7 +1934,8 @@ class CAAApp {
       filtered = filtered.filter(p => {
         const titleMatch = (p.title || '').toLowerCase().includes(term);
         const subMatch = (p.subtitle || '').toLowerCase().includes(term);
-        return titleMatch || subMatch;
+        const authorMatch = (p.authorName || p.authorUser || '').toLowerCase().includes(term);
+        return titleMatch || subMatch || authorMatch;
       });
     }
 
@@ -1897,14 +1949,20 @@ class CAAApp {
     const container = document.getElementById('projectsListContainer');
     if (!container) return;
 
+    const isSharedTab = this.currentProjectTab === 'shared';
+
     if (!projects || projects.length === 0) {
       container.innerHTML = `
         <div class="py-12 text-center text-slate-400">
           <svg class="w-12 h-12 mx-auto mb-2 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path>
           </svg>
-          <p class="text-sm font-medium">Nessun progetto trovato per questa ricerca.</p>
-          <p class="text-xs text-slate-400 mt-1">Prova a cambiare i filtri o genera un nuovo percorso con l'IA.</p>
+          <p class="text-sm font-medium">
+            ${isSharedTab ? 'Nessun percorso condiviso trovato dai colleghi.' : 'Nessun progetto personale trovato per questa ricerca.'}
+          </p>
+          <p class="text-xs text-slate-400 mt-1">
+            ${isSharedTab ? 'Quando un altro docente condivide un percorso o quando attivi la spunta sui tuoi, apparirà qui!' : 'Crea un nuovo percorso con l\'IA o importa un file per iniziare.'}
+          </p>
         </div>
       `;
       return;
@@ -1927,7 +1985,53 @@ class CAAApp {
 
       const safeId = String(proj.id).replace(/'/g, "\\'");
       const safeTitle = (proj.title || '').replace(/'/g, "\\'");
+      const isShared = Boolean(proj.isShared);
 
+      if (isSharedTab) {
+        // --- CARD PROGETTO CONDIVISO DALLA COMMUNITY ---
+        return `
+          <div class="p-4 rounded-xl border border-amber-200 hover:border-amber-400 hover:shadow-md bg-amber-50/20 transition flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2 flex-wrap mb-1.5">
+                <span class="px-2.5 py-0.5 rounded-md text-[11px] font-bold bg-amber-100 text-amber-900 border border-amber-300 flex items-center gap-1">
+                  <span>👤 Autore:</span>
+                  <span class="font-extrabold">${proj.authorName || proj.authorUser || 'Docente'}</span>
+                </span>
+                <span class="px-2 py-0.5 rounded-md text-[11px] font-bold border ${gradeBadgeClass}">
+                  ${gradeBadgeText}
+                </span>
+                <span class="px-2 py-0.5 rounded-md text-[11px] font-medium bg-slate-100 text-slate-600 border border-slate-200">
+                  ${proj.cardCount || 0} passaggi
+                </span>
+                ${proj.hasMoral ? '<span class="px-2 py-0.5 rounded-md text-[11px] font-medium bg-amber-100 text-amber-800 border border-amber-200">✨ Morale</span>' : ''}
+              </div>
+
+              <h4 class="text-base font-bold text-slate-900 truncate">
+                ${proj.title || 'Senza Titolo'}
+              </h4>
+              ${proj.subtitle ? `<p class="text-xs text-slate-500 line-clamp-1 mt-0.5">${proj.subtitle}</p>` : ''}
+              
+              <p class="text-[11px] text-slate-400 mt-1 flex items-center gap-1">
+                <span>Condiviso: ${formattedDate}</span>
+              </p>
+            </div>
+
+            <div class="flex items-center gap-2 flex-shrink-0 self-end sm:self-center">
+              <button type="button" onclick="window.app.loadSharedProjectById('${safeId}')" class="px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-bold shadow-sm transition flex items-center gap-1.5" title="Visualizza questo percorso condiviso a video">
+                <span>📂 Apri a video</span>
+              </button>
+              <button type="button" onclick="window.app.cloneSharedProjectById('${safeId}')" class="px-3 py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 rounded-lg text-xs font-bold transition flex items-center gap-1" title="Crea una tua copia personale modificabile">
+                <span>📥 Salva tra i miei</span>
+              </button>
+              <button type="button" onclick="window.app.exportSharedProjectById('${safeId}')" class="p-2 border border-slate-200 hover:bg-slate-50 text-slate-600 rounded-lg text-xs transition" title="Scarica file JSON">
+                ⬇️
+              </button>
+            </div>
+          </div>
+        `;
+      }
+
+      // --- CARD PROGETTO PERSONALE CON SPUNTA CONDIVIDI ---
       return `
         <div class="p-4 rounded-xl border border-slate-200 hover:border-blue-400 hover:shadow-md bg-white transition flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div class="flex-1 min-w-0">
@@ -1946,9 +2050,17 @@ class CAAApp {
             </h4>
             ${proj.subtitle ? `<p class="text-xs text-slate-500 line-clamp-1 mt-0.5">${proj.subtitle}</p>` : ''}
             
-            <p class="text-[11px] text-slate-400 mt-1.5 flex items-center gap-1">
-              <span>Modificato: ${formattedDate}</span>
-            </p>
+            <div class="flex flex-wrap items-center gap-3 mt-2">
+              <p class="text-[11px] text-slate-400 flex items-center gap-1">
+                <span>Modificato: ${formattedDate}</span>
+              </p>
+
+              <!-- Spunta per decidere se condividere o meno il progetto personale -->
+              <label class="inline-flex items-center gap-1.5 cursor-pointer select-none px-2.5 py-0.5 rounded-lg border text-[11px] transition ${isShared ? 'bg-emerald-50 border-emerald-300 text-emerald-800 font-bold' : 'bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100'}" title="Spunta per rendere visibile questo progetto a tutti i colleghi nella sezione Condivisi">
+                <input type="checkbox" ${isShared ? 'checked' : ''} onchange="window.app.handleToggleProjectShare('${safeId}', this.checked)" class="w-3.5 h-3.5 text-emerald-600 rounded border-slate-300 focus:ring-emerald-500 cursor-pointer">
+                <span>${isShared ? '🌐 Condiviso con colleghi' : '🔒 Privato (non condiviso)'}</span>
+              </label>
+            </div>
           </div>
 
           <div class="flex items-center gap-2 flex-shrink-0 self-end sm:self-center">
@@ -1965,6 +2077,99 @@ class CAAApp {
         </div>
       `;
     }).join('');
+  }
+
+  /**
+   * Gestisce il cambio di stato della spunta di condivisione di un progetto.
+   */
+  async handleToggleProjectShare(projectId, isShared) {
+    try {
+      const ok = await ProjectManager.toggleShareProject(projectId, isShared);
+      if (ok) {
+        this.showToast(isShared ? '🌐 Progetto condiviso con tutti i colleghi!' : '🔒 Progetto reso privato.');
+      } else {
+        this.showToast('Aggiornato in locale (sincronizzazione cloud in corso)', 'info');
+      }
+      await this.refreshProjectsCount();
+      this.applyProjectsFilter();
+    } catch (e) {
+      this.showToast(`Errore condivisione: ${e.message}`, 'error');
+    }
+  }
+
+  /**
+   * Richiama e visualizza a video un progetto condiviso da un altro utente.
+   */
+  async loadSharedProjectById(projectId) {
+    if (!projectId) return;
+
+    this.setLoadingState(true, 'Caricamento progetto condiviso...');
+    try {
+      const fullLesson = await ProjectManager.getSharedProject(projectId);
+      
+      // Assicura che i token abbiano i pittogrammi
+      if (fullLesson && fullLesson.cards) {
+        for (const card of fullLesson.cards) {
+          if (card.tokens) {
+            for (const token of card.tokens) {
+              if (token.customImage && token.customImageDataUri) {
+                token.pictogramUrl = token.customImageDataUri;
+              } else if (!token.pictogramUrl && token.pictogramId && !String(token.pictogramId).startsWith('ai_')) {
+                token.pictogramUrl = ArasaacService.getPictogramUrl(token.pictogramId);
+              }
+            }
+          }
+        }
+      }
+
+      LessonRenderer.renderLesson(fullLesson);
+      this.currentLesson = fullLesson;
+      this.lastSavedSnapshot = this.takeProjectSnapshot(fullLesson);
+      this.markClean();
+
+      this.closeProjectsModal();
+      this.showToast(`Percorso condiviso "${fullLesson.title}" caricato a video!`);
+      document.getElementById('printableArea')?.scrollIntoView({ behavior: 'smooth' });
+    } catch (e) {
+      console.error(e);
+      this.showToast(`Errore caricamento: ${e.message}`, 'error');
+    } finally {
+      this.setLoadingState(false);
+    }
+  }
+
+  /**
+   * Clona un progetto condiviso salvandone una copia modificabile nei propri percorsi.
+   */
+  async cloneSharedProjectById(projectId) {
+    if (!projectId) return;
+
+    this.setLoadingState(true, 'Salvataggio copia nei tuoi percorsi...');
+    try {
+      const fullLesson = await ProjectManager.getSharedProject(projectId);
+      const res = await ProjectManager.cloneSharedProject(fullLesson);
+
+      await this.refreshProjectsCount();
+      this.switchProjectsTab('mine');
+      this.showToast(`Copia salvata con successo nei tuoi percorsi!`, 'success');
+    } catch (e) {
+      console.error(e);
+      this.showToast(`Errore copia: ${e.message}`, 'error');
+    } finally {
+      this.setLoadingState(false);
+    }
+  }
+
+  /**
+   * Esporta un progetto condiviso come JSON.
+   */
+  async exportSharedProjectById(projectId) {
+    try {
+      const project = await ProjectManager.getSharedProject(projectId);
+      ProjectManager.exportProjectFile(project);
+    } catch (e) {
+      this.showToast(`Errore download: ${e.message}`, 'error');
+    }
   }
 
   /**

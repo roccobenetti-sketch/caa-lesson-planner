@@ -3,11 +3,13 @@
  * dei percorsi didattici CAA associati al profilo utente.
  */
 
-import { AuthManager } from './authManager.js?v=2.5.0';
+import { AuthManager } from './authManager.js?v=2.6.0';
 
 export class ProjectManager {
   static LOCAL_STORAGE_KEY = 'caa_saved_projects_v1';
   static CLOUD_API = 'https://caa-api.roccobenetti.workers.dev/api/sync/projects';
+  static SHARED_CLOUD_API = 'https://caa-api.roccobenetti.workers.dev/api/sync/shared-projects';
+  static TOGGLE_SHARE_API = 'https://caa-api.roccobenetti.workers.dev/api/sync/projects/share-toggle';
 
   static getUsername() {
     return AuthManager.currentUser?.username?.toLowerCase() || 'rocco';
@@ -138,6 +140,8 @@ export class ProjectManager {
     try {
       localStorage.setItem(`caa_proj_full_${lessonData.id}`, JSON.stringify(lessonData));
 
+      const isShared = Boolean(lessonData.isShared);
+
       const summary = {
         id: lessonData.id,
         title: lessonData.title,
@@ -147,6 +151,7 @@ export class ProjectManager {
         layoutType: lessonData.layoutType || 'routine',
         cardCount: (lessonData.cards || []).length,
         hasMoral: Boolean(lessonData.moral),
+        isShared: isShared,
         createdAt: lessonData.createdAt,
         updatedAt: lessonData.updatedAt,
         authorUser: user
@@ -170,6 +175,7 @@ export class ProjectManager {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           user,
+          authorName: AuthManager.currentUser?.name || user,
           project: lessonData
         })
       });
@@ -186,6 +192,123 @@ export class ProjectManager {
       savedOnCloud,
       project: lessonData
     };
+  }
+
+  /**
+   * Modifica lo stato di condivisione pubblica di un progetto.
+   */
+  static async toggleShareProject(projectId, isShared) {
+    if (!projectId) return false;
+    const user = this.getUsername();
+    const isSharedBool = Boolean(isShared);
+
+    // 1. Aggiorna in locale il file completo
+    try {
+      const storedFull = localStorage.getItem(`caa_proj_full_${projectId}`);
+      if (storedFull) {
+        const parsed = JSON.parse(storedFull);
+        parsed.isShared = isSharedBool;
+        parsed.updatedAt = new Date().toISOString();
+        localStorage.setItem(`caa_proj_full_${projectId}`, JSON.stringify(parsed));
+      }
+
+      // Aggiorna l'indice locale
+      const storageKey = `${this.LOCAL_STORAGE_KEY}_${user}`;
+      const stored = localStorage.getItem(storageKey);
+      if (stored) {
+        let list = JSON.parse(stored);
+        const item = list.find(p => p.id === projectId);
+        if (item) {
+          item.isShared = isSharedBool;
+          item.updatedAt = new Date().toISOString();
+          localStorage.setItem(storageKey, JSON.stringify(list));
+        }
+      }
+    } catch (e) {
+      console.warn('Errore aggiornamento locale condivisione:', e);
+    }
+
+    // 2. Aggiorna sul Cloudflare Worker KV
+    try {
+      const resp = await fetch(this.TOGGLE_SHARE_API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          user,
+          projectId,
+          isShared: isSharedBool,
+          authorName: AuthManager.currentUser?.name || user
+        })
+      });
+      return resp.ok;
+    } catch (e) {
+      console.warn('Errore sincronizzazione cloud share-toggle:', e);
+      return false;
+    }
+  }
+
+  /**
+   * Recupera l'elenco di tutti i progetti condivisi dagli altri utenti/docenti.
+   */
+  static async fetchSharedProjects() {
+    try {
+      const resp = await fetch(this.SHARED_CLOUD_API, {
+        cache: 'no-store'
+      });
+      if (resp.ok) {
+        const data = await resp.json();
+        return data.sharedProjects || [];
+      }
+    } catch (e) {
+      console.warn('Errore recupero progetti condivisi dal Cloud:', e);
+    }
+    return [];
+  }
+
+  /**
+   * Recupera il file completo di un progetto condiviso da un altro utente.
+   */
+  static async getSharedProject(projectId) {
+    if (!projectId) throw new Error('ID progetto mancante');
+    
+    // Controlla prima la cache locale
+    try {
+      const cached = localStorage.getItem(`caa_shared_full_${projectId}`);
+      if (cached) return JSON.parse(cached);
+    } catch (e) {}
+
+    // Recupera dal cloud
+    const resp = await fetch(`${this.SHARED_CLOUD_API}?id=${encodeURIComponent(projectId)}`, {
+      cache: 'no-store'
+    });
+    if (!resp.ok) throw new Error('Impossibile caricare il progetto condiviso.');
+    const data = await resp.json();
+    if (!data.project) throw new Error('Progetto condiviso vuoto o non trovato.');
+
+    try {
+      localStorage.setItem(`caa_shared_full_${projectId}`, JSON.stringify(data.project));
+    } catch (e) {}
+
+    return data.project;
+  }
+
+  /**
+   * Clona un progetto condiviso creandone una copia personale nei propri progetti.
+   */
+  static async cloneSharedProject(sharedProject) {
+    if (!sharedProject) throw new Error('Progetto da clonare non valido');
+    const user = this.getUsername();
+    
+    const cloned = JSON.parse(JSON.stringify(sharedProject));
+    const rawTitle = cloned.title || 'Percorso Condiviso';
+    cloned.title = rawTitle.startsWith('Copia di ') ? rawTitle : `Copia di ${rawTitle}`;
+    cloned.id = `cloned_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
+    cloned.authorUser = user;
+    cloned.isShared = false; // La copia nasce come privata
+    cloned.createdAt = new Date().toISOString();
+    cloned.updatedAt = cloned.createdAt;
+
+    return await this.saveProject(cloned);
   }
 
   /**
