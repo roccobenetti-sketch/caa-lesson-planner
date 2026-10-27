@@ -11,6 +11,7 @@
 import { ArasaacService } from './arasaacService.js';
 import { ConfigManager } from './config.js';
 import { GeminiService } from './geminiService.js';
+import { StickerAlbumEngine } from './stickerAlbumEngine.js';
 
 export const LessonRenderer = {
   currentLesson: null,
@@ -85,7 +86,8 @@ export const LessonRenderer = {
     }
 
     const moralTokens = this.currentLesson.moral?.tokens || [];
-    let totalTokens = moralTokens.length;
+    const stickers = this.currentLesson.stickers || [];
+    let totalTokens = moralTokens.length + stickers.length;
     cards.forEach(card => {
       totalTokens += (card.tokens || []).length;
     });
@@ -108,6 +110,12 @@ export const LessonRenderer = {
 
     for (const token of moralTokens) {
       await process(token);
+    }
+
+    for (const stk of stickers) {
+      if (stk && stk.token) {
+        await process(stk.token);
+      }
     }
 
     return this.currentLesson;
@@ -162,6 +170,10 @@ export const LessonRenderer = {
   render(containerElement, lesson) {
     if (!lesson || !containerElement) return;
     this.currentLesson = lesson;
+
+    if (StickerAlbumEngine.isAlbum(lesson)) {
+      return StickerAlbumEngine.render(containerElement, lesson);
+    }
 
     const useUppercase = ConfigManager.state.useUppercase;
     const useColorBorders = ConfigManager.state.useColorBorders;
@@ -630,7 +642,9 @@ export const LessonRenderer = {
   updateTokenPictogram(cardRef, tokenIndex, pictogramId, imageUrl, isCustom = false) {
     if (!this.currentLesson) return;
     let token = null;
-    if (cardRef === 'moral') {
+    if (cardRef === 'sticker') {
+      token = this.currentLesson.stickers?.[tokenIndex]?.token;
+    } else if (cardRef === 'moral') {
       token = this.currentLesson.moral?.tokens?.[tokenIndex];
     } else {
       token = this.currentLesson.cards?.[cardRef]?.tokens?.[tokenIndex];

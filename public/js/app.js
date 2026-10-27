@@ -11,6 +11,7 @@ import { CustomPictogramsManager } from './customPictogramsManager.js';
 import { AuthManager } from './authManager.js';
 import { BackupManager } from './backupManager.js';
 import { PdfClientEngine } from './pdfClientEngine.js';
+import { StickerAlbumEngine } from './stickerAlbumEngine.js';
 
 class CAAApp {
   constructor() {
@@ -643,6 +644,12 @@ class CAAApp {
         detailLevel
       });
 
+      if (layoutType === 'album') {
+        lessonPlan.layoutType = 'album';
+        lessonPlan.isAlbum = true;
+        StickerAlbumEngine.ensureAlbumStructure(lessonPlan);
+      }
+
       this.setLoadingState(true, 'Ricerca simboli ARASAAC e creazione pittogrammi vettoriali (0%)...');
 
       const fullLesson = await LessonRenderer.prepareLesson(lessonPlan, (progress) => {
@@ -962,7 +969,9 @@ class CAAApp {
     this.selectedTokenIndex = tokenIndex;
 
     let token = null;
-    if (cardRef === 'moral') {
+    if (cardRef === 'sticker') {
+      token = LessonRenderer.currentLesson?.stickers?.[tokenIndex]?.token;
+    } else if (cardRef === 'moral') {
       token = LessonRenderer.currentLesson?.moral?.tokens?.[tokenIndex];
     } else {
       token = LessonRenderer.currentLesson?.cards?.[cardRef]?.tokens?.[tokenIndex];
@@ -1277,7 +1286,9 @@ class CAAApp {
 
     try {
       let category = 'misc';
-      if (this.selectedCardIndex === 'moral') {
+      if (this.selectedCardIndex === 'sticker') {
+        category = LessonRenderer.currentLesson?.stickers?.[this.selectedTokenIndex]?.token?.category || 'noun';
+      } else if (this.selectedCardIndex === 'moral') {
         category = LessonRenderer.currentLesson?.moral?.tokens?.[this.selectedTokenIndex]?.category || 'misc';
       } else if (this.selectedCardIndex !== null && this.selectedTokenIndex !== null) {
         category = LessonRenderer.currentLesson?.cards?.[this.selectedCardIndex]?.tokens?.[this.selectedTokenIndex]?.category || 'misc';
@@ -1464,7 +1475,9 @@ class CAAApp {
     if (!cleanWord) return;
 
     let token = null;
-    if (cardRef === 'moral') {
+    if (cardRef === 'sticker') {
+      token = LessonRenderer.currentLesson?.stickers?.[tokenIndex]?.token;
+    } else if (cardRef === 'moral') {
       token = LessonRenderer.currentLesson?.moral?.tokens?.[tokenIndex];
     } else {
       token = LessonRenderer.currentLesson?.cards?.[cardRef]?.tokens?.[tokenIndex];
@@ -2947,11 +2960,85 @@ class CAAApp {
       this.setLoadingState(false);
     }
   }
+
+  // =========================================================================
+  // METODI DEDICATI AD ALBUM DI FIGURINE & RACCOGLITORE A4
+  // =========================================================================
+
+  setStickerAlbumFormat(format) {
+    if (!LessonRenderer.currentLesson) return;
+    LessonRenderer.currentLesson.stickerFormat = format;
+    LessonRenderer.render(document.getElementById('printableArea'), LessonRenderer.currentLesson);
+  }
+
+  updateStickerLabel(index, newLabel) {
+    if (!LessonRenderer.currentLesson || !LessonRenderer.currentLesson.stickers) return;
+    const stk = LessonRenderer.currentLesson.stickers[index];
+    if (stk) {
+      stk.label = newLabel;
+      if (stk.token) {
+        stk.token.displayWord = newLabel.toLocaleUpperCase('it-IT');
+      }
+    }
+  }
+
+  async addStickerToAlbum() {
+    if (!LessonRenderer.currentLesson) return;
+    if (!Array.isArray(LessonRenderer.currentLesson.stickers)) {
+      LessonRenderer.currentLesson.stickers = [];
+    }
+
+    const word = prompt('Inserisci il nome o la parola della nuova figurina CAA:');
+    if (!word || !word.trim()) return;
+
+    const cleanWord = word.trim();
+    this.setLoadingState(true, `Ricerca simbolo per "${cleanWord}"...`);
+
+    try {
+      const token = {
+        displayWord: cleanWord.toLocaleUpperCase('it-IT'),
+        searchTerm: cleanWord.toLowerCase(),
+        category: 'noun'
+      };
+
+      await LessonRenderer.populateToken(token);
+
+      LessonRenderer.currentLesson.stickers.push({
+        id: `stk_${Date.now()}`,
+        label: cleanWord,
+        token: token
+      });
+
+      LessonRenderer.render(document.getElementById('printableArea'), LessonRenderer.currentLesson);
+      this.showToast(`Figurina "${cleanWord}" aggiunta! Raccoglitore aggiornato.`);
+    } catch (e) {
+      this.showToast(`Errore aggiunta: ${e.message}`, 'error');
+    } finally {
+      this.setLoadingState(false);
+    }
+  }
+
+  removeStickerFromAlbum(index) {
+    if (!LessonRenderer.currentLesson || !LessonRenderer.currentLesson.stickers) return;
+    LessonRenderer.currentLesson.stickers.splice(index, 1);
+    LessonRenderer.render(document.getElementById('printableArea'), LessonRenderer.currentLesson);
+    this.showToast(`Figurina #${index + 1} rimossa dal raccoglitore.`);
+  }
+
+  changeStickerImage(index) {
+    this.openPictogramSelector('sticker', index);
+  }
+
+  generateStickerWithAi(index) {
+    this.openPictogramSelector('sticker', index);
+    this.switchModalTab('ai');
+  }
 }
 
 // Inizializzazione globale
 window.CustomPictogramsManager = CustomPictogramsManager;
 window.ProjectManager = ProjectManager;
+window.StickerAlbumEngine = StickerAlbumEngine;
 window.app = new CAAApp();
 document.addEventListener('DOMContentLoaded', () => {
   window.app.init();

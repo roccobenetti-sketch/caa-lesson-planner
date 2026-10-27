@@ -124,6 +124,9 @@ NON DEVI FARE DI TESTA TUA, NON DEVI ACCORPARE PIÙ AZIONI INSIEME E NON DEVI SA
 2. SE L'UTENTE FORNISCE UN'IDEA GENERALE (senza specificare tutti i passaggi):
    - In modalità DETTAGLIATA: scompone autonomamente l'argomento in TUTTI i suoi micro-passaggi logici sequenziali (1..N passaggi, nessuno escluso).
    - In modalità SINTETICA: genera solo i punti cardine essenziali.
+${layoutType === 'album' ? `
+   - SE FORMATO ALBUM FIGURINE (layoutType = 'album'): genera una collezione di 6-12 tessere/figurine tematiche (cards) focalizzate su singoli oggetti, personaggi, azioni o concetti chiave (1 solo token CAA primario per figurina in "tokens" e nome figurina in "stepLabel").
+` : ''}
 
 3. REGOLE FORMATO SCHEDE CAA (FITZGERALD KEY):
    - Ogni scheda deve contenere poche parole chiare (3-5 parole e simboli).
