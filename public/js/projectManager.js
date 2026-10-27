@@ -3,7 +3,7 @@
  * dei percorsi didattici CAA associati al profilo utente.
  */
 
-import { AuthManager } from './authManager.js?v=2.7.0';
+import { AuthManager } from './authManager.js?v=2.7.1';
 
 export class ProjectManager {
   static LOCAL_STORAGE_KEY = 'caa_saved_projects_v1';
@@ -20,11 +20,28 @@ export class ProjectManager {
    */
   static async listProjects() {
     const user = this.getUsername();
+    const cleanUser = user.toLowerCase().trim();
+
+    // 0. Migrazione di sicurezza una tantum: isola la chiave legacy globale a favore di rocco
+    try {
+      const legacyGlobal = localStorage.getItem(this.LOCAL_STORAGE_KEY);
+      if (legacyGlobal) {
+        if (cleanUser === 'rocco') {
+          const roccoKey = `${this.LOCAL_STORAGE_KEY}_rocco`;
+          if (!localStorage.getItem(roccoKey)) {
+            localStorage.setItem(roccoKey, legacyGlobal);
+          }
+        }
+        // Rimuove tassativamente la chiave globale per impedire che altri utenti la leggano
+        localStorage.removeItem(this.LOCAL_STORAGE_KEY);
+      }
+    } catch (e) {}
+
     let cloudProjects = [];
 
-    // 1. Tentativo di sincronizzazione Cloud KV
+    // 1. Tentativo di sincronizzazione Cloud KV per l'utente specifico
     try {
-      const resp = await fetch(`${this.CLOUD_API}?user=${encodeURIComponent(user)}`, {
+      const resp = await fetch(`${this.CLOUD_API}?user=${encodeURIComponent(cleanUser)}`, {
         cache: 'no-store'
       });
       if (resp.ok) {
@@ -35,10 +52,10 @@ export class ProjectManager {
       console.warn('Sincronizzazione Cloud non raggiungibile (uso memoria locale):', e);
     }
 
-    // 2. Lettura progetti locali
+    // 2. Lettura progetti locali rigorosamente isolati per utente
     let localProjects = [];
     try {
-      const stored = localStorage.getItem(`${this.LOCAL_STORAGE_KEY}_${user}`) || localStorage.getItem(this.LOCAL_STORAGE_KEY);
+      const stored = localStorage.getItem(`${this.LOCAL_STORAGE_KEY}_${cleanUser}`);
       if (stored) {
         localProjects = JSON.parse(stored);
       }
@@ -46,7 +63,7 @@ export class ProjectManager {
       console.warn('Errore lettura localStorage progetti:', e);
     }
 
-    // 3. Unione e deduplicazione
+    // 3. Unione e deduplicazione con verifica rigorosa dell'autore
     const projectsMap = new Map();
     for (const p of localProjects) {
       if (p && p.id) projectsMap.set(p.id, p);
@@ -55,16 +72,24 @@ export class ProjectManager {
       if (p && p.id) projectsMap.set(p.id, p);
     }
 
-    const merged = Array.from(projectsMap.values());
+    const merged = Array.from(projectsMap.values()).filter(p => {
+      if (!p) return false;
+      const author = (p.authorUser || '').toLowerCase().trim();
+      if (cleanUser === 'rocco') {
+        return !author || author === 'rocco';
+      }
+      return author === cleanUser;
+    });
+
     merged.sort((a, b) => {
       const dateA = new Date(a.updatedAt || a.createdAt || 0).getTime();
       const dateB = new Date(b.updatedAt || b.createdAt || 0).getTime();
       return dateB - dateA;
     });
 
-    // Salva l'unione aggiornata in locale per garantire funzionamento offline istantaneo
+    // Salva l'unione aggiornata in locale isolata per l'utente
     try {
-      localStorage.setItem(`${this.LOCAL_STORAGE_KEY}_${user}`, JSON.stringify(merged));
+      localStorage.setItem(`${this.LOCAL_STORAGE_KEY}_${cleanUser}`, JSON.stringify(merged));
     } catch (e) {}
 
     return merged;

@@ -2,15 +2,15 @@
  * Controller principale dell'applicazione CAA Lesson Planner.
  */
 
-import { ConfigManager } from './config.js?v=2.7.0';
-import { GeminiService } from './geminiService.js?v=2.7.0';
-import { ArasaacService } from './arasaacService.js?v=2.7.0';
-import { LessonRenderer } from './lessonRenderer.js?v=2.7.0';
-import { ProjectManager } from './projectManager.js?v=2.7.0';
-import { CustomPictogramsManager } from './customPictogramsManager.js?v=2.7.0';
-import { AuthManager } from './authManager.js?v=2.7.0';
-import { BackupManager } from './backupManager.js?v=2.7.0';
-import { PdfClientEngine } from './pdfClientEngine.js?v=2.7.0';
+import { ConfigManager } from './config.js?v=2.7.1';
+import { GeminiService } from './geminiService.js?v=2.7.1';
+import { ArasaacService } from './arasaacService.js?v=2.7.1';
+import { LessonRenderer } from './lessonRenderer.js?v=2.7.1';
+import { ProjectManager } from './projectManager.js?v=2.7.1';
+import { CustomPictogramsManager } from './customPictogramsManager.js?v=2.7.1';
+import { AuthManager } from './authManager.js?v=2.7.1';
+import { BackupManager } from './backupManager.js?v=2.7.1';
+import { PdfClientEngine } from './pdfClientEngine.js?v=2.7.1';
 
 class CAAApp {
   constructor() {

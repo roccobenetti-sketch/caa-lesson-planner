@@ -3,7 +3,7 @@
  * Sincronizzazione automatica Cloud KV + Locale associata al profilo utente.
  */
 
-import { AuthManager } from './authManager.js?v=2.7.0';
+import { AuthManager } from './authManager.js?v=2.7.1';
 
 const STORAGE_KEY = 'caa_custom_pictograms';
 const CLOUD_API = 'https://caa-api.roccobenetti.workers.dev/api/sync/custom-pictograms';
@@ -19,8 +19,24 @@ export const CustomPictogramsManager = {
    */
   getAll() {
     const user = this.getUsername();
+    const cleanUser = user.toLowerCase().trim();
+
+    // Migrazione legacy una tantum per rocco
     try {
-      const data = localStorage.getItem(`${STORAGE_KEY}_${user}`) || localStorage.getItem(STORAGE_KEY);
+      const legacy = localStorage.getItem(STORAGE_KEY);
+      if (legacy) {
+        if (cleanUser === 'rocco') {
+          const roccoKey = `${STORAGE_KEY}_rocco`;
+          if (!localStorage.getItem(roccoKey)) {
+            localStorage.setItem(roccoKey, legacy);
+          }
+        }
+        localStorage.removeItem(STORAGE_KEY);
+      }
+    } catch (e) {}
+
+    try {
+      const data = localStorage.getItem(`${STORAGE_KEY}_${cleanUser}`);
       return data ? JSON.parse(data) : [];
     } catch (e) {
       console.error('Errore recupero simboli personalizzati:', e);
