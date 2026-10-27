@@ -2,15 +2,15 @@
  * Controller principale dell'applicazione CAA Lesson Planner.
  */
 
-import { ConfigManager } from './config.js?v=2.6.2';
-import { GeminiService } from './geminiService.js?v=2.6.2';
-import { ArasaacService } from './arasaacService.js?v=2.6.2';
-import { LessonRenderer } from './lessonRenderer.js?v=2.6.2';
-import { ProjectManager } from './projectManager.js?v=2.6.2';
-import { CustomPictogramsManager } from './customPictogramsManager.js?v=2.6.2';
-import { AuthManager } from './authManager.js?v=2.6.2';
-import { BackupManager } from './backupManager.js?v=2.6.2';
-import { PdfClientEngine } from './pdfClientEngine.js?v=2.6.2';
+import { ConfigManager } from './config.js?v=2.6.3';
+import { GeminiService } from './geminiService.js?v=2.6.3';
+import { ArasaacService } from './arasaacService.js?v=2.6.3';
+import { LessonRenderer } from './lessonRenderer.js?v=2.6.3';
+import { ProjectManager } from './projectManager.js?v=2.6.3';
+import { CustomPictogramsManager } from './customPictogramsManager.js?v=2.6.3';
+import { AuthManager } from './authManager.js?v=2.6.3';
+import { BackupManager } from './backupManager.js?v=2.6.3';
+import { PdfClientEngine } from './pdfClientEngine.js?v=2.6.3';
 
 class CAAApp {
   constructor() {
@@ -2118,7 +2118,6 @@ class CAAApp {
       document.getElementById('emptyState')?.classList.add('hidden');
 
       this.currentLesson = fullLesson;
-      this.lastSavedSnapshot = this.takeProjectSnapshot(fullLesson);
       this.markClean();
 
       this.closeProjectsModal();
@@ -2286,6 +2285,10 @@ class CAAApp {
     };
     reader.readAsText(file);
     event.target.value = '';
+  }
+
+  takeProjectSnapshot(lesson) {
+    return lesson ? JSON.stringify(lesson) : null;
   }
 
   /**
