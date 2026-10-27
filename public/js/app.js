@@ -2,15 +2,15 @@
  * Controller principale dell'applicazione CAA Lesson Planner.
  */
 
-import { ConfigManager } from './config.js?v=2.7.3';
-import { GeminiService } from './geminiService.js?v=2.7.3';
-import { ArasaacService } from './arasaacService.js?v=2.7.3';
-import { LessonRenderer } from './lessonRenderer.js?v=2.7.3';
-import { ProjectManager } from './projectManager.js?v=2.7.3';
-import { CustomPictogramsManager } from './customPictogramsManager.js?v=2.7.3';
-import { AuthManager } from './authManager.js?v=2.7.3';
-import { BackupManager } from './backupManager.js?v=2.7.3';
-import { PdfClientEngine } from './pdfClientEngine.js?v=2.7.3';
+import { ConfigManager } from './config.js?v=2.7.5';
+import { GeminiService } from './geminiService.js?v=2.7.5';
+import { ArasaacService } from './arasaacService.js?v=2.7.5';
+import { LessonRenderer } from './lessonRenderer.js?v=2.7.5';
+import { ProjectManager } from './projectManager.js?v=2.7.5';
+import { CustomPictogramsManager } from './customPictogramsManager.js?v=2.7.5';
+import { AuthManager } from './authManager.js?v=2.7.5';
+import { BackupManager } from './backupManager.js?v=2.7.5';
+import { PdfClientEngine } from './pdfClientEngine.js?v=2.7.5';
 
 class CAAApp {
   constructor() {
@@ -2752,30 +2752,52 @@ class CAAApp {
     }
   }
 
-  handleLoginSubmit() {
+  async handleLoginSubmit() {
     const userInput = document.getElementById('inputLoginUsername');
     const passInput = document.getElementById('inputLoginPassword');
     const errorBox = document.getElementById('loginErrorMessage');
+    const submitBtn = document.querySelector('#formLogin button[type="submit"]');
 
     const u = userInput ? userInput.value : '';
     const p = passInput ? passInput.value : '';
 
-    const res = AuthManager.login(u, p);
-    if (!res.success) {
-      if (errorBox) {
-        errorBox.textContent = res.message;
-        errorBox.classList.remove('hidden');
-      }
-      return;
+    if (errorBox) errorBox.classList.add('hidden');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Verifica in corso...';
     }
 
-    if (errorBox) errorBox.classList.add('hidden');
-    const loginModal = document.getElementById('loginModal');
-    if (loginModal) loginModal.classList.add('hidden');
+    try {
+      const res = await AuthManager.login(u, p);
+      if (!res.success) {
+        if (errorBox) {
+          errorBox.textContent = res.message;
+          errorBox.classList.remove('hidden');
+        }
+        return;
+      }
 
-    this.setupAuthUI();
-    this.updateConfigStatusUI();
-    this.showToast(`Benvenuto, ${res.user.name || res.user.username}!`);
+      if (errorBox) errorBox.classList.add('hidden');
+      const loginModal = document.getElementById('loginModal');
+      if (loginModal) loginModal.classList.add('hidden');
+
+      this.setupAuthUI();
+      this.updateConfigStatusUI();
+      await this.refreshProjectsCount();
+      this.refreshCustomPictosBadge();
+      this.refreshSharedPictosBadge().catch(() => {});
+      this.showToast(`Benvenuto, ${res.user.name || res.user.username}!`, 'success');
+    } catch (e) {
+      if (errorBox) {
+        errorBox.textContent = 'Errore durante l\'accesso: ' + e.message;
+        errorBox.classList.remove('hidden');
+      }
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Accedi alla Suite';
+      }
+    }
   }
 
   handleLogout() {

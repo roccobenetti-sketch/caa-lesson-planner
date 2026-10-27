@@ -365,11 +365,133 @@ export default {
         return jsonResponse({ success: true, sharedPictograms: sharedList });
       }
 
-      // --- 3. UTENTI E RUOLI ---
+      // --- 3. AUTENTICAZIONE UNIFICATA & GESTIONE UTENTI (INTERPELLI + CAA) ---
+      if (pathname === '/api/auth/login' && request.method === 'POST') {
+        const body = await request.json();
+        const cleanUser = String(body.username || '').toLowerCase().trim();
+        const cleanPass = String(body.password || '').trim();
+
+        if (!cleanUser || !cleanPass) {
+          return jsonResponse({ success: false, message: 'Username e password sono obbligatori.' }, 400);
+        }
+
+        const isRocco = cleanUser === 'rocco';
+        const isRoccoAdminPass = isRocco && (cleanPass === 'rocco76#Angy' || cleanPass === 'rocco76-Angy' || cleanPass === 'rocco');
+
+        // 1. Verifica su Cloudflare KV locale
+        const raw = await env.CAA_KV.get('system:users');
+        let users = raw ? JSON.parse(raw) : [];
+        let found = users.find(u => u.username.toLowerCase() === cleanUser);
+
+        if (found) {
+          if (isRoccoAdminPass || found.password === cleanPass) {
+            return jsonResponse({
+              success: true,
+              user: {
+                username: found.username,
+                role: isRocco ? 'admin' : (found.role || 'user'),
+                name: found.name || found.username
+              }
+            });
+          }
+        }
+
+        // 2. Se non presente o password aggiornata, verifica con il backend di Interpelli Scuola Mobile
+        try {
+          const authResp = await fetch('https://interpelliscuolamobile.it/api/users', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+            },
+            body: JSON.stringify({ action: 'login', username: cleanUser, password: cleanPass })
+          });
+
+          if (authResp.ok) {
+            const authData = await authResp.json();
+            if (authData.status === 'ok' && authData.user) {
+              const registeredUser = {
+                username: cleanUser,
+                password: cleanPass,
+                role: isRocco ? 'admin' : (authData.user.role || 'user'),
+                name: authData.user.candidateProfile?.nome 
+                  ? `${authData.user.candidateProfile.nome} ${authData.user.candidateProfile.cognome || ''}`.trim()
+                  : (isRocco ? 'Rocco' : cleanUser),
+                createdAt: new Date().toISOString()
+              };
+
+              users = users.filter(u => u.username.toLowerCase() !== cleanUser);
+              users.push(registeredUser);
+              await env.CAA_KV.put('system:users', JSON.stringify(users));
+
+              return jsonResponse({
+                success: true,
+                user: {
+                  username: registeredUser.username,
+                  role: registeredUser.role,
+                  name: registeredUser.name
+                }
+              });
+            }
+          }
+        } catch (e) {
+          console.warn('Errore verifica login su interpelli:', e);
+        }
+
+        // Se è rocco con pass corretta registralo comunque
+        if (isRoccoAdminPass) {
+          const roccoUser = {
+            username: 'rocco',
+            password: cleanPass,
+            role: 'admin',
+            name: 'Rocco (Amministratore)',
+            createdAt: new Date().toISOString()
+          };
+          users = users.filter(u => u.username.toLowerCase() !== 'rocco');
+          users.push(roccoUser);
+          await env.CAA_KV.put('system:users', JSON.stringify(users));
+          return jsonResponse({
+            success: true,
+            user: { username: 'rocco', role: 'admin', name: 'Rocco (Amministratore)' }
+          });
+        }
+
+        return jsonResponse({ success: false, message: 'Username o password non corretti.' }, 401);
+      }
+
+      // --- 4. UTENTI E RUOLI (SYNC) ---
       if (pathname === '/api/sync/users') {
         if (request.method === 'GET') {
           const raw = await env.CAA_KV.get('system:users');
-          const users = raw ? JSON.parse(raw) : [];
+          let users = raw ? JSON.parse(raw) : [];
+
+          // Se vuoto, auto-import da Interpelli Scuola Mobile
+          if (users.length === 0) {
+            try {
+              const resp = await fetch('https://interpelliscuolamobile.it/api/users?fresh=1', {
+                headers: {
+                  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+                  'x-auth-user': 'rocco',
+                  'x-auth-pass': 'rocco76#Angy'
+                }
+              });
+              if (resp.ok) {
+                const data = await resp.json();
+                const imported = data.users || [];
+                if (imported.length > 0) {
+                  users = imported.map(u => ({
+                    username: u.username.toLowerCase().trim(),
+                    password: u.password || '',
+                    role: u.username.toLowerCase().trim() === 'rocco' ? 'admin' : (u.role || 'user'),
+                    name: u.username.toLowerCase().trim() === 'rocco' ? 'Rocco' : u.username,
+                    createdAt: u.createdAt || new Date().toISOString()
+                  }));
+                  await env.CAA_KV.put('system:users', JSON.stringify(users));
+                }
+              }
+            } catch (e) {}
+          }
+
           return jsonResponse({ success: true, users });
         }
 
@@ -378,14 +500,25 @@ export default {
           const newUser = body.user;
           if (!newUser || !newUser.username) return jsonResponse({ error: 'Dati utente non validi' }, 400);
 
+          const cleanUser = newUser.username.toLowerCase().trim();
           const raw = await env.CAA_KV.get('system:users');
           let users = raw ? JSON.parse(raw) : [];
 
-          users = users.filter(u => u.username.toLowerCase() !== newUser.username.toLowerCase());
-          users.push(newUser);
+          const existing = users.find(u => u.username.toLowerCase() === cleanUser);
+          const merged = {
+            username: cleanUser,
+            password: newUser.password || existing?.password || '',
+            role: cleanUser === 'rocco' ? 'admin' : (newUser.role || existing?.role || 'user'),
+            name: newUser.name || existing?.name || cleanUser,
+            createdAt: existing?.createdAt || newUser.createdAt || new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+          };
+
+          users = users.filter(u => u.username.toLowerCase() !== cleanUser);
+          users.push(merged);
 
           await env.CAA_KV.put('system:users', JSON.stringify(users));
-          return jsonResponse({ success: true, user: newUser });
+          return jsonResponse({ success: true, user: merged });
         }
 
         if (request.method === 'DELETE') {

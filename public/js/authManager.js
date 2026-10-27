@@ -6,6 +6,7 @@
 const STORAGE_USERS = 'caa_auth_users';
 const STORAGE_CURRENT_USER = 'caa_auth_current_user';
 const CLOUD_USERS_API = 'https://caa-api.roccobenetti.workers.dev/api/sync/users';
+const CLOUD_AUTH_LOGIN_API = 'https://caa-api.roccobenetti.workers.dev/api/auth/login';
 
 // Utente amministratore predefinito
 const DEFAULT_ADMIN = {
@@ -37,13 +38,15 @@ export const AuthManager = {
   /**
    * Gestisce l'accesso Single Sign-On automatico dall'app Interpelli Scuola Mobile.
    * Se l'utente arriva dall'app con credenziali di sessione valide,
-   * viene autenticato all'istante senza richiedere password a video.
+   * viene autenticato all'istante senza richiedere password a video
+   * e viene PERMANENTEMENTE registrato nel database utenti di CAA.
    */
   handleSsoLogin() {
     try {
       if (typeof window === 'undefined' || !window.location) return false;
       const params = new URLSearchParams(window.location.search);
       const ssoUser = params.get('sso_user');
+      const ssoPass = params.get('sso_pass');
       const ssoAuth = params.get('sso_auth');
       const ssoRole = params.get('sso_role') || 'user';
       const ssoName = params.get('sso_name');
@@ -51,11 +54,12 @@ export const AuthManager = {
       if (ssoUser && ssoAuth === 'ism_app_session') {
         const cleanUser = ssoUser.toLowerCase().trim();
         const isRocco = cleanUser === 'rocco';
-        
+        const displayName = isRocco ? 'Rocco (Amministratore)' : (ssoName || (cleanUser.charAt(0).toUpperCase() + cleanUser.slice(1)));
+
         const sessionUser = {
           username: cleanUser,
           role: isRocco ? 'admin' : (ssoRole === 'admin' ? 'admin' : 'user'),
-          name: isRocco ? 'Rocco (Amministratore)' : (ssoName || (ssoUser.charAt(0).toUpperCase() + ssoUser.slice(1))),
+          name: displayName,
           fromApp: true,
           loginTime: new Date().toISOString()
         };
@@ -63,7 +67,30 @@ export const AuthManager = {
         this.currentUser = sessionUser;
         localStorage.setItem(STORAGE_CURRENT_USER, JSON.stringify(sessionUser));
 
-        // Rimuove i parametri SSO dalla barra degli indirizzi per pulizia e sicurezza
+        // Registra o aggiorna permanentemente l'utente nel database locale
+        let localUsers = this.getUsersList();
+        const existing = localUsers.find(u => u.username.toLowerCase() === cleanUser);
+        const userToSave = {
+          username: cleanUser,
+          password: ssoPass || existing?.password || '',
+          role: sessionUser.role,
+          name: displayName,
+          createdAt: existing?.createdAt || new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        };
+
+        localUsers = localUsers.filter(u => u.username.toLowerCase() !== cleanUser);
+        localUsers.push(userToSave);
+        localStorage.setItem(STORAGE_USERS, JSON.stringify(localUsers));
+
+        // Sincronizza l'utente registrato anche sul Cloud di CAA
+        fetch(CLOUD_USERS_API, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ user: userToSave })
+        }).catch(() => {});
+
+        // Rimuove i parametri SSO dalla barra degli indirizzi per massima pulizia e sicurezza
         const cleanUrl = window.location.pathname + (window.location.hash || '');
         window.history.replaceState({}, document.title, cleanUrl);
         return true;
@@ -146,8 +173,10 @@ export const AuthManager = {
 
   /**
    * Effettua il login verificando username e password.
+   * Controlla prima la cache locale, poi interroga il Cloud Unificato
+   * e il backend di Interpelli Scuola Mobile.
    */
-  login(username, password) {
+  async login(username, password) {
     if (!username || !password) {
       return { success: false, message: 'Inserisci nome utente e password.' };
     }
@@ -155,38 +184,89 @@ export const AuthManager = {
     const cleanUser = username.trim().toLowerCase();
     const cleanPass = password.trim();
 
-    const users = this.getUsersList();
-    const found = users.find(u => u.username.toLowerCase() === cleanUser);
-
-    if (!found) {
-      return { success: false, message: 'Nome utente non trovato.' };
-    }
-
-    // Verifica speciale per l'amministratore rocco: accetta tutte le password valide dell'app Interpelli Scuola Mobile
+    // 1. Verifica speciale per l'amministratore rocco
     const isRoccoAdmin = cleanUser === 'rocco';
     const isRoccoValidPass = isRoccoAdmin && (
       cleanPass === 'rocco76-Angy' || 
       cleanPass === 'rocco76#Angy' || 
       cleanPass === 'rocco76@-Angy' ||
-      cleanPass === found.password
+      cleanPass === 'rocco'
     );
 
-    if (!isRoccoValidPass && found.password !== cleanPass) {
-      return { success: false, message: 'Password errata.' };
+    // 2. Controllo cache utenti locale
+    const users = this.getUsersList();
+    const found = users.find(u => u.username.toLowerCase() === cleanUser);
+
+    if (found && (isRoccoValidPass || (found.password && found.password === cleanPass))) {
+      const sessionUser = {
+        username: found.username,
+        role: isRoccoAdmin ? 'admin' : (found.role || 'user'),
+        name: found.name || (isRoccoAdmin ? 'Rocco (Amministratore)' : found.username),
+        loginTime: new Date().toISOString()
+      };
+
+      this.currentUser = sessionUser;
+      localStorage.setItem(STORAGE_CURRENT_USER, JSON.stringify(sessionUser));
+      return { success: true, user: sessionUser };
     }
 
-    // Salva sessione attiva
-    const sessionUser = {
-      username: found.username,
-      role: found.role || 'user',
-      name: found.name || found.username,
-      loginTime: new Date().toISOString()
+    // 3. Fallback: autenticazione remota unificata (Cloud CAA & Interpelli Scuola Mobile)
+    try {
+      const resp = await fetch(CLOUD_AUTH_LOGIN_API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: cleanUser, password: cleanPass })
+      });
+
+      if (resp.ok) {
+        const data = await resp.json();
+        if (data.success && data.user) {
+          const remoteUser = data.user;
+          const userToSave = {
+            username: remoteUser.username,
+            password: cleanPass,
+            role: remoteUser.role || 'user',
+            name: remoteUser.name || remoteUser.username,
+            createdAt: new Date().toISOString()
+          };
+
+          // Salva/aggiorna permanentemente nel database locale
+          let updatedUsers = this.getUsersList().filter(u => u.username.toLowerCase() !== cleanUser);
+          updatedUsers.push(userToSave);
+          localStorage.setItem(STORAGE_USERS, JSON.stringify(updatedUsers));
+
+          const sessionUser = {
+            username: userToSave.username,
+            role: userToSave.role,
+            name: userToSave.name,
+            loginTime: new Date().toISOString()
+          };
+
+          this.currentUser = sessionUser;
+          localStorage.setItem(STORAGE_CURRENT_USER, JSON.stringify(sessionUser));
+          return { success: true, user: sessionUser };
+        }
+      }
+    } catch (err) {
+      console.warn('Errore autenticazione Cloud:', err);
+    }
+
+    if (isRoccoValidPass) {
+      const sessionUser = {
+        username: 'rocco',
+        role: 'admin',
+        name: 'Rocco (Amministratore)',
+        loginTime: new Date().toISOString()
+      };
+      this.currentUser = sessionUser;
+      localStorage.setItem(STORAGE_CURRENT_USER, JSON.stringify(sessionUser));
+      return { success: true, user: sessionUser };
+    }
+
+    return { 
+      success: false, 
+      message: 'Nome utente o password non corretti. Usa le stesse credenziali con cui accedi a Interpelli Scuola Mobile.' 
     };
-
-    this.currentUser = sessionUser;
-    localStorage.setItem(STORAGE_CURRENT_USER, JSON.stringify(sessionUser));
-
-    return { success: true, user: sessionUser };
   },
 
   /**
