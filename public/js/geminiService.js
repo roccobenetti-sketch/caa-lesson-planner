@@ -15,6 +15,61 @@ export const GeminiService = {
   svgFallbackCache: new Map(),
 
   /**
+   * Invoca l'API Gemini tramite proxy Cloudflare o fallback diretto.
+   */
+  async callGeminiApi(model, geminiPayload, activeKey) {
+    const endpoints = [];
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+      endpoints.push('/api/generate');
+    }
+    endpoints.push('https://caa-api.roccobenetti.workers.dev/api/generate');
+
+    let lastError = null;
+
+    for (const ep of endpoints) {
+      try {
+        const resp = await fetch(ep, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            apiKey: activeKey,
+            model: model,
+            geminiPayload: geminiPayload
+          })
+        });
+
+        if (resp.ok) {
+          return await resp.json();
+        } else if (resp.status !== 405 && resp.status !== 404) {
+          const errData = await resp.json().catch(() => ({}));
+          throw new Error(errData.error?.message || errData.error || `HTTP ${resp.status}`);
+        }
+      } catch (err) {
+        lastError = err;
+      }
+    }
+
+    // Fallback diretto Google Gemini dal browser
+    if (activeKey) {
+      const directUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${activeKey}`;
+      const directResponse = await fetch(directUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(geminiPayload)
+      });
+
+      if (directResponse.ok) {
+        return await directResponse.json();
+      } else {
+        const errJson = await directResponse.json().catch(() => ({}));
+        throw new Error(errJson.error?.message || `Errore Gemini HTTP ${directResponse.status}`);
+      }
+    }
+
+    throw lastError || new Error('Nessun endpoint IA disponibile.');
+  },
+
+  /**
    * Genera un progetto di lezione CAA analizzando contesto, motivazioni e morale.
    * @param {Object} params
    * @param {string} params.promptIdea - Testo descrittivo dell'idea o attività didattica fornita dall'utente
@@ -143,40 +198,8 @@ IMPORTANTE: Assicurati di includere esplicitamente ogni singolo evento, motivo d
       }
     };
 
-    let responseText = '';
-    try {
-      const response = await fetch('/api/generate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          apiKey: activeKey,
-          model: model,
-          geminiPayload: geminiPayload
-        })
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error?.message || errorData.error || `HTTP ${response.status}`);
-      }
-
-      const result = await response.json();
-      responseText = result?.candidates?.[0]?.content?.parts?.[0]?.text || '';
-    } catch (err) {
-      console.warn('Proxy fallito, tentativo browser diretto:', err.message);
-      const directUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${activeKey}`;
-      const directResponse = await fetch(directUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(geminiPayload)
-      });
-      if (!directResponse.ok) {
-        const errJson = await directResponse.json().catch(() => ({}));
-        throw new Error(errJson.error?.message || `Errore Gemini HTTP ${directResponse.status}`);
-      }
-      const directResult = await directResponse.json();
-      responseText = directResult?.candidates?.[0]?.content?.parts?.[0]?.text || '';
-    }
+    const result = await this.callGeminiApi(model, geminiPayload, activeKey);
+    const responseText = result?.candidates?.[0]?.content?.parts?.[0]?.text || '';
 
     if (!responseText) {
       throw new Error('Nessuna risposta dal modello Gemini.');
@@ -231,31 +254,20 @@ RISPONDI ESCLUSIVAMENTE CON UN ARRAY JSON (nessun markdown né testo):
 
     try {
       if (activeKey) {
-        const response = await fetch('/api/generate', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            apiKey: activeKey,
-            model: model,
-            geminiPayload: {
-              systemInstruction: { parts: [{ text: systemPrompt }] },
-              contents: [{ parts: [{ text: `Frase da convertire: "${rawText}"` }] }],
-              generationConfig: { temperature: 0.1, responseMimeType: 'application/json' }
-            }
-          })
-        });
+        const result = await this.callGeminiApi(model, {
+          systemInstruction: { parts: [{ text: systemPrompt }] },
+          contents: [{ parts: [{ text: `Frase da convertire: "${rawText}"` }] }],
+          generationConfig: { temperature: 0.1, responseMimeType: 'application/json' }
+        }, activeKey);
 
-        if (response.ok) {
-          const result = await response.json();
-          let jsonText = result?.candidates?.[0]?.content?.parts?.[0]?.text || '';
-          jsonText = jsonText.trim();
-          if (jsonText.startsWith('```json')) jsonText = jsonText.slice(7);
-          if (jsonText.startsWith('```')) jsonText = jsonText.slice(3);
-          if (jsonText.endsWith('```')) jsonText = jsonText.slice(0, -3);
-          const parsed = JSON.parse(jsonText.trim());
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            return parsed;
-          }
+        let jsonText = result?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+        jsonText = jsonText.trim();
+        if (jsonText.startsWith('```json')) jsonText = jsonText.slice(7);
+        if (jsonText.startsWith('```')) jsonText = jsonText.slice(3);
+        if (jsonText.endsWith('```')) jsonText = jsonText.slice(0, -3);
+        const parsed = JSON.parse(jsonText.trim());
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return parsed;
         }
       }
     } catch (e) {
@@ -309,38 +321,27 @@ Regole:
 `;
 
       try {
-        const response = await fetch('/api/generate', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            apiKey: activeKey,
-            model: model,
-            geminiPayload: {
-              contents: [{ parts: [{ text: svgPrompt }] }],
-              generationConfig: { temperature: 0.2, maxOutputTokens: 1024 }
-            }
-          })
-        });
+        const result = await this.callGeminiApi(model, {
+          contents: [{ parts: [{ text: svgPrompt }] }],
+          generationConfig: { temperature: 0.2, maxOutputTokens: 1024 }
+        }, activeKey);
 
-        if (response.ok) {
-          const result = await response.json();
-          let svgCode = result?.candidates?.[0]?.content?.parts?.[0]?.text || '';
-          svgCode = svgCode.trim();
-          if (svgCode.includes('<svg')) {
-            svgCode = svgCode.substring(svgCode.indexOf('<svg'));
-          }
-          if (svgCode.includes('</svg>')) {
-            svgCode = svgCode.substring(0, svgCode.indexOf('</svg>') + 6);
-          }
+        let svgCode = result?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+        svgCode = svgCode.trim();
+        if (svgCode.includes('<svg')) {
+          svgCode = svgCode.substring(svgCode.indexOf('<svg'));
+        }
+        if (svgCode.includes('</svg>')) {
+          svgCode = svgCode.substring(0, svgCode.indexOf('</svg>') + 6);
+        }
 
-          if (svgCode.startsWith('<svg') && svgCode.endsWith('</svg>')) {
-            if (!svgCode.includes('xmlns=')) {
-              svgCode = svgCode.replace('<svg', '<svg xmlns="http://www.w3.org/2000/svg"');
-            }
-            const dataUrl = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgCode)));
-            this.svgFallbackCache.set(termKey, dataUrl);
-            return dataUrl;
+        if (svgCode.startsWith('<svg') && svgCode.endsWith('</svg>')) {
+          if (!svgCode.includes('xmlns=')) {
+            svgCode = svgCode.replace('<svg', '<svg xmlns="http://www.w3.org/2000/svg"');
           }
+          const dataUrl = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgCode)));
+          this.svgFallbackCache.set(termKey, dataUrl);
+          return dataUrl;
         }
       } catch (e) {
         console.warn(`Fallback procedurale per "${word}":`, e.message);
@@ -613,25 +614,10 @@ REGOLE DI CONTINUITÀ E FUSIONE MULTIPLA:
 
     let rawSvg = '';
     try {
-      const response = await fetch('/api/generate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          apiKey: activeKey,
-          model: model,
-          geminiPayload: geminiPayload
-        })
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error?.message || errorData.error || `HTTP ${response.status}`);
-      }
-
-      const result = await response.json();
+      const result = await this.callGeminiApi(model, geminiPayload, activeKey);
       rawSvg = result?.candidates?.[0]?.content?.parts?.[0]?.text || '';
     } catch (err) {
-      console.warn('Proxy fallito o errore:', err.message);
+      console.warn('Errore generazione immagine con IA:', err.message);
       throw err;
     }
 
