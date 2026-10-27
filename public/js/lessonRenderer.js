@@ -637,13 +637,17 @@ export const LessonRenderer = {
   },
 
   /**
-   * Sostituisce il pittogramma di un token specifico.
+   * Sostituisce il pittogramma di un token specifico, aggiornando facoltativamente anche il testo/parola.
    */
-  updateTokenPictogram(cardRef, tokenIndex, pictogramId, imageUrl, isCustom = false) {
+  updateTokenPictogram(cardRef, tokenIndex, pictogramId, imageUrl, isCustom = false, newWord = null) {
     if (!this.currentLesson) return;
     let token = null;
     if (cardRef === 'sticker') {
-      token = this.currentLesson.stickers?.[tokenIndex]?.token;
+      const stk = this.currentLesson.stickers?.[tokenIndex];
+      token = stk?.token;
+      if (stk && newWord) {
+        stk.label = newWord;
+      }
     } else if (cardRef === 'moral') {
       token = this.currentLesson.moral?.tokens?.[tokenIndex];
     } else {
@@ -653,6 +657,10 @@ export const LessonRenderer = {
       token.pictogramId = pictogramId;
       token.imageUrl = imageUrl;
       token.customImage = isCustom;
+      if (newWord) {
+        token.displayWord = String(newWord).trim().toLocaleUpperCase('it-IT');
+        token.searchTerm = String(newWord).trim().toLowerCase();
+      }
     }
   },
 

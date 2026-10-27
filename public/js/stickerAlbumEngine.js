@@ -250,7 +250,7 @@ export const StickerAlbumEngine = {
 
                 <!-- Rimozione veloce a video (No-Print) -->
                 <button type="button"
-                        class="no-print opacity-0 group-hover:opacity-100 text-slate-400 hover:text-rose-600 transition p-0.5"
+                        class="no-print text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-full w-5 h-5 flex items-center justify-center transition p-0.5"
                         onclick="window.app.removeStickerFromAlbum(${idx})"
                         title="Elimina figurina e casella corrispondente">
                   ✕
@@ -311,38 +311,65 @@ export const StickerAlbumEngine = {
                   <span class="flex items-center gap-0.5">✂️ <span class="text-[9px]">taglio</span></span>
                 </div>
 
-                <!-- Box Immagine CAA -->
+                <!-- Box Immagine CAA con Pulsante Rapido Svuota Immagine -->
                 <div class="flex-1 flex flex-col items-center justify-center p-1 w-full">
-                  <div class="${fmt.imgSizeClass} flex items-center justify-center rounded-lg border-2 ${borderColClass} overflow-hidden bg-white shadow-2xs mb-1.5 relative">
+                  <div class="${fmt.imgSizeClass} flex items-center justify-center rounded-lg border-2 ${borderColClass} overflow-hidden bg-white shadow-2xs mb-1.5 relative group/img">
                     ${this.renderTokenImage(token)}
+                    <!-- Tasto veloce cancella immagine su hover o click (No-Print) -->
+                    <button type="button"
+                            class="no-print absolute top-1 right-1 w-5 h-5 bg-rose-500 hover:bg-rose-600 text-white rounded-full text-[10px] flex items-center justify-center shadow-xs opacity-0 group-hover/img:opacity-100 transition"
+                            onclick="window.app.clearStickerImage(${idx})"
+                            title="Rimuovi immagine del simbolo">
+                      ✕
+                    </button>
                   </div>
 
-                  <!-- Testo Figurina -->
-                  <span class="text-xs sm:text-sm font-bold text-slate-800 caa-text text-center px-1 truncate max-w-full">
+                  <!-- Testo / Scritta Figurina Editabile a Video (No-Print) -->
+                  <div class="no-print w-full px-1">
+                    <input type="text"
+                           class="w-full text-xs sm:text-sm font-bold text-slate-800 bg-slate-50 hover:bg-slate-100 focus:bg-white border border-slate-200 focus:border-emerald-500 rounded-md px-1.5 py-1 focus:outline-none text-center transition shadow-2xs"
+                           value="${this.escapeHtml(stk.label || token.displayWord || '')}"
+                           oninput="window.app.updateStickerLabel(${idx}, this.value)"
+                           placeholder="Scritta figurina..."
+                           title="Clicca per modificare la scritta della figurina" />
+                  </div>
+
+                  <!-- Testo Stampato Pulito (Print-Only) -->
+                  <span class="print-only text-xs sm:text-sm font-bold text-slate-800 caa-text text-center px-1 truncate max-w-full">
                     ${this.escapeHtml(stk.label || token.displayWord || '')}
                   </span>
                 </div>
 
-                <!-- Barra Controlli Figurina a Video (No-Print) -->
-                <div class="no-print w-full pt-1.5 mt-1 border-t border-slate-100 flex items-center justify-center gap-1 opacity-0 group-hover:opacity-100 transition">
-                  <button type="button"
-                          class="px-2 py-0.5 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded text-[11px] font-semibold transition"
-                          onclick="window.app.changeStickerImage(${idx})"
-                          title="Cerca o sostituisci simbolo per questa figurina">
-                    🖼️ Simbolo
-                  </button>
-                  <button type="button"
-                          class="px-2 py-0.5 bg-violet-50 hover:bg-violet-100 text-violet-700 rounded text-[11px] font-semibold transition"
-                          onclick="window.app.generateStickerWithAi(${idx})"
-                          title="Genera simbolo personalizzato con IA">
-                    ✨ IA
-                  </button>
-                  <button type="button"
-                          class="px-1.5 py-0.5 text-slate-400 hover:text-rose-600 rounded text-[11px] transition"
-                          onclick="window.app.removeStickerFromAlbum(${idx})"
-                          title="Elimina figurina">
-                    🗑️
-                  </button>
+                <!-- Barra Controlli Figurina a Video (No-Print) Sempre Visibile -->
+                <div class="no-print w-full pt-1.5 mt-1 border-t border-slate-100 flex items-center justify-between gap-1 flex-wrap">
+                  <div class="flex items-center gap-1">
+                    <button type="button"
+                            class="px-2 py-1 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-md text-[11px] font-bold transition flex items-center gap-0.5 shadow-2xs"
+                            onclick="window.app.changeStickerImage(${idx})"
+                            title="Cerca o sostituisci simbolo per questa figurina">
+                      <span>🖼️ Simbolo</span>
+                    </button>
+                    <button type="button"
+                            class="px-2 py-1 bg-violet-50 hover:bg-violet-100 text-violet-700 rounded-md text-[11px] font-bold transition flex items-center gap-0.5 shadow-2xs"
+                            onclick="window.app.generateStickerWithAi(${idx})"
+                            title="Genera simbolo personalizzato con IA per questa figurina">
+                      <span>✨ IA</span>
+                    </button>
+                  </div>
+                  <div class="flex items-center gap-1">
+                    <button type="button"
+                            class="p-1 text-slate-400 hover:text-amber-600 rounded-md hover:bg-amber-50 transition text-[11px]"
+                            onclick="window.app.clearStickerImage(${idx})"
+                            title="Svuota immagine del simbolo">
+                      🔄
+                    </button>
+                    <button type="button"
+                            class="p-1 text-slate-400 hover:text-rose-600 rounded-md hover:bg-rose-50 transition text-[11px]"
+                            onclick="window.app.removeStickerFromAlbum(${idx})"
+                            title="Elimina figurina e casella corrispondente">
+                      🗑️
+                    </button>
+                  </div>
                 </div>
               </div>
             `;
@@ -362,12 +389,9 @@ export const StickerAlbumEngine = {
       return '<span class="text-xs text-slate-400">Nessun simbolo</span>';
     }
 
-    if (token.customImage) {
-      return `<img src="${token.customImage}" alt="${this.escapeHtml(token.displayWord || '')}" class="max-w-full max-h-full object-contain pointer-events-none" />`;
-    }
-
-    if (token.imageUrl) {
-      return `<img src="${token.imageUrl}" alt="${this.escapeHtml(token.displayWord || '')}" class="max-w-full max-h-full object-contain pointer-events-none" loading="lazy" />`;
+    const imgUrl = token.imageUrl || (typeof token.customImage === 'string' ? token.customImage : '') || '';
+    if (imgUrl) {
+      return `<img src="${imgUrl}" alt="${this.escapeHtml(token.displayWord || '')}" class="max-w-full max-h-full object-contain pointer-events-none" loading="lazy" />`;
     }
 
     if (token.svgRaw) {

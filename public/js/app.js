@@ -1367,7 +1367,7 @@ class CAAApp {
             isShared
           });
           this.refreshCustomPictosBadge();
-          this.applyNewPictogram(saved.id, svgDataUri, true);
+          this.applyNewPictogram(saved.id, svgDataUri, true, finalName);
           this.showToast(`Simbolo "${finalName}" salvato ${isShared ? 'e condiviso con i colleghi' : 'nel tuo archivio'}!`, 'success');
         });
 
@@ -1390,7 +1390,9 @@ class CAAApp {
 
         // Gestione azione "Usa Subito" (senza salvare in archivio)
         document.getElementById('btnUseOnlyAiPictogram')?.addEventListener('click', () => {
-          this.applyNewPictogram(`ai_${Date.now()}`, svgDataUri, true);
+          const nameInput = document.getElementById('inputCustomPictoSaveName');
+          const finalName = (nameInput?.value || defaultName).trim().toLocaleUpperCase('it-IT');
+          this.applyNewPictogram(`ai_${Date.now()}`, svgDataUri, true, finalName);
         });
       }
 
@@ -1409,12 +1411,12 @@ class CAAApp {
     }
   }
 
-  applyNewPictogram(pictogramId, imageUrl, isCustom = false) {
+  applyNewPictogram(pictogramId, imageUrl, isCustom = false, newWord = null) {
     if (this.selectedCardIndex === null || this.selectedTokenIndex === null) return;
-    LessonRenderer.updateTokenPictogram(this.selectedCardIndex, this.selectedTokenIndex, pictogramId, imageUrl, isCustom);
+    LessonRenderer.updateTokenPictogram(this.selectedCardIndex, this.selectedTokenIndex, pictogramId, imageUrl, isCustom, newWord);
     LessonRenderer.render(document.getElementById('printableArea'), LessonRenderer.currentLesson);
     document.getElementById('searchModal')?.classList.add('hidden');
-    this.showToast('Simbolo aggiornato!');
+    this.showToast(newWord ? `Simbolo e scritta aggiornati con "${newWord}"!` : 'Simbolo aggiornato!');
   }
 
   /**
@@ -2977,8 +2979,22 @@ class CAAApp {
     if (stk) {
       stk.label = newLabel;
       if (stk.token) {
-        stk.token.displayWord = newLabel.toLocaleUpperCase('it-IT');
+        stk.token.displayWord = (newLabel || '').toLocaleUpperCase('it-IT');
+        stk.token.searchTerm = (newLabel || '').toLowerCase();
       }
+
+      // Sincronizza istantaneamente a video i campi input del Foglio 1 e Foglio 2
+      const allInputs = document.querySelectorAll(`[data-sticker-index="${index}"] input`);
+      allInputs.forEach(inp => {
+        if (inp && inp !== document.activeElement && inp.value !== newLabel) {
+          inp.value = newLabel;
+        }
+      });
+      // Sincronizza anche i testi per la stampa
+      const allPrints = document.querySelectorAll(`[data-sticker-index="${index}"] .caa-text`);
+      allPrints.forEach(pr => {
+        if (pr) pr.textContent = newLabel;
+      });
     }
   }
 
@@ -3022,7 +3038,20 @@ class CAAApp {
     if (!LessonRenderer.currentLesson || !LessonRenderer.currentLesson.stickers) return;
     LessonRenderer.currentLesson.stickers.splice(index, 1);
     LessonRenderer.render(document.getElementById('printableArea'), LessonRenderer.currentLesson);
-    this.showToast(`Figurina #${index + 1} rimossa dal raccoglitore.`);
+    this.showToast(`Figurina rimossa dal raccoglitore.`);
+  }
+
+  clearStickerImage(index) {
+    if (!LessonRenderer.currentLesson || !LessonRenderer.currentLesson.stickers) return;
+    const stk = LessonRenderer.currentLesson.stickers[index];
+    if (stk && stk.token) {
+      stk.token.imageUrl = '';
+      stk.token.svgRaw = '';
+      stk.token.customImage = false;
+      stk.token.pictogramId = null;
+      LessonRenderer.render(document.getElementById('printableArea'), LessonRenderer.currentLesson);
+      this.showToast('Immagine del simbolo rimossa.');
+    }
   }
 
   changeStickerImage(index) {
@@ -3032,6 +3061,12 @@ class CAAApp {
   generateStickerWithAi(index) {
     this.openPictogramSelector('sticker', index);
     this.switchModalTab('ai');
+    const stk = LessonRenderer.currentLesson?.stickers?.[index];
+    const currentName = stk?.label || stk?.token?.displayWord || '';
+    const inputAiPrompt = document.getElementById('inputAiPictogramPrompt');
+    if (inputAiPrompt && currentName) {
+      inputAiPrompt.value = currentName.toLocaleUpperCase('it-IT');
+    }
   }
 }
 
