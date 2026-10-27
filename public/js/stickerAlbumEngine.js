@@ -232,7 +232,7 @@ export const StickerAlbumEngine = {
               
               <!-- Casella di Testo / Didascalia in Alto -->
               <div class="mb-2 flex items-center justify-between gap-1.5 border-b border-slate-100 pb-1.5">
-                <span class="w-5 h-5 rounded-full bg-indigo-600 text-white text-[11px] font-bold flex items-center justify-center shrink-0">
+                <span class="no-print w-5 h-5 rounded-full bg-indigo-600 text-white text-[11px] font-bold flex items-center justify-center shrink-0">
                   ${idx + 1}
                 </span>
 
@@ -243,7 +243,7 @@ export const StickerAlbumEngine = {
                        oninput="window.app.updateStickerLabel(${idx}, this.value)"
                        placeholder="Etichetta..." />
 
-                <!-- Testo Stampato Pulito -->
+                <!-- Testo Stampato Pulito (Senza numeri) -->
                 <span class="print-only flex-1 text-center font-bold text-xs sm:text-sm text-slate-900 caa-text">
                   ${this.escapeHtml(stk.label || '')}
                 </span>
@@ -257,13 +257,12 @@ export const StickerAlbumEngine = {
                 </button>
               </div>
 
-              <!-- Riquadro Vuoto Sagomato per Incollare la Figurina -->
+              <!-- Riquadro Vuoto Sagomato per Incollare la Figurina (Senza numeri) -->
               <div class="flex-1 ${fmt.boxClass} rounded-lg border-2 border-dashed border-slate-300 bg-slate-50/60 flex flex-col items-center justify-center p-2 text-center text-slate-400 select-none sticker-paste-box">
                 <span class="text-xl sm:text-2xl mb-1 opacity-60">📎</span>
                 <span class="text-[10px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider">
                   Incolla qui
                 </span>
-                <span class="text-[9px] text-slate-400/80">#${idx + 1}</span>
               </div>
             </div>
           `).join('')}
@@ -307,9 +306,8 @@ export const StickerAlbumEngine = {
               <div class="flex flex-col items-center justify-between rounded-xl border-2 border-dashed border-slate-400 p-2.5 bg-white relative transition hover:border-emerald-500 sticker-cut-border group"
                    data-sticker-index="${idx}">
                 
-                <!-- Indicatore di Ritaglio con Forbice in Alto -->
-                <div class="w-full flex items-center justify-between text-[10px] text-slate-400 mb-1">
-                  <span class="font-bold text-slate-500">#${idx + 1}</span>
+                <!-- Indicatore di Ritaglio con Forbice in Alto (Nessun numero in stampa né a video) -->
+                <div class="w-full flex items-center justify-end text-[10px] text-slate-400 mb-1">
                   <span class="flex items-center gap-0.5">✂️ <span class="text-[9px]">taglio</span></span>
                 </div>
 
