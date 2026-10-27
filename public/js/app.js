@@ -2923,6 +2923,8 @@ class CAAApp {
 }
 
 // Inizializzazione globale
+window.CustomPictogramsManager = CustomPictogramsManager;
+window.ProjectManager = ProjectManager;
 window.app = new CAAApp();
 document.addEventListener('DOMContentLoaded', () => {
   window.app.init();
