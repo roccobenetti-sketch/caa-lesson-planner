@@ -3,7 +3,7 @@
  * dei percorsi didattici CAA associati al profilo utente.
  */
 
-import { AuthManager } from './authManager.js?v=2.7.1';
+import { AuthManager } from './authManager.js';
 
 export class ProjectManager {
   static LOCAL_STORAGE_KEY = 'caa_saved_projects_v1';
@@ -12,7 +12,17 @@ export class ProjectManager {
   static TOGGLE_SHARE_API = 'https://caa-api.roccobenetti.workers.dev/api/sync/projects/share-toggle';
 
   static getUsername() {
-    return AuthManager.currentUser?.username?.toLowerCase() || 'rocco';
+    let user = AuthManager.currentUser?.username;
+    if (!user) {
+      try {
+        const stored = localStorage.getItem('caa_auth_current_user');
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          user = parsed?.username;
+        }
+      } catch (e) {}
+    }
+    return (user || '').toLowerCase().trim();
   }
 
   /**
@@ -21,6 +31,9 @@ export class ProjectManager {
   static async listProjects() {
     const user = this.getUsername();
     const cleanUser = user.toLowerCase().trim();
+    if (!cleanUser) {
+      return [];
+    }
 
     // 0. Migrazione di sicurezza una tantum: isola la chiave legacy globale a favore di rocco
     try {

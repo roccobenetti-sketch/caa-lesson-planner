@@ -3,7 +3,7 @@
  * Sincronizzazione automatica Cloud KV + Locale associata al profilo utente.
  */
 
-import { AuthManager } from './authManager.js?v=2.7.5';
+import { AuthManager } from './authManager.js';
 
 const STORAGE_KEY = 'caa_custom_pictograms';
 const CLOUD_API = 'https://caa-api.roccobenetti.workers.dev/api/sync/custom-pictograms';
@@ -12,11 +12,21 @@ const TOGGLE_SHARE_API = 'https://caa-api.roccobenetti.workers.dev/api/sync/cust
 
 export const CustomPictogramsManager = {
   getUsername() {
-    return AuthManager.currentUser?.username?.toLowerCase() || 'rocco';
+    let user = AuthManager.currentUser?.username;
+    if (!user) {
+      try {
+        const stored = localStorage.getItem('caa_auth_current_user');
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          user = parsed?.username;
+        }
+      } catch (e) {}
+    }
+    return (user || '').toLowerCase().trim();
   },
 
   getAuthorName() {
-    return AuthManager.currentUser?.name || (this.getUsername() === 'rocco' ? 'Rocco' : this.getUsername());
+    return AuthManager.currentUser?.name || this.getUsername() || 'Docente';
   },
 
   /**
@@ -26,6 +36,9 @@ export const CustomPictogramsManager = {
   getAll() {
     const user = this.getUsername();
     const cleanUser = user.toLowerCase().trim();
+    if (!cleanUser) {
+      return [];
+    }
 
     // Migrazione legacy una tantum per rocco
     try {
@@ -55,6 +68,7 @@ export const CustomPictogramsManager = {
    */
   async syncFromCloud() {
     const user = this.getUsername();
+    if (!user) return;
     try {
       const resp = await fetch(`${CLOUD_API}?user=${encodeURIComponent(user)}`, { cache: 'no-store' });
       if (resp.ok) {

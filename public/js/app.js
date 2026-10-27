@@ -2,15 +2,15 @@
  * Controller principale dell'applicazione CAA Lesson Planner.
  */
 
-import { ConfigManager } from './config.js?v=2.7.5';
-import { GeminiService } from './geminiService.js?v=2.7.5';
-import { ArasaacService } from './arasaacService.js?v=2.7.5';
-import { LessonRenderer } from './lessonRenderer.js?v=2.7.5';
-import { ProjectManager } from './projectManager.js?v=2.7.5';
-import { CustomPictogramsManager } from './customPictogramsManager.js?v=2.7.5';
-import { AuthManager } from './authManager.js?v=2.7.5';
-import { BackupManager } from './backupManager.js?v=2.7.5';
-import { PdfClientEngine } from './pdfClientEngine.js?v=2.7.5';
+import { ConfigManager } from './config.js';
+import { GeminiService } from './geminiService.js';
+import { ArasaacService } from './arasaacService.js';
+import { LessonRenderer } from './lessonRenderer.js';
+import { ProjectManager } from './projectManager.js';
+import { CustomPictogramsManager } from './customPictogramsManager.js';
+import { AuthManager } from './authManager.js';
+import { BackupManager } from './backupManager.js';
+import { PdfClientEngine } from './pdfClientEngine.js';
 
 class CAAApp {
   constructor() {
@@ -2802,6 +2802,9 @@ class CAAApp {
 
   handleLogout() {
     AuthManager.logout();
+    this.cachedProjects = [];
+    this.cachedSharedProjects = [];
+    this.cachedSharedPictograms = [];
     this.showToast('Disconnessione effettuata.');
     const loginModal = document.getElementById('loginModal');
     if (loginModal) {
@@ -2811,6 +2814,8 @@ class CAAApp {
       loginModal.classList.remove('hidden');
     }
     this.setupAuthUI();
+    this.refreshProjectsCount();
+    this.refreshCustomPictosBadge();
   }
 
   renderUsersList() {
