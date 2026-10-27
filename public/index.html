@@ -378,6 +378,32 @@
           </p>
         </div>
 
+        <!-- Guida Rapida: Come ottenere la chiave API Gemini -->
+        <div class="bg-gradient-to-br from-blue-50 to-indigo-50/60 border border-blue-200 rounded-xl p-3.5 space-y-2.5">
+          <div class="flex items-center justify-between gap-2">
+            <span class="text-xs font-bold text-blue-900 flex items-center gap-1.5">
+              <span>🔑 Guida: Come ottenere la tua Chiave API gratuita</span>
+            </span>
+            <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 px-2.5 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-[11px] font-bold shadow-sm transition" title="Apri Google AI Studio in una nuova scheda">
+              <span>Apri Google AI Studio</span>
+              <span>↗</span>
+            </a>
+          </div>
+
+          <ol class="text-xs text-slate-700 space-y-1.5 list-decimal list-inside leading-relaxed">
+            <li>Visita il portale gratuito <strong><a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" class="text-blue-700 hover:underline font-semibold">Google AI Studio (aistudio.google.com)</a></strong> ed effettua l'accesso con il tuo account Google.</li>
+            <li>Clicca sul pulsante blu <strong>"Create API key"</strong> (o "Get API key").</li>
+            <li>Seleziona <strong>"Create API key in new project"</strong> (o scegli un progetto esistente).</li>
+            <li>Copia la chiave generata (inizia con <code>AIzaSy...</code>) e incollala nel riquadro sopra.</li>
+            <li>Clicca sul pulsante <strong>"Salva Impostazioni"</strong> in basso.</li>
+          </ol>
+
+          <div class="flex items-start gap-1.5 text-[11px] text-slate-500 bg-white/80 p-2 rounded-lg border border-blue-100">
+            <span>ℹ️</span>
+            <span><strong>Nessun costo:</strong> Il piano standard di Google AI Studio include quote gratuite permanenti (Free Tier) ideali per creare schede CAA senza necessità di carta di credito.</span>
+          </div>
+        </div>
+
         <div>
           <label for="selectModel" class="block text-sm font-semibold text-slate-700 mb-1">Modello Gemini:</label>
           <select id="selectModel" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm text-slate-700 focus:ring-2 focus:ring-blue-500">
@@ -817,6 +843,6 @@
   <div id="toastNotification" class="no-print fixed bottom-4 right-4 z-50 px-4 py-3 rounded-xl shadow-lg text-sm font-medium hidden opacity-0 transition-opacity"></div>
 
   <!-- Script Modulare dell'Applicazione -->
-  <script type="module" src="./js/app.js?v=2.6.3"></script>
+  <script type="module" src="./js/app.js?v=2.6.4"></script>
 </body>
 </html>
