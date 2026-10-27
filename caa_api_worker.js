@@ -34,6 +34,13 @@ export default {
         return jsonResponse({ status: 'ok', service: 'CAA Cloud Sync API', timestamp: new Date().toISOString() });
       }
 
+      if (pathname === '/api/config') {
+        return jsonResponse({
+          defaultModel: 'gemini-3.1-flash-lite',
+          defaultApiKey: env.GEMINI_API_KEY || ''
+        });
+      }
+
       // --- 1. PROGETTI CAA ---
       if (pathname === '/api/sync/projects') {
         const user = (url.searchParams.get('user') || 'rocco').toLowerCase().trim();

@@ -85,18 +85,21 @@ export const ConfigManager = {
       this.state.model = savedModel;
     }
 
-    // 2. Interroga il server locale per verificare se è configurata una chiave predefinita
+    // 2. Recupera la configurazione (server locale o Cloud Worker)
     try {
-      const response = await fetch('/api/config');
-      if (response.ok) {
-        const data = await response.json();
+      let resp = await fetch('/api/config');
+      if (!resp.ok) {
+        resp = await fetch('https://caa-api.roccobenetti.workers.dev/api/config');
+      }
+      if (resp.ok) {
+        const data = await resp.json();
         this.state.defaultApiKey = data.defaultApiKey || '';
         if (!savedModel && data.defaultModel) {
           this.state.model = data.defaultModel;
         }
       }
     } catch (err) {
-      console.warn('Impossibile contattare /api/config. Funzionamento in modalità standalone.');
+      console.warn('Funzionamento in modalità standalone.');
     }
 
     // 3. Determina la chiave effettiva da utilizzare
@@ -117,17 +120,21 @@ export const ConfigManager = {
    */
   async fetchAvailableModels() {
     const key = this.getActiveApiKey();
+    if (!key) return this.state.availableModels;
+
     try {
       const resp = await fetch(`/api/models?key=${encodeURIComponent(key)}`);
       if (resp.ok) {
         const data = await resp.json();
-        this.state.availableModels = data.models || [];
+        if (data.models && data.models.length > 0) {
+          this.state.availableModels = data.models;
+        }
         return this.state.availableModels;
       }
     } catch (e) {
-      console.warn('Recupero elenco modelli live fallito:', e);
+      // Standalone/GitHub Pages: usa l'elenco statico predefinito
     }
-    return [];
+    return this.state.availableModels;
   },
 
   getActiveApiKey() {
