@@ -2,15 +2,15 @@
  * Controller principale dell'applicazione CAA Lesson Planner.
  */
 
-import { ConfigManager } from './config.js?v=2.7.1';
-import { GeminiService } from './geminiService.js?v=2.7.1';
-import { ArasaacService } from './arasaacService.js?v=2.7.1';
-import { LessonRenderer } from './lessonRenderer.js?v=2.7.1';
-import { ProjectManager } from './projectManager.js?v=2.7.1';
-import { CustomPictogramsManager } from './customPictogramsManager.js?v=2.7.1';
-import { AuthManager } from './authManager.js?v=2.7.1';
-import { BackupManager } from './backupManager.js?v=2.7.1';
-import { PdfClientEngine } from './pdfClientEngine.js?v=2.7.1';
+import { ConfigManager } from './config.js?v=2.7.3';
+import { GeminiService } from './geminiService.js?v=2.7.3';
+import { ArasaacService } from './arasaacService.js?v=2.7.3';
+import { LessonRenderer } from './lessonRenderer.js?v=2.7.3';
+import { ProjectManager } from './projectManager.js?v=2.7.3';
+import { CustomPictogramsManager } from './customPictogramsManager.js?v=2.7.3';
+import { AuthManager } from './authManager.js?v=2.7.3';
+import { BackupManager } from './backupManager.js?v=2.7.3';
+import { PdfClientEngine } from './pdfClientEngine.js?v=2.7.3';
 
 class CAAApp {
   constructor() {
@@ -18,6 +18,7 @@ class CAAApp {
     this.selectedTokenIndex = null;
     this.cachedProjects = [];
     this.cachedSharedProjects = [];
+    this.cachedSharedPictograms = [];
     this.currentProjectTab = 'mine'; // 'mine' | 'shared'
     this.currentProjectFilter = 'all';
     this.lastSavedSnapshot = null;
@@ -60,6 +61,7 @@ class CAAApp {
     CustomPictogramsManager.syncFromCloud().catch(() => {});
     this.refreshProjectsCount().catch(() => {});
     this.refreshCustomPictosBadge();
+    this.refreshSharedPictosBadge().catch(() => {});
 
     window.addEventListener('resize', () => {
       LessonRenderer.adjustAllTokenLabels(document.getElementById('printableArea'));
@@ -255,9 +257,10 @@ class CAAApp {
       });
     }
 
-    // Gestione Tab Modale Simbolo (Catalogo ARASAAC vs I Miei Simboli vs Generatore IA)
+    // Gestione Tab Modale Simbolo (Catalogo ARASAAC vs I Miei Simboli vs Condivisi vs Generatore IA)
     const tabBtnArasaac = document.getElementById('tabBtnArasaac');
     const tabBtnCustomPictos = document.getElementById('tabBtnCustomPictos');
+    const tabBtnSharedPictos = document.getElementById('tabBtnSharedPictos');
     const tabBtnAiGenerator = document.getElementById('tabBtnAiGenerator');
 
     if (tabBtnArasaac) {
@@ -267,6 +270,12 @@ class CAAApp {
       tabBtnCustomPictos.addEventListener('click', () => {
         this.switchModalTab('custom');
         this.loadCustomPictograms();
+      });
+    }
+    if (tabBtnSharedPictos) {
+      tabBtnSharedPictos.addEventListener('click', () => {
+        this.switchModalTab('shared');
+        this.loadSharedPictograms();
       });
     }
     if (tabBtnAiGenerator) {
@@ -286,6 +295,25 @@ class CAAApp {
     const btnRefreshCustomPictos = document.getElementById('btnRefreshCustomPictos');
     if (btnRefreshCustomPictos) {
       btnRefreshCustomPictos.addEventListener('click', () => this.loadCustomPictograms());
+    }
+
+    // Ricerca e aggiornamento Simboli Condivisi dai Colleghi
+    const inputSharedPictoSearch = document.getElementById('inputSharedPictoSearch');
+    if (inputSharedPictoSearch) {
+      inputSharedPictoSearch.addEventListener('input', () => {
+        const query = (inputSharedPictoSearch.value || '').trim().toLocaleUpperCase('it-IT');
+        const filtered = (this.cachedSharedPictograms || []).filter(item => 
+          (item.name && item.name.toLocaleUpperCase('it-IT').includes(query)) ||
+          (item.authorName && item.authorName.toLocaleUpperCase('it-IT').includes(query)) ||
+          (item.prompt && item.prompt.toLocaleUpperCase('it-IT').includes(query))
+        );
+        this.renderSharedPictograms(filtered);
+      });
+    }
+
+    const btnRefreshSharedPictos = document.getElementById('btnRefreshSharedPictos');
+    if (btnRefreshSharedPictos) {
+      btnRefreshSharedPictos.addEventListener('click', () => this.loadSharedPictograms(true));
     }
 
     // Bottone Generazione Simbolo con IA
@@ -649,25 +677,29 @@ class CAAApp {
 
   /**
    * Cambia il tab attivo nel modale di selezione/creazione simbolo.
-   * @param {'arasaac'|'custom'|'ai'} tabName 
+   * @param {'arasaac'|'custom'|'shared'|'ai'} tabName 
    */
   switchModalTab(tabName) {
     const tabBtnArasaac = document.getElementById('tabBtnArasaac');
     const tabBtnCustomPictos = document.getElementById('tabBtnCustomPictos');
+    const tabBtnSharedPictos = document.getElementById('tabBtnSharedPictos');
     const tabBtnAiGenerator = document.getElementById('tabBtnAiGenerator');
 
     const tabContentArasaac = document.getElementById('tabContentArasaac');
     const tabContentCustomPictos = document.getElementById('tabContentCustomPictos');
+    const tabContentSharedPictos = document.getElementById('tabContentSharedPictos');
     const tabContentAi = document.getElementById('tabContentAi');
 
     const baseInactive = 'px-3.5 py-2 text-xs font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-800 flex items-center gap-1.5 transition whitespace-nowrap';
 
     if (tabBtnArasaac) tabBtnArasaac.className = baseInactive;
     if (tabBtnCustomPictos) tabBtnCustomPictos.className = baseInactive;
+    if (tabBtnSharedPictos) tabBtnSharedPictos.className = baseInactive;
     if (tabBtnAiGenerator) tabBtnAiGenerator.className = baseInactive;
 
     tabContentArasaac?.classList.add('hidden');
     tabContentCustomPictos?.classList.add('hidden');
+    tabContentSharedPictos?.classList.add('hidden');
     tabContentAi?.classList.add('hidden');
 
     if (tabName === 'arasaac') {
@@ -676,8 +708,11 @@ class CAAApp {
     } else if (tabName === 'custom') {
       if (tabBtnCustomPictos) tabBtnCustomPictos.className = 'px-3.5 py-2 text-xs font-bold border-b-2 border-amber-600 text-amber-700 flex items-center gap-1.5 transition whitespace-nowrap';
       tabContentCustomPictos?.classList.remove('hidden');
+    } else if (tabName === 'shared') {
+      if (tabBtnSharedPictos) tabBtnSharedPictos.className = 'px-3.5 py-2 text-xs font-bold border-b-2 border-indigo-600 text-indigo-700 flex items-center gap-1.5 transition whitespace-nowrap';
+      tabContentSharedPictos?.classList.remove('hidden');
     } else if (tabName === 'ai') {
-      if (tabBtnAiGenerator) tabBtnAiGenerator.className = 'px-3.5 py-2 text-xs font-bold border-b-2 border-indigo-600 text-indigo-700 flex items-center gap-1.5 transition whitespace-nowrap';
+      if (tabBtnAiGenerator) tabBtnAiGenerator.className = 'px-3.5 py-2 text-xs font-bold border-b-2 border-purple-600 text-purple-700 flex items-center gap-1.5 transition whitespace-nowrap';
       tabContentAi?.classList.remove('hidden');
       document.getElementById('inputAiPictogramPrompt')?.focus();
     }
@@ -695,6 +730,22 @@ class CAAApp {
   }
 
   /**
+   * Aggiorna il badge numerico con il totale dei simboli condivisi dai colleghi.
+   */
+  async refreshSharedPictosBadge() {
+    const badge = document.getElementById('sharedPictosBadge');
+    if (!badge) return;
+    try {
+      if (!this.cachedSharedPictograms || this.cachedSharedPictograms.length === 0) {
+        this.cachedSharedPictograms = await CustomPictogramsManager.getSharedPictograms();
+      }
+      badge.textContent = String((this.cachedSharedPictograms || []).length);
+    } catch (e) {
+      badge.textContent = '0';
+    }
+  }
+
+  /**
    * Carica e visualizza l'archivio dei simboli personali salvati.
    */
   loadCustomPictograms() {
@@ -705,7 +756,7 @@ class CAAApp {
   }
 
   /**
-   * Renderizza la griglia dei simboli personali salvati.
+   * Renderizza la griglia dei simboli personali salvati con toggle/spunta di condivisione.
    * @param {Array<Object>} items 
    */
   renderCustomPictograms(items) {
@@ -732,8 +783,10 @@ class CAAApp {
     container.innerHTML = items.map(item => {
       const safeId = this.escapeHtml(item.id);
       const safeName = this.escapeHtml(item.name || 'SIMBOLO');
+      const isShared = Boolean(item.isShared);
+
       return `
-        <div class="border border-amber-200 hover:border-amber-500 rounded-xl p-2 flex flex-col items-center justify-between cursor-pointer transition hover:shadow-md bg-white relative group"
+        <div class="border ${isShared ? 'border-blue-300 bg-blue-50/20' : 'border-amber-200 bg-white'} hover:border-amber-500 rounded-xl p-2.5 flex flex-col items-center justify-between cursor-pointer transition hover:shadow-md relative group select-none"
              onclick="window.app.applyNewPictogram('${safeId}', '${item.imageUrl}', true)"
              title="Clicca per assegnare questo simbolo alla parola">
           
@@ -743,16 +796,152 @@ class CAAApp {
                   onclick="event.stopPropagation(); window.app.deleteCustomPictogram('${safeId}', '${safeName}')"
                   title="Elimina dall'archivio personale">✕</button>
 
-          <div class="w-20 h-20 flex items-center justify-center p-1 bg-white rounded">
+          <div class="w-20 h-20 flex items-center justify-center p-1 bg-white rounded border border-slate-100 shadow-2xs">
             <img src="${item.imageUrl}" class="max-w-full max-h-full object-contain pointer-events-none" loading="lazy" alt="${safeName}" />
           </div>
-          <span class="text-[10px] font-bold text-slate-700 text-center truncate w-full mt-1 uppercase" title="${safeName}">
+
+          <span class="text-[10px] font-bold text-slate-800 text-center truncate w-full mt-1.5 uppercase" title="${safeName}">
             ${safeName}
           </span>
-          <span class="text-[9px] text-amber-600 font-medium">Personale</span>
+
+          <!-- Spunta / Toggle Condivisione con i Colleghi -->
+          <label class="mt-1.5 w-full flex items-center justify-center gap-1.5 text-[10px] font-bold py-1 px-1.5 rounded-lg border transition cursor-pointer ${isShared ? 'bg-blue-100/70 border-blue-300 text-blue-900' : 'bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100'}"
+                 onclick="event.stopPropagation();"
+                 title="Spunta per decidere se condividere questo simbolo con tutti i colleghi">
+            <input type="checkbox" 
+                   class="w-3.5 h-3.5 text-blue-600 rounded border-slate-300 focus:ring-blue-500 cursor-pointer" 
+                   ${isShared ? 'checked' : ''} 
+                   onchange="window.app.handleToggleCustomPictoShare('${safeId}', this.checked, '${safeName}')" />
+            <span class="truncate">${isShared ? '🌐 Condiviso' : '🔒 Privato'}</span>
+          </label>
         </div>
       `;
     }).join('');
+  }
+
+  /**
+   * Attiva/disattiva la condivisione pubblica di un simbolo personale.
+   */
+  async handleToggleCustomPictoShare(id, isShared, name) {
+    this.showToast(isShared ? `Condivisione in corso per "${name}"...` : `Rimozione condivisione...`);
+    const ok = await CustomPictogramsManager.toggleShare(id, isShared);
+    if (ok) {
+      this.showToast(isShared 
+        ? `✨ Il simbolo "${name}" è ora CONDIVISO con tutti i colleghi!` 
+        : `🔒 Condivisione rimossa. Il simbolo "${name}" è ora PRIVATO.`, 'success');
+      this.loadCustomPictograms();
+      // Forza l'aggiornamento cache dei condivisi
+      this.loadSharedPictograms(true).catch(() => {});
+    } else {
+      this.showToast('Errore durante l\'aggiornamento della condivisione sul Cloud.', 'error');
+      this.loadCustomPictograms();
+    }
+  }
+
+  /**
+   * Carica i simboli condivisi dai colleghi dal Cloud.
+   */
+  async loadSharedPictograms(forceRefresh = false) {
+    const container = document.getElementById('sharedPictosGrid');
+    if (!container) return;
+
+    if (forceRefresh || !this.cachedSharedPictograms || this.cachedSharedPictograms.length === 0) {
+      container.innerHTML = `
+        <div class="col-span-full py-8 text-center space-y-2">
+          <div class="w-8 h-8 border-3 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
+          <p class="text-xs text-slate-500 font-medium">Caricamento simboli condivisi dai colleghi...</p>
+        </div>
+      `;
+      this.cachedSharedPictograms = await CustomPictogramsManager.getSharedPictograms();
+      this.refreshSharedPictosBadge();
+    }
+
+    const query = (document.getElementById('inputSharedPictoSearch')?.value || '').trim().toLocaleUpperCase('it-IT');
+    const items = query 
+      ? (this.cachedSharedPictograms || []).filter(item => 
+          (item.name && item.name.toLocaleUpperCase('it-IT').includes(query)) ||
+          (item.authorName && item.authorName.toLocaleUpperCase('it-IT').includes(query)) ||
+          (item.prompt && item.prompt.toLocaleUpperCase('it-IT').includes(query))
+        )
+      : (this.cachedSharedPictograms || []);
+
+    this.renderSharedPictograms(items);
+  }
+
+  /**
+   * Renderizza la griglia dei simboli condivisi dai colleghi.
+   * @param {Array<Object>} items 
+   */
+  renderSharedPictograms(items) {
+    const container = document.getElementById('sharedPictosGrid');
+    if (!container) return;
+
+    if (!items || items.length === 0) {
+      container.innerHTML = `
+        <div class="col-span-full py-8 text-center space-y-3">
+          <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mx-auto text-xl">🌐</div>
+          <p class="text-xs text-slate-600 font-medium max-w-sm mx-auto">
+            Nessun simbolo condiviso dai colleghi al momento per questa ricerca.
+          </p>
+          <p class="text-[11px] text-slate-400 max-w-xs mx-auto">
+            Puoi condividere i tuoi simboli personalizzati con la spunta nella scheda <strong>"⭐ I Miei Simboli"</strong>!
+          </p>
+        </div>
+      `;
+      return;
+    }
+
+    container.innerHTML = items.map(item => {
+      const safeId = this.escapeHtml(item.id);
+      const safeName = this.escapeHtml(item.name || 'SIMBOLO');
+      const safeAuthor = this.escapeHtml(item.authorName || item.authorUser || 'Collega');
+
+      return `
+        <div class="border border-blue-200 bg-white hover:border-blue-500 rounded-xl p-2.5 flex flex-col items-center justify-between cursor-pointer transition hover:shadow-md relative group select-none"
+             onclick="window.app.applyNewPictogram('${safeId}', '${item.imageUrl}', true)"
+             title="Clicca per assegnare questo simbolo alla parola">
+          
+          <div class="w-20 h-20 flex items-center justify-center p-1 bg-white rounded border border-slate-100 shadow-2xs">
+            <img src="${item.imageUrl}" class="max-w-full max-h-full object-contain pointer-events-none" loading="lazy" alt="${safeName}" />
+          </div>
+
+          <span class="text-[10px] font-bold text-slate-800 text-center truncate w-full mt-1.5 uppercase" title="${safeName}">
+            ${safeName}
+          </span>
+
+          <span class="text-[9px] text-blue-700 font-semibold truncate max-w-full" title="Creato da ${safeAuthor}">
+            👤 ${safeAuthor}
+          </span>
+
+          <!-- Bottone Salva nei miei simboli personali -->
+          <button type="button" 
+                  class="mt-1.5 w-full py-1 px-1.5 text-[9px] font-bold bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 rounded-lg transition flex items-center justify-center gap-1"
+                  onclick="event.stopPropagation(); window.app.handleCloneSharedPicto('${safeId}')"
+                  title="Salva una copia di questo simbolo nel tuo archivio personale">
+            <span>💾 Salva nei miei</span>
+          </button>
+        </div>
+      `;
+    }).join('');
+  }
+
+  /**
+   * Salva una copia di un simbolo condiviso dai colleghi nei propri simboli personali.
+   */
+  handleCloneSharedPicto(id) {
+    const item = (this.cachedSharedPictograms || []).find(p => p.id === id);
+    if (!item) {
+      this.showToast('Simbolo non trovato.', 'error');
+      return;
+    }
+
+    try {
+      CustomPictogramsManager.cloneSharedPictogram(item);
+      this.refreshCustomPictosBadge();
+      this.showToast(`Simbolo "${item.name}" salvato nei tuoi simboli personali!`, 'success');
+    } catch (e) {
+      this.showToast(`Errore salvataggio: ${e.message}`, 'error');
+    }
   }
 
   /**
@@ -800,6 +989,7 @@ class CAAApp {
     // Assicura che si apra sul tab ARASAAC e aggiorna badge
     this.switchModalTab('arasaac');
     this.refreshCustomPictosBadge();
+    this.refreshSharedPictosBadge();
     this.initAiReferenceCarousel(token);
 
     modal?.classList.remove('hidden');
@@ -1121,6 +1311,12 @@ class CAAApp {
                        placeholder="Es: REGINA CATTIVA" />
               </div>
 
+              <!-- Spunta per decidere se condividere subito con i colleghi -->
+              <label class="flex items-center gap-2 text-xs font-semibold text-slate-700 cursor-pointer pt-0.5" title="Se spuntato, il simbolo sarà immediatamente visibile anche agli altri docenti">
+                <input type="checkbox" id="checkShareAiPictoNow" class="w-4 h-4 text-blue-600 rounded border-slate-300 focus:ring-blue-500 cursor-pointer" />
+                <span>🌐 Condividi subito con i colleghi</span>
+              </label>
+
               <!-- Gruppo Azioni: Salva e Usa, Salva Solo, Usa Subito -->
               <div class="flex flex-wrap items-center gap-2 pt-1">
                 <button type="button" 
@@ -1151,28 +1347,32 @@ class CAAApp {
         // Gestione azione "Salva e Usa"
         document.getElementById('btnSaveAndUseAiPictogram')?.addEventListener('click', () => {
           const nameInput = document.getElementById('inputCustomPictoSaveName');
+          const isShared = Boolean(document.getElementById('checkShareAiPictoNow')?.checked);
           const finalName = (nameInput?.value || defaultName).trim().toLocaleUpperCase('it-IT');
           const saved = CustomPictogramsManager.save({
             name: finalName,
             imageUrl: svgDataUri,
-            prompt: promptText
+            prompt: promptText,
+            isShared
           });
           this.refreshCustomPictosBadge();
           this.applyNewPictogram(saved.id, svgDataUri, true);
-          this.showToast(`Simbolo "${finalName}" salvato nell'archivio personale e applicato!`);
+          this.showToast(`Simbolo "${finalName}" salvato ${isShared ? 'e condiviso con i colleghi' : 'nel tuo archivio'}!`, 'success');
         });
 
         // Gestione azione "Salva Solo nell'Archivio"
         document.getElementById('btnSaveOnlyAiPictogram')?.addEventListener('click', () => {
           const nameInput = document.getElementById('inputCustomPictoSaveName');
+          const isShared = Boolean(document.getElementById('checkShareAiPictoNow')?.checked);
           const finalName = (nameInput?.value || defaultName).trim().toLocaleUpperCase('it-IT');
           CustomPictogramsManager.save({
             name: finalName,
             imageUrl: svgDataUri,
-            prompt: promptText
+            prompt: promptText,
+            isShared
           });
           this.refreshCustomPictosBadge();
-          this.showToast(`Simbolo "${finalName}" aggiunto al tuo archivio personale!`);
+          this.showToast(`Simbolo "${finalName}" aggiunto ai tuoi simboli ${isShared ? 'e condiviso' : ''}!`, 'success');
           this.switchModalTab('custom');
           this.loadCustomPictograms();
         });

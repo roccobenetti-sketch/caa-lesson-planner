@@ -3,14 +3,20 @@
  * Sincronizzazione automatica Cloud KV + Locale associata al profilo utente.
  */
 
-import { AuthManager } from './authManager.js?v=2.7.1';
+import { AuthManager } from './authManager.js?v=2.7.2';
 
 const STORAGE_KEY = 'caa_custom_pictograms';
 const CLOUD_API = 'https://caa-api.roccobenetti.workers.dev/api/sync/custom-pictograms';
+const SHARED_CLOUD_API = 'https://caa-api.roccobenetti.workers.dev/api/sync/shared-pictograms';
+const TOGGLE_SHARE_API = 'https://caa-api.roccobenetti.workers.dev/api/sync/custom-pictograms/toggle-share';
 
 export const CustomPictogramsManager = {
   getUsername() {
     return AuthManager.currentUser?.username?.toLowerCase() || 'rocco';
+  },
+
+  getAuthorName() {
+    return AuthManager.currentUser?.name || (this.getUsername() === 'rocco' ? 'Rocco' : this.getUsername());
   },
 
   /**
@@ -69,7 +75,7 @@ export const CustomPictogramsManager = {
   /**
    * Salva un nuovo pittogramma personalizzato nell'archivio locale e Cloud.
    */
-  save({ name, imageUrl, prompt = '' }) {
+  save({ name, imageUrl, prompt = '', isShared = false }) {
     if (!name || !imageUrl) {
       throw new Error('Nome e immagine sono obbligatori per salvare il simbolo.');
     }
@@ -77,6 +83,7 @@ export const CustomPictogramsManager = {
     const cleanName = String(name).trim().toLocaleUpperCase('it-IT');
     const items = this.getAll();
     const user = this.getUsername();
+    const authorName = this.getAuthorName();
 
     const id = 'custom_' + Date.now();
     const newPicto = {
@@ -84,6 +91,9 @@ export const CustomPictogramsManager = {
       name: cleanName,
       imageUrl,
       prompt: prompt || cleanName,
+      isShared: Boolean(isShared),
+      authorUser: user,
+      authorName: authorName,
       createdAt: new Date().toISOString()
     };
 
@@ -94,10 +104,84 @@ export const CustomPictogramsManager = {
     fetch(CLOUD_API, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ user, picto: newPicto })
+      body: JSON.stringify({ user, authorName, picto: newPicto })
     }).catch(() => {});
 
     return newPicto;
+  },
+
+  /**
+   * Attiva o disattiva la condivisione pubblica con i colleghi per un simbolo personale.
+   * @param {string} id 
+   * @param {boolean} isShared 
+   * @returns {Promise<boolean>}
+   */
+  async toggleShare(id, isShared) {
+    if (!id) return false;
+    const user = this.getUsername();
+    const authorName = this.getAuthorName();
+    const items = this.getAll();
+    const target = items.find(item => item.id === id);
+    if (!target) return false;
+
+    target.isShared = Boolean(isShared);
+    target.authorUser = user;
+    target.authorName = authorName;
+    target.updatedAt = new Date().toISOString();
+
+    localStorage.setItem(`${STORAGE_KEY}_${user}`, JSON.stringify(items));
+
+    try {
+      const resp = await fetch(TOGGLE_SHARE_API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id,
+          isShared: Boolean(isShared),
+          user,
+          authorName
+        })
+      });
+      return resp.ok;
+    } catch (e) {
+      console.warn('Errore toggle condivisione simbolo cloud:', e);
+      return false;
+    }
+  },
+
+  /**
+   * Recupera tutti i simboli personalizzati condivisi dai colleghi.
+   * @returns {Promise<Array<Object>>}
+   */
+  async getSharedPictograms() {
+    try {
+      const resp = await fetch(SHARED_CLOUD_API, { cache: 'no-store' });
+      if (resp.ok) {
+        const data = await resp.json();
+        return data.sharedPictograms || [];
+      }
+    } catch (e) {
+      console.warn('Errore recupero simboli condivisi:', e);
+    }
+    return [];
+  },
+
+  /**
+   * Clona un simbolo condiviso dai colleghi salvandolo tra i propri simboli personali.
+   * @param {Object} sharedPicto 
+   * @returns {Object}
+   */
+  cloneSharedPictogram(sharedPicto) {
+    if (!sharedPicto || !sharedPicto.imageUrl) {
+      throw new Error('Dati del simbolo non validi per la copia.');
+    }
+
+    return this.save({
+      name: sharedPicto.name || 'SIMBOLO',
+      imageUrl: sharedPicto.imageUrl,
+      prompt: sharedPicto.prompt || '',
+      isShared: false
+    });
   },
 
   /**

@@ -8,7 +8,7 @@ export default {
     const url = new URL(request.url);
     const corsHeaders = {
       'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, DELETE, OPTIONS',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type, Authorization, x-user',
       'Access-Control-Max-Age': '86400',
     };
@@ -240,7 +240,7 @@ export default {
         }
       }
 
-      // --- 2. PITTOGRAMMI E IMMAGINI IA PERSONALI ---
+      // --- 2. PITTOGRAMMI E IMMAGINI IA PERSONALI E CONDIVISI ---
       if (pathname === '/api/sync/custom-pictograms') {
         const user = (url.searchParams.get('user') || 'rocco').toLowerCase().trim();
 
@@ -256,6 +256,9 @@ export default {
           const picto = body.picto;
           if (!picto || !picto.name) return jsonResponse({ error: 'Dati simbolo non validi' }, 400);
 
+          picto.authorUser = targetUser;
+          picto.authorName = body.authorName || (targetUser === 'rocco' ? 'Rocco' : targetUser);
+
           const raw = await env.CAA_KV.get(`picto:${targetUser}`);
           let items = raw ? JSON.parse(raw) : [];
 
@@ -264,6 +267,25 @@ export default {
           items.unshift(picto);
 
           await env.CAA_KV.put(`picto:${targetUser}`, JSON.stringify(items));
+
+          // Gestione indice globale simboli condivisi
+          if (picto.isShared) {
+            const rawShared = await env.CAA_KV.get('index:shared_pictograms');
+            let sharedList = rawShared ? JSON.parse(rawShared) : [];
+            sharedList = sharedList.filter(p => p.id !== picto.id);
+            sharedList.unshift({
+              id: picto.id,
+              name: picto.name,
+              imageUrl: picto.imageUrl,
+              prompt: picto.prompt || '',
+              isShared: true,
+              authorUser: targetUser,
+              authorName: picto.authorName,
+              createdAt: picto.createdAt || new Date().toISOString()
+            });
+            await env.CAA_KV.put('index:shared_pictograms', JSON.stringify(sharedList));
+          }
+
           return jsonResponse({ success: true, id: picto.id });
         }
 
@@ -277,8 +299,70 @@ export default {
             items = items.filter(i => i.id !== pictoId);
             await env.CAA_KV.put(`picto:${user}`, JSON.stringify(items));
           }
+
+          // Rimuove da indice condivisi se presente
+          const rawShared = await env.CAA_KV.get('index:shared_pictograms');
+          if (rawShared) {
+            let sharedList = JSON.parse(rawShared);
+            sharedList = sharedList.filter(p => p.id !== pictoId);
+            await env.CAA_KV.put('index:shared_pictograms', JSON.stringify(sharedList));
+          }
+
           return jsonResponse({ success: true, deletedId: pictoId });
         }
+      }
+
+      // --- TOGGLE CONDIVISIONE SIMBOLO PERSONALIZZATO ---
+      if ((pathname === '/api/sync/custom-pictograms/toggle-share' || pathname === '/api/sync/custom-pictograms/share-toggle') && 
+          (request.method === 'PUT' || request.method === 'POST')) {
+        const body = await request.json();
+        const pictoId = body.id;
+        const isShared = Boolean(body.isShared);
+        const user = (body.user || 'rocco').toLowerCase().trim();
+        const authorName = body.authorName || (user === 'rocco' ? 'Rocco' : user);
+
+        if (!pictoId) return jsonResponse({ error: 'ID simbolo mancante' }, 400);
+
+        const raw = await env.CAA_KV.get(`picto:${user}`);
+        let items = raw ? JSON.parse(raw) : [];
+        let targetPicto = items.find(i => i.id === pictoId);
+
+        if (!targetPicto) {
+          return jsonResponse({ error: 'Simbolo non trovato nel profilo' }, 404);
+        }
+
+        targetPicto.isShared = isShared;
+        targetPicto.authorUser = user;
+        targetPicto.authorName = authorName;
+        await env.CAA_KV.put(`picto:${user}`, JSON.stringify(items));
+
+        // Aggiorna indice globale simboli condivisi
+        const rawShared = await env.CAA_KV.get('index:shared_pictograms');
+        let sharedList = rawShared ? JSON.parse(rawShared) : [];
+        sharedList = sharedList.filter(p => p.id !== pictoId);
+
+        if (isShared) {
+          sharedList.unshift({
+            id: targetPicto.id,
+            name: targetPicto.name,
+            imageUrl: targetPicto.imageUrl,
+            prompt: targetPicto.prompt || '',
+            isShared: true,
+            authorUser: user,
+            authorName: authorName,
+            createdAt: targetPicto.createdAt || new Date().toISOString()
+          });
+        }
+
+        await env.CAA_KV.put('index:shared_pictograms', JSON.stringify(sharedList));
+        return jsonResponse({ success: true, id: pictoId, isShared });
+      }
+
+      // --- FEED SIMBOLI CONDIVISI DA TUTTI GLI UTENTI ---
+      if (pathname === '/api/sync/shared-pictograms' && request.method === 'GET') {
+        const rawShared = await env.CAA_KV.get('index:shared_pictograms');
+        const sharedList = rawShared ? JSON.parse(rawShared) : [];
+        return jsonResponse({ success: true, sharedPictograms: sharedList });
       }
 
       // --- 3. UTENTI E RUOLI ---
