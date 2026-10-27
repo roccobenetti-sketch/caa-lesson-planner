@@ -2,15 +2,15 @@
  * Controller principale dell'applicazione CAA Lesson Planner.
  */
 
-import { ConfigManager } from './config.js?v=2.6.0';
-import { GeminiService } from './geminiService.js?v=2.6.0';
-import { ArasaacService } from './arasaacService.js?v=2.6.0';
-import { LessonRenderer } from './lessonRenderer.js?v=2.6.0';
-import { ProjectManager } from './projectManager.js?v=2.6.0';
-import { CustomPictogramsManager } from './customPictogramsManager.js?v=2.6.0';
-import { AuthManager } from './authManager.js?v=2.6.0';
-import { BackupManager } from './backupManager.js?v=2.6.0';
-import { PdfClientEngine } from './pdfClientEngine.js?v=2.6.0';
+import { ConfigManager } from './config.js?v=2.6.1';
+import { GeminiService } from './geminiService.js?v=2.6.1';
+import { ArasaacService } from './arasaacService.js?v=2.6.1';
+import { LessonRenderer } from './lessonRenderer.js?v=2.6.1';
+import { ProjectManager } from './projectManager.js?v=2.6.1';
+import { CustomPictogramsManager } from './customPictogramsManager.js?v=2.6.1';
+import { AuthManager } from './authManager.js?v=2.6.1';
+import { BackupManager } from './backupManager.js?v=2.6.1';
+import { PdfClientEngine } from './pdfClientEngine.js?v=2.6.1';
 
 class CAAApp {
   constructor() {
@@ -1855,7 +1855,7 @@ class CAAApp {
   /**
    * Passa tra la scheda dei progetti personali e quella dei progetti condivisi.
    */
-  switchProjectsTab(tab = 'mine') {
+  async switchProjectsTab(tab = 'mine') {
     this.currentProjectTab = tab;
     const tabMy = document.getElementById('tabMyProjects');
     const tabShared = document.getElementById('tabSharedProjects');
@@ -1872,6 +1872,7 @@ class CAAApp {
       tabMy?.classList.add('bg-slate-50', 'text-slate-600', 'border-slate-200');
     }
 
+    await this.refreshProjectsCount();
     this.applyProjectsFilter();
   }
 

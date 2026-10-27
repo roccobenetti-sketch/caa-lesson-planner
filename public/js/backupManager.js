@@ -4,8 +4,8 @@
  * con verifica e riconciliazione anti-duplicati.
  */
 
-import { ProjectManager } from './projectManager.js?v=2.6.0';
-import { CustomPictogramsManager } from './customPictogramsManager.js?v=2.6.0';
+import { ProjectManager } from './projectManager.js?v=2.6.1';
+import { CustomPictogramsManager } from './customPictogramsManager.js?v=2.6.1';
 
 export const BackupManager = {
   /**

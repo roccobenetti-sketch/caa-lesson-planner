@@ -3,7 +3,7 @@
  * dei percorsi didattici CAA associati al profilo utente.
  */
 
-import { AuthManager } from './authManager.js?v=2.6.0';
+import { AuthManager } from './authManager.js?v=2.6.1';
 
 export class ProjectManager {
   static LOCAL_STORAGE_KEY = 'caa_saved_projects_v1';
