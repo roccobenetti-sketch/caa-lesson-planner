@@ -25,9 +25,11 @@ export const AuthManager = {
    */
   async init() {
     this.ensureAdminUser();
-    const hasSso = this.handleSsoLogin();
-    if (!hasSso) {
-      this.restoreSession();
+    if (!this.currentUser) {
+      const hasSso = this.handleSsoLogin();
+      if (!hasSso) {
+        this.restoreSession();
+      }
     }
     await this.syncUsersFromCloud();
   },

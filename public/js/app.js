@@ -25,11 +25,21 @@ class CAAApp {
   }
 
   async init() {
-    // 1. Registra subito i click listener e mostra la schermata di login se non autenticato
+    // 1. Ripristino immediato sessione locale o SSO sincrono per evitare flickering del modale login
+    try {
+      const hasSso = AuthManager.handleSsoLogin();
+      if (!hasSso) {
+        AuthManager.restoreSession();
+      }
+    } catch (e) {
+      console.warn('Errore pre-init auth:', e);
+    }
+
+    // Registra listener UI e aggiorna lo stato dell'autenticazione
     this.setupUIBindings();
     this.setupAuthUI();
 
-    // 2. Inizializzazione autenticazione e configurazioni
+    // 2. Inizializzazione completa asincrona (sincronizzazione utenti e config dal Cloud)
     try {
       await AuthManager.init();
     } catch (e) {
