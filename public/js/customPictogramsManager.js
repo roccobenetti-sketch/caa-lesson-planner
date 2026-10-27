@@ -98,9 +98,6 @@ export const CustomPictogramsManager = {
       method: 'DELETE'
     }).catch(() => {});
   },
-    items = items.filter(item => item.id !== id);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-  },
 
   /**
    * Filtra i pittogrammi per parola chiave.

@@ -23,15 +23,32 @@ class CAAApp {
   }
 
   async init() {
-    await AuthManager.init();
-    await ConfigManager.init();
+    // 1. Registra subito i click listener e mostra la schermata di login se non autenticato
     this.setupUIBindings();
     this.setupAuthUI();
+
+    // 2. Inizializzazione autenticazione e configurazioni
+    try {
+      await AuthManager.init();
+    } catch (e) {
+      console.warn('Errore init auth:', e);
+    }
+    this.setupAuthUI();
+
+    try {
+      await ConfigManager.init();
+    } catch (e) {
+      console.warn('Errore init config:', e);
+    }
+
     this.updateConfigStatusUI();
     this.populateModelSelectors();
-    await CustomPictogramsManager.syncFromCloud();
-    await this.refreshProjectsCount();
+    
+    // 3. Sincronizzazioni cloud in background
+    CustomPictogramsManager.syncFromCloud().catch(() => {});
+    this.refreshProjectsCount().catch(() => {});
     this.refreshCustomPictosBadge();
+
     window.addEventListener('resize', () => {
       LessonRenderer.adjustAllTokenLabels(document.getElementById('printableArea'));
     });
