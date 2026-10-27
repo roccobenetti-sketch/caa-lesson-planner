@@ -8,9 +8,9 @@
  * - Resa ottimizzata per la stampa A4 (tutti i controlli no-print nascosti)
  */
 
-import { ArasaacService } from './arasaacService.js?v=2.6.1';
-import { ConfigManager } from './config.js?v=2.6.1';
-import { GeminiService } from './geminiService.js?v=2.6.1';
+import { ArasaacService } from './arasaacService.js?v=2.6.2';
+import { ConfigManager } from './config.js?v=2.6.2';
+import { GeminiService } from './geminiService.js?v=2.6.2';
 
 export const LessonRenderer = {
   currentLesson: null,
@@ -145,6 +145,13 @@ export const LessonRenderer = {
       default:
         return 'border-cat-misc';
     }
+  },
+
+  /**
+   * Alias di compatibilità per il rendering del progetto a video.
+   */
+  renderLesson(lesson, containerElement = document.getElementById('printableArea')) {
+    return this.render(containerElement, lesson);
   },
 
   /**

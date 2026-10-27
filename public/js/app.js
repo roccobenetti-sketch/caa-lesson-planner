@@ -2,15 +2,15 @@
  * Controller principale dell'applicazione CAA Lesson Planner.
  */
 
-import { ConfigManager } from './config.js?v=2.6.1';
-import { GeminiService } from './geminiService.js?v=2.6.1';
-import { ArasaacService } from './arasaacService.js?v=2.6.1';
-import { LessonRenderer } from './lessonRenderer.js?v=2.6.1';
-import { ProjectManager } from './projectManager.js?v=2.6.1';
-import { CustomPictogramsManager } from './customPictogramsManager.js?v=2.6.1';
-import { AuthManager } from './authManager.js?v=2.6.1';
-import { BackupManager } from './backupManager.js?v=2.6.1';
-import { PdfClientEngine } from './pdfClientEngine.js?v=2.6.1';
+import { ConfigManager } from './config.js?v=2.6.2';
+import { GeminiService } from './geminiService.js?v=2.6.2';
+import { ArasaacService } from './arasaacService.js?v=2.6.2';
+import { LessonRenderer } from './lessonRenderer.js?v=2.6.2';
+import { ProjectManager } from './projectManager.js?v=2.6.2';
+import { CustomPictogramsManager } from './customPictogramsManager.js?v=2.6.2';
+import { AuthManager } from './authManager.js?v=2.6.2';
+import { BackupManager } from './backupManager.js?v=2.6.2';
+import { PdfClientEngine } from './pdfClientEngine.js?v=2.6.2';
 
 class CAAApp {
   constructor() {
@@ -2109,28 +2109,21 @@ class CAAApp {
       const fullLesson = await ProjectManager.getSharedProject(projectId);
       
       // Assicura che i token abbiano i pittogrammi
-      if (fullLesson && fullLesson.cards) {
-        for (const card of fullLesson.cards) {
-          if (card.tokens) {
-            for (const token of card.tokens) {
-              if (token.customImage && token.customImageDataUri) {
-                token.pictogramUrl = token.customImageDataUri;
-              } else if (!token.pictogramUrl && token.pictogramId && !String(token.pictogramId).startsWith('ai_')) {
-                token.pictogramUrl = ArasaacService.getPictogramUrl(token.pictogramId);
-              }
-            }
-          }
-        }
-      }
+      await LessonRenderer.prepareLesson(fullLesson);
 
-      LessonRenderer.renderLesson(fullLesson);
+      const container = document.getElementById('printableArea');
+      LessonRenderer.render(container, fullLesson);
+
+      document.getElementById('lessonActions')?.classList.remove('hidden');
+      document.getElementById('emptyState')?.classList.add('hidden');
+
       this.currentLesson = fullLesson;
       this.lastSavedSnapshot = this.takeProjectSnapshot(fullLesson);
       this.markClean();
 
       this.closeProjectsModal();
       this.showToast(`Percorso condiviso "${fullLesson.title}" caricato a video!`);
-      document.getElementById('printableArea')?.scrollIntoView({ behavior: 'smooth' });
+      container.scrollIntoView({ behavior: 'smooth' });
     } catch (e) {
       console.error(e);
       this.showToast(`Errore caricamento: ${e.message}`, 'error');
