@@ -1,0 +1,744 @@
+{
+  "title": "La Fiaba del piccolo drago e del fuoco gentile",
+  "targetGrade": "primaria",
+  "primaryClass": "1",
+  "layoutType": "routine",
+  "contextSummary": "Fiaba originale sui draghi sviluppata passo dopo passo in modo dettagliato seguendo i principi della CAA.",
+  "teacherGuide": "Leggere la storia indicando ogni simbolo CAA. Sottolineare le emozioni e le motivazioni dei personaggi ad ogni passaggio.",
+  "moral": {
+    "title": "La Morale e l'Insegnamento Chiave",
+    "explanation": "L'amicizia e la gentilezza sono più forti della rabbia e portano pace a tutti.",
+    "tokens": [
+      {
+        "displayWord": "AMICIZIA",
+        "searchTerm": "amicizia",
+        "category": "noun",
+        "pictogramId": 8488,
+        "imageUrl": "https://static.arasaac.org/pictograms/8488/8488_500.png",
+        "alternatives": [
+          {
+            "id": 8488,
+            "imageUrl": "https://static.arasaac.org/pictograms/8488/8488_500.png"
+          }
+        ],
+        "source": "arasaac"
+      },
+      {
+        "displayWord": "GENTILEZZA",
+        "searchTerm": "gentilezza",
+        "category": "adjective",
+        "pictogramId": 37231,
+        "imageUrl": "https://static.arasaac.org/pictograms/37231/37231_500.png",
+        "alternatives": [
+          {
+            "id": 37231,
+            "imageUrl": "https://static.arasaac.org/pictograms/37231/37231_500.png"
+          }
+        ],
+        "source": "arasaac"
+      },
+      {
+        "displayWord": "SONO",
+        "searchTerm": "essere",
+        "category": "verb",
+        "pictogramId": 36480,
+        "imageUrl": "https://static.arasaac.org/pictograms/36480/36480_500.png",
+        "alternatives": [
+          {
+            "id": 36480,
+            "imageUrl": "https://static.arasaac.org/pictograms/36480/36480_500.png"
+          }
+        ],
+        "source": "arasaac"
+      },
+      {
+        "displayWord": "PIÙ",
+        "searchTerm": "più",
+        "category": "adjective",
+        "pictogramId": 3220,
+        "imageUrl": "https://static.arasaac.org/pictograms/3220/3220_500.png",
+        "alternatives": [
+          {
+            "id": 3220,
+            "imageUrl": "https://static.arasaac.org/pictograms/3220/3220_500.png"
+          },
+          {
+            "id": 5508,
+            "imageUrl": "https://static.arasaac.org/pictograms/5508/5508_500.png"
+          },
+          {
+            "id": 26913,
+            "imageUrl": "https://static.arasaac.org/pictograms/26913/26913_500.png"
+          },
+          {
+            "id": 16121,
+            "imageUrl": "https://static.arasaac.org/pictograms/16121/16121_500.png"
+          },
+          {
+            "id": 4557,
+            "imageUrl": "https://static.arasaac.org/pictograms/4557/4557_500.png"
+          },
+          {
+            "id": 4716,
+            "imageUrl": "https://static.arasaac.org/pictograms/4716/4716_500.png"
+          },
+          {
+            "id": 10193,
+            "imageUrl": "https://static.arasaac.org/pictograms/10193/10193_500.png"
+          },
+          {
+            "id": 32749,
+            "imageUrl": "https://static.arasaac.org/pictograms/32749/32749_500.png"
+          }
+        ],
+        "source": "arasaac"
+      },
+      {
+        "displayWord": "FORTI",
+        "searchTerm": "forte",
+        "category": "adjective",
+        "pictogramId": 25121,
+        "imageUrl": "https://static.arasaac.org/pictograms/25121/25121_500.png",
+        "alternatives": [
+          {
+            "id": 25121,
+            "imageUrl": "https://static.arasaac.org/pictograms/25121/25121_500.png"
+          },
+          {
+            "id": 4655,
+            "imageUrl": "https://static.arasaac.org/pictograms/4655/4655_500.png"
+          },
+          {
+            "id": 10204,
+            "imageUrl": "https://static.arasaac.org/pictograms/10204/10204_500.png"
+          },
+          {
+            "id": 34296,
+            "imageUrl": "https://static.arasaac.org/pictograms/34296/34296_500.png"
+          }
+        ],
+        "source": "arasaac"
+      },
+      {
+        "displayWord": "RABBIA",
+        "searchTerm": "rabbia",
+        "category": "adjective",
+        "pictogramId": 35567,
+        "imageUrl": "https://static.arasaac.org/pictograms/35567/35567_500.png",
+        "alternatives": [
+          {
+            "id": 35567,
+            "imageUrl": "https://static.arasaac.org/pictograms/35567/35567_500.png"
+          }
+        ],
+        "source": "arasaac"
+      },
+      {
+        "displayWord": "PORTANO",
+        "searchTerm": "portare",
+        "category": "verb",
+        "pictogramId": 8983,
+        "imageUrl": "https://static.arasaac.org/pictograms/8983/8983_500.png",
+        "alternatives": [
+          {
+            "id": 8983,
+            "imageUrl": "https://static.arasaac.org/pictograms/8983/8983_500.png"
+          },
+          {
+            "id": 7280,
+            "imageUrl": "https://static.arasaac.org/pictograms/7280/7280_500.png"
+          },
+          {
+            "id": 6553,
+            "imageUrl": "https://static.arasaac.org/pictograms/6553/6553_500.png"
+          },
+          {
+            "id": 6139,
+            "imageUrl": "https://static.arasaac.org/pictograms/6139/6139_500.png"
+          },
+          {
+            "id": 7279,
+            "imageUrl": "https://static.arasaac.org/pictograms/7279/7279_500.png"
+          },
+          {
+            "id": 8982,
+            "imageUrl": "https://static.arasaac.org/pictograms/8982/8982_500.png"
+          },
+          {
+            "id": 32061,
+            "imageUrl": "https://static.arasaac.org/pictograms/32061/32061_500.png"
+          },
+          {
+            "id": 37223,
+            "imageUrl": "https://static.arasaac.org/pictograms/37223/37223_500.png"
+          }
+        ],
+        "source": "arasaac"
+      },
+      {
+        "displayWord": "PACE",
+        "searchTerm": "pace",
+        "category": "noun",
+        "pictogramId": 8182,
+        "imageUrl": "https://static.arasaac.org/pictograms/8182/8182_500.png",
+        "alternatives": [
+          {
+            "id": 8182,
+            "imageUrl": "https://static.arasaac.org/pictograms/8182/8182_500.png"
+          },
+          {
+            "id": 7076,
+            "imageUrl": "https://static.arasaac.org/pictograms/7076/7076_500.png"
+          },
+          {
+            "id": 32994,
+            "imageUrl": "https://static.arasaac.org/pictograms/32994/32994_500.png"
+          },
+          {
+            "id": 32992,
+            "imageUrl": "https://static.arasaac.org/pictograms/32992/32992_500.png"
+          }
+        ],
+        "source": "arasaac"
+      },
+      {
+        "displayWord": "A",
+        "searchTerm": "a",
+        "category": "misc",
+        "pictogramId": 7034,
+        "imageUrl": "https://static.arasaac.org/pictograms/7034/7034_500.png",
+        "alternatives": [
+          {
+            "id": 7034,
+            "imageUrl": "https://static.arasaac.org/pictograms/7034/7034_500.png"
+          }
+        ],
+        "source": "arasaac"
+      },
+      {
+        "displayWord": "TUTTI",
+        "searchTerm": "tutto",
+        "category": "adjective",
+        "pictogramId": "36081",
+        "imageUrl": "https://static.arasaac.org/pictograms/36081/36081_500.png",
+        "alternatives": [
+          {
+            "id": 5596,
+            "imageUrl": "https://static.arasaac.org/pictograms/5596/5596_500.png"
+          }
+        ],
+        "source": "arasaac",
+        "customImage": false
+      }
+    ]
+  },
+  "cards": [
+    {
+      "sectionTitle": "Inizio della storia",
+      "stepLabel": "Il piccolo drago",
+      "pedagogicalExplanation": "Presentazione del protagonista che vive nella grotta.",
+      "tokens": [
+        {
+          "displayWord": "DRAGO",
+          "searchTerm": "drago",
+          "category": "person",
+          "pictogramId": 5572,
+          "imageUrl": "https://static.arasaac.org/pictograms/5572/5572_500.png",
+          "alternatives": [
+            {
+              "id": 5572,
+              "imageUrl": "https://static.arasaac.org/pictograms/5572/5572_500.png"
+            },
+            {
+              "id": 5576,
+              "imageUrl": "https://static.arasaac.org/pictograms/5576/5576_500.png"
+            },
+            {
+              "id": 39536,
+              "imageUrl": "https://static.arasaac.org/pictograms/39536/39536_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "VIVE",
+          "searchTerm": "vivere",
+          "category": "verb",
+          "pictogramId": 11605,
+          "imageUrl": "https://static.arasaac.org/pictograms/11605/11605_500.png",
+          "alternatives": [
+            {
+              "id": 11605,
+              "imageUrl": "https://static.arasaac.org/pictograms/11605/11605_500.png"
+            },
+            {
+              "id": 7302,
+              "imageUrl": "https://static.arasaac.org/pictograms/7302/7302_500.png"
+            },
+            {
+              "id": 35103,
+              "imageUrl": "https://static.arasaac.org/pictograms/35103/35103_500.png"
+            },
+            {
+              "id": 38394,
+              "imageUrl": "https://static.arasaac.org/pictograms/38394/38394_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "GROTTA",
+          "searchTerm": "grotta",
+          "category": "noun",
+          "pictogramId": "custom_1793051276941",
+          "imageUrl": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAgMTIwIiB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCI+CiAgPCEtLSBTZm9uZG8gZmlhYmVzY28gcmljaGllc3RvIC0tPgogIDxyZWN0IHdpZHRoPSIxMTYiIGhlaWdodD0iMTE2IiB4PSIyIiB5PSIyIiByeD0iMTYiIGZpbGw9IiNmZWZjZTgiIHN0cm9rZT0iI2ZlZjA4YSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz4KCiAgPCEtLSBJbnRlcm5vIEdyb3R0YSBBY2NvZ2xpZW50ZSAoQ2FzYSBkZWwgRHJhZ28pIC0tPgogIDxwYXRoIGQ9Ik0gMTIgMTA4IFEgMTIgNTAgNjAgNDggUSAxMDggNTAgMTA4IDEwOCBaIiBmaWxsPSIjNDIyYTFkIi8+CiAgPHBhdGggZD0iTSAxOCAxMDggUSAxOCA1NiA2MCA1NCBRIDEwMiA1NiAxMDIgMTA4IFoiIGZpbGw9IiM3ODUzMzgiLz4KICA8cGF0aCBkPSJNIDI0IDEwOCBRIDI0IDYyIDYwIDYwIFEgOTYgNjIgOTYgMTA4IFoiIGZpbGw9IiNiMDg5NjgiLz4KICAKICA8IS0tIFBhdmltZW50byBkZWxsYSBjYXZlcm5hIC0tPgogIDxlbGxpcHNlIGN4PSI2MCIgY3k9IjEwNCIgcng9IjQyIiByeT0iOCIgZmlsbD0iIzVjNDAzMyIvPgogIAogIDwhLS0gRGV0dGFnbGkgY2FzYTogdGFwcGV0byBhY2NvZ2xpZW50ZSAtLT4KICA8ZWxsaXBzZSBjeD0iNjAiIGN5PSIxMDQiIHJ4PSIyNSIgcnk9IjUiIGZpbGw9IiNlMDdhNWYiLz4KCiAgPCEtLSBNZW5zb2xhIGNvbiB0ZXNvcmkgZSBsaWJyaSBzdWxsYSBwYXJldGUgcm9jY2lvc2EgLS0+CiAgPHJlY3QgeD0iNDUiIHk9IjcwIiB3aWR0aD0iMzAiIGhlaWdodD0iMiIgZmlsbD0iIzNhMjMxMiIgcng9IjEiLz4KICA8Y2lyY2xlIGN4PSI1MiIgY3k9IjY3IiByPSIzIiBmaWxsPSIjZjRhMjYxIi8+CiAgPHJlY3QgeD0iNTgiIHk9IjY0IiB3aWR0aD0iNCIgaGVpZ2h0PSI2IiBmaWxsPSIjZTc2ZjUxIiByeD0iMSIvPgogIDxyZWN0IHg9IjYzIiB5PSI2NSIgd2lkdGg9IjMiIGhlaWdodD0iNSIgZmlsbD0iIzJhOWQ4ZiIgcng9IjEiLz4KCiAgPCEtLSBEUkFHTyBERUxMQSBDT05USU5VSVTDgCAoVmVyZGUsIGFjY29nbGllbnRlIG5lbGxhIHN1YSBncm90dGEsIHN0aWxlIHN0b3J5Ym9vaykgLS0+CiAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTAsIDEwKSI+CiAgICA8IS0tIENvZGEgYXJyaWNjaWF0YSBzdWwgcGF2aW1lbnRvIC0tPgogICAgPHBhdGggZD0iTSA1MCA4NSBRIDM1IDk1IDQ1IDk4IFEgNjUgMTAyIDg1IDkyIiBmaWxsPSJub25lIiBzdHJva2U9IiMxYzNiMTYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgICA8cGF0aCBkPSJNIDUwIDg1IFEgMzUgOTUgNDUgOTggUSA2NSAxMDIgODUgOTIiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzIzNGUxZSIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgoKICAgIDwhLS0gQ29ycG8gcGFmZnV0byBkZWwgZHJhZ28gLS0+CiAgICA8cGF0aCBkPSJNIDQ4IDY1IFEgNDAgODUgNTUgOTAgUSA3MCA4NSA2OCA2NSBaIiBmaWxsPSIjMjM0ZTFlIiBzdHJva2U9IiMxYzNiMTYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgogICAgPCEtLSBQYW5jaWEgY2hpYXJhICh2ZXJkZSBjaGlhcm8gY29tZSBkYSByaWZlcmltZW50bykgLS0+CiAgICA8cGF0aCBkPSJNIDUyIDcwIFEgNDggODUgNTcgODcgUSA2NCA4NSA2MiA3MCBaIiBmaWxsPSIjYTNlNjM1IiBvcGFjaXR5PSIwLjgiLz4KCiAgICA8IS0tIFphbXBlIHBvc3RlcmlvcmkgZSBhbnRlcmlvcmkgLS0+CiAgICA8cGF0aCBkPSJNIDQ1IDgzIEwgNDMgOTEgTCA0OCA5MSBaIiBmaWxsPSIjMjM0ZTFlIiBzdHJva2U9IiMxYzNiMTYiIHN0cm9rZS13aWR0aD0iMS41Ii8+CiAgICA8cGF0aCBkPSJNIDY4IDgzIEwgNzAgOTEgTCA2NSA5MSBaIiBmaWxsPSIjMjM0ZTFlIiBzdHJva2U9IiMxYzNiMTYiIHN0cm9rZS13aWR0aD0iMS41Ii8+CgogICAgPCEtLSBDb2xsbyBlIFRlc3RhIC0tPgogICAgPHBhdGggZD0iTSA1NSA2NSBRIDUwIDQ1IDY4IDQwIFEgNzggMzcgODIgNDggUSA4NSA1OCA3MiA2NSBaIiBmaWxsPSIjMjM0ZTFlIiBzdHJva2U9IiMxYzNiMTYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgogICAgPCEtLSBTZnVtYXR1cmEgY29sbG8gLS0+CiAgICA8cGF0aCBkPSJNIDU4IDYwIFEgNTYgNDcgNjcgNDMgUSA3MyA0MSA3NiA0OCBRIDc4IDU1IDY4IDYwIFoiIGZpbGw9IiNhM2U2MzUiIG9wYWNpdHk9IjAuNyIvPgoKICAgIDwhLS0gTXVzbyBlIGJvY2NhIGFtaWNoZXZvbGUgKHN0aWxlIGZpYWJlc2NvKSAtLT4KICAgIDxwYXRoIGQ9Ik0gNzggNDUgUSA4NiA0NiA4NCA1MSBRIDgwIDUzIDc2IDUwIFoiIGZpbGw9IiMyMzRlMWUiIHN0cm9rZT0iIzFjM2IxNiIgc3Ryb2tlLXdpZHRoPSIxLjUiLz4KICAgIDxjaXJjbGUgY3g9IjgxIiBjeT0iNDciIHI9IjEiIGZpbGw9IiMxYzNiMTYiLz4KICAgIDwhLS0gT2NjaGlvIGVzcHJlc3Npdm8gZSBkb2xjZSAtLT4KICAgIDxjaXJjbGUgY3g9Ijc1IiBjeT0iNDQiIHI9IjEuNSIgZmlsbD0iIzFjM2IxNiIvPgogICAgPGNpcmNsZSBjeD0iNzUuNSIgY3k9IjQzLjUiIHI9IjAuNSIgZmlsbD0iI2ZmZmZmZiIvPgogICAgCiAgICA8IS0tIFBpY2NvbGUgY29ybmEgc3VsIGNhcG8gLS0+CiAgICA8cGF0aCBkPSJNIDcwIDM4IEwgNzMgMzQgTCA3NCAzOSBaIiBmaWxsPSIjMWMzYjE2Ii8+CgogICAgPCEtLSBBbGkgcmlwaWVnYXRlIHN1bGxhIHNjaGllbmEgKGNhcmF0dGVyaXN0aWNoZSB2ZXJkaSBkYWxsJ2ltbWFnaW5lKSAtLT4KICAgIDxwYXRoIGQ9Ik0gNTIgNTAgUSAzOCA0NSAzNSA2MCBRIDQ1IDY1IDUyIDYwIFoiIGZpbGw9IiNhM2U2MzUiIHN0cm9rZT0iIzFjM2IxNiIgc3Ryb2tlLXdpZHRoPSIxLjgiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KICAgIDxwYXRoIGQ9Ik0gMzggNTIgUSA0NSA1OCA1MCA1OCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMWMzYjE2IiBzdHJva2Utd2lkdGg9IjEuMiIvPgogICAgPHBhdGggZD0iTSAzNiA1NyBRIDQ0IDYxIDQ4IDYyIiBmaWxsPSJub25lIiBzdHJva2U9IiMxYzNiMTYiIHN0cm9rZS13aWR0aD0iMS4yIi8+CgogICAgPCEtLSBaYW1wYSBhbnRlcmlvcmUgY2hlIHRpZW5lIHVuYSB0YXp6YSBmdW1hbnRlIChkZXR0YWdsaW8gY2FzYWxpbmdvL2ZpYWJlc2NvKSAtLT4KICAgIDxwYXRoIGQ9Ik0gNjQgNjggUSA2OCA3MiA3MiA2OCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMWMzYjE2IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogICAgPCEtLSBUYXp6YSBkaSB0w6ggY2FsZG8gLS0+CiAgICA8cmVjdCB4PSI3MSIgeT0iNjYiIHdpZHRoPSI1IiBoZWlnaHQ9IjYiIGZpbGw9IiNmOGZhZmMiIHN0cm9rZT0iIzFjM2IxNiIgc3Ryb2tlLXdpZHRoPSIxIiByeD0iMSIvPgogICAgPCEtLSBWYXBvcmUgbWFnaWNvIC0tPgogICAgPHBhdGggZD0iTSA3MyA2NCBRIDc1IDYyIDczIDYwIiBmaWxsPSJub25lIiBzdHJva2U9IiNhM2U2MzUiIHN0cm9rZS13aWR0aD0iMSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBvcGFjaXR5PSIwLjgiLz4KICA8L2c+CgogIDwhLS0gTHVjaW5lIGZhdGF0ZS9jcmlzdGFsbGkgc3VsbGEgcm9jY2lhIHBlciBkYXJlIGNhbG9yZSAtLT4KICA8Y2lyY2xlIGN4PSIyOCIgY3k9IjQ1IiByPSIyIiBmaWxsPSIjZmRlMDQ3IiBvcGFjaXR5PSIwLjgiLz4KICA8Y2lyY2xlIGN4PSI5MiIgY3k9IjQwIiByPSIxLjUiIGZpbGw9IiNmZGUwNDciIG9wYWNpdHk9IjAuOCIvPgogIDxjaXJjbGUgY3g9Ijg1IiBjeT0iNzUiIHI9IjIiIGZpbGw9IiM2N2U4ZjkiIG9wYWNpdHk9IjAuNyIvPgo8L3N2Zz4=",
+          "alternatives": [
+            {
+              "id": 2729,
+              "imageUrl": "https://static.arasaac.org/pictograms/2729/2729_500.png"
+            },
+            {
+              "id": 11177,
+              "imageUrl": "https://static.arasaac.org/pictograms/11177/11177_500.png"
+            },
+            {
+              "id": 39203,
+              "imageUrl": "https://static.arasaac.org/pictograms/39203/39203_500.png"
+            }
+          ],
+          "source": "arasaac",
+          "customImage": true
+        }
+      ]
+    },
+    {
+      "sectionTitle": "Il problema",
+      "stepLabel": "Il fuoco birichino",
+      "pedagogicalExplanation": "Il drago starnutisce e brucia le foglie senza volerlo.",
+      "tokens": [
+        {
+          "displayWord": "DRAGO",
+          "searchTerm": "drago",
+          "category": "person",
+          "pictogramId": 5572,
+          "imageUrl": "https://static.arasaac.org/pictograms/5572/5572_500.png",
+          "alternatives": [
+            {
+              "id": 5572,
+              "imageUrl": "https://static.arasaac.org/pictograms/5572/5572_500.png"
+            },
+            {
+              "id": 5576,
+              "imageUrl": "https://static.arasaac.org/pictograms/5576/5576_500.png"
+            },
+            {
+              "id": 39536,
+              "imageUrl": "https://static.arasaac.org/pictograms/39536/39536_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "STARNUTISCE",
+          "searchTerm": "starnutire",
+          "category": "verb",
+          "pictogramId": 16703,
+          "imageUrl": "https://static.arasaac.org/pictograms/16703/16703_500.png",
+          "alternatives": [
+            {
+              "id": 16703,
+              "imageUrl": "https://static.arasaac.org/pictograms/16703/16703_500.png"
+            },
+            {
+              "id": 35965,
+              "imageUrl": "https://static.arasaac.org/pictograms/35965/35965_500.png"
+            },
+            {
+              "id": 36149,
+              "imageUrl": "https://static.arasaac.org/pictograms/36149/36149_500.png"
+            },
+            {
+              "id": 36535,
+              "imageUrl": "https://static.arasaac.org/pictograms/36535/36535_500.png"
+            },
+            {
+              "id": 36536,
+              "imageUrl": "https://static.arasaac.org/pictograms/36536/36536_500.png"
+            },
+            {
+              "id": 36537,
+              "imageUrl": "https://static.arasaac.org/pictograms/36537/36537_500.png"
+            },
+            {
+              "id": 36733,
+              "imageUrl": "https://static.arasaac.org/pictograms/36733/36733_500.png"
+            },
+            {
+              "id": 36734,
+              "imageUrl": "https://static.arasaac.org/pictograms/36734/36734_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "FUOCO",
+          "searchTerm": "fuoco",
+          "category": "noun",
+          "pictogramId": 4654,
+          "imageUrl": "https://static.arasaac.org/pictograms/4654/4654_500.png",
+          "alternatives": [
+            {
+              "id": 4654,
+              "imageUrl": "https://static.arasaac.org/pictograms/4654/4654_500.png"
+            },
+            {
+              "id": 21518,
+              "imageUrl": "https://static.arasaac.org/pictograms/21518/21518_500.png"
+            },
+            {
+              "id": 37553,
+              "imageUrl": "https://static.arasaac.org/pictograms/37553/37553_500.png"
+            },
+            {
+              "id": 4925,
+              "imageUrl": "https://static.arasaac.org/pictograms/4925/4925_500.png"
+            },
+            {
+              "id": 3140,
+              "imageUrl": "https://static.arasaac.org/pictograms/3140/3140_500.png"
+            },
+            {
+              "id": 6578,
+              "imageUrl": "https://static.arasaac.org/pictograms/6578/6578_500.png"
+            },
+            {
+              "id": 25944,
+              "imageUrl": "https://static.arasaac.org/pictograms/25944/25944_500.png"
+            },
+            {
+              "id": 6196,
+              "imageUrl": "https://static.arasaac.org/pictograms/6196/6196_500.png"
+            }
+          ],
+          "source": "arasaac"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "L'incontro",
+      "stepLabel": "Gli amici del bosco",
+      "pedagogicalExplanation": "Il drago incontra gli animali spaventati dal fuoco.",
+      "tokens": [
+        {
+          "displayWord": "ANIMALI",
+          "searchTerm": "animale",
+          "category": "person",
+          "pictogramId": 2568,
+          "imageUrl": "https://static.arasaac.org/pictograms/2568/2568_500.png",
+          "alternatives": [
+            {
+              "id": 8025,
+              "imageUrl": "https://static.arasaac.org/pictograms/8025/8025_500.png"
+            },
+            {
+              "id": 6901,
+              "imageUrl": "https://static.arasaac.org/pictograms/6901/6901_500.png"
+            },
+            {
+              "id": 2520,
+              "imageUrl": "https://static.arasaac.org/pictograms/2520/2520_500.png"
+            },
+            {
+              "id": 38634,
+              "imageUrl": "https://static.arasaac.org/pictograms/38634/38634_500.png"
+            },
+            {
+              "id": 2903,
+              "imageUrl": "https://static.arasaac.org/pictograms/2903/2903_500.png"
+            },
+            {
+              "id": 2343,
+              "imageUrl": "https://static.arasaac.org/pictograms/2343/2343_500.png"
+            },
+            {
+              "id": 13090,
+              "imageUrl": "https://static.arasaac.org/pictograms/13090/13090_500.png"
+            },
+            {
+              "id": 22039,
+              "imageUrl": "https://static.arasaac.org/pictograms/22039/22039_500.png"
+            }
+          ],
+          "customImage": false
+        },
+        {
+          "displayWord": "HANNO",
+          "searchTerm": "avere",
+          "category": "verb",
+          "pictogramId": "custom_1793050891677",
+          "imageUrl": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCI+CiAgPCEtLSBTZm9uZG8gc3RhbmRhcmQgQ0FBIC0tPgogIDxyZWN0IHdpZHRoPSI5NiIgaGVpZ2h0PSI5NiIgeD0iMiIgeT0iMiIgcng9IjE0IiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiNlMmU4ZjAiIHN0cm9rZS13aWR0aD0iMiIvPgogIAogIDwhLS0gRnJlY2NlIGRpcmV6aW9uYWxpIGRpIG1vdmltZW50byBwZXIgaW5kaWNhcmUgbCdhemlvbmUgZGkgYWZmZXJyYXJlIC0tPgogIDxnIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzNiODJmNiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIG9wYWNpdHk9IjAuNiI+CiAgICA8cGF0aCBkPSJNIDIwIDQwIEwgMzUgNDAiIC8+CiAgICA8cGF0aCBkPSJNIDgwIDQwIEwgNjUgNDAiIC8+CiAgICA8cGF0aCBkPSJNIDI4IDM0IEwgMjAgNDAgTCAyOCA0NiIgLz4KICAgIDxwYXRoIGQ9Ik0gNzIgMzQgTCA4MCA0MCBMIDcyIDQ2IiAvPgogIDwvZz4KCiAgPCEtLSBPZ2dldHRvIGFmZmVycmF0byAocGFsbGEgcm9zc2EgY2VudHJhbGUpIC0tPgogIDxjaXJjbGUgY3g9IjUwIiBjeT0iNTAiIHI9IjE0IiBmaWxsPSIjZWY0NDQ0IiBzdHJva2U9IiMxZTI5M2IiIHN0cm9rZS13aWR0aD0iMyIvPgogIDxwYXRoIGQ9Ik0gNDMgNDEgUSA0NyA0NSA0MyA1MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZjg3MTcxIiBzdHJva2Utd2lkdGg9IjIuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CgogIDwhLS0gTWFubyBTaW5pc3RyYSAtLT4KICA8ZyBmaWxsPSIjZmRlMDQ3IiBzdHJva2U9IiMxZTI5M2IiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj4KICAgIDwhLS0gUGFsbW8gZSBwb2xzbyAtLT4KICAgIDxwYXRoIGQ9Ik0gMTIgNTggTCAyNiA1OCBDIDMwIDU4IDM1IDUzIDM1IDQ4IEwgMzUgNDIgQyAzNSAzNyAzMCAzMiAyNiAzMiBMIDEyIDMyIFoiIC8+CiAgICA8IS0tIERpdGEgY2hlIHN0cmluZ29ubyB2ZXJzbyBkZXN0cmEgLS0+CiAgICA8cGF0aCBkPSJNIDMzIDM0IEwgNDMgMzYiIC8+CiAgICA8cGF0aCBkPSJNIDM1IDQyIEwgNDYgNDMiIC8+CiAgICA8cGF0aCBkPSJNIDM1IDUwIEwgNDYgNDgiIC8+CiAgICA8cGF0aCBkPSJNIDMxIDU2IEwgNDEgNTMiIC8+CiAgPC9nPgoKICA8IS0tIE1hbm8gRGVzdHJhIC0tPgogIDxnIGZpbGw9IiNmZGUwNDciIHN0cm9rZT0iIzFlMjkzYiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPgogICAgPCEtLSBQYWxtbyBlIHBvbHNvIC0tPgogICAgPHBhdGggZD0iTSA4OCA1OCBMIDc0IDU4IEMgNzAgNTggNjUgNTMgNjUgNDggTCA2NSA0MiBDIDY1IDM3IDcwIDMyIDc0IDMyIEwgODggMzIgWiIgLz4KICAgIDwhLS0gRGl0YSBjaGUgc3RyaW5nb25vIHZlcnNvIHNpbmlzdHJhIC0tPgogICAgPHBhdGggZD0iTSA2NyAzNCBMIDU3IDM2IiAvPgogICAgPHBhdGggZD0iTSA2NSA0MiBMIDU0IDQzIiAvPgogICAgPHBhdGggZD0iTSA2NSA1MCBMIDU0IDQ4IiAvPgogICAgPHBhdGggZD0iTSA2OSA1NiBMIDU5IDUzIiAvPgogIDwvZz4KPC9zdmc+",
+          "alternatives": [
+            {
+              "id": 7015,
+              "imageUrl": "https://static.arasaac.org/pictograms/7015/7015_500.png"
+            }
+          ],
+          "customImage": true
+        },
+        {
+          "displayWord": "PAURA",
+          "searchTerm": "paura",
+          "category": "adjective",
+          "pictogramId": "39248",
+          "imageUrl": "https://static.arasaac.org/pictograms/39248/39248_500.png",
+          "alternatives": [
+            {
+              "id": 10261,
+              "imageUrl": "https://static.arasaac.org/pictograms/10261/10261_500.png"
+            },
+            {
+              "id": 35571,
+              "imageUrl": "https://static.arasaac.org/pictograms/35571/35571_500.png"
+            },
+            {
+              "id": 38417,
+              "imageUrl": "https://static.arasaac.org/pictograms/38417/38417_500.png"
+            },
+            {
+              "id": 39248,
+              "imageUrl": "https://static.arasaac.org/pictograms/39248/39248_500.png"
+            },
+            {
+              "id": 39668,
+              "imageUrl": "https://static.arasaac.org/pictograms/39668/39668_500.png"
+            },
+            {
+              "id": 39697,
+              "imageUrl": "https://static.arasaac.org/pictograms/39697/39697_500.png"
+            },
+            {
+              "id": 38258,
+              "imageUrl": "https://static.arasaac.org/pictograms/38258/38258_500.png"
+            }
+          ],
+          "customImage": false
+        },
+        {
+          "displayWord": "ESSERE",
+          "searchTerm": "essere",
+          "category": "verb",
+          "pictogramId": 36480,
+          "imageUrl": "https://static.arasaac.org/pictograms/36480/36480_500.png",
+          "alternatives": [
+            {
+              "id": 36480,
+              "imageUrl": "https://static.arasaac.org/pictograms/36480/36480_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "BRUCIATI",
+          "searchTerm": "bruciare",
+          "category": "verb",
+          "pictogramId": "custom_1793051498098",
+          "imageUrl": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjAgMTIwIiB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCI+CiAgPGRlZnM+CiAgICA8IS0tIFNmb25kbyBjb24gc2Z1bWF0dXJhIC0tPgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJiZ0dyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjZjFmNWY5Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2UyZThmMCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KCiAgICA8IS0tIFNmdW1hdHVyYSBjb3JwbyBzZXJwZW50ZSAodG9uYWxpdMOgIHZlcmRpIHJlYWxpc3RpY2hlIGUgdm9sdW1pbm9zZSkgLS0+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImJvZHlHcmFkIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2EzZTYzNSIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjQwJSIgc3RvcC1jb2xvcj0iIzY1YTMwZCIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjgwJSIgc3RvcC1jb2xvcj0iIzRkN2MwZiIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMzZjYyMTIiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CgogICAgPCEtLSBTZnVtYXR1cmEgcGVyIGlsIHZlbnRyZSBjaGlhcm8gZGVsIHNlcnBlbnRlIC0tPgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJiZWxseUdyYWQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2JlZjI2NCIgc3RvcC1vcGFjaXR5PSIwLjgiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjODRjYzE2IiBzdG9wLW9wYWNpdHk9IjAuOSIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KCiAgICA8IS0tIE9tYnJhIHBvcnRhdGEgc3VsIHRlcnJlbm8gLS0+CiAgICA8cmFkaWFsR3JhZGllbnQgaWQ9InNoYWRvd0dyYWQiIGN4PSI1MCUiIGN5PSI1MCUiIHI9IjUwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9InJnYmEoMCwgMCwgMCwgMC4zNSkiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSJyZ2JhKDAsIDAsIDAsIDApIi8+CiAgICA8L3JhZGlhbEdyYWRpZW50PgoKICAgIDwhLS0gU2Z1bWF0dXJlIGZ1b2NvIHJlYWxpc3RpY28gLS0+CiAgICA8cmFkaWFsR3JhZGllbnQgaWQ9ImZpcmVPdXRlciIgY3g9IjUwJSIgY3k9IjUwJSIgcj0iNTAlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2Y5NzMxNiIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjYwJSIgc3RvcC1jb2xvcj0iI2VmNDQ0NCIgc3RvcC1vcGFjaXR5PSIwLjgiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjYjkxYzFjIiBzdG9wLW9wYWNpdHk9IjAiLz4KICAgIDwvcmFkaWFsR3JhZGllbnQ+CgogICAgPHJhZGlhbEdyYWRpZW50IGlkPSJmaXJlSW5uZXIiIGN4PSI1MCUiIGN5PSI2MCUiIHI9IjQwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNmZWYwOGEiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiNmYWNjMTUiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjZjk3MzE2IiBzdG9wLW9wYWNpdHk9IjAiLz4KICAgIDwvcmFkaWFsR3JhZGllbnQ+CiAgICAKICAgIDwhLS0gRmlsdHJvIGJhZ2xpb3JlIChnbG93KSBwZXIgaWwgZnVvY28gLS0+CiAgICA8ZmlsdGVyIGlkPSJnbG93IiB4PSItNTAlIiB5PSItNTAlIiB3aWR0aD0iMjAwJSIgaGVpZ2h0PSIyMDAlIj4KICAgICAgPGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMyIgcmVzdWx0PSJjb2xvcmVkQmx1ciIvPgogICAgICA8ZmVNZXJnZT4KICAgICAgICA8ZmVNZXJnZU5vZGUgaW49ImNvbG9yZWRCbHVyIi8+CiAgICAgICAgPGZlTWVyZ2VOb2RlIGluPSJTb3VyY2VHcmFwaGljIi8+CiAgICAgIDwvZmVNZXJnZT4KICAgIDwvZmlsdGVyPgogIDwvZGVmcz4KCiAgPCEtLSBTZm9uZG8gcHJpbmNpcGFsZSAtLT4KICA8cmVjdCB3aWR0aD0iMTE2IiBoZWlnaHQ9IjExNiIgeD0iMiIgeT0iMiIgcng9IjE2IiBmaWxsPSJ1cmwoI2JnR3JhZCkiIHN0cm9rZT0iI2NiZDVlMSIgc3Ryb2tlLXdpZHRoPSIxLjUiLz4KCiAgPCEtLSBPbWJyYSBzb3R0byBpbCBzZXJwZW50ZSAtLT4KICA8ZWxsaXBzZSBjeD0iNjAiIGN5PSI4NSIgcng9IjUwIiByeT0iMTIiIGZpbGw9InVybCgjc2hhZG93R3JhZCkiLz4KCiAgPCEtLSBPbWJyYSBzb3R0byBpbCBmdW9jbyBkZWxsYSBjb2RhIC0tPgogIDxlbGxpcHNlIGN4PSIyNiIgY3k9IjQ4IiByeD0iMTAiIHJ5PSI0IiBmaWxsPSJ1cmwoI3NoYWRvd0dyYWQpIi8+CgogIDwhLS0gPT09PT09PT09PT09PT09PT0gU0VSUEVOVEUgUkVBTElTVElDTyA9PT09PT09PT09PT09PT09PSAtLT4KICA8IS0tIENvcnBvIHByaW5jaXBhbGUgY29uIHRleHR1cmUgZGkgc2NhZ2xpZSBzb3R0aWxpIC0tPgogIDxnIGlkPSJzbmFrZSI+CiAgICA8IS0tIENvZGEgYXJyaWNjaWF0YSBjb24gZnVvY28gLS0+CiAgICA8IS0tIENvcnBvIHBvc3RlcmlvcmUgLS0+CiAgICA8cGF0aCBkPSJNIDI3LDQyIEMgMjQsNDAgMjEsNDMgMjMsNDcgQyAyNSw1MSAyOSw0OCAzMyw0MCBDIDM3LDMyIDQ1LDI0IDUzLDM1IEMgNjEsNDYgNTEsNzUgNzAsNzIgQyA4MCw3MCA4NSw1NSA5Miw1NyBDIDk4LDU5IDEwNCw2NSAxMDMsNjkgQyAxMDIsNzIgOTYsNzUgODgsNzQgQyA3NSw3MiA2NSw0MiA1Myw0MiBDIDQ1LDQyIDM5LDUyIDM1LDQ2IFoiIGZpbGw9InVybCgjYm9keUdyYWQpIi8+CgogICAgPCEtLSBTZXppb25lIHByaW5jaXBhbGUgb25kdWxhdGEgcmljYWxjYXRhIHN1bGxhIHJlZmVyZW5jZSBtYSByZXNhIHRyaWRpbWVuc2lvbmFsZSAtLT4KICAgIDxwYXRoIGQ9Ik0gMjgsNDAgCiAgICAgICAgICAgICBDIDIwLDM4IDE4LDUyIDI2LDUwCiAgICAgICAgICAgICBDIDM4LDQ4IDQ4LDI1IDYyLDM1CiAgICAgICAgICAgICBDIDc2LDQ1IDYwLDc4IDc4LDc0CiAgICAgICAgICAgICBDIDg4LDcyIDkyLDU4IDk4LDYwCiAgICAgICAgICAgICBDIDEwNiw2MiAxMDgsNzIgOTgsNzYKICAgICAgICAgICAgIEMgODgsODAgNzIsNjAgNjIsNjUKICAgICAgICAgICAgIEMgNTAsNzAgNDIsNDAgMzMsNDMKICAgICAgICAgICAgIEMgMjgsNDUgMzAsNDIgMjgsNDAgWiIgCiAgICAgICAgICBmaWxsPSJ1cmwoI2JvZHlHcmFkKSIgCiAgICAgICAgICBzdHJva2U9IiMzNjUzMTQiIAogICAgICAgICAgc3Ryb2tlLXdpZHRoPSIxLjIiIAogICAgICAgICAgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgoKICAgIDwhLS0gU2Z1bWF0dXJhIGluZmVyaW9yZS92ZW50cmUgcGVyIGRhcmUgdm9sdW1lIGNpbGluZHJpY28gLS0+CiAgICA8cGF0aCBkPSJNIDMwLDQ4IEMgNDIsNDggNDgsMjggNjAsMzggQyA3Miw0OCA1OCw3NCA3NCw3MiBDIDg0LDcwIDg5LDYxIDk2LDYyIiAKICAgICAgICAgIGZpbGw9Im5vbmUiIAogICAgICAgICAgc3Ryb2tlPSJ1cmwoI2JlbGx5R3JhZCkiIAogICAgICAgICAgc3Ryb2tlLXdpZHRoPSIzLjUiIAogICAgICAgICAgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiAKICAgICAgICAgIG9wYWNpdHk9IjAuOCIvPgoKICAgIDwhLS0gVGVzdGEgZGVsIHNlcnBlbnRlIChkZXR0YWdsaWF0YSBlIHRyaWRpbWVuc2lvbmFsZSkgLS0+CiAgICA8ZyBpZD0iaGVhZCI+CiAgICAgIDwhLS0gU290dG8tdGVzdGEgLyBDb2xsbyAtLT4KICAgICAgPHBhdGggZD0iTSA5Miw2MiBDIDk1LDY1IDEwMSw2NSAxMDQsNjMgQyAxMDcsNjEgMTEwLDY1IDEwOCw2OSBDIDEwNiw3MyA5OCw3NSA5Miw3MCBaIiBmaWxsPSIjM2Y2MjEyIi8+CiAgICAgIAogICAgICA8IS0tIFRlc3RhIHByaW5jaXBhbGUgLS0+CiAgICAgIDxwYXRoIGQ9Ik0gOTYsNjAgQyAxMDAsNTggMTA3LDU5IDExMCw2MyBDIDExMyw2NyAxMTIsNzEgMTA4LDczIEMgMTAyLDc2IDk2LDcyIDk0LDY4IEMgOTMsNjUgOTQsNjEgOTYsNjAgWiIgCiAgICAgICAgICAgIGZpbGw9InVybCgjYm9keUdyYWQpIiAKICAgICAgICAgICAgc3Ryb2tlPSIjMzY1MzE0IiAKICAgICAgICAgICAgc3Ryb2tlLXdpZHRoPSIxLjIiLz4KICAgICAgCiAgICAgIDwhLS0gU29wcmFjY2lnbGlvIC8gUmlsaWV2byBvY3VsYXJlIHBlciByZWFsaXNtbyAtLT4KICAgICAgPHBhdGggZD0iTSAxMDAsNjIgQyAxMDMsNjEgMTA2LDYzIDEwNSw2NiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNjVhMzBkIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CgogICAgICA8IS0tIE9jY2hpbyByZWFsaXN0aWNvIGNvbiByaWZsZXNzbyAtLT4KICAgICAgPGNpcmNsZSBjeD0iMTAzIiBjeT0iNjUiIHI9IjEuOCIgZmlsbD0iIzExMTgyNyIvPgogICAgICA8Y2lyY2xlIGN4PSIxMDMuNSIgY3k9IjY0LjUiIHI9IjAuNiIgZmlsbD0iI2ZmZmZmZiIvPgoKICAgICAgPCEtLSBOYXJpY2UgLS0+CiAgICAgIDxjaXJjbGUgY3g9IjEwOSIgY3k9IjY1IiByPSIwLjUiIGZpbGw9IiMzZjYyMTIiLz4KCiAgICAgIDwhLS0gTGluZ3VhIGJpZm9yY3V0YSAoZ3VpZGEgdmlzaXZhKSAtLT4KICAgICAgPHBhdGggZD0iTSAxMTAsNjcgTCAxMTUsNjYgTSAxMTUsNjYgTCAxMTgsNjMgTSAxMTUsNjYgTCAxMTgsNjkiIAogICAgICAgICAgICBmaWxsPSJub25lIiAKICAgICAgICAgICAgc3Ryb2tlPSIjZTExZDQ4IiAKICAgICAgICAgICAgc3Ryb2tlLXdpZHRoPSIxLjIiIAogICAgICAgICAgICBzdHJva2UtbGluZWNhcD0icm91bmQiIAogICAgICAgICAgICBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgICA8L2c+CiAgPC9nPgoKICA8IS0tID09PT09PT09PT09PT09PT09IEZVT0NPIFNVTExBIENPREEgPT09PT09PT09PT09PT09PT0gLS0+CiAgPGcgaWQ9InRhaWwtZmlyZSIgZmlsdGVyPSJ1cmwoI2dsb3cpIj4KICAgIDwhLS0gYWxvbmUgZXN0ZXJubyBkZWwgZnVvY28gLS0+CiAgICA8ZWxsaXBzZSBjeD0iMjMiIGN5PSI0MCIgcng9IjEwIiByeT0iMTQiIGZpbGw9InVybCgjZmlyZU91dGVyKSIvPgogICAgCiAgICA8IS0tIGZpYW1tZSBkaW5hbWljaGUgLS0+CiAgICA8cGF0aCBkPSJNIDIzLDUwIEMgMjAsNDQgMTQsNDAgMTgsMzMgQyAyMSwyOCAyMywzMSAyNSwyNCBDIDI3LDMyIDMyLDM1IDI5LDQzIEMgMjcsNDggMjUsNDggMjMsNTAgWiIgZmlsbD0idXJsKCNmaXJlT3V0ZXIpIi8+CiAgICAKICAgIDwhLS0gbnVjbGVvIGludGVybm8gaW5mdW9jYXRvIChwacO5IGNoaWFybykgLS0+CiAgICA8cGF0aCBkPSJNIDIzLDQ2IEMgMjEsNDEgMTgsMzggMjAsMzMgQyAyMiwyOSAyMywzMiAyNCwyNyBDIDI1LDMyIDI4LDM1IDI2LDQxIEMgMjUsNDUgMjQsNDUgMjMsNDYgWiIgZmlsbD0idXJsKCNmaXJlSW5uZXIpIi8+CiAgICAKICAgIDwhLS0gU2NpbnRpbGxlIGZsdXR0dWFudGkgLS0+CiAgICA8Y2lyY2xlIGN4PSIxNSIgY3k9IjMwIiByPSIxIiBmaWxsPSIjZmVmMDhhIi8+CiAgICA8Y2lyY2xlIGN4PSIzMSIgY3k9IjI3IiByPSIxLjIiIGZpbGw9IiNmZWYwOGEiLz4KICAgIDxjaXJjbGUgY3g9IjIxIiBjeT0iMjAiIHI9IjAuOCIgZmlsbD0iI2ZkYmE3NCIvPgogICAgPGNpcmNsZSBjeD0iMjciIGN5PSIxNyIgcj0iMSIgZmlsbD0iI2ZlZjA4YSIvPgogIDwvZz4KCjwvc3ZnPg==",
+          "alternatives": [
+            {
+              "id": 6196,
+              "imageUrl": "https://static.arasaac.org/pictograms/6196/6196_500.png"
+            },
+            {
+              "id": 36155,
+              "imageUrl": "https://static.arasaac.org/pictograms/36155/36155_500.png"
+            }
+          ],
+          "source": "arasaac",
+          "customImage": true
+        }
+      ]
+    },
+    {
+      "sectionTitle": "L'azione gentile",
+      "stepLabel": "Arrostire i marshmallow",
+      "pedagogicalExplanation": "Il drago usa il suo fuoco per cucinare cose buone insieme.",
+      "tokens": [
+        {
+          "displayWord": "DRAGO",
+          "searchTerm": "drago",
+          "category": "person",
+          "pictogramId": 5572,
+          "imageUrl": "https://static.arasaac.org/pictograms/5572/5572_500.png",
+          "alternatives": [
+            {
+              "id": 5572,
+              "imageUrl": "https://static.arasaac.org/pictograms/5572/5572_500.png"
+            },
+            {
+              "id": 5576,
+              "imageUrl": "https://static.arasaac.org/pictograms/5576/5576_500.png"
+            },
+            {
+              "id": 39536,
+              "imageUrl": "https://static.arasaac.org/pictograms/39536/39536_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "CUCINA",
+          "searchTerm": "cucinare",
+          "category": "verb",
+          "pictogramId": 30526,
+          "imageUrl": "https://static.arasaac.org/pictograms/30526/30526_500.png",
+          "alternatives": [
+            {
+              "id": 30526,
+              "imageUrl": "https://static.arasaac.org/pictograms/30526/30526_500.png"
+            },
+            {
+              "id": 2342,
+              "imageUrl": "https://static.arasaac.org/pictograms/2342/2342_500.png"
+            },
+            {
+              "id": 6984,
+              "imageUrl": "https://static.arasaac.org/pictograms/6984/6984_500.png"
+            },
+            {
+              "id": 39811,
+              "imageUrl": "https://static.arasaac.org/pictograms/39811/39811_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "DOLCI",
+          "searchTerm": "dolce",
+          "category": "noun",
+          "pictogramId": "custom_1793050925640",
+          "imageUrl": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCI+CiAgPCEtLSBTZm9uZG8gc3RhbmRhcmQgQ0FBIGNvbiBib3JkbyBhcnJvdG9uZGF0byAtLT4KICA8cmVjdCB3aWR0aD0iOTYiIGhlaWdodD0iOTYiIHg9IjIiIHk1PSIyIiB5PSIyIiByeD0iMTQiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iI2UyZThmMCIgc3Ryb2tlLXdpZHRoPSIyIi8+CgogIDwhLS0gR3J1cHBvIGRvbGNpdW1pIGNlbnRyYXRvIC0tPgogIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAsIDIpIj4KICAgIAogICAgPCEtLSBQSUFUVE8gLyBCQVNFIC0tPgogICAgPGVsbGlwc2UgY3g9IjUwIiBjeT0iODAiIHJ4PSIzNiIgcnk9IjciIGZpbGw9IiNlMmU4ZjAiIHN0cm9rZT0iIzFlMjkzYiIgc3Ryb2tlLXdpZHRoPSIzIi8+CiAgICA8ZWxsaXBzZSBjeD0iNTAiIGN5PSI3OCIgcng9IjMyIiByeT0iNSIgZmlsbD0iI2Y4ZmFmYyIgc3Ryb2tlPSIjMWUyOTNiIiBzdHJva2Utd2lkdGg9IjIiLz4KCiAgICA8IS0tIENVUENBS0UgKGEgc2luaXN0cmEpIC0tPgogICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTgsIDQyKSI+CiAgICAgIDwhLS0gUGlyb2ZpbGEgLS0+CiAgICAgIDxwYXRoIGQ9Ik0gNSAyMiBMIDEyIDM2IEMgMTIgMzcgMTggMzcgMTkgMzYgTCAyNiAyMiBaIiBmaWxsPSIjMzhiZGY4IiBzdHJva2U9IiMxZTI5M2IiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgogICAgICA8cGF0aCBkPSJNIDkgMjIgTCAxMSAzNiBNIDE1IDIyIEwgMTUuNSAzNiBNIDIxIDIyIEwgMTkgMzYiIHN0cm9rZT0iIzFlMjkzYiIgc3Ryb2tlLXdpZHRoPSIyIiBvcGFjaXR5PSIwLjYiLz4KICAgICAgPCEtLSBQYW4gZGkgc3B1Z25hIC8gQ3JlbWEgLS0+CiAgICAgIDxwYXRoIGQ9Ik0gMyAyMiBDIDAgMTUgMTUgMTAgMTUuNSAxNSBDIDE2IDEwIDMxIDE1IDI4IDIyIFoiIGZpbGw9IiNmNDcyYjYiIHN0cm9rZT0iIzFlMjkzYiIgc3Ryb2tlLXdpZHRoPSIzIi8+CiAgICAgIDwhLS0gQ2lsaWVnaW5hIC0tPgogICAgICA8Y2lyY2xlIGN4PSIxNS41IiBjeT0iOCIgcj0iNSIgZmlsbD0iI2VmNDQ0NCIgc3Ryb2tlPSIjMWUyOTNiIiBzdHJva2Utd2lkdGg9IjIuNSIvPgogICAgICA8cGF0aCBkPSJNIDE1LjUgMyBDIDE4IC0yIDI0IC0xIDI2IDIiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzFlMjkzYiIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICAgIDwvZz4KCiAgICA8IS0tIENJQU1CRUxMQSAvIERPTlVUIChhIGRlc3RyYSkgLS0+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1NiwgNDYpIj4KICAgICAgPCEtLSBDaWFtYmVsbGEgYmFzZSAtLT4KICAgICAgPGNpcmNsZSBjeD0iMTgiIGN5PSIxOCIgcj0iMTYiIGZpbGw9IiNmYmJmMjQiIHN0cm9rZT0iIzFlMjkzYiIgc3Ryb2tlLXdpZHRoPSIzIi8+CiAgICAgIDwhLS0gR2xhc3NhIHJvc2EgLS0+CiAgICAgIDxwYXRoIGQ9Ik0gMTggNCBDIDI3IDQgMzMgMTAgMzIgMTggQyAzMSAyMiAyOCAyNCAyNiAyMiBDIDI0IDIwIDIzIDI1IDIwIDI2IEMgMTYgMjcgMTAgMjQgOCAyMCBDIDUgMTQgOSA0IDE4IDQgWiIgZmlsbD0iI2Y0NzJiNiIgc3Ryb2tlPSIjMWUyOTNiIiBzdHJva2Utd2lkdGg9IjIuNSIvPgogICAgICA8IS0tIEJ1Y28gY2VudHJhbGUgLS0+CiAgICAgIDxjaXJjbGUgY3g9IjE4IiBjeT0iMTgiIHI9IjUiIGZpbGw9IiNmZmZmZmYiIHN0cm9rZT0iIzFlMjkzYiIgc3Ryb2tlLXdpZHRoPSIyLjUiLz4KICAgICAgPCEtLSBDb25mZXR0aW5pIGNvbG9yYXRpIHN1bGxhIGdsYXNzYSAtLT4KICAgICAgPGxpbmUgeDE9IjEyIiB5MT0iOSIgeDI9IjE0IiB5Mj0iMTEiIHN0cm9rZT0iI2VmNDQ0NCIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICAgICAgPGxpbmUgeDE9IjI0IiB5MT0iMTIiIHgyPSIyNiIgeTI9IjEwIiBzdHJva2U9IiMzOGJkZjgiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgICAgIDxsaW5lIHgxPSIxNCIgeTE9IjIxIiB4Mj0iMTYiIHkyPSIyMyIgc3Ryb2tlPSIjMjJjNTVlIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgogICAgPC9nPgoKICAgIDwhLS0gQ0FSQU1FTExBIChhbCBjZW50cm8gaW4gYmFzc28vZGlldHJvKSAtLT4KICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDM2LCAyMikiPgogICAgICA8IS0tIEluY2FydG8gbGF0ZXJhbGUgU1ggLS0+CiAgICAgIDxwYXRoIGQ9Ik0gMTQgMTIgTCAyIDcgTCA0IDE2IFoiIGZpbGw9IiNhODU1ZjciIHN0cm9rZT0iIzFlMjkzYiIgc3Ryb2tlLXdpZHRoPSIyLjUiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KICAgICAgPCEtLSBJbmNhcnRvIGxhdGVyYWxlIERYIC0tPgogICAgICA8cGF0aCBkPSJNIDI2IDEyIEwgMzggNyBMIDM2IDE2IFoiIGZpbGw9IiNhODU1ZjciIHN0cm9rZT0iIzFlMjkzYiIgc3Ryb2tlLXdpZHRoPSIyLjUiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KICAgICAgPCEtLSBDb3JwbyBjYXJhbWVsbGEgLS0+CiAgICAgIDxjaXJjbGUgY3g9IjIwIiBjeT0iMTIiIHI9IjEwIiBmaWxsPSIjYzA4NGZjIiBzdHJva2U9IiMxZTI5M2IiIHN0cm9rZS13aWR0aD0iMyIvPgogICAgICA8IS0tIERldHRhZ2xpbyBjYXJhbWVsbGEgKHN0cmlzY2UpIC0tPgogICAgICA8cGF0aCBkPSJNIDE0IDUgQyAxOCA4IDE4IDE2IDE0IDE5IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMi41IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICAgIDwvZz4KCiAgPC9nPgo8L3N2Zz4=",
+          "alternatives": [
+            {
+              "id": 32440,
+              "imageUrl": "https://static.arasaac.org/pictograms/32440/32440_500.png"
+            },
+            {
+              "id": 4636,
+              "imageUrl": "https://static.arasaac.org/pictograms/4636/4636_500.png"
+            },
+            {
+              "id": 9055,
+              "imageUrl": "https://static.arasaac.org/pictograms/9055/9055_500.png"
+            },
+            {
+              "id": 10201,
+              "imageUrl": "https://static.arasaac.org/pictograms/10201/10201_500.png"
+            },
+            {
+              "id": 31837,
+              "imageUrl": "https://static.arasaac.org/pictograms/31837/31837_500.png"
+            },
+            {
+              "id": 8369,
+              "imageUrl": "https://static.arasaac.org/pictograms/8369/8369_500.png"
+            },
+            {
+              "id": 28357,
+              "imageUrl": "https://static.arasaac.org/pictograms/28357/28357_500.png"
+            },
+            {
+              "id": 36127,
+              "imageUrl": "https://static.arasaac.org/pictograms/36127/36127_500.png"
+            }
+          ],
+          "source": "arasaac",
+          "customImage": true
+        }
+      ]
+    },
+    {
+      "sectionTitle": "La conclusione",
+      "stepLabel": "Tutti felici",
+      "pedagogicalExplanation": "Gli animali capiscono che il drago è buono e giocano insieme.",
+      "tokens": [
+        {
+          "displayWord": "TUTTI",
+          "searchTerm": "tutto",
+          "category": "person",
+          "pictogramId": "36081",
+          "imageUrl": "https://static.arasaac.org/pictograms/36081/36081_500.png",
+          "alternatives": [
+            {
+              "id": 5596,
+              "imageUrl": "https://static.arasaac.org/pictograms/5596/5596_500.png"
+            }
+          ],
+          "source": "arasaac",
+          "customImage": false
+        },
+        {
+          "displayWord": "GIOCANO",
+          "searchTerm": "giocare",
+          "category": "verb",
+          "pictogramId": 23392,
+          "imageUrl": "https://static.arasaac.org/pictograms/23392/23392_500.png",
+          "alternatives": [
+            {
+              "id": 23392,
+              "imageUrl": "https://static.arasaac.org/pictograms/23392/23392_500.png"
+            },
+            {
+              "id": 6537,
+              "imageUrl": "https://static.arasaac.org/pictograms/6537/6537_500.png"
+            },
+            {
+              "id": 2439,
+              "imageUrl": "https://static.arasaac.org/pictograms/2439/2439_500.png"
+            },
+            {
+              "id": 35717,
+              "imageUrl": "https://static.arasaac.org/pictograms/35717/35717_500.png"
+            },
+            {
+              "id": 35723,
+              "imageUrl": "https://static.arasaac.org/pictograms/35723/35723_500.png"
+            },
+            {
+              "id": 36884,
+              "imageUrl": "https://static.arasaac.org/pictograms/36884/36884_500.png"
+            },
+            {
+              "id": 36885,
+              "imageUrl": "https://static.arasaac.org/pictograms/36885/36885_500.png"
+            },
+            {
+              "id": 37068,
+              "imageUrl": "https://static.arasaac.org/pictograms/37068/37068_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "INSIEME",
+          "searchTerm": "insieme",
+          "category": "adjective",
+          "pictogramId": "7116",
+          "imageUrl": "https://static.arasaac.org/pictograms/7116/7116_500.png",
+          "alternatives": [
+            {
+              "id": 7064,
+              "imageUrl": "https://static.arasaac.org/pictograms/7064/7064_500.png"
+            }
+          ],
+          "source": "arasaac",
+          "customImage": false
+        }
+      ]
+    }
+  ],
+  "id": "la_fiaba_del_piccolo_drago_e_d_1793050449568",
+  "createdAt": "2026-10-26T21:34:09.568Z",
+  "updatedAt": "2026-10-26T21:51:54Z",
+  "includeContextSummaryInPrint": false,
+  "includeTeacherGuideInPrint": false
+}

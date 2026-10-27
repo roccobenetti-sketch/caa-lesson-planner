@@ -3,7 +3,7 @@
  * Gestisce chiavi API, modelli Gemini e persistenza locale nel browser.
  */
 
-import { AuthManager } from './authManager.js';
+import { AuthManager } from './authManager.js?v=2.5.0';
 
 export const ConfigManager = {
   STORAGE_KEY_API: 'caa_gemini_api_key',

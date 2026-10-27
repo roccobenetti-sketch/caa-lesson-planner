@@ -8,9 +8,9 @@
  * - Resa ottimizzata per la stampa A4 (tutti i controlli no-print nascosti)
  */
 
-import { ArasaacService } from './arasaacService.js';
-import { ConfigManager } from './config.js';
-import { GeminiService } from './geminiService.js';
+import { ArasaacService } from './arasaacService.js?v=2.5.0';
+import { ConfigManager } from './config.js?v=2.5.0';
+import { GeminiService } from './geminiService.js?v=2.5.0';
 
 export const LessonRenderer = {
   currentLesson: null,

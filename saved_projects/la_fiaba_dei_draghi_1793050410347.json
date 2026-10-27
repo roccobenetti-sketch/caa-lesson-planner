@@ -1,0 +1,471 @@
+{
+  "title": "La Fiaba dei Draghi",
+  "targetGrade": "primaria",
+  "primaryClass": "1",
+  "layoutType": "routine",
+  "contextSummary": "Generata una fiaba dettagliata con i draghi scomponendo la storia in micro-passaggi logici sequenziali.",
+  "teacherGuide": "Utilizzare le schede CAA per guidare il bambino nella comprensione della sequenza narrativa, ponendo attenzione ai verbi e alle emozioni dei personaggi.",
+  "moral": {
+    "title": "La Morale e l'Insegnamento Chiave",
+    "explanation": "L'amicizia e la gentilezza sono più forti del fuoco e della paura.",
+    "tokens": [
+      {
+        "displayWord": "AMICIZIA",
+        "searchTerm": "amicizia",
+        "category": "noun",
+        "pictogramId": 8488,
+        "imageUrl": "https://static.arasaac.org/pictograms/8488/8488_500.png",
+        "alternatives": [
+          {
+            "id": 8488,
+            "imageUrl": "https://static.arasaac.org/pictograms/8488/8488_500.png"
+          }
+        ],
+        "source": "arasaac"
+      },
+      {
+        "displayWord": "VINCE",
+        "searchTerm": "vincere",
+        "category": "verb",
+        "pictogramId": 7218,
+        "imageUrl": "https://static.arasaac.org/pictograms/7218/7218_500.png",
+        "alternatives": [
+          {
+            "id": 7218,
+            "imageUrl": "https://static.arasaac.org/pictograms/7218/7218_500.png"
+          },
+          {
+            "id": 10155,
+            "imageUrl": "https://static.arasaac.org/pictograms/10155/10155_500.png"
+          },
+          {
+            "id": 19531,
+            "imageUrl": "https://static.arasaac.org/pictograms/19531/19531_500.png"
+          },
+          {
+            "id": 36541,
+            "imageUrl": "https://static.arasaac.org/pictograms/36541/36541_500.png"
+          },
+          {
+            "id": 38986,
+            "imageUrl": "https://static.arasaac.org/pictograms/38986/38986_500.png"
+          }
+        ],
+        "source": "arasaac"
+      },
+      {
+        "displayWord": "SEMPRE",
+        "searchTerm": "sempre",
+        "category": "adjective",
+        "pictogramId": 31548,
+        "imageUrl": "https://static.arasaac.org/pictograms/31548/31548_500.png",
+        "alternatives": [
+          {
+            "id": 31548,
+            "imageUrl": "https://static.arasaac.org/pictograms/31548/31548_500.png"
+          }
+        ],
+        "source": "arasaac"
+      }
+    ]
+  },
+  "cards": [
+    {
+      "sectionTitle": "Inizio",
+      "stepLabel": "Il piccolo drago nel bosco",
+      "pedagogicalExplanation": "Presentazione del protagonista che vive nel bosco incantato.",
+      "tokens": [
+        {
+          "displayWord": "PICCOLO",
+          "searchTerm": "piccolo",
+          "category": "adjective",
+          "pictogramId": 4716,
+          "imageUrl": "https://static.arasaac.org/pictograms/4716/4716_500.png",
+          "alternatives": [
+            {
+              "id": 4716,
+              "imageUrl": "https://static.arasaac.org/pictograms/4716/4716_500.png"
+            },
+            {
+              "id": 16121,
+              "imageUrl": "https://static.arasaac.org/pictograms/16121/16121_500.png"
+            },
+            {
+              "id": 36887,
+              "imageUrl": "https://static.arasaac.org/pictograms/36887/36887_500.png"
+            },
+            {
+              "id": 34088,
+              "imageUrl": "https://static.arasaac.org/pictograms/34088/34088_500.png"
+            },
+            {
+              "id": 6162,
+              "imageUrl": "https://static.arasaac.org/pictograms/6162/6162_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "DRAGO",
+          "searchTerm": "drago",
+          "category": "person",
+          "pictogramId": 5572,
+          "imageUrl": "https://static.arasaac.org/pictograms/5572/5572_500.png",
+          "alternatives": [
+            {
+              "id": 5572,
+              "imageUrl": "https://static.arasaac.org/pictograms/5572/5572_500.png"
+            },
+            {
+              "id": 5576,
+              "imageUrl": "https://static.arasaac.org/pictograms/5576/5576_500.png"
+            },
+            {
+              "id": 39536,
+              "imageUrl": "https://static.arasaac.org/pictograms/39536/39536_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "VIVE",
+          "searchTerm": "vivere",
+          "category": "verb",
+          "pictogramId": 11605,
+          "imageUrl": "https://static.arasaac.org/pictograms/11605/11605_500.png",
+          "alternatives": [
+            {
+              "id": 11605,
+              "imageUrl": "https://static.arasaac.org/pictograms/11605/11605_500.png"
+            },
+            {
+              "id": 7302,
+              "imageUrl": "https://static.arasaac.org/pictograms/7302/7302_500.png"
+            },
+            {
+              "id": 35103,
+              "imageUrl": "https://static.arasaac.org/pictograms/35103/35103_500.png"
+            },
+            {
+              "id": 38394,
+              "imageUrl": "https://static.arasaac.org/pictograms/38394/38394_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "BOSCO",
+          "searchTerm": "bosco",
+          "category": "noun",
+          "pictogramId": 2666,
+          "imageUrl": "https://static.arasaac.org/pictograms/2666/2666_500.png",
+          "alternatives": [
+            {
+              "id": 2666,
+              "imageUrl": "https://static.arasaac.org/pictograms/2666/2666_500.png"
+            },
+            {
+              "id": 32462,
+              "imageUrl": "https://static.arasaac.org/pictograms/32462/32462_500.png"
+            },
+            {
+              "id": 35145,
+              "imageUrl": "https://static.arasaac.org/pictograms/35145/35145_500.png"
+            },
+            {
+              "id": 25869,
+              "imageUrl": "https://static.arasaac.org/pictograms/25869/25869_500.png"
+            }
+          ],
+          "source": "arasaac"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "Svolgimento",
+      "stepLabel": "La ricerca del fuoco",
+      "pedagogicalExplanation": "Il drago cerca di imparare a sputare il fuoco.",
+      "tokens": [
+        {
+          "displayWord": "DRAGO",
+          "searchTerm": "drago",
+          "category": "person",
+          "pictogramId": 5572,
+          "imageUrl": "https://static.arasaac.org/pictograms/5572/5572_500.png",
+          "alternatives": [
+            {
+              "id": 5572,
+              "imageUrl": "https://static.arasaac.org/pictograms/5572/5572_500.png"
+            },
+            {
+              "id": 5576,
+              "imageUrl": "https://static.arasaac.org/pictograms/5576/5576_500.png"
+            },
+            {
+              "id": 39536,
+              "imageUrl": "https://static.arasaac.org/pictograms/39536/39536_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "CERCA",
+          "searchTerm": "cercare",
+          "category": "verb",
+          "pictogramId": 6947,
+          "imageUrl": "https://static.arasaac.org/pictograms/6947/6947_500.png",
+          "alternatives": [
+            {
+              "id": 6947,
+              "imageUrl": "https://static.arasaac.org/pictograms/6947/6947_500.png"
+            },
+            {
+              "id": 6946,
+              "imageUrl": "https://static.arasaac.org/pictograms/6946/6946_500.png"
+            },
+            {
+              "id": 21466,
+              "imageUrl": "https://static.arasaac.org/pictograms/21466/21466_500.png"
+            },
+            {
+              "id": 21468,
+              "imageUrl": "https://static.arasaac.org/pictograms/21468/21468_500.png"
+            },
+            {
+              "id": 27391,
+              "imageUrl": "https://static.arasaac.org/pictograms/27391/27391_500.png"
+            },
+            {
+              "id": 32156,
+              "imageUrl": "https://static.arasaac.org/pictograms/32156/32156_500.png"
+            },
+            {
+              "id": 37238,
+              "imageUrl": "https://static.arasaac.org/pictograms/37238/37238_500.png"
+            },
+            {
+              "id": 37240,
+              "imageUrl": "https://static.arasaac.org/pictograms/37240/37240_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "FUOCO",
+          "searchTerm": "fuoco",
+          "category": "noun",
+          "pictogramId": 4654,
+          "imageUrl": "https://static.arasaac.org/pictograms/4654/4654_500.png",
+          "alternatives": [
+            {
+              "id": 4654,
+              "imageUrl": "https://static.arasaac.org/pictograms/4654/4654_500.png"
+            },
+            {
+              "id": 21518,
+              "imageUrl": "https://static.arasaac.org/pictograms/21518/21518_500.png"
+            },
+            {
+              "id": 37553,
+              "imageUrl": "https://static.arasaac.org/pictograms/37553/37553_500.png"
+            },
+            {
+              "id": 4925,
+              "imageUrl": "https://static.arasaac.org/pictograms/4925/4925_500.png"
+            },
+            {
+              "id": 3140,
+              "imageUrl": "https://static.arasaac.org/pictograms/3140/3140_500.png"
+            },
+            {
+              "id": 6578,
+              "imageUrl": "https://static.arasaac.org/pictograms/6578/6578_500.png"
+            },
+            {
+              "id": 25944,
+              "imageUrl": "https://static.arasaac.org/pictograms/25944/25944_500.png"
+            },
+            {
+              "id": 6196,
+              "imageUrl": "https://static.arasaac.org/pictograms/6196/6196_500.png"
+            }
+          ],
+          "source": "arasaac"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "Incontro",
+      "stepLabel": "L'incontro con il drago grande",
+      "pedagogicalExplanation": "Il piccolo drago incontra un drago più grande che lo aiuta.",
+      "tokens": [
+        {
+          "displayWord": "INCONTRA",
+          "searchTerm": "incontrare",
+          "category": "verb",
+          "pictogramId": 39519,
+          "imageUrl": "https://static.arasaac.org/pictograms/39519/39519_500.png",
+          "alternatives": [
+            {
+              "id": 39519,
+              "imageUrl": "https://static.arasaac.org/pictograms/39519/39519_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "DRAGO",
+          "searchTerm": "drago",
+          "category": "person",
+          "pictogramId": 5572,
+          "imageUrl": "https://static.arasaac.org/pictograms/5572/5572_500.png",
+          "alternatives": [
+            {
+              "id": 5572,
+              "imageUrl": "https://static.arasaac.org/pictograms/5572/5572_500.png"
+            },
+            {
+              "id": 5576,
+              "imageUrl": "https://static.arasaac.org/pictograms/5576/5576_500.png"
+            },
+            {
+              "id": 39536,
+              "imageUrl": "https://static.arasaac.org/pictograms/39536/39536_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "GRANDE",
+          "searchTerm": "grande",
+          "category": "adjective",
+          "pictogramId": 4658,
+          "imageUrl": "https://static.arasaac.org/pictograms/4658/4658_500.png",
+          "alternatives": [
+            {
+              "id": 4658,
+              "imageUrl": "https://static.arasaac.org/pictograms/4658/4658_500.png"
+            },
+            {
+              "id": 38564,
+              "imageUrl": "https://static.arasaac.org/pictograms/38564/38564_500.png"
+            },
+            {
+              "id": 8704,
+              "imageUrl": "https://static.arasaac.org/pictograms/8704/8704_500.png"
+            },
+            {
+              "id": 10272,
+              "imageUrl": "https://static.arasaac.org/pictograms/10272/10272_500.png"
+            },
+            {
+              "id": 2363,
+              "imageUrl": "https://static.arasaac.org/pictograms/2363/2363_500.png"
+            },
+            {
+              "id": 4557,
+              "imageUrl": "https://static.arasaac.org/pictograms/4557/4557_500.png"
+            },
+            {
+              "id": 16119,
+              "imageUrl": "https://static.arasaac.org/pictograms/16119/16119_500.png"
+            },
+            {
+              "id": 7002,
+              "imageUrl": "https://static.arasaac.org/pictograms/7002/7002_500.png"
+            }
+          ],
+          "source": "arasaac"
+        }
+      ]
+    },
+    {
+      "sectionTitle": "Conclusione",
+      "stepLabel": "La grande festa dei draghi",
+      "pedagogicalExplanation": "I draghi festeggiano insieme felici nel cielo.",
+      "tokens": [
+        {
+          "displayWord": "DRAGHI",
+          "searchTerm": "drago",
+          "category": "person",
+          "pictogramId": 5572,
+          "imageUrl": "https://static.arasaac.org/pictograms/5572/5572_500.png",
+          "alternatives": [
+            {
+              "id": 5572,
+              "imageUrl": "https://static.arasaac.org/pictograms/5572/5572_500.png"
+            },
+            {
+              "id": 5576,
+              "imageUrl": "https://static.arasaac.org/pictograms/5576/5576_500.png"
+            },
+            {
+              "id": 39536,
+              "imageUrl": "https://static.arasaac.org/pictograms/39536/39536_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "GIOCANO",
+          "searchTerm": "giocare",
+          "category": "verb",
+          "pictogramId": 23392,
+          "imageUrl": "https://static.arasaac.org/pictograms/23392/23392_500.png",
+          "alternatives": [
+            {
+              "id": 23392,
+              "imageUrl": "https://static.arasaac.org/pictograms/23392/23392_500.png"
+            },
+            {
+              "id": 6537,
+              "imageUrl": "https://static.arasaac.org/pictograms/6537/6537_500.png"
+            },
+            {
+              "id": 2439,
+              "imageUrl": "https://static.arasaac.org/pictograms/2439/2439_500.png"
+            },
+            {
+              "id": 35717,
+              "imageUrl": "https://static.arasaac.org/pictograms/35717/35717_500.png"
+            },
+            {
+              "id": 35723,
+              "imageUrl": "https://static.arasaac.org/pictograms/35723/35723_500.png"
+            },
+            {
+              "id": 36884,
+              "imageUrl": "https://static.arasaac.org/pictograms/36884/36884_500.png"
+            },
+            {
+              "id": 36885,
+              "imageUrl": "https://static.arasaac.org/pictograms/36885/36885_500.png"
+            },
+            {
+              "id": 37068,
+              "imageUrl": "https://static.arasaac.org/pictograms/37068/37068_500.png"
+            }
+          ],
+          "source": "arasaac"
+        },
+        {
+          "displayWord": "INSIEME",
+          "searchTerm": "insieme",
+          "category": "adjective",
+          "pictogramId": 7064,
+          "imageUrl": "https://static.arasaac.org/pictograms/7064/7064_500.png",
+          "alternatives": [
+            {
+              "id": 7064,
+              "imageUrl": "https://static.arasaac.org/pictograms/7064/7064_500.png"
+            }
+          ],
+          "source": "arasaac"
+        }
+      ]
+    }
+  ],
+  "id": "la_fiaba_dei_draghi_1793050410347",
+  "createdAt": "2026-10-26T21:33:30.347Z",
+  "updatedAt": "2026-10-26T21:33:30Z"
+}

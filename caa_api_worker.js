@@ -41,6 +41,27 @@ export default {
         });
       }
 
+      if (pathname === '/api/generate' && request.method === 'POST') {
+        const body = await request.json();
+        const activeKey = body.apiKey || env.GEMINI_API_KEY || '';
+        const model = body.model || 'gemini-3.1-flash-lite';
+        const payload = body.geminiPayload;
+
+        if (!activeKey) {
+          return jsonResponse({ error: 'Chiave API Gemini mancante' }, 400);
+        }
+
+        const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${activeKey}`;
+        const geminiResp = await fetch(geminiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const respData = await geminiResp.json();
+        return jsonResponse(respData, geminiResp.status);
+      }
+
       // --- 1. PROGETTI CAA ---
       if (pathname === '/api/sync/projects') {
         const user = (url.searchParams.get('user') || 'rocco').toLowerCase().trim();

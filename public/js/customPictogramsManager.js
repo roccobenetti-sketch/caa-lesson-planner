@@ -3,7 +3,7 @@
  * Sincronizzazione automatica Cloud KV + Locale associata al profilo utente.
  */
 
-import { AuthManager } from './authManager.js';
+import { AuthManager } from './authManager.js?v=2.5.0';
 
 const STORAGE_KEY = 'caa_custom_pictograms';
 const CLOUD_API = 'https://caa-api.roccobenetti.workers.dev/api/sync/custom-pictograms';
