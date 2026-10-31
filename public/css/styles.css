@@ -355,3 +355,111 @@ html.dark.oled-theme .border-slate-300 {
     color: #000000 !important;
   }
 }
+
+/* =========================================================================
+   MODALITÀ NOTTE NERO OLED PURO (#000000) PER CAA LESSON PLANNER
+   ========================================================================= */
+html.dark,
+html.dark body,
+html.oled-theme,
+html.oled-theme body {
+  background-color: #000000 !important;
+  color: #f8fafc !important;
+}
+
+html.dark header,
+html.oled-theme header,
+html.dark section,
+html.oled-theme section,
+html.dark .bg-white,
+html.oled-theme .bg-white,
+html.dark div[class*="bg-white"],
+html.oled-theme div[class*="bg-white"] {
+  background-color: #000000 !important;
+  border-color: #27272a !important;
+  color: #f8fafc !important;
+}
+
+html.dark .bg-slate-50,
+html.oled-theme .bg-slate-50,
+html.dark .bg-slate-100,
+html.oled-theme .bg-slate-100,
+html.dark .bg-slate-200,
+html.oled-theme .bg-slate-200 {
+  background-color: #0d0d0d !important;
+  border-color: #27272a !important;
+  color: #f4f4f5 !important;
+}
+
+html.dark .bg-blue-50,
+html.oled-theme .bg-blue-50 {
+  background-color: #051329 !important;
+  border-color: #1e3a8a !important;
+}
+
+html.dark .bg-amber-50,
+html.oled-theme .bg-amber-50 {
+  background-color: #1c1305 !important;
+  border-color: #78350f !important;
+}
+
+html.dark .text-slate-900,
+html.oled-theme .text-slate-900,
+html.dark .text-slate-800,
+html.oled-theme .text-slate-800,
+html.dark .text-slate-700,
+html.oled-theme .text-slate-700 {
+  color: #f8fafc !important;
+}
+
+html.dark .text-slate-600,
+html.oled-theme .text-slate-600,
+html.dark .text-slate-500,
+html.oled-theme .text-slate-500 {
+  color: #a1a1aa !important;
+}
+
+html.dark input:not([type="checkbox"]):not([type="radio"]),
+html.oled-theme input:not([type="checkbox"]):not([type="radio"]),
+html.dark select,
+html.oled-theme select,
+html.dark textarea,
+html.oled-theme textarea {
+  background-color: #09090b !important;
+  color: #ffffff !important;
+  border-color: #3f3f46 !important;
+}
+
+html.dark .border-slate-200,
+html.oled-theme .border-slate-200,
+html.dark .border-slate-300,
+html.oled-theme .border-slate-300 {
+  border-color: #27272a !important;
+}
+
+/* Tessere CAA dentro l'area stampabile: in modalità notte a schermo scuriscono lo sfondo, preservando i bordi Fitzgerald colorati */
+html.dark #printableArea {
+  background-color: #000000 !important;
+}
+
+html.dark .caa-card {
+  background-color: #0c0c0e !important;
+}
+
+html.dark .caa-card text,
+html.dark .caa-card span,
+html.dark .caa-card .caa-word-label {
+  color: #ffffff !important;
+}
+
+/* Durante la stampa A4 editoriale, mantiene la purezza della carta bianca */
+@media print {
+  html.dark, html.dark body, html.dark header, html.dark section, html.dark .bg-white,
+  html.dark #printableArea, html.dark .caa-card {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+  }
+  html.dark .caa-card text, html.dark .caa-card span, html.dark .caa-card .caa-word-label {
+    color: #000000 !important;
+  }
+}
