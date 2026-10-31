@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CAA IN-Book Studio — Libri e Testi in Simboli con IA</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <!-- Top Header -->
+  <header class="app-header no-print">
+    <div class="brand-area">
+      <div class="brand-logo">📖</div>
+      <div>
+        <h1>CAA IN-Book Studio <span class="badge-version">IA + ARASAAC</span></h1>
+        <p>Traduzione integrale di racconti e brani disciplinari in simboli per il Modeling</p>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <!-- Badge Utente e Logout -->
+      <div class="user-session-pill" id="userSessionPill">
+        <span class="user-avatar-icon">👤</span>
+        <span class="user-name-text" id="headerUserBadge">Accesso...</span>
+        <button type="button" class="btn-user-admin hidden" id="btnOpenUsersModal" title="Gestione Utenti (Admin)">👥 Utenti</button>
+        <button type="button" class="btn-user-logout" id="btnLogoutBtn" title="Disconnetti">Esci</button>
+      </div>
+
+      <button type="button" class="btn-header" id="btnStopModeling" title="Ferma voce e Modeling">
+        ⏹️ Stop Voce
+      </button>
+      <button type="button" class="btn-header" id="btnSaveInBook" title="Salva il libro IN-Book nell'archivio">
+        💾 Salva Libro
+      </button>
+      <button type="button" class="btn-header" id="btnExportBookJson" title="Esporta file progetto .json">
+        ⬇️ Esporta JSON
+      </button>
+      <label class="btn-header" title="Importa un file progetto .json">
+        ⬆️ Importa JSON
+        <input type="file" id="importBookJsonInput" accept=".json" class="hidden" />
+      </label>
+      <button type="button" class="btn-header btn-print" id="btnPrintInBookPdf" title="Stampa o Salva come PDF IN-Book">
+        🖨️ Stampa / PDF IN-Book
+      </button>
+      <button type="button" class="btn-header btn-settings" id="btnOpenSettingsModal" title="Configura Chiave API e Modello Gemini">
+        ⚙️ IA
+      </button>
+    </div>
+  </header>
+
+  <!-- Barra Stato -->
+  <div id="appStatusBanner" class="status-banner status-ok no-print">
+    Pronto. Inserisci un testo o scegli una traccia di esempio per generare l'IN-Book.
+  </div>
+
+  <!-- Layout Principale -->
+  <main class="workspace-grid">
+    <!-- Sidebar Sinistra: Input Testo, Regole IN-Book e Archivio -->
+    <aside class="sidebar-panel no-print">
+      <section class="panel-card">
+        <h2>1. Testo o Brano da Trasformare</h2>
+
+        <div class="preset-buttons-row">
+          <span class="small-label">Esempi rapidi:</span>
+          <button type="button" class="btn-chip" data-preset="fiaba">🐉 Fiaba (Narrativa)</button>
+          <button type="button" class="btn-chip" data-preset="scienze">🌿 Scienze (Fotosintesi)</button>
+          <button type="button" class="btn-chip" data-preset="storia">🔥 Storia (Paleolitico)</button>
+        </div>
+
+        <div class="form-group">
+          <label for="bookTitleInput">Titolo del Libro / Brano:</label>
+          <input type="text" id="bookTitleInput" class="form-input" placeholder="Es. Il Piccolo Drago Scintilla" />
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="bookCategorySelect">Ambito:</label>
+            <select id="bookCategorySelect" class="form-select">
+              <option value="narrativa">📚 Narrativa / Fiaba</option>
+              <option value="scienze">🔬 Scienze / Geografia</option>
+              <option value="storia">🏛️ Storia / Educazione Civica</option>
+              <option value="routine">🧩 Autonomie / Sociale</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="translationModeSelect">Modalità Traduzione:</label>
+            <select id="translationModeSelect" class="form-select">
+              <option value="faithful">Traduzione Integrale Fedele</option>
+              <option value="adapted">Adatta e Semplifica per Modeling</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="label-with-action">
+            <label for="sourceTextInput">Frasi, Racconto o Capitolo (separa le pagine con una riga vuota):</label>
+            <label class="link-upload">
+              📂 Carica .txt
+              <input type="file" id="uploadTextFileInput" accept=".txt,.md" class="hidden" />
+            </label>
+          </div>
+          <textarea id="sourceTextInput" rows="7" class="form-textarea" placeholder="Scrivi o incolla qui il testo narrativo o disciplinare..."></textarea>
+        </div>
+
+        <button type="button" class="btn-generate-main" id="btnGenerateInBook">
+          ✨ Genera IN-Book in Simboli
+        </button>
+      </section>
+
+      <!-- Controlli Visivi & Evidenziazione Simboli -->
+      <section class="panel-card">
+        <h2>2. Controllo Qualità & Layout IN-Book</h2>
+
+        <label class="toggle-row">
+          <input type="checkbox" id="chkHighlightOrigins" checked />
+          <span>
+            <strong>Evidenzia origine simboli</strong>
+            <small>Mostra bordo viola (✨ IA), ambra (⚠️ Verifica) e blu (👤 Personale)</small>
+          </span>
+        </label>
+
+        <label class="toggle-row">
+          <input type="checkbox" id="chkShowGrammarMarkers" checked />
+          <span>
+            <strong>Marcatori morfologici IN-Book</strong>
+            <small>Mostra Plurale (+) e frecce Tempo Passato (←) / Futuro (→)</small>
+          </span>
+        </label>
+
+        <div class="form-row-2" style="margin-top: 10px;">
+          <div class="form-group">
+            <label for="selTextPosition">Posizione Testo:</label>
+            <select id="selTextPosition" class="form-select">
+              <option value="bottom">Sotto il simbolo (Standard)</option>
+              <option value="top">Sopra il simbolo</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="selDefaultAiStyle">Stile Pittogrammi IA:</label>
+            <select id="selDefaultAiStyle" class="form-select">
+              <option value="stylized">Pittogramma CAA</option>
+              <option value="storybook">Fiabesco</option>
+              <option value="realistic">Realistico</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="legend-box">
+          <div class="legend-item"><span class="dot dot-ai"></span> <strong>✨ Viola:</strong> Pittogramma generato da IA</div>
+          <div class="legend-item"><span class="dot dot-verify"></span> <strong>⚠️ Ambra:</strong> Parola polisemica da verificare</div>
+          <div class="legend-item"><span class="dot dot-custom"></span> <strong>👤 Blu:</strong> Simbolo personale / associato</div>
+          <div class="legend-item"><span class="dot dot-std"></span> <strong>Nero:</strong> Simbolo certificato ARASAAC</div>
+        </div>
+      </section>
+
+      <!-- Archivio Libri Salvati -->
+      <section class="panel-card">
+        <h2>3. Libri IN-Book Salvati</h2>
+        <div id="savedBooksList" class="saved-books-list"></div>
+      </section>
+    </aside>
+
+    <!-- Area Centrale: Pagine IN-Book Interattive -->
+    <section class="inbook-stage" id="inbookCanvasContainer">
+      <!-- Renderizzato dinamicamente da InBookRenderer -->
+    </section>
+  </main>
+
+  <!-- Modale Login di Sicurezza (blocco accesso se non autenticato) -->
+  <div id="loginAuthModal" class="modal-backdrop hidden no-print" role="dialog" aria-modal="true">
+    <div class="modal-window login-modal-window">
+      <div class="login-brand-header">
+        <div class="login-brand-icon">📖</div>
+        <h3>CAA IN-Book Studio</h3>
+        <p>Accesso protetto per i docenti e la comunità di <strong>interpelliscuolamobile.it</strong></p>
+      </div>
+
+      <form id="loginAuthForm" class="login-form-body">
+        <div id="loginErrorMessage" class="login-err-msg hidden"></div>
+
+        <div class="form-group">
+          <label for="loginUsernameInput">Nome Utente:</label>
+          <input type="text" id="loginUsernameInput" class="form-input" autocomplete="username" placeholder="Es. rocco o il tuo username app" required />
+        </div>
+
+        <div class="form-group">
+          <label for="loginPasswordInput">Password:</label>
+          <input type="password" id="loginPasswordInput" class="form-input" autocomplete="current-password" placeholder="La tua password" required />
+        </div>
+
+        <button type="submit" class="btn-generate-main" id="btnLoginSubmit">
+          🔐 Accedi all'IN-Book Studio
+        </button>
+
+        <p class="login-footer-hint">
+          💡 <strong>Accesso diretto Single Sign-On:</strong> se stai usando l'app <em>Interpelli Scuola Mobile</em>, tocca direttamente il pulsante <strong>"CAA IN-Book Studio"</strong> nel menu app per entrare all'istante senza dover digitare la password.
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modale Gestione Utenti (Riservato all'Admin Rocco) -->
+  <div id="usersManagementModal" class="modal-backdrop hidden no-print" role="dialog" aria-modal="true">
+    <div class="modal-window users-modal-window">
+      <div class="modal-top-bar">
+        <h3>👥 Gestione Utenti & Docenti Abilitati (Admin)</h3>
+        <button type="button" class="btn-close-modal" id="btnCloseUsersModal">✕</button>
+      </div>
+      <div class="modal-body-pad">
+        <div class="admin-create-user-box">
+          <h4>Crea Nuovo Account Docente</h4>
+          <div class="form-row-2">
+            <input type="text" id="newUsernameInput" class="form-input" placeholder="Nome utente (min. 3 car.)" />
+            <input type="password" id="newPasswordInput" class="form-input" placeholder="Password (min. 4 car.)" />
+          </div>
+          <div style="margin-top: 8px;">
+            <input type="text" id="newDisplayNameInput" class="form-input" placeholder="Nome completo / Scuola (opzionale)" />
+          </div>
+          <button type="button" class="btn-apply-success" id="btnSubmitCreateUser" style="margin-top: 10px;">
+            ➕ Aggiungi Utente e Sincronizza nel Cloud
+          </button>
+          <div id="userCreateStatusMsg" class="insp-status-msg"></div>
+        </div>
+
+        <h4 style="margin: 16px 0 8px;">Elenco Utenti con Accesso Sincronizzato</h4>
+        <div id="adminUsersListContainer" class="admin-users-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modale Inspector per Modifica / Rigenerazione IA / Sostituzione Simbolo -->
+  <div id="tokenInspectorModal" class="modal-backdrop hidden no-print" role="dialog" aria-modal="true">
+    <div class="modal-window inspector-modal-window" id="tokenInspectorBody">
+      <!-- Renderizzato dinamicamente da InspectorModal -->
+    </div>
+  </div>
+
+  <!-- Modale Impostazioni API Gemini -->
+  <div id="settingsModal" class="modal-backdrop hidden no-print" role="dialog" aria-modal="true">
+    <div class="modal-window settings-modal-window">
+      <div class="modal-top-bar">
+        <h3>⚙️ Configurazione Motore IA Gemini</h3>
+        <button type="button" class="btn-close-modal" data-close-settings>✕</button>
+      </div>
+      <div class="modal-body-pad">
+        <div class="form-group">
+          <label for="settingsApiKeyInput">Chiave API Google Gemini (lascia vuoto per usare quella di sistema):</label>
+          <input type="password" id="settingsApiKeyInput" class="form-input" placeholder="AIzaSy..." />
+        </div>
+        <div class="form-group">
+          <label for="settingsModelSelect">Modello IA per Analisi e Disegno Pittogrammi SVG:</label>
+          <select id="settingsModelSelect" class="form-select"></select>
+        </div>
+        <div class="modal-footer-btns">
+          <button type="button" class="btn-secondary-action" data-close-settings>Annulla</button>
+          <button type="button" class="btn-apply-success" id="btnSaveSettings">Salva Impostazioni</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
