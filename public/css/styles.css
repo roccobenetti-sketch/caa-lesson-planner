@@ -298,72 +298,13 @@ body {
   }
 }
 
-/* === MODALITÀ NOTTE NERO OLED PURO (#000000) === */
-html.dark.oled-theme,
-html.dark.oled-theme body {
-  background-color: #000000 !important;
-  color: #f1f5f9 !important;
-}
-
-html.dark.oled-theme header,
-html.dark.oled-theme section,
-html.dark.oled-theme .bg-white {
-  background-color: #0a0a0a !important;
-  border-color: #262626 !important;
-  color: #f1f5f9 !important;
-}
-
-html.dark.oled-theme .bg-slate-50,
-html.dark.oled-theme .bg-slate-100 {
-  background-color: #121212 !important;
-  border-color: #27272a !important;
-  color: #f4f4f5 !important;
-}
-
-html.dark.oled-theme .text-slate-900,
-html.dark.oled-theme .text-slate-800,
-html.dark.oled-theme .text-slate-700 {
-  color: #f8fafc !important;
-}
-
-html.dark.oled-theme .text-slate-600,
-html.dark.oled-theme .text-slate-500 {
-  color: #a1a1aa !important;
-}
-
-html.dark.oled-theme input,
-html.dark.oled-theme select,
-html.dark.oled-theme textarea {
-  background-color: #141414 !important;
-  color: #ffffff !important;
-  border-color: #3f3f46 !important;
-}
-
-html.dark.oled-theme .border-slate-200,
-html.dark.oled-theme .border-slate-300 {
-  border-color: #27272a !important;
-}
-
-/* Tessere stampabili sempre ad alto contrasto */
-@media print {
-  html.dark.oled-theme,
-  html.dark.oled-theme body,
-  html.dark.oled-theme header,
-  html.dark.oled-theme section,
-  html.dark.oled-theme .bg-white {
-    background-color: #ffffff !important;
-    color: #000000 !important;
-  }
-}
-
-/* =========================================================================
-   MODALITÀ NOTTE NERO OLED PURO (#000000) PER CAA LESSON PLANNER
-   ========================================================================= */
+/* === MODALITA NOTTE NERO OLED PURO (#000000) UNIVERSALE === */
 html.dark,
 html.dark body,
 html.oled-theme,
 html.oled-theme body {
   background-color: #000000 !important;
+  background: #000000 !important;
   color: #f8fafc !important;
 }
 
@@ -371,11 +312,18 @@ html.dark header,
 html.oled-theme header,
 html.dark section,
 html.oled-theme section,
+html.dark aside,
+html.oled-theme aside,
+html.dark main,
+html.oled-theme main,
 html.dark .bg-white,
 html.oled-theme .bg-white,
 html.dark div[class*="bg-white"],
-html.oled-theme div[class*="bg-white"] {
+html.oled-theme div[class*="bg-white"],
+html.dark section[class*="bg-white"],
+html.oled-theme section[class*="bg-white"] {
   background-color: #000000 !important;
+  background: #000000 !important;
   border-color: #27272a !important;
   color: #f8fafc !important;
 }
@@ -386,7 +334,8 @@ html.dark .bg-slate-100,
 html.oled-theme .bg-slate-100,
 html.dark .bg-slate-200,
 html.oled-theme .bg-slate-200 {
-  background-color: #0d0d0d !important;
+  background-color: #09090b !important;
+  background: #09090b !important;
   border-color: #27272a !important;
   color: #f4f4f5 !important;
 }
@@ -395,12 +344,14 @@ html.dark .bg-blue-50,
 html.oled-theme .bg-blue-50 {
   background-color: #051329 !important;
   border-color: #1e3a8a !important;
+  color: #bfdbfe !important;
 }
 
 html.dark .bg-amber-50,
 html.oled-theme .bg-amber-50 {
   background-color: #1c1305 !important;
   border-color: #78350f !important;
+  color: #fde68a !important;
 }
 
 html.dark .text-slate-900,
@@ -419,17 +370,8 @@ html.oled-theme .text-slate-500 {
   color: #a1a1aa !important;
 }
 
-html.dark input:not([type="checkbox"]):not([type="radio"]),
-html.oled-theme input:not([type="checkbox"]):not([type="radio"]),
-html.dark select,
-html.oled-theme select,
-html.dark textarea,
-html.oled-theme textarea {
-  background-color: #09090b !important;
-  color: #ffffff !important;
-  border-color: #3f3f46 !important;
-}
-
+html.dark .border-slate-100,
+html.oled-theme .border-slate-100,
 html.dark .border-slate-200,
 html.oled-theme .border-slate-200,
 html.dark .border-slate-300,
@@ -437,29 +379,77 @@ html.oled-theme .border-slate-300 {
   border-color: #27272a !important;
 }
 
-/* Tessere CAA dentro l'area stampabile: in modalità notte a schermo scuriscono lo sfondo, preservando i bordi Fitzgerald colorati */
-html.dark #printableArea {
+/* Tutti i bottoni e controlli */
+html.dark header button,
+html.oled-theme header button,
+html.dark button.bg-white,
+html.oled-theme button.bg-white,
+html.dark label.bg-white,
+html.oled-theme label.bg-white,
+html.dark .modal-window,
+html.oled-theme .modal-window {
+  background-color: #09090b !important;
+  background: #09090b !important;
+  border-color: #27272a !important;
+  color: #f8fafc !important;
+}
+
+html.dark header button:hover,
+html.oled-theme header button:hover,
+html.dark button.bg-white:hover,
+html.oled-theme button.bg-white:hover {
+  background-color: #18181b !important;
+}
+
+/* Input, Select, Textarea */
+html.dark input:not([type="checkbox"]):not([type="radio"]),
+html.oled-theme input:not([type="checkbox"]):not([type="radio"]),
+html.dark select,
+html.oled-theme select,
+html.dark textarea,
+html.oled-theme textarea {
+  background-color: #09090b !important;
+  background: #09090b !important;
+  color: #ffffff !important;
+  border-color: #3f3f46 !important;
+}
+
+/* Area stampabile a schermo e tessere CAA */
+html.dark #printableArea,
+html.oled-theme #printableArea {
   background-color: #000000 !important;
+  background: #000000 !important;
+  border-color: #27272a !important;
 }
 
-html.dark .caa-card {
-  background-color: #0c0c0e !important;
-}
-
-html.dark .caa-card text,
-html.dark .caa-card span,
-html.dark .caa-card .caa-word-label {
+html.dark .caa-card,
+html.oled-theme .caa-card {
+  background-color: #000000 !important;
+  background: #000000 !important;
   color: #ffffff !important;
 }
 
-/* Durante la stampa A4 editoriale, mantiene la purezza della carta bianca */
+html.dark .caa-card text,
+html.oled-theme .caa-card text,
+html.dark .caa-card span,
+html.oled-theme .caa-card span,
+html.dark .caa-card .caa-word-label,
+html.oled-theme .caa-card .caa-word-label {
+  color: #ffffff !important;
+}
+
+/* Stampa editoriale A4: carta bianca candida e colori Fitzgerald standard */
 @media print {
   html.dark, html.dark body, html.dark header, html.dark section, html.dark .bg-white,
-  html.dark #printableArea, html.dark .caa-card {
+  html.dark #printableArea, html.dark .caa-card,
+  html.oled-theme, html.oled-theme body, html.oled-theme header, html.oled-theme section,
+  html.oled-theme #printableArea, html.oled-theme .caa-card {
     background-color: #ffffff !important;
+    background: #ffffff !important;
     color: #000000 !important;
   }
-  html.dark .caa-card text, html.dark .caa-card span, html.dark .caa-card .caa-word-label {
+  html.dark .caa-card text, html.dark .caa-card span, html.dark .caa-card .caa-word-label,
+  html.oled-theme .caa-card text, html.oled-theme .caa-card span, html.oled-theme .caa-card .caa-word-label {
     color: #000000 !important;
   }
 }
