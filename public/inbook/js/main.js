@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Entrypoint principale per CAA IN-Book Studio.
  * Inizializza autenticazione (SSO/Credenziali), configurazione, stato,
  * editor interattivo, Modeling Player e salvataggio libri.
@@ -11,6 +11,7 @@ import { GeminiInbookService } from './geminiInbookService.js';
 import { InBookRenderer } from './inbookRenderer.js';
 import { InspectorModal } from './inspectorModal.js';
 import { ModelingPlayer } from './modelingPlayer.js';
+import { DocumentExtractor } from './documentExtractor.js';
 
 const PRESET_TEXTS = {
   fiaba: {
@@ -304,18 +305,30 @@ const AppBootstrap = {
 
     const fileInput = document.getElementById('uploadTextFileInput');
     if (fileInput) {
-      fileInput.addEventListener('change', evt => {
+      fileInput.addEventListener('change', async evt => {
         const file = evt.target.files?.[0];
         if (!file) return;
-        const reader = new FileReader();
-        reader.onload = () => {
-          const textArea = document.getElementById('sourceTextInput');
-          const titleInput = document.getElementById('bookTitleInput');
-          if (textArea) textArea.value = String(reader.result);
-          if (titleInput && !titleInput.value.trim()) {
-            titleInput.value = file.name.replace(/\.[^.]+$/, '');
+
+        const textArea = document.getElementById('sourceTextInput');
+        const titleInput = document.getElementById('bookTitleInput');
+
+        this.setStatus(Estrazione contenuti da "" in corso...);
+        try {
+          const extracted = await DocumentExtractor.extractFromFile(file, msg => this.setStatus(msg));
+          if (textArea) textArea.value = extracted.text;
+          if (titleInput && (!titleInput.value.trim() || titleInput.value === 'Nuovo IN-Book')) {
+            titleInput.value = extracted.title;
           }
-          this.setStatus(`File "${file.name}" caricato. Clicca su "Genera IN-Book in Simboli".`);
+
+          const pageInfo = extracted.pageCount ?  ( pagine) : '';
+          this.setStatus(File "" [] estratto con successo! Clicca su "Genera IN-Book in Simboli".);
+        } catch (extErr) {
+          this.setStatus(Errore estrazione file: , true);
+        } finally {
+          fileInput.value = '';
+        }
+      });
+    }ricato. Clicca su "Genera IN-Book in Simboli".`);
         };
         reader.readAsText(file, 'utf-8');
       });

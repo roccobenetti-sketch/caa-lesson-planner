@@ -1,10 +1,18 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CAA IN-Book Studio — Libri e Testi in Simboli con IA</title>
-  <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+  <!-- Librerie client per estrazione PDF, DOCX ed eBook EPUB -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script>
+    if (window.pdfjsLib) {
+      window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    }
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
 <body>
   <!-- Top Header -->
@@ -94,9 +102,9 @@
         <div class="form-group">
           <div class="label-with-action">
             <label for="sourceTextInput">Frasi, Racconto o Capitolo (separa le pagine con una riga vuota):</label>
-            <label class="link-upload">
-              📂 Carica .txt
-              <input type="file" id="uploadTextFileInput" accept=".txt,.md" class="hidden" />
+            <label class="link-upload" title="Supporta PDF, Word (.docx, .doc), eBook (.epub, .mobi, .azw), testo (.txt, .md)">
+              📥 Importa File (PDF, DOCX, EPUB, TXT, MOBI)
+              <input type="file" id="uploadTextFileInput" accept=".txt,.md,.pdf,.docx,.doc,.epub,.mobi,.azw,.azw3,.fb2,.html,.htm" class="hidden" />
             </label>
           </div>
           <textarea id="sourceTextInput" rows="7" class="form-textarea" placeholder="Scrivi o incolla qui il testo narrativo o disciplinare..."></textarea>
