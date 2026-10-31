@@ -297,3 +297,61 @@ body {
     display: inline-block !important;
   }
 }
+
+/* === MODALITÀ NOTTE NERO OLED PURO (#000000) === */
+html.dark.oled-theme,
+html.dark.oled-theme body {
+  background-color: #000000 !important;
+  color: #f1f5f9 !important;
+}
+
+html.dark.oled-theme header,
+html.dark.oled-theme section,
+html.dark.oled-theme .bg-white {
+  background-color: #0a0a0a !important;
+  border-color: #262626 !important;
+  color: #f1f5f9 !important;
+}
+
+html.dark.oled-theme .bg-slate-50,
+html.dark.oled-theme .bg-slate-100 {
+  background-color: #121212 !important;
+  border-color: #27272a !important;
+  color: #f4f4f5 !important;
+}
+
+html.dark.oled-theme .text-slate-900,
+html.dark.oled-theme .text-slate-800,
+html.dark.oled-theme .text-slate-700 {
+  color: #f8fafc !important;
+}
+
+html.dark.oled-theme .text-slate-600,
+html.dark.oled-theme .text-slate-500 {
+  color: #a1a1aa !important;
+}
+
+html.dark.oled-theme input,
+html.dark.oled-theme select,
+html.dark.oled-theme textarea {
+  background-color: #141414 !important;
+  color: #ffffff !important;
+  border-color: #3f3f46 !important;
+}
+
+html.dark.oled-theme .border-slate-200,
+html.dark.oled-theme .border-slate-300 {
+  border-color: #27272a !important;
+}
+
+/* Tessere stampabili sempre ad alto contrasto */
+@media print {
+  html.dark.oled-theme,
+  html.dark.oled-theme body,
+  html.dark.oled-theme header,
+  html.dark.oled-theme section,
+  html.dark.oled-theme .bg-white {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+  }
+}

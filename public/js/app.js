@@ -12,6 +12,7 @@ import { AuthManager } from './authManager.js';
 import { BackupManager } from './backupManager.js';
 import { PdfClientEngine } from './pdfClientEngine.js';
 import { StickerAlbumEngine } from './stickerAlbumEngine.js';
+import { ThemeManager } from './themeManager.js';
 
 class CAAApp {
   constructor() {
@@ -35,6 +36,17 @@ class CAAApp {
       }
     } catch (e) {
       console.warn('Errore pre-init auth:', e);
+    }
+
+    // Inizializza Tema Giorno / Notte OLED (rispetta sso_theme dall'app)
+    try {
+      ThemeManager.init();
+      const themeBtn = document.getElementById('btnThemeToggle');
+      if (themeBtn) {
+        themeBtn.addEventListener('click', () => ThemeManager.toggle());
+      }
+    } catch (e) {
+      console.warn('Errore init theme:', e);
     }
 
     // Registra listener UI e aggiorna lo stato dell'autenticazione
