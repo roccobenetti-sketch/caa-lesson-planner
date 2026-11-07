@@ -217,6 +217,24 @@ class CAAApp {
       });
     }
 
+    // Toggle visibilità password e API Key (offuscamento di default con icona occhio)
+    const setupPasswordToggle = (btnId, inputId) => {
+      const btn = document.getElementById(btnId);
+      const input = document.getElementById(inputId);
+      if (btn && input) {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const isPass = input.type === 'password';
+          input.type = isPass ? 'text' : 'password';
+          btn.textContent = isPass ? '🔒' : '👁️';
+          btn.title = isPass ? 'Nascondi' : 'Mostra';
+        });
+      }
+    };
+    setupPasswordToggle('btnToggleApiKeyVisibility', 'inputApiKey');
+    setupPasswordToggle('btnToggleLoginPassVisibility', 'inputLoginPassword');
+    setupPasswordToggle('btnToggleNewUserPassVisibility', 'inputNewPassword');
+
     // Quick Idea Chips
     document.querySelectorAll('.idea-chip').forEach(chip => {
       chip.addEventListener('click', (e) => {
