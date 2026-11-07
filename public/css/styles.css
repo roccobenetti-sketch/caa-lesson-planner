@@ -453,3 +453,32 @@ html.oled-theme .caa-card .caa-word-label {
     color: #000000 !important;
   }
 }
+
+/* FORZATURA NERO OLED SU GRADIENTI, SCHEDE SPIEGAZIONE E MODALI GUIDA API */
+html.dark [class*="bg-gradient"],
+html.oled-theme [class*="bg-gradient"],
+html.dark [class*="from-blue-"],
+html.oled-theme [class*="from-blue-"],
+html.dark [class*="from-purple-"],
+html.oled-theme [class*="from-purple-"],
+html.dark [class*="to-indigo-"],
+html.oled-theme [class*="to-indigo-"],
+html.dark div[class*="bg-white/"],
+html.oled-theme div[class*="bg-white/"],
+html.dark div[class*="bg-white"],
+html.oled-theme div[class*="bg-white"] {
+  background: #000000 !important;
+  background-image: none !important;
+  background-color: #000000 !important;
+  border-color: #27272a !important;
+  color: #f4f4f5 !important;
+}
+
+html.dark [class*="text-blue-900"],
+html.oled-theme [class*="text-blue-900"],
+html.dark [class*="text-purple-950"],
+html.oled-theme [class*="text-purple-950"],
+html.dark [class*="text-purple-900"],
+html.oled-theme [class*="text-purple-900"] {
+  color: #93c5fd !important;
+}
