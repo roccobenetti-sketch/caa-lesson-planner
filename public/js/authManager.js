@@ -45,11 +45,13 @@ export const AuthManager = {
     try {
       if (typeof window === 'undefined' || !window.location) return false;
       const params = new URLSearchParams(window.location.search);
-      const ssoUser = params.get('sso_user');
-      const ssoPass = params.get('sso_pass');
-      const ssoAuth = params.get('sso_auth');
-      const ssoRole = params.get('sso_role') || 'user';
-      const ssoName = params.get('sso_name');
+      const hashClean = (window.location.hash || '').replace(/^#/, '');
+      const hashParams = new URLSearchParams(hashClean);
+      const ssoUser = params.get('sso_user') || hashParams.get('sso_user');
+      const ssoPass = params.get('sso_pass') || hashParams.get('sso_pass');
+      const ssoAuth = params.get('sso_auth') || hashParams.get('sso_auth');
+      const ssoRole = params.get('sso_role') || hashParams.get('sso_role') || 'user';
+      const ssoName = params.get('sso_name') || hashParams.get('sso_name');
 
       if (ssoUser && ssoAuth === 'ism_app_session') {
         const cleanUser = ssoUser.toLowerCase().trim();
