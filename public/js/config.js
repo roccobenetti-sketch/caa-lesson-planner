@@ -138,14 +138,10 @@ export const ConfigManager = {
   },
 
   getActiveApiKey() {
-    // 1. Se l'utente è autenticato ed è un utente secondario, usa la sua chiave personale
     if (AuthManager.isAuthenticated()) {
-      if (!AuthManager.isAdmin()) {
-        return AuthManager.getUserApiKey();
-      } else {
-        // Se è l'admin Rocco, usa la chiave impostata su admin o la default
-        const adminKey = AuthManager.getUserApiKey();
-        if (adminKey) return adminKey;
+      const userKey = AuthManager.getUserApiKey();
+      if (userKey && userKey.trim() !== '') {
+        return userKey.trim();
       }
     }
     return this.state.apiKey || this.state.defaultApiKey || '';

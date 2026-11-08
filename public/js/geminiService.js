@@ -18,11 +18,12 @@ export const GeminiService = {
    * Invoca l'API Gemini tramite proxy Cloudflare o fallback diretto.
    */
   async callGeminiApi(model, geminiPayload, activeKey) {
-    const endpoints = [];
+    const endpoints = [
+      'https://caa-api.roccobenetti.workers.dev/api/generate'
+    ];
     if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-      endpoints.push('/api/generate');
+      endpoints.unshift('/api/generate');
     }
-    endpoints.push('https://caa-api.roccobenetti.workers.dev/api/generate');
 
     let lastError = null;
 
@@ -39,11 +40,16 @@ export const GeminiService = {
         });
 
         if (resp.ok) {
-          return await resp.json();
-        } else if (resp.status !== 405 && resp.status !== 404) {
-          const errData = await resp.json().catch(() => ({}));
-          throw new Error(errData.error?.message || errData.error || `HTTP ${resp.status}`);
+          const contentType = resp.headers.get('content-type') || '';
+          if (contentType.includes('application/json')) {
+            const data = await resp.json();
+            if (data && (data.candidates || data.text)) {
+              return data;
+            }
+          }
         }
+        const errData = await resp.json().catch(() => ({}));
+        lastError = new Error(errData.error?.message || errData.error || `HTTP ${resp.status}`);
       } catch (err) {
         lastError = err;
       }
@@ -51,18 +57,22 @@ export const GeminiService = {
 
     // Fallback diretto Google Gemini dal browser
     if (activeKey) {
-      const directUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${activeKey}`;
-      const directResponse = await fetch(directUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(geminiPayload)
-      });
+      try {
+        const directUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${activeKey}`;
+        const directResponse = await fetch(directUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(geminiPayload)
+        });
 
-      if (directResponse.ok) {
-        return await directResponse.json();
-      } else {
-        const errJson = await directResponse.json().catch(() => ({}));
-        throw new Error(errJson.error?.message || `Errore Gemini HTTP ${directResponse.status}`);
+        if (directResponse.ok) {
+          return await directResponse.json();
+        } else {
+          const errJson = await directResponse.json().catch(() => ({}));
+          lastError = new Error(errJson.error?.message || `Errore Gemini HTTP ${directResponse.status}`);
+        }
+      } catch (err) {
+        lastError = err;
       }
     }
 
@@ -82,10 +92,6 @@ export const GeminiService = {
   async generateLesson({ promptIdea, targetGrade = 'infanzia', primaryClass = '1', layoutType = 'routine', detailLevel = 'detailed' }) {
     const activeKey = ConfigManager.getActiveApiKey();
     const model = ConfigManager.state.model || 'gemini-3.1-flash-lite';
-
-    if (!activeKey) {
-      throw new Error('Chiave API Gemini mancante. Inserisci la tua chiave nelle impostazioni.');
-    }
 
     const isInfanzia = targetGrade === 'infanzia';
     const gradeLabel = isInfanzia ? "Scuola dell'Infanzia (3-5 anni)" : `Scuola Primaria - Classe ${primaryClass}ª`;
