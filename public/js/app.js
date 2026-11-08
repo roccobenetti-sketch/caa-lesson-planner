@@ -1332,12 +1332,26 @@ class CAAApp {
         this.aiReferenceImages
       );
       const defaultName = promptText.toLocaleUpperCase('it-IT');
+
+      // Decodifica l'SVG per renderizzarlo direttamente nel DOM (senza passare da img e senza dipendere da Base64)
+      let svgInlineMarkup = '';
+      try {
+        if (svgDataUri.includes('base64,')) {
+          const rawB64 = svgDataUri.split('base64,')[1];
+          const decoded = decodeURIComponent(escape(atob(rawB64)));
+          if (decoded && decoded.includes('<svg')) {
+            svgInlineMarkup = decoded.replace(/<svg\b/i, '<svg style="width:100%;height:100%;max-width:100%;max-height:100%;display:block;"');
+          }
+        }
+      } catch (decErr) {
+        console.warn('Fallback render Data URI standard:', decErr);
+      }
       
       if (previewArea) {
         previewArea.innerHTML = `
           <div class="flex flex-col sm:flex-row items-center gap-4 bg-white p-4 rounded-2xl border border-indigo-100 shadow-sm w-full max-w-xl mx-auto">
-            <div class="w-24 h-24 border-2 border-amber-300 rounded-2xl p-1 bg-white flex items-center justify-center shrink-0 shadow-inner">
-              <img src="${svgDataUri}" class="max-w-full max-h-full object-contain pointer-events-none" alt="Simbolo generato con IA" />
+            <div class="w-24 h-24 border-2 border-amber-300 rounded-2xl p-1 bg-white flex items-center justify-center shrink-0 shadow-inner overflow-hidden">
+              ${svgInlineMarkup ? svgInlineMarkup : `<img src="${svgDataUri}" class="max-w-full max-h-full object-contain pointer-events-none" alt="" />`}
             </div>
 
             <div class="flex-1 text-left space-y-2.5 w-full">
@@ -1752,7 +1766,13 @@ class CAAApp {
   handleImageError(imgElement, word, category) {
     if (!imgElement) return;
     imgElement.onerror = null;
-    imgElement.src = GeminiService.createProceduralSvgDataUri(word, category);
+    const parent = imgElement.parentElement;
+    if (parent && parent.classList.contains('caa-picto-container')) {
+      const fallbackSvg = GeminiService.createProceduralSvg(word, category);
+      parent.innerHTML = fallbackSvg.replace(/<svg\b/i, '<svg style="width:100%;height:100%;max-width:100%;max-height:100%;display:block;"');
+    } else {
+      imgElement.src = GeminiService.createProceduralSvgDataUri(word, category);
+    }
   }
 
   /**

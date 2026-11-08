@@ -655,7 +655,10 @@ REGOLE DI CONTINUITÀ E FUSIONE MULTIPLA:
       }
     }
 
-    // Assicura la presenza degli attributi SVG indispensabili per la visualizzazione in un tag <img>
+    // Rimuove eventuali scritte testuali spurie dentro il disegno SVG
+    validSvg = validSvg.replace(/<text[\s\S]*?<\/text>/gi, '');
+
+    // Assicura la presenza degli attributi SVG indispensabili per la visualizzazione corretta
     if (!validSvg.includes('xmlns=')) {
       validSvg = validSvg.replace(/<svg\b/i, '<svg xmlns="http://www.w3.org/2000/svg"');
     }
@@ -663,7 +666,7 @@ REGOLE DI CONTINUITÀ E FUSIONE MULTIPLA:
       validSvg = validSvg.replace(/<svg\b/i, '<svg viewBox="0 0 100 100"');
     }
     if (!validSvg.includes('width=')) {
-      validSvg = validSvg.replace(/<svg\b/i, '<svg width="100" height="100"');
+      validSvg = validSvg.replace(/<svg\b/i, '<svg width="100%" height="100%"');
     }
 
     // Converti in Data URI base64

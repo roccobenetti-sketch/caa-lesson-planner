@@ -619,12 +619,8 @@ export const LessonRenderer = {
         </div>
 
         <!-- Immagine Pittogramma (Con fallback automatico garantito anti-campo vuoto) -->
-        <div class="caa-picto-container w-20 h-20 md:w-24 md:h-24 flex items-center justify-center p-1 bg-white rounded">
-          <img src="${imgUrl}" 
-               alt="${this.escapeHtml(token.displayWord)}" 
-               class="max-w-full max-h-full object-contain pointer-events-none" 
-               loading="eager"
-               onerror="window.app.handleImageError(this, '${this.escapeHtml(token.displayWord)}', '${token.category}')" />
+        <div class="caa-picto-container w-20 h-20 md:w-24 md:h-24 flex items-center justify-center p-1 bg-white rounded overflow-hidden">
+          ${this.renderPictogramMedia(imgUrl, token.displayWord, token.category)}
         </div>
 
         <!-- Categoria o tooltip cambio -->
@@ -662,6 +658,32 @@ export const LessonRenderer = {
         token.searchTerm = String(newWord).trim().toLowerCase();
       }
     }
+  },
+
+  renderPictogramMedia(url, word, category) {
+    if (!url) {
+      const fallbackSvg = GeminiService.createProceduralSvg(word, category);
+      return fallbackSvg.replace(/<svg\b/i, '<svg style="width:100%;height:100%;max-width:100%;max-height:100%;display:block;"');
+    }
+    // Se è già codice SVG puro
+    if (typeof url === 'string' && url.trim().startsWith('<svg')) {
+      return url.replace(/<svg\b/i, '<svg style="width:100%;height:100%;max-width:100%;max-height:100%;display:block;"');
+    }
+    // Se è un Data URI SVG base64
+    if (typeof url === 'string' && url.startsWith('data:image/svg+xml;base64,')) {
+      try {
+        const decoded = decodeURIComponent(escape(atob(url.replace('data:image/svg+xml;base64,', ''))));
+        if (decoded && decoded.includes('<svg')) {
+          return decoded.replace(/<svg\b/i, '<svg style="width:100%;height:100%;max-width:100%;max-height:100%;display:block;"');
+        }
+      } catch (e) {}
+    }
+    // Standard tag img per URL ARASAAC o raster
+    return `<img src="${this.escapeHtml(url)}" 
+                 alt="" 
+                 class="max-w-full max-h-full object-contain pointer-events-none" 
+                 loading="eager"
+                 onerror="window.app.handleImageError(this, '${this.escapeHtml(word)}', '${category}')" />`;
   },
 
   escapeHtml(str) {
