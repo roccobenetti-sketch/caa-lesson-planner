@@ -143,6 +143,23 @@ body {
     box-shadow: none !important;
   }
 
+  /* Reset contenitori principali in stampa per azzerare margini e padding che generavano fogli bianchi */
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+    height: auto !important;
+    min-height: auto !important;
+  }
+  main {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: auto !important;
+    display: block !important;
+  }
+
   /* Album Figurine CAA: Regole di stampa A4 rigorose multi-foglio e 1:1 senza fogli bianchi parassiti */
   .sticker-album-container {
     margin: 0 !important;
@@ -170,6 +187,20 @@ body {
     border: none !important;
     box-shadow: none !important;
     background-color: #ffffff !important;
+  }
+
+  /* Scritte delle caselle, figurine e titoli: NERO ASSOLUTO (#000000) nitido per la stampa */
+  .sticker-album-container .caa-text,
+  .sticker-album-item .caa-text,
+  .sticker-paste-box .caa-text,
+  .sticker-cut-card .caa-text,
+  .album-a4-page h1,
+  .album-a4-page h2 {
+    color: #000000 !important;
+    font-weight: 800 !important;
+    -webkit-text-fill-color: #000000 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 
   /* Compattazione margini intestazione per evitare overflow verticale e fogli bianchi parassiti */

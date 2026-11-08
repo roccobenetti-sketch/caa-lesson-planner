@@ -198,6 +198,21 @@ export const StickerAlbumEngine = {
           background-color: #f8fafc !important;
         }
 
+        /* Scritte nere e marcate ad alto contrasto per le tessere e i titoli */
+        .sticker-album-container .caa-text,
+        .sticker-album-item .caa-text,
+        .sticker-paste-box .caa-text,
+        .sticker-cut-card .caa-text,
+        .sticker-album-container input,
+        .album-a4-page h1,
+        .album-a4-page h2 {
+          color: #000000 !important;
+          font-weight: 800 !important;
+          -webkit-text-fill-color: #000000 !important;
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+
         /* Regole di salto pagina A4 rigorose per la stampa multi-foglio e 1:1 senza fogli bianchi parassiti */
         @media print {
           .sticker-album-container {
@@ -249,6 +264,17 @@ export const StickerAlbumEngine = {
             break-before: auto !important;
             page-break-after: auto !important;
             break-after: auto !important;
+          }
+          .album-a4-page h1,
+          .album-a4-page h2,
+          .album-a4-page span,
+          .album-a4-page div {
+            color: #000000 !important;
+          }
+          .album-a4-page .text-slate-400,
+          .album-a4-page .text-slate-500,
+          .album-a4-page .text-slate-600 {
+            color: #1e293b !important;
           }
         }
       </style>
@@ -340,8 +366,8 @@ export const StickerAlbumEngine = {
                   <h2 class="no-print text-xl font-bold text-slate-800">${this.escapeHtml(lesson.title || 'Il mio Album di Figurine CAA')} (Cont.)</h2>
                 `}
                 
-                <!-- Titolo Pulito in Stampa -->
-                <h1 class="print-only text-xl sm:text-2xl font-bold text-slate-900 caa-text">
+                <!-- Titolo Pulito in Stampa (Nero assoluto) -->
+                <h1 class="print-only text-xl sm:text-2xl font-extrabold text-black caa-text" style="color: #000000 !important; font-weight: 900 !important;">
                   ${this.escapeHtml(lesson.title || 'Il mio Album di Figurine CAA')}
                   ${totalPages > 1 ? `<span class="text-sm font-normal text-slate-600"> (Pag. ${pIdx + 1}/${totalPages})</span>` : ''}
                 </h1>
@@ -398,16 +424,18 @@ export const StickerAlbumEngine = {
                       </div>
                     </div>
 
-                    <!-- Parola Guida / Etichetta CAA in Basso (Identica alla figurina da ritagliare) -->
+                    <!-- Parola Guida / Etichetta CAA in Basso (Nero puro ad alto contrasto per la stampa) -->
                     <div class="w-full text-center px-0.5 leading-tight">
                       <input type="text"
-                             class="no-print w-full text-[11px] sm:text-xs font-bold text-slate-800 bg-slate-50 hover:bg-slate-100 focus:bg-white border border-slate-200 focus:border-indigo-500 rounded px-1 py-0.5 focus:outline-none text-center transition"
+                             class="no-print w-full text-[11px] sm:text-xs font-extrabold text-black bg-slate-50 hover:bg-slate-100 focus:bg-white border border-slate-200 focus:border-indigo-500 rounded px-1 py-0.5 focus:outline-none text-center transition"
+                             style="color: #000000 !important; font-weight: 800 !important;"
                              value="${this.escapeHtml(stk.label || '')}"
                              oninput="window.app.updateStickerLabel(${globalIdx}, this.value)"
                              placeholder="Etichetta..."
                              title="Clicca per modificare la scritta della casella" />
                       
-                      <span class="print-only text-[11px] sm:text-xs font-bold text-slate-900 caa-text block truncate">
+                      <span class="print-only text-[11px] sm:text-xs font-extrabold text-black caa-text block truncate"
+                            style="color: #000000 !important; font-weight: 800 !important;">
                         ${this.escapeHtml(stk.label || '')}
                       </span>
                     </div>
@@ -481,16 +509,18 @@ export const StickerAlbumEngine = {
                       </div>
                     </div>
 
-                    <!-- Testo Figurina (Editabile a video, pulito in stampa) -->
+                    <!-- Testo Figurina (Nero puro ad alto contrasto per la stampa) -->
                     <div class="w-full text-center px-0.5 leading-tight">
                       <input type="text"
-                             class="no-print w-full text-[11px] sm:text-xs font-bold text-slate-800 bg-slate-50 hover:bg-slate-100 focus:bg-white border border-slate-200 focus:border-emerald-500 rounded px-1 py-0.5 focus:outline-none text-center transition"
+                             class="no-print w-full text-[11px] sm:text-xs font-extrabold text-black bg-slate-50 hover:bg-slate-100 focus:bg-white border border-slate-200 focus:border-emerald-500 rounded px-1 py-0.5 focus:outline-none text-center transition"
+                             style="color: #000000 !important; font-weight: 800 !important;"
                              value="${this.escapeHtml(stk.label || token.displayWord || '')}"
                              oninput="window.app.updateStickerLabel(${globalIdx}, this.value)"
                              placeholder="Scritta..."
                              title="Clicca per modificare la scritta della figurina" />
                       
-                      <span class="print-only text-[11px] sm:text-xs font-bold text-slate-800 caa-text block truncate">
+                      <span class="print-only text-[11px] sm:text-xs font-extrabold text-black caa-text block truncate"
+                            style="color: #000000 !important; font-weight: 800 !important;">
                         ${this.escapeHtml(stk.label || token.displayWord || '')}
                       </span>
                     </div>
