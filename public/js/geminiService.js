@@ -18,6 +18,11 @@ export const GeminiService = {
    * Invoca l'API Gemini tramite proxy Cloudflare o fallback diretto.
    */
   async callGeminiApi(model, geminiPayload, activeKey) {
+    let safeModel = String(model || '').trim();
+    if (!safeModel || safeModel.includes('1.5') || safeModel.includes('2.0') || safeModel.includes('2.5')) {
+      safeModel = 'gemini-3.1-flash-lite';
+    }
+
     const endpoints = [
       'https://caa-api.roccobenetti.workers.dev/api/generate'
     ];
@@ -34,7 +39,7 @@ export const GeminiService = {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             apiKey: activeKey,
-            model: model,
+            model: safeModel,
             geminiPayload: geminiPayload
           })
         });
@@ -57,22 +62,27 @@ export const GeminiService = {
 
     // Fallback diretto Google Gemini dal browser
     if (activeKey) {
-      try {
-        const directUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${activeKey}`;
-        const directResponse = await fetch(directUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(geminiPayload)
-        });
+      const directCandidates = [safeModel, 'gemini-3.1-flash-lite', 'gemini-3.5-flash-lite', 'gemini-flash-latest'];
+      const uniqueDirect = [...new Set(directCandidates)];
 
-        if (directResponse.ok) {
-          return await directResponse.json();
-        } else {
-          const errJson = await directResponse.json().catch(() => ({}));
-          lastError = new Error(errJson.error?.message || `Errore Gemini HTTP ${directResponse.status}`);
+      for (const m of uniqueDirect) {
+        try {
+          const directUrl = `https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent?key=${activeKey}`;
+          const directResponse = await fetch(directUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(geminiPayload)
+          });
+
+          if (directResponse.ok) {
+            return await directResponse.json();
+          } else {
+            const errJson = await directResponse.json().catch(() => ({}));
+            lastError = new Error(errJson.error?.message || `Errore Gemini HTTP ${directResponse.status}`);
+          }
+        } catch (err) {
+          lastError = err;
         }
-      } catch (err) {
-        lastError = err;
       }
     }
 
@@ -519,7 +529,7 @@ Regole:
    */
   async generateAiPictogramSvg(description, style = 'stylized', categoryHint = 'misc', referenceImages = []) {
     const activeKey = ConfigManager.getActiveApiKey();
-    const model = ConfigManager.state.model || 'gemini-2.5-flash';
+    const model = ConfigManager.state.model || 'gemini-3.1-flash-lite';
 
     if (!activeKey) {
       throw new Error('Chiave API Gemini mancante. Inserisci la tua chiave nelle impostazioni per generare con IA.');
@@ -635,13 +645,25 @@ REGOLE DI CONTINUITÀ E FUSIONE MULTIPLA:
     const svgMatch = cleanSvg.match(/<svg[\s\S]*?<\/svg>/i);
     let validSvg = svgMatch ? svgMatch[0] : '';
 
-    if (!validSvg || !validSvg.includes('viewBox')) {
-      if (cleanSvg.includes('<svg') && !cleanSvg.includes('</svg>')) {
-        validSvg = cleanSvg.substring(cleanSvg.indexOf('<svg')) + '\n</svg>';
+    if (!validSvg) {
+      if (cleanSvg.includes('<svg')) {
+        const start = cleanSvg.indexOf('<svg');
+        validSvg = cleanSvg.substring(start) + (cleanSvg.includes('</svg>') ? '' : '\n</svg>');
       } else {
         console.warn('Risposta SVG non valida o assente, applico fallback procedurale arricchito');
         validSvg = this.createProceduralSvg(cleanDesc, categoryHint);
       }
+    }
+
+    // Assicura la presenza degli attributi SVG indispensabili per la visualizzazione in un tag <img>
+    if (!validSvg.includes('xmlns=')) {
+      validSvg = validSvg.replace(/<svg\b/i, '<svg xmlns="http://www.w3.org/2000/svg"');
+    }
+    if (!validSvg.includes('viewBox=')) {
+      validSvg = validSvg.replace(/<svg\b/i, '<svg viewBox="0 0 100 100"');
+    }
+    if (!validSvg.includes('width=')) {
+      validSvg = validSvg.replace(/<svg\b/i, '<svg width="100" height="100"');
     }
 
     // Converti in Data URI base64

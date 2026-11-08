@@ -44,22 +44,54 @@ export default {
       if (pathname === '/api/generate' && request.method === 'POST') {
         const body = await request.json();
         const activeKey = body.apiKey || env.GEMINI_API_KEY || '';
-        const model = body.model || 'gemini-3.1-flash-lite';
+        let requestedModel = String(body.model || '').trim();
         const payload = body.geminiPayload;
 
         if (!activeKey) {
           return jsonResponse({ error: 'Chiave API Gemini mancante' }, 400);
         }
 
-        const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${activeKey}`;
-        const geminiResp = await fetch(geminiUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
+        // Se il modello è dismesso da Google (1.5, 2.0, 2.5), auto-migra a gemini-3.1-flash-lite
+        if (!requestedModel || requestedModel.includes('1.5') || requestedModel.includes('2.0') || requestedModel.includes('2.5')) {
+          requestedModel = 'gemini-3.1-flash-lite';
+        }
 
-        const respData = await geminiResp.json();
-        return jsonResponse(respData, geminiResp.status);
+        const candidateModels = [
+          requestedModel,
+          'gemini-3.1-flash-lite',
+          'gemini-3.5-flash-lite',
+          'gemini-flash-lite-latest',
+          'gemini-flash-latest'
+        ];
+        const uniqueModels = [...new Set(candidateModels)];
+
+        let lastRespData = null;
+        let lastStatus = 500;
+
+        for (const candidate of uniqueModels) {
+          try {
+            const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${candidate}:generateContent?key=${activeKey}`;
+            const geminiResp = await fetch(geminiUrl, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload)
+            });
+
+            const respData = await geminiResp.json();
+            if (geminiResp.ok) {
+              return jsonResponse(respData, 200);
+            }
+            lastRespData = respData;
+            lastStatus = geminiResp.status;
+            // Se errore non legato al modello (es. payload 400), esce
+            if (geminiResp.status !== 404 && geminiResp.status !== 503 && geminiResp.status !== 429) {
+              break;
+            }
+          } catch (netErr) {
+            lastRespData = { error: { message: netErr.message } };
+          }
+        }
+        return jsonResponse(lastRespData, lastStatus);
       }
 
       // --- 1. PROGETTI CAA ---
