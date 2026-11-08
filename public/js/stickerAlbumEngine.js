@@ -198,8 +198,16 @@ export const StickerAlbumEngine = {
           background-color: #f8fafc !important;
         }
 
-        /* Regole di salto pagina A4 rigorose per la stampa multi-foglio e 1:1 */
+        /* Regole di salto pagina A4 rigorose per la stampa multi-foglio e 1:1 senza fogli bianchi parassiti */
         @media print {
+          .sticker-album-container {
+            margin: 0 !important;
+            padding: 0 !important;
+            gap: 0 !important;
+          }
+          .sticker-album-container > * + * {
+            margin-top: 0 !important;
+          }
           .album-a4-page,
           .print-sheet.album-a4-page {
             page-break-after: always !important;
@@ -207,16 +215,23 @@ export const StickerAlbumEngine = {
             page-break-inside: avoid !important;
             break-inside: avoid !important;
             margin: 0 !important;
-            padding: 8mm 10mm !important;
+            padding: 0 !important;
             box-sizing: border-box !important;
-            min-height: 275mm !important;
-            max-height: 285mm !important;
+            min-height: auto !important;
+            height: auto !important;
+            max-height: none !important;
+            overflow: visible !important;
             box-shadow: none !important;
             border: none !important;
             background-color: #ffffff !important;
           }
+          .album-a4-page .border-b-2 {
+            margin-bottom: 3.5mm !important;
+            padding-bottom: 2mm !important;
+          }
           .album-a4-page:last-child,
-          .print-sheet.album-a4-page:last-child {
+          .print-sheet.album-a4-page:last-child,
+          .sticker-album-stickers-sheet:last-child {
             page-break-after: auto !important;
             break-after: auto !important;
           }
