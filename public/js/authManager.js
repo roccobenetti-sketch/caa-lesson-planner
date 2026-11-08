@@ -52,6 +52,7 @@ export const AuthManager = {
       const ssoAuth = params.get('sso_auth') || hashParams.get('sso_auth');
       const ssoRole = params.get('sso_role') || hashParams.get('sso_role') || 'user';
       const ssoName = params.get('sso_name') || hashParams.get('sso_name');
+      const ssoAiKey = params.get('sso_ai_key') || hashParams.get('sso_ai_key');
 
       if (ssoUser && ssoAuth === 'ism_app_session') {
         const cleanUser = ssoUser.toLowerCase().trim();
@@ -68,6 +69,10 @@ export const AuthManager = {
 
         this.currentUser = sessionUser;
         localStorage.setItem(STORAGE_CURRENT_USER, JSON.stringify(sessionUser));
+
+        if (ssoAiKey && ssoAiKey.trim()) {
+          this.setUserApiKey(ssoAiKey.trim());
+        }
 
         // Registra o aggiorna permanentemente l'utente nel database locale
         let localUsers = this.getUsersList();
