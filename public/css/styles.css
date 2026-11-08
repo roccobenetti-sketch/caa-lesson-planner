@@ -143,6 +143,49 @@ body {
     box-shadow: none !important;
   }
 
+  /* Album Figurine CAA: Regole di stampa A4 rigorose multi-foglio e 1:1 */
+  .album-a4-page,
+  .print-sheet.album-a4-page {
+    page-break-after: always !important;
+    break-after: page !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    margin: 0 !important;
+    padding: 8mm 10mm !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    min-height: 275mm !important;
+    border: none !important;
+    box-shadow: none !important;
+    background-color: #ffffff !important;
+  }
+
+  /* Ultimo foglio assoluto dell'album: nessun foglio bianco aggiuntivo */
+  .album-a4-page:last-child,
+  .print-sheet.album-a4-page:last-child {
+    page-break-after: auto !important;
+    break-after: auto !important;
+  }
+
+  /* Salto pagina forzato e netto tra fogli del Raccoglitore e fogli delle Figurine */
+  .sticker-album-collector-sheet {
+    page-break-after: always !important;
+    break-after: page !important;
+  }
+
+  /* Nessuna figurina o casella raccoglitore deve MAI essere spezzata a metà */
+  .sticker-album-item,
+  .sticker-paste-box,
+  .sticker-cut-card,
+  [data-sticker-index] {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+    page-break-before: auto !important;
+    break-before: auto !important;
+    page-break-after: auto !important;
+    break-after: auto !important;
+  }
+
   /* Intestazione della lezione / titolo */
   .lesson-header-print {
     break-inside: avoid !important;

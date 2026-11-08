@@ -198,18 +198,40 @@ export const StickerAlbumEngine = {
           background-color: #f8fafc !important;
         }
 
-        /* Regole di salto pagina A4 per la stampa */
+        /* Regole di salto pagina A4 rigorose per la stampa multi-foglio e 1:1 */
         @media print {
-          .album-a4-page {
+          .album-a4-page,
+          .print-sheet.album-a4-page {
             page-break-after: always !important;
             break-after: page !important;
+            page-break-inside: avoid !important;
+            break-inside: avoid !important;
             margin: 0 !important;
             padding: 8mm 10mm !important;
-            min-height: 280mm !important;
+            box-sizing: border-box !important;
+            min-height: 275mm !important;
+            max-height: 285mm !important;
             box-shadow: none !important;
             border: none !important;
+            background-color: #ffffff !important;
           }
-          .album-a4-page:last-child {
+          .album-a4-page:last-child,
+          .print-sheet.album-a4-page:last-child {
+            page-break-after: auto !important;
+            break-after: auto !important;
+          }
+          .sticker-album-collector-sheet {
+            page-break-after: always !important;
+            break-after: page !important;
+          }
+          .sticker-album-item,
+          .sticker-paste-box,
+          .sticker-cut-card,
+          [data-sticker-index] {
+            break-inside: avoid !important;
+            page-break-inside: avoid !important;
+            page-break-before: auto !important;
+            break-before: auto !important;
             page-break-after: auto !important;
             break-after: auto !important;
           }
@@ -322,47 +344,58 @@ export const StickerAlbumEngine = {
             </p>
           </div>
 
-          <!-- GRIGLIA RACCOGLITORE DELLA PAGINA (Caselle con dimensioni millimetriche fisse) -->
+          <!-- GRIGLIA RACCOGLITORE DELLA PAGINA (Caselle con dimensioni millimetriche identiche 1:1 alle figurine) -->
           <div class="grid ${fmt.gridClass} justify-items-center">
             ${chunk.items.map((stk, localIdx) => {
               const globalIdx = chunk.startIndex + localIdx;
               return `
-                <div class="flex flex-col items-center rounded-xl border border-slate-200 bg-white p-2 shadow-2xs transition hover:border-indigo-300 relative group"
+                <div class="sticker-album-item flex flex-col items-center relative group"
                      data-sticker-index="${globalIdx}">
                   
-                  <!-- Casella di Testo / Didascalia in Alto -->
-                  <div class="w-full mb-1.5 flex items-center justify-between gap-1 border-b border-slate-100 pb-1">
-                    <span class="no-print w-5 h-5 rounded-full bg-indigo-600 text-white text-[11px] font-bold flex items-center justify-center shrink-0">
-                      ${globalIdx + 1}
-                    </span>
+                  <!-- CASELLA VUOTA RACCOGLITORE (DIMENSIONI MILLIMETRICHE IDENTICHE 1:1 ALLA FIGURINA) -->
+                  <div class="${fmt.boxClass} flex flex-col items-center justify-between rounded-lg border-2 border-dashed border-slate-300 bg-slate-50/70 p-1.5 relative transition hover:border-indigo-400 sticker-paste-box">
+                    
+                    <!-- Indicatore Superiore Raccoglitore (Numero a video / Incolla in stampa) -->
+                    <div class="w-full flex items-center justify-between text-[9px] text-slate-400 leading-none">
+                      <span class="no-print w-4 h-4 rounded-full bg-indigo-600 text-white text-[10px] font-bold flex items-center justify-center shrink-0">
+                        ${globalIdx + 1}
+                      </span>
+                      <span class="print-only text-[8px] text-slate-400 flex items-center gap-0.5">
+                        📎 <span class="uppercase tracking-wider">incolla</span>
+                      </span>
 
-                    <!-- Input Didascalia a Video (No-Print) -->
-                    <input type="text"
-                           class="no-print flex-1 text-xs sm:text-sm font-bold text-slate-800 bg-slate-50 hover:bg-slate-100 focus:bg-white border border-slate-200 focus:border-indigo-500 rounded-md px-1.5 py-0.5 focus:outline-none text-center"
-                           value="${this.escapeHtml(stk.label || '')}"
-                           oninput="window.app.updateStickerLabel(${globalIdx}, this.value)"
-                           placeholder="Etichetta..." />
+                      <!-- Rimozione veloce a video (No-Print) -->
+                      <button type="button"
+                              class="no-print text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-full w-4 h-4 flex items-center justify-center transition p-0.5"
+                              onclick="window.app.removeStickerFromAlbum(${globalIdx})"
+                              title="Elimina figurina e casella corrispondente">
+                        ✕
+                      </button>
+                    </div>
 
-                    <!-- Testo Stampato Pulito (Senza numeri) -->
-                    <span class="print-only flex-1 text-center font-bold text-xs sm:text-sm text-slate-900 caa-text">
-                      ${this.escapeHtml(stk.label || '')}
-                    </span>
+                    <!-- Sagoma Vuota per Incollare la Figurina (Stessa dimensione fmt.imgClass del simbolo) -->
+                    <div class="flex-1 flex flex-col items-center justify-center p-0.5 w-full overflow-hidden">
+                      <div class="${fmt.imgClass} flex flex-col items-center justify-center rounded border-2 border-dashed border-slate-300 bg-white/70 select-none shadow-2xs">
+                        <span class="text-base sm:text-lg opacity-60">📎</span>
+                        <span class="text-[9px] sm:text-[10px] font-semibold text-slate-400 uppercase tracking-wider text-center px-1">
+                          Incolla qui
+                        </span>
+                      </div>
+                    </div>
 
-                    <!-- Rimozione veloce a video (No-Print) -->
-                    <button type="button"
-                            class="no-print text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-full w-5 h-5 flex items-center justify-center transition p-0.5"
-                            onclick="window.app.removeStickerFromAlbum(${globalIdx})"
-                            title="Elimina figurina e casella corrispondente">
-                      ✕
-                    </button>
-                  </div>
-
-                  <!-- Riquadro Vuoto Sagomato per Incollare la Figurina (DIMENSIONI FISSE ESATTE 1:1) -->
-                  <div class="${fmt.boxClass} rounded-lg border-2 border-dashed border-slate-300 bg-slate-50/70 flex flex-col items-center justify-center p-2 text-center text-slate-400 select-none sticker-paste-box">
-                    <span class="text-lg sm:text-xl mb-1 opacity-60">📎</span>
-                    <span class="text-[10px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider">
-                      Incolla qui
-                    </span>
+                    <!-- Parola Guida / Etichetta CAA in Basso (Identica alla figurina da ritagliare) -->
+                    <div class="w-full text-center px-0.5 leading-tight">
+                      <input type="text"
+                             class="no-print w-full text-[11px] sm:text-xs font-bold text-slate-800 bg-slate-50 hover:bg-slate-100 focus:bg-white border border-slate-200 focus:border-indigo-500 rounded px-1 py-0.5 focus:outline-none text-center transition"
+                             value="${this.escapeHtml(stk.label || '')}"
+                             oninput="window.app.updateStickerLabel(${globalIdx}, this.value)"
+                             placeholder="Etichetta..."
+                             title="Clicca per modificare la scritta della casella" />
+                      
+                      <span class="print-only text-[11px] sm:text-xs font-bold text-slate-900 caa-text block truncate">
+                        ${this.escapeHtml(stk.label || '')}
+                      </span>
+                    </div>
                   </div>
                 </div>
               `;
@@ -408,7 +441,7 @@ export const StickerAlbumEngine = {
               const borderColClass = this.getCategoryBorderClass(category);
 
               return `
-                <div class="flex flex-col items-center rounded-xl p-1 relative group"
+                <div class="sticker-album-item flex flex-col items-center relative group"
                      data-sticker-index="${globalIdx}">
                   
                   <!-- TESSERA FIGURINA DA RITAGLIARE (DIMENSIONI IDENTICHE 1:1 AL RIQUADRO INCOLLA) -->
