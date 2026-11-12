@@ -94,128 +94,87 @@
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col antialiased">
 
-  <!-- Intestazione Principale (No-Print) -->
-  <header class="no-print bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+  <!-- Intestazione Principale 100% Mobile-Safe (No-Print) -->
+  <header class="no-print bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm w-full max-w-full overflow-hidden">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
       
-      <!-- Brand & Titolo -->
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white font-bold text-lg shadow-sm">
-          CAA
+      <!-- Riga Superiore: Brand a sinistra + Azioni Rapide a destra (Non sfora mai) -->
+      <div class="h-14 sm:h-16 flex items-center justify-between gap-2 min-w-0 w-full">
+        <!-- Brand & Titolo -->
+        <div class="flex items-center gap-2 sm:gap-3 min-w-0 shrink">
+          <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white font-bold text-base sm:text-lg shadow-sm shrink-0">
+            CAA
+          </div>
+          <div class="min-w-0">
+            <h1 class="text-sm sm:text-lg font-bold text-slate-900 leading-tight truncate">CAA Lesson Planner</h1>
+            <p class="text-[10px] text-slate-500 hidden sm:block">Infanzia & Primaria • Simboli ARASAAC & IA</p>
+          </div>
         </div>
-        <div>
-          <h1 class="text-lg font-bold text-slate-900 leading-tight">CAA Lesson Planner</h1>
-          <p class="text-xs text-slate-500">Infanzia & Primaria • Simboli ARASAAC & IA</p>
+
+        <!-- Azioni Rapide Sempre Contenute -->
+        <div class="flex items-center gap-1 sm:gap-2 shrink-0">
+          <!-- Tasto Tema Giorno / Notte OLED -->
+          <button id="btnThemeToggle" type="button" class="p-1.5 sm:px-2.5 sm:py-1.5 rounded-xl border border-slate-300 bg-slate-100 hover:bg-slate-200 text-slate-800 shadow-sm transition" title="Cambia Tema">
+            <span>🌙</span> <span class="font-bold text-xs hidden sm:inline">Notte</span>
+          </button>
+
+          <!-- Archivio Progetti Salvati -->
+          <button id="btnOpenProjectsModal" class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-amber-300 bg-amber-50 hover:bg-amber-100/80 text-xs sm:text-sm font-semibold text-amber-900 shadow-sm transition">
+            <svg class="w-4 h-4 text-amber-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+            </svg>
+            <span class="hidden xs:inline">Progetti</span>
+            <span id="projectsCountBadge" class="px-1.5 py-0.2 rounded-full text-[10px] sm:text-xs bg-amber-200 text-amber-900 font-bold">...</span>
+          </button>
+
+          <!-- Tasto Impostazioni & API Key -->
+          <button id="btnOpenSettings" class="flex items-center gap-1.5 p-1.5 sm:px-3 sm:py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs sm:text-sm font-medium text-slate-700 shadow-sm transition" title="Configura Chiave API & Modello">
+            <svg class="w-4 h-4 text-slate-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            </svg>
+            <span class="hidden md:inline">Impostazioni</span>
+          </button>
+
+          <!-- Tasti e Modello Desktop (>= md) -->
+          <div class="hidden md:flex items-center gap-2">
+            <button id="btnHeaderCloseProject" class="hidden items-center gap-1 px-2.5 py-1 rounded-lg border border-red-200 bg-red-50 hover:bg-red-100 text-xs font-bold text-red-700 shadow-sm transition" title="Chiudi il progetto attuale">
+              ✕ <span>Chiudi</span>
+            </button>
+            <div class="flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-xl px-2 py-1 transition" title="Modello IA">
+              <span class="text-xs text-slate-500 font-bold">🤖</span>
+              <select id="selectHeaderModel" class="bg-transparent text-xs font-bold text-slate-800 focus:outline-none cursor-pointer max-w-[130px] truncate">
+              </select>
+            </div>
+            <div id="authHeaderArea" class="flex items-center gap-1">
+              <span id="userBadge" class="inline-flex items-center gap-1 px-2 py-0.5 text-xs rounded-xl font-bold bg-blue-50 text-blue-800 border border-blue-200">
+                👤 <span id="userBadgeName">Accesso...</span>
+              </span>
+              <button id="btnLogout" type="button" class="p-1 text-xs rounded-xl font-medium text-slate-600 hover:bg-slate-100 border border-slate-200 transition" title="Esci">🚪</button>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Azioni Rapide & Impostazioni -->
-      <div class="flex items-center gap-2 sm:gap-3">
-        <!-- Bottone Chiudi Progetto rapido nell'header (visibile solo a progetto aperto) -->
-        <button id="btnHeaderCloseProject" class="hidden items-center gap-1.5 px-3 py-1.5 rounded-lg border border-red-200 bg-red-50 hover:bg-red-100 text-xs font-bold text-red-700 shadow-sm transition" title="Chiudi il progetto attuale e torna al foglio bianco">
-          ✕ <span class="hidden sm:inline">Chiudi Progetto</span>
+      <!-- Riga 2 (Mobile < md): Toolbar Orizzontale a Scorrimento Touch (Zero overflow body) -->
+      <div class="flex md:hidden items-center gap-1.5 overflow-x-auto py-1.5 border-t border-slate-100 no-scrollbar min-w-0 w-full">
+        <button id="btnHeaderCloseProjectMobile" onclick="document.getElementById('btnHeaderCloseProject').click()" class="hidden items-center gap-1 px-2 py-1 rounded-lg border border-red-200 bg-red-50 text-[11px] font-bold text-red-700 shrink-0">
+          ✕ Chiudi
         </button>
-
-        <!-- Archivio Progetti Salvati -->
-        <button id="btnOpenProjectsModal" class="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-amber-300 bg-amber-50 hover:bg-amber-100/80 text-sm font-semibold text-amber-900 shadow-sm transition">
-          <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
-          </svg>
-          <span>I Miei Progetti</span>
-          <span id="projectsCountBadge" class="px-2 py-0.5 rounded-full text-xs bg-amber-200 text-amber-900 font-bold">...</span>
-        </button>
-
-        <!-- Selettore Versione Modello IA Rapido -->
-        <div class="flex items-center gap-1.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-xl px-2.5 py-1 transition" title="Seleziona la versione del modello IA da usare">
-          <span class="text-xs text-slate-500 font-bold hidden md:inline">🤖 Modello:</span>
-          <select id="selectHeaderModel" class="bg-transparent text-xs font-bold text-slate-800 focus:outline-none cursor-pointer pr-1 max-w-[200px] sm:max-w-[260px] truncate">
-            <optgroup label="⚡ Flash & Veloci (Consigliati)">
-              <option value="gemini-3.1-flash-lite" selected>gemini-3.1-flash-lite ⚡ (Rapido)</option>
-              <option value="gemini-3.8-flash">gemini-3.8-flash (Potente)</option>
-              <option value="gemini-3.7-flash">gemini-3.7-flash</option>
-              <option value="gemini-3.6-flash">gemini-3.6-flash</option>
-              <option value="gemini-3.5-flash">gemini-3.5-flash</option>
-              <option value="gemini-3.5-flash-lite">gemini-3.5-flash-lite</option>
-              <option value="gemini-3-flash-preview">gemini-3-flash-preview</option>
-              <option value="gemini-flash-latest">gemini-flash-latest</option>
-              <option value="gemini-flash-lite-latest">gemini-flash-lite-latest</option>
-              <option value="gemini-2.5-flash">gemini-2.5-flash</option>
-              <option value="gemini-2.5-flash-lite">gemini-2.5-flash-lite</option>
-              <option value="gemini-3.1-flash-lite-preview">gemini-3.1-flash-lite-preview</option>
-              <option value="gemini-omni-1.1-flash">gemini-omni-1.1-flash</option>
-              <option value="gemini-omni-flash-preview">gemini-omni-flash-preview</option>
-            </optgroup>
-            <optgroup label="🧠 Pro & Ragionamento Avanzato">
-              <option value="gemini-3.1-pro-preview">gemini-3.1-pro-preview</option>
-              <option value="gemini-3.1-pro-preview-customtools">gemini-3.1-pro-preview-customtools</option>
-              <option value="gemini-pro-latest">gemini-pro-latest</option>
-              <option value="gemini-2.5-pro">gemini-2.5-pro</option>
-              <option value="deep-research-preview-04-2026">deep-research-preview-04-2026</option>
-              <option value="deep-research-pro-preview-12-2025">deep-research-pro-preview-12-2025</option>
-              <option value="deep-research-max-preview-04-2026">deep-research-max-preview-04-2026</option>
-            </optgroup>
-            <optgroup label="🎨 Generazione Immagine & Multimodale">
-              <option value="gemini-3.1-flash-image">gemini-3.1-flash-image</option>
-              <option value="gemini-3.1-flash-image-preview">gemini-3.1-flash-image-preview</option>
-              <option value="gemini-3.1-flash-lite-image">gemini-3.1-flash-lite-image</option>
-              <option value="gemini-3-pro-image">gemini-3-pro-image</option>
-              <option value="gemini-3-pro-image-preview">gemini-3-pro-image-preview</option>
-              <option value="gemini-2.5-flash-image">gemini-2.5-flash-image</option>
-            </optgroup>
-            <optgroup label="🔬 Altri Modelli, Ricerca & Preview">
-              <option value="gemini-4-argon">gemini-4-argon</option>
-              <option value="gemini-nano-banana-2.1">gemini-nano-banana-2.1</option>
-              <option value="nano-banana-pro-preview">nano-banana-pro-preview</option>
-              <option value="gemini-robotics-er-2-preview">gemini-robotics-er-2-preview</option>
-              <option value="gemini-2.5-computer-use-preview-10-2025">gemini-2.5-computer-use-preview-10-2025</option>
-              <option value="gemma-4-31b-it">gemma-4-31b-it</option>
-              <option value="gemma-4-26b-a4b-it">gemma-4-26b-a4b-it</option>
-              <option value="antigravity-preview-latest">antigravity-preview-latest</option>
-              <option value="antigravity-preview-09-2026">antigravity-preview-09-2026</option>
-              <option value="antigravity-preview-05-2026">antigravity-preview-05-2026</option>
-              <option value="gemini-3.5-transcribe">gemini-3.5-transcribe</option>
-              <option value="gemini-3.8-flash-tts">gemini-3.8-flash-tts</option>
-              <option value="gemini-3.8-flash-lite-tts">gemini-3.8-flash-lite-tts</option>
-              <option value="gemini-3.1-flash-tts-preview">gemini-3.1-flash-tts-preview</option>
-              <option value="gemini-2.5-flash-preview-tts">gemini-2.5-flash-preview-tts</option>
-              <option value="gemini-2.5-pro-preview-tts">gemini-2.5-pro-preview-tts</option>
-              <option value="lyria-3.5">lyria-3.5</option>
-              <option value="lyria-3-pro-preview">lyria-3-pro-preview</option>
-              <option value="lyria-3-clip-preview">lyria-3-clip-preview</option>
-            </optgroup>
+        <div class="flex items-center gap-1 bg-slate-50 border border-slate-200 rounded-lg px-2 py-0.5 text-[11px] shrink-0">
+          <span>🤖</span>
+          <select id="selectHeaderModelMobile" onchange="document.getElementById('selectHeaderModel').value=this.value; document.getElementById('selectHeaderModel').dispatchEvent(new Event('change'))" class="bg-transparent text-[11px] font-bold text-slate-800 focus:outline-none cursor-pointer max-w-[130px] truncate">
           </select>
         </div>
-
-        <div id="keyStatusBadge" class="hidden sm:inline-flex px-2.5 py-1 text-xs rounded-full font-medium bg-slate-100 text-slate-700">
-          Caricamento...
+        <div class="flex items-center gap-1 bg-slate-50 border border-slate-200 rounded-lg px-2 py-0.5 text-[11px] shrink-0">
+          <span>👤</span>
+          <span id="userBadgeNameMobile" class="font-bold text-slate-800 max-w-[80px] truncate">Accesso...</span>
         </div>
-
-        <!-- Utente Autenticato & Gestione Utenti (Admin) -->
-        <div id="authHeaderArea" class="flex items-center gap-1.5 sm:gap-2">
-          <span id="userBadge" class="inline-flex items-center gap-1 px-2.5 py-1 text-xs rounded-xl font-bold bg-blue-50 text-blue-800 border border-blue-200">
-            👤 <span id="userBadgeName">Accesso...</span>
-          </span>
-          <button id="btnOpenUsersModal" type="button" class="hidden items-center gap-1 px-2.5 py-1 text-xs rounded-xl font-bold bg-purple-50 hover:bg-purple-100 text-purple-700 border border-purple-200 shadow-sm transition" title="Pannello Amministratore: Gestisci Utenti e Password">
-            👥 <span class="hidden sm:inline">Utenti</span>
-          </button>
-          <button id="btnLogout" type="button" class="flex items-center gap-1 px-2.5 py-1 text-xs rounded-xl font-medium text-slate-600 hover:bg-slate-100 border border-slate-200 transition" title="Disconnetti account">
-            🚪 <span class="hidden sm:inline">Esci</span>
-          </button>
-        </div>
-
-        <!-- Tasto Giorno / Notte OLED -->
-        <button id="btnThemeToggle" type="button" class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border border-slate-300 bg-slate-100 hover:bg-slate-200 text-slate-800 shadow-sm transition" title="Cambia Tema">
-          <span>🌙</span> <span class="font-bold text-xs hidden sm:inline">Notte</span>
-        </button>
-
-        <button id="btnOpenSettings" class="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-sm font-medium text-slate-700 shadow-sm transition">
-          <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-          </svg>
-          <span class="hidden sm:inline">Chiave & Impostazioni</span>
+        <button onclick="document.getElementById('btnLogout').click()" class="px-2 py-0.5 rounded-lg border border-slate-200 bg-white text-[11px] font-bold text-slate-600 shrink-0">
+          🚪 Esci
         </button>
       </div>
+
     </div>
   </header>
 

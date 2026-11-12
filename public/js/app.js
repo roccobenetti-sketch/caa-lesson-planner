@@ -1555,7 +1555,8 @@ class CAAApp {
           body: JSON.stringify(LessonRenderer.currentLesson)
         });
 
-        if (resp.ok) {
+        const contentType = resp.headers.get('content-type') || '';
+        if (resp.ok && contentType.includes('application/pdf')) {
           const blob = await resp.blob();
           const titleSlug = (LessonRenderer.currentLesson.title || 'lezione_caa')
             .toLowerCase()

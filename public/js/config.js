@@ -10,6 +10,7 @@ export const ConfigManager = {
   STORAGE_KEY_MODEL: 'caa_gemini_model',
   STORAGE_KEY_UPPERCASE: 'caa_pref_uppercase',
   STORAGE_KEY_COLOR_BORDERS: 'caa_pref_color_borders',
+  DEFAULT_FALLBACK_API_KEY: '',
 
   state: {
     apiKey: '',
@@ -76,6 +77,9 @@ export const ConfigManager = {
     } else if (this.state.defaultApiKey) {
       this.state.apiKey = this.state.defaultApiKey;
       this.state.isCustomKey = false;
+    } else {
+      this.state.apiKey = this.DEFAULT_FALLBACK_API_KEY;
+      this.state.isCustomKey = false;
     }
 
     // 4. Carica l'elenco di tutti i modelli disponibili
@@ -111,7 +115,7 @@ export const ConfigManager = {
         return userKey.trim();
       }
     }
-    return this.state.apiKey || this.state.defaultApiKey || '';
+    return this.state.apiKey || this.state.defaultApiKey || this.DEFAULT_FALLBACK_API_KEY;
   },
 
   setApiKey(key) {
